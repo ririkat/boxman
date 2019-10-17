@@ -5,7 +5,3 @@
 	<jsp:param value="메인화면" name="pageTitle"/>
 </jsp:include>
 
-	<section id="content">
-		<img src="${pageContext.request.contextPath }/resources/images/logo-spring.png" id="center-image" alt="스프링로고" />
-	</section>
-
