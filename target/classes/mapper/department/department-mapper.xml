@@ -9,7 +9,7 @@
 	
 	<!-- 부서리스트출력 -->
 	<select id="selectDeptList" resultType="map">
-		SELECT * FROM DEPARTMENT
+		SELECT *, COUNT(*) FROM DEPARTMENT
 	</select>
 	
 	<!-- 부서 수정 -->

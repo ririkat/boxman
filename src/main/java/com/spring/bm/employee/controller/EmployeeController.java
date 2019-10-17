@@ -44,6 +44,8 @@ public class EmployeeController {
 			@RequestParam(value="upFile", required=false) MultipartFile[] upFile,
 			HttpServletRequest request) {
 		
+		param.replace("empPassword", pwEncoder.encode(param.get("empPassword")));
+		
 		String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
 		Map<String, String> fMap = new HashMap();
 		List<Map<String, String>> fileList = new ArrayList();
