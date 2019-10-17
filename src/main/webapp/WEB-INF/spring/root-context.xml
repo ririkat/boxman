@@ -17,7 +17,7 @@
 		</bean>
 		
 		<!-- 로그를 출력하기 위한 라이브러리 추가 -->
-		<!-- <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 			<constructor-arg ref="realDataSource"/>
 			<property name = "logFormatter">
 				<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
@@ -25,7 +25,7 @@
 					<property name="sqlPrefix" value="[SQL]"/>
 				</bean>
 			</property>
-		</bean> -->
+		</bean>
 		
 		
 		<!--
