@@ -104,11 +104,10 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <h6 class="collapse-header">Accounting</h6>
+            <a class="collapse-item" href="${path }/acct/is.do">손익계산표</a>
+            <a class="collapse-item" href="${path }/acct/bs.do">대차대조표</a>
+            <a class="collapse-item" href="${path }/acct/cf.do">현금흐름표</a>
           </div>
         </div>
       </li>
