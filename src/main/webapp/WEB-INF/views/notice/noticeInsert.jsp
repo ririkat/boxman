@@ -81,4 +81,11 @@ div#demo-container {
 			$("#devFrm").attr("action","${path }/notice/insertNotice.do");
 			$("#devFrm").submit();
 		}
+		
+		$(function(){
+			$('[name=upFile]').on('change',function(){
+				var fileName=this.file.name;
+				console.log(fileName);
+			})
+		})
 	</script>

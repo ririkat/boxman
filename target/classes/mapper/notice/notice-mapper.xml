@@ -32,5 +32,4 @@
 	  UPDATE NOTICE SET NREADCOUNT = NREADCOUNT + 1 WHERE NNO = #{nReadCount}
 	</update>
 
-
 </mapper>
