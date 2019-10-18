@@ -7,8 +7,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-	<jsp:param value="사원등록" name="tabTitle"/> 
-	<jsp:param value="사원등록" name="pageTitle"/>
+	<jsp:param value="부서목록" name="tabTitle"/> 
+	<jsp:param value="부서목록" name="pageTitle"/>
 </jsp:include>
 
 <section>
@@ -37,7 +37,7 @@
 	        		<div class="col-sm-12 col-md-6">
 	         		<div id="dataTable_filter" class="dataTables_filter">
 	         			<div style="float:right;">
-	          			<a href="${path}/emp/insertEmp.do" class="btn btn-light btn-icon-split">
+	          			<a href="${path}/dept/insertDept.do" class="btn btn-light btn-icon-split">
 	                 <span class="icon text-gray-600">
 	                   <i class="fas fa-arrow-right"></i>
 	                 </span>
@@ -62,10 +62,10 @@
 	           	<c:forEach var="d" items="${list}">
 	              <tr>
 	               	<td>
-	               		<a href='${path }/dept/selectDeptOne?deptNo=${d["DEPTNO"]}'><c:out value='${d["DEPTNO"]}'/></a>
+	               		<a href='${path }/dept/updateDept.do?deptNo=${d["DEPTNO"]}'><c:out value='${d["DEPTNO"]}'/></a>
 	               	</td>
 	               	<td>
-	               		<a href='${path }/dept/selectDeptOne?deptNo=${d["DEPTNO"]}'><c:out value='${d["DEPTNAME"]}'/></a>
+	               		<a href='${path }/dept/updateDept.do?deptNo=${d["DEPTNO"]}'><c:out value='${d["DEPTNAME"]}'/></a>
 	               	</td>
                		<td>
 	               		<c:out value='${d["COUNT"]}'/>

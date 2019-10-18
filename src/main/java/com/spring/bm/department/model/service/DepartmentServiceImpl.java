@@ -42,6 +42,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 		if(result > 0) throw new Exception();
 		return result;
 	}
+
+	/* 부서상세 */
+	@Override
+	public Map<String, String> selectDeptOne(int deptNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDeptOne(session, deptNo);
+	}
+	
+	
 	
 	
 

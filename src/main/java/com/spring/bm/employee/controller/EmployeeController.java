@@ -36,7 +36,7 @@ public class EmployeeController {
 	/* 사원등록 */
 	@RequestMapping("/emp/insertEmp.do")	//사원등록 폼으로 전환
 	public String insertEmp() {
-		return "/emp/empForm";
+		return "emp/empEnroll";
 	}
 	
 	@RequestMapping("/emp/insertEmpEnd.do")	//사원 등록 완료

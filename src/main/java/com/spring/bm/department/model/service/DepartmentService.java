@@ -11,6 +11,8 @@ public interface DepartmentService {
 	List<Map<String, String>> selectDeptList();
 	/* 부서삭제 */
 	int updateDeptStatus(Map<String, String> map) throws Exception;
+	/* 부서상세 */
+	Map<String, String> selectDeptOne(int deptNo);
 
 
 }
