@@ -16,6 +16,7 @@
   <meta name="author" content="">
 
   <title>${param.tabTitle }</title>
+  <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 
   <!-- Custom fonts for this template-->
   <link href="${path }/resources/b4/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -123,7 +124,7 @@
       
       <!-- 게시판 관리 -->
       <li class="nav-item">
-        <a class="nav-link" href="tables.html">
+        <a class="nav-link" href="${path }/notice/selectNoticeList.do">
           <i class="fas fa-fw fa-table"></i>
           <span>게시판 관리</span></a>
       </li>

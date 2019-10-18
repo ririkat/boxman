@@ -7,56 +7,66 @@
    <jsp:param name="pageTitle" value="게시판상세"/>
 </jsp:include>
 <section id="content">
-	<div id="container">
-		<div id="content">
-			<div class="sub_title">
-				<h3>부서별자료실</h3>
-				<p>각 부서의 노동 정책 및 행정업무에 대한 자료를 보실 수 있습니다.</p>
-				<div id="text">
-					<div class="board_view">
-						<dl class="b_title">
-							<dt>제목</dt>
-							<dd>${nt.NName}</dd>
-						</dl>
-						<dl class="b_date">
-							<dt>등록일</dt>
-							<dd>${nt.NDate}</dd>
-						</dl>
-						<dl class="b_team">
-							<dt>담당부서</dt>
-							<dd>물품관리팀</dd>
-						</dl>
-						<dl class="b_writer">
-							<dt>작성자</dt>
-							<dd></dd>
-						</dl>
-						<dl class="b_tel">
-							<dt>전화번호</dt>
-							<dd></dd>
-						</dl>
-						<div class="b_content">
-							내용
-						</div>
-						<dl class="b_file">
-							<dt>첨부파일</dt>
-							<dd>
-								<ul>
-									<li>
-										<span>첨부파일이름</span>
-										<a href="#" class="" title="다운로드">
-											<img src="${pageContext.request.contextPath }/resources/images/btn_down.gif" alt="다운로드">
-										</a>
-									</li>
-								</ul>
-							</dd>
-						</dl>
-					</div>
-					<div class="">
-						<a href="${pageContext.request.contextPath}/notice/selectNoticeList.do">목록</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+
+<form id="devFrm" enctype="multipart/form-data" action="${path }/notice/insertNotice.do" method="post">
+<div class="col-md-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">상세페이지</h4>
+                    <p class="card-description"> 각 부서의 노동 정책 및 행정업무에 대한 자료를 보실 수 있습니다. </p>
+                    <form class="forms-sample">
+                      <div class="form-group">
+                        <label for="exampleInputName1">제목</label>
+                        <input type="text" class="form-control" id="exampleInputName1" name="nName" value="${nt.NName}">
+                      </div>
+                     <div class="form-group">
+                        <label for="exampleInputPassword4">등록일</label>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.NDate}">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">담당부서</label>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">작성자</label>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleInputPassword4">전화번호</label>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="">
+                      </div>
+                      <div class="form-group">
+                      	<div class=" custom-file">
+                      	<label for="upFile">첨부파일</label>
+		                   
+									  <c:forEach items="${upNotice}" var="a" varStatus="vs">
+							            <button type="button" 
+							                    class="btn btn-outline-success btn-block"
+							                    onclick="fileDownload('${a.upNoticeOrgName}','${a.upNoticeReName }');">
+							                첨부파일${vs.count} - ${a.upNoticeOrgName }
+							            </button>
+							        </c:forEach>
+							
+		                </div>
+               		  </div>
+                      <div class="form-group">
+                        <label for="exampleTextarea1">내용</label>
+                        <textarea class="form-control" id="exampleTextarea1" name="nText" rows="2">${nt.NText}</textarea> 
+                      </div>
+                      <button type="submit" class="btn btn-success mr-2">수정</button>
+                      <button class="btn btn-light">삭제</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+	</form>
 	
 </section>
+
+<script>
+		function fileDownload(oName, rName)
+		{
+		   oName=encodeURIComponent(oName);
+		   location.href="${path}/notice/filedownLoad.do?oName="+oName+"&rName="+rName;
+		}
+</script>

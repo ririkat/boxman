@@ -22,4 +22,6 @@ public interface NoticeDao {
 
 	int insertUploadNotice(SqlSessionTemplate sqlSession, UploadNotice n);
 
+	List<UploadNotice> selectUpNoticeList(SqlSessionTemplate sqlSession, int nNo);
+
 }

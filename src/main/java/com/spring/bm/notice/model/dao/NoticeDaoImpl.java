@@ -20,7 +20,7 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int insertUploadNotice(SqlSessionTemplate sqlSession, UploadNotice n) {
-		return sqlSession.insert("board.insertUploadNotice",n);
+		return sqlSession.insert("notice.insertUploadNotice",n);
 	}
 
 	@Override
@@ -43,11 +43,11 @@ public class NoticeDaoImpl implements NoticeDao {
 	public int updateReadCount(SqlSessionTemplate sqlSession, int nReadCount) {
 		return sqlSession.update("notice.updateReadCount", nReadCount);
 	}
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public List<UploadNotice> selectUpNoticeList(SqlSessionTemplate sqlSession, int nNo) {
+		return sqlSession.selectList("notice.selectUpNoticeList", nNo);
+	}
+
 
 }

@@ -18,4 +18,6 @@ public interface NoticeService {
 
 	int insertNotice(Map<String, Object> param, List<UploadNotice> upNoticeList) throws Exception;
 
+	List<UploadNotice> selectUpNoticeList(int nNo);
+
 }

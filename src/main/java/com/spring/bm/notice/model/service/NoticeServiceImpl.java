@@ -59,6 +59,13 @@ public class NoticeServiceImpl implements NoticeService {
 	public int updateReadCount(int nReadCount) {
 		return dao.updateReadCount(sqlSession, nReadCount);
 	}
+
+	@Override
+	public List<UploadNotice> selectUpNoticeList(int nNo) {
+		return dao.selectUpNoticeList(sqlSession, nNo);
+	}
+	
+	
 	
 	
 
