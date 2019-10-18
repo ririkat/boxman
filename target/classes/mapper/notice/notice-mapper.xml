@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="notice">
 
-	<insert id="insertUploadNotice" parameterType="com.spring.finaltest.notice.model.vo.UploadNotice">
+	<!-- <insert id="insertUploadNotice" parameterType="com.spring.finaltest.notice.model.vo.UploadNotice">
 		INSERT INTO UPNOTICE VALUES(SEQ_UPNOTICENO.NEXTVAL, #{nNo}, #{upNoticeOrgName}, #{upNoticeReName})
 	</insert>
 
@@ -30,6 +30,6 @@
 
 	<update id="updateReadCount" parameterType="_int">
 	  UPDATE NOTICE SET NREADCOUNT = NREADCOUNT + 1 WHERE NNO = #{nReadCount}
-	</update>
+	</update> -->
 
 </mapper>
