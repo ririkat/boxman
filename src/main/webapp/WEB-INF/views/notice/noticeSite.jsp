@@ -70,47 +70,22 @@ li {
 		                 </div>
                         <tr>
                           <th>번호</th>
+                          <th>형식</th>
                           <th>업체명</th>
                           <th>링크</th>
                         </tr>
                       </thead>
                       <tbody>
+                        <c:forEach items="${list }" var ="list" varStatus="v">
                         <tr>
-                          <td>Jacob</td>
-                          <td>53275531</td>
+                          <td>${v.count}</td>
+                          <td><c:out value='${list["STCHECK"]}'/></td>
+                          <td><c:out value='${list["STNAME"]}'/></td>
                           <td>
-                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="#"><span>사이트연결</span></a></label>
+                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list['STLINK']}" target="_blank"><span>사이트연결</span></a></label>
                           </td>
                         </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>53275532</td>
-                          <td>
-                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="#"><span>사이트연결</span></a></label>
-                          </td>
-                        </tr>
-                        
-                        <tr>
-                          <td>John</td>
-                          <td>53275533</td>
-                          <td>
-                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="#"><span>사이트연결</span></a></label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>53275534</td>
-                          <td>
-                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="#"><span>사이트연결</span></a></label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Dave</td>
-                          <td>53275535</td>
-                          <td>
-                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="#"><span>사이트연결</span></a></label>
-                          </td>
-                        </tr>
+                        </c:forEach>
                       </tbody>
                     </table>
                   </div>

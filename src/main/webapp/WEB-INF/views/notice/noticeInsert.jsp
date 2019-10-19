@@ -21,16 +21,22 @@ div#demo-container {
 <div class="col-md-6 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">게시판</h4>
+                    <h4 class="card-title">공지사항</h4>
                     <p class="card-description"> 게시글 작성 </p>
                     <form class="forms-sample">
+                    
+                   	  <div class="col-md-6 grid-margin stretch-card form-check">
+                        <label class="form-check-label">
+                         <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>
+                      </div>
+                            
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
                         <input type="text" class="form-control" id="exampleInputName1" name="nName" placeholder="">
                       </div>
                       <div class="form-group">
                         <label for="exampleInputEmail3">부서</label>
-                         <select name = "deptNo" id = "exampleInputEmail3" class="form-control">
+                         <select name = "deptName" id = "exampleInputEmail3" class="form-control">
 		                  <option value = "0">해당 부서를 선택하세요</option>
 		                  <c:forEach items="${deptList}" var="dept">
 		                     <option value = "<c:out value='${dept["DEPTNAME"]}'/>"><c:out value='${dept["DEPTNAME"]}'/></option>
@@ -39,16 +45,16 @@ div#demo-container {
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">작성자</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" placeholder="">
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="" disabled>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">전화번호</label>
-                        <input type="number" class="form-control" id="exampleInputPassword4" placeholder="">
+                        <input type="number" class="form-control" id="exampleInputPassword4" value="" disabled>
                       </div>                 
                      
                       <div class="form-group">
                         <label for="exampleTextarea1">내용</label>
-                        <textarea class="form-control" id="exampleTextarea1" name="nText" rows="2"></textarea> 
+                        <textarea class="form-control" id="exampleTextarea1" name="nText" rows="15"></textarea> 
                       </div>
                       
                       <!-- <div class="form-group">

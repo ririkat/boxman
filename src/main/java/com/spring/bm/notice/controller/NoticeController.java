@@ -38,7 +38,6 @@ public class NoticeController {
 	DepartmentService deptservice;
 	@Autowired
 	EmployeeService empSerivce;
-	
                                                                            //	@RequestParam(name="empNo") int empNo
 	//게시판에서 게시판등록화면으로 화면전환
 	@RequestMapping("/notice/notice.do")
@@ -130,12 +129,6 @@ public class NoticeController {
 		
 		return "notice/noticeOne";
 	}
-	
-	//관련사이트화면
-	@RequestMapping("/notice/site.do")
-	public String site() {
-		return "notice/noticeSite";
-	}
 
 	//메인화면에서 게시판화면으로 화면전환, 게시판목록 (페이징처리)
 	//ModelAndView : 모델과 view를 한번에 묶어서 처리
@@ -146,11 +139,13 @@ public class NoticeController {
 			ModelAndView mv = new ModelAndView();
 			int numPerPage = 5;
 			List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
+			List<Notice> list2 = noticeService.selectNoticeList2();
 			int totalCount = noticeService.selectNoticeCount();
 
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/spring/notice/selectNoticeList.do"));
+			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));
 			mv.addObject("count", totalCount);
 			mv.addObject("list",list);   //key value형식 -> model로 들어감
+			mv.addObject("list2",list2); //필독체크 리스트
 			mv.setViewName("notice/noticeList");   // -> view
 
 			return mv;
@@ -201,13 +196,46 @@ public class NoticeController {
 		      }
 		   }
 		
-		//사이트등록
+		//사이트등록화면
 		@RequestMapping("/notice/insertSite.do")
-		public ModelAndView insertSite() {
-			ModelAndView mv = new ModelAndView();
+		public String insertSite() {
+			return "notice/insertSite";
+		}
+
+		//사이트등록완료
+		@RequestMapping("/notice/insertSiteEnd.do")
+		public ModelAndView insertSiteEnd(@RequestParam Map<String, Object> param) {
 			
-			mv.setViewName("notice/insertSite");   // -> view
+			int result=noticeService.insertSite(param);
+				
+			String msg="";
+			String loc="/notice/site.do";
+			if(result>0) {
+				msg="사이트등록성공!";
+			}else {
+				msg="사이트등록실패!";
+			}
+
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
 
 			return mv;
 		}
+		
+		//관련사이트 목록
+			@RequestMapping("/notice/site.do")
+			public ModelAndView siteList() {
+
+				//반환될 modelAndView객체 생성
+				ModelAndView mv = new ModelAndView();
+				
+				List<Map<String,Object>> list = noticeService.selectSiteList();
+				
+				mv.addObject("list",list);
+				mv.setViewName("notice/noticeSite");   // -> view
+
+				return mv;
+			}
 }

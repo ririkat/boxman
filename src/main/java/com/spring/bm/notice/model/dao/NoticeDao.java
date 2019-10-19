@@ -24,4 +24,10 @@ public interface NoticeDao {
 
 	List<UploadNotice> selectUpNoticeList(SqlSessionTemplate sqlSession, int nNo);
 
+	List<Notice> selectNoticeList2(SqlSessionTemplate sqlSession);
+
+	int insertSite(SqlSessionTemplate sqlSession, Map<String, Object> param);
+
+	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
+
 }

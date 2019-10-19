@@ -17,29 +17,29 @@
                     <form class="forms-sample">
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="nName" value="${nt.NName}">
+                        <input type="text" class="form-control" id="exampleInputName1" name="nName" value="${nt.NName}" readonly>
                       </div>
                      <div class="form-group">
                         <label for="exampleInputPassword4">등록일</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.NDate}">
-                      </div>
-                      <div class="form-group">
-                        <label for="exampleInputPassword4">담당부서</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="">
-                      </div>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.NDate}" readonly>
+                      </div>                     
+	                      <div class="form-group">
+	                        <label for="exampleInputPassword4">담당부서</label>
+	                        <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.deptName}" readonly>
+	                      </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">작성자</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="">
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="" readonly>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">전화번호</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="">
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="" readonly>
                       </div>
                       <div class="form-group">
                       	<div class=" custom-file">
                       	<label for="upFile">첨부파일</label>
 		                   
-									  <c:forEach items="${upNotice}" var="a" varStatus="vs">
+									  <c:forEach items="${upNotice}" var="a">
 							            <button type="button" 
 							                    class="btn btn-outline-success btn-block"
 							                    onclick="fileDownload('${a.upNoticeOrgName}','${a.upNoticeReName }');">
@@ -51,7 +51,7 @@
                		  </div>
                       <div class="form-group">
                         <label for="exampleTextarea1">내용</label>
-                        <textarea class="form-control" id="exampleTextarea1" name="nText" rows="2">${nt.NText}</textarea> 
+                        <textarea class="form-control" id="exampleTextarea1" name="nText" rows="2" readonly>${nt.NText}</textarea> 
                       </div>
                       <button type="submit" class="btn btn-success mr-2">수정</button>
                       <button class="btn btn-light">삭제</button>

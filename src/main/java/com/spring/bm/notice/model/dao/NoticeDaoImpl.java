@@ -49,5 +49,19 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sqlSession.selectList("notice.selectUpNoticeList", nNo);
 	}
 
+	@Override
+	public List<Notice> selectNoticeList2(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("notice.selectNoticeList2");
+	}
+
+	@Override
+	public int insertSite(SqlSessionTemplate sqlSession, Map<String, Object> param) {
+		return sqlSession.insert("notice.insertSite",param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("notice.selectSiteList");
+	}
 
 }

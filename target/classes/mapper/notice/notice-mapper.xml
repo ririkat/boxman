@@ -7,14 +7,18 @@
 	</insert>
 
 	<insert id="insertNotice" parameterType="map">
-		insert into notice values(seq_notice.nextval, #{nName}, #{nText}, default, sysdate)
+		insert into notice values(seq_notice.nextval, (select deptNo from department where deptName=#{deptName}), #{nCheck}, #{nName}, #{nText}, default, sysdate)
 		<selectKey keyProperty="nNo" resultType="string" order="AFTER">
 			SELECT seq_notice.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
+	
+	<insert id="insertSite" parameterType="map">
+		insert into rsite values(seq_rsite.nextval, #{stName}, #{stCheck}, #{stLink})
+	</insert>
 
 	<select id="selectNoticeOne" resultType="notice">
-		select * from notice where nName=#{nName}
+		select A.* , B.deptname from notice A , department B where A.deptNo = B.deptNo AND nName=#{nName}
 	</select>
 	
 	<select id="selectNoticeCount" resultType="_int">
@@ -34,6 +38,14 @@
 	
 	<select id="selectUpNoticeList" resultType="upNotice" parameterType="_int">
  		select * from upnotice where NNO=#{NNo}
+ 	</select>
+ 	
+ 	<select id="selectNoticeList2" resultType="notice">
+ 		select * from notice where NCHECK='필독체크'
+ 	</select>
+ 	
+ 	<select id="selectSiteList" resultType="map">
+ 		select * from rsite
  	</select>
 
 </mapper>
