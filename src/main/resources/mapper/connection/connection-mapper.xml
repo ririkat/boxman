@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="connection">
+
+	<select id="selectConnCount" resultType="_int">
+		select count(*) from connection
+	</select>
+	
+	<select id="selectConnList" resultType="map">
+		SELECT A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO
+	</select>
+	
+	<select id="selectStfMainCateg" resultType="map">
+		SELECT * FROM STUFF_MAINCATEGORY
+	</select>
+	
+	<select id="searchDisCon" resultType="_int">
+		SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_}
+	</select>
+	
+	<select id="searchCon" resultType="_int">
+		SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_} AND MCNO=(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName_})
+	</select>
+
+</mapper>
