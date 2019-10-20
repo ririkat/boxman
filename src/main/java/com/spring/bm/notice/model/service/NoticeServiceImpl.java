@@ -79,7 +79,21 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<Map<String, Object>> selectSiteList() {
 		return dao.selectSiteList(sqlSession);
 	}
-	
+
+	@Override
+	public int updateNotice(Map<String, Object> param) {
+		return dao.updateNotice(sqlSession, param);
+	}
+
+	@Override
+	public int deleteNotice(Map<String, Object> param) {
+		return dao.deleteNotice(sqlSession, param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeCheck(String nName) {
+		return dao.selectNoticeCheck(sqlSession, nName);
+	}
 	
 
 }

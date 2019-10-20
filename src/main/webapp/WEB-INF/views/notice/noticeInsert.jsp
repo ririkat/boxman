@@ -129,7 +129,6 @@ div#demo-container {
 	
 	$(function(){
 		$('[name=upFile]').on('change',function(){
-			console.log();
 			var fileName=this.files[0].name;
 			$(this).next('.custom-file-label').html(fileName);
 		})

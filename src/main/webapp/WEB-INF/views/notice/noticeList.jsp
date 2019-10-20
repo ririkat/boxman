@@ -96,9 +96,8 @@
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
 									<td><c:out value='${notice["NTEXT"]}'/></td>							 
-								
-										<td></td>
-									
+									<td></td>
+
 									<td><c:out value='${notice["NDATE"]}'/></td>
 									<td><c:out value='${notice["NREADCOUNT"]}'/></td>
 								</tr>

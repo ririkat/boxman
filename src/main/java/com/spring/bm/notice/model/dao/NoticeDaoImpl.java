@@ -15,12 +15,12 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int insertNotice(SqlSessionTemplate sqlSession, Map<String, Object> param) {
-		return sqlSession.insert("notice.insertNotice",param);
+		return sqlSession.insert("notice.insertNotice", param);
 	}
 
 	@Override
 	public int insertUploadNotice(SqlSessionTemplate sqlSession, UploadNotice n) {
-		return sqlSession.insert("notice.insertUploadNotice",n);
+		return sqlSession.insert("notice.insertUploadNotice", n);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public List<Map<String, String>> selectNoticeList(SqlSessionTemplate sqlSession, int cPage, int numPerPage) {
 		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
-		return sqlSession.selectList("notice.selectNoticeList",null,rows);
+		return sqlSession.selectList("notice.selectNoticeList", null, rows);
 	}
 
 	@Override
@@ -56,12 +56,27 @@ public class NoticeDaoImpl implements NoticeDao {
 
 	@Override
 	public int insertSite(SqlSessionTemplate sqlSession, Map<String, Object> param) {
-		return sqlSession.insert("notice.insertSite",param);
+		return sqlSession.insert("notice.insertSite", param);
 	}
 
 	@Override
 	public List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("notice.selectSiteList");
+	}
+
+	@Override
+	public int updateNotice(SqlSessionTemplate sqlSession, Map<String, Object> param) {
+		return sqlSession.update("notice.updateNotice", param);
+	}
+
+	@Override
+	public int deleteNotice(SqlSessionTemplate sqlSession, Map<String, Object> param) {
+		return sqlSession.delete("notice.deleteNotice", param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeCheck(SqlSessionTemplate sqlSession, String nName) {
+		return sqlSession.selectList("notice.selectNoticeCheck", nName);
 	}
 
 }

@@ -84,11 +84,9 @@ public class NoticeController {
 				un.setUpNoticeReName(reName);
 				upNoticeList.add(un);
 			}
-			
 		}
 
 		int result=0;
-		
 		try {
 			result=noticeService.insertNotice(param,upNoticeList);
 			
@@ -109,6 +107,7 @@ public class NoticeController {
 		mv.addObject("msg",msg);
 		mv.addObject("loc",loc);
 		mv.setViewName("common/msg");
+		
 		return mv;
 	}
 
@@ -117,18 +116,67 @@ public class NoticeController {
 	@RequestMapping("/notice/selectNoticeOne.do")
 	public String selectNoticeOne(@RequestParam(name="nName") String nName, @RequestParam("nReadCount") int nReadCount, Model model, @RequestParam(name="nNo") int nNo) {
 		
-		
 		Notice nt = noticeService.selectNoticeOne(nName);
 		List<UploadNotice> upNotice  = noticeService.selectUpNoticeList(nNo);
+		List<Map<String, String>> list = deptservice.selectDeptList();	
+		List<Map<String,String>> list2 = noticeService.selectNoticeCheck(nName);
 		//조회수 +1
 		int rc = noticeService.updateReadCount(nReadCount);
 		
 		model.addAttribute("upNotice",upNotice);
+		model.addAttribute("deptList",list);
+		model.addAttribute("list2",list2);
 		model.addAttribute("nt",nt);
 		model.addAttribute("rc",rc);
 		
 		return "notice/noticeOne";
 	}
+	
+		//게시글 수정
+		@RequestMapping("/notice/updateNotice.do")
+		public ModelAndView updateNotice(@RequestParam Map<String, Object> param) {
+			
+			int result=noticeService.updateNotice(param);
+			System.out.println("리절트 ====> "+result);
+			
+			String msg="";
+			String loc="/notice/selectNoticeList.do";
+			
+			if(result>0) {
+				msg="게시글 수정 완료!";
+			}else {
+				msg="게시글 수정 실패!";
+			}
+
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			return mv;
+		}
+		
+		//게시글 삭제
+		@RequestMapping("/notice/deleteNotice.do")
+		public ModelAndView deleteNotice(@RequestParam Map<String, Object> param) {
+			
+			int result = noticeService.deleteNotice(param);
+			
+			String msg="";
+			String loc="/notice/selectNoticeList.do";
+			
+			if(result>0) {
+				msg="게시글 삭제 완료!";
+			}else {
+				msg="게시글 삭제 실패!";
+			}
+			ModelAndView mv = new ModelAndView();
+			
+			mv.addObject("msg",msg);
+			mv.addObject("loc",loc);
+			mv.setViewName("common/msg");
+			return mv;
+			
+		}
 
 	//메인화면에서 게시판화면으로 화면전환, 게시판목록 (페이징처리)
 	//ModelAndView : 모델과 view를 한번에 묶어서 처리
@@ -146,6 +194,7 @@ public class NoticeController {
 			mv.addObject("count", totalCount);
 			mv.addObject("list",list);   //key value형식 -> model로 들어감
 			mv.addObject("list2",list2); //필독체크 리스트
+			
 			mv.setViewName("notice/noticeList");   // -> view
 
 			return mv;

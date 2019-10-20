@@ -11,6 +11,7 @@ public class Notice {
 	private int deptNo; //department 참조번호
 	private String nName; //공지사항 글 제목
 	private String nText; //공지사항 글 내용
+	private String nCheck;
 	private int nReadCount; //공지사항 조회수
 	private Date nDate; //공지사항 등록일
 	private String deptName;

@@ -25,5 +25,11 @@ public interface NoticeService {
 	int insertSite(Map<String, Object> param);
 	//등록한 사이트 목록
 	List<Map<String, Object>> selectSiteList();
+	//게시글 수정
+	int updateNotice(Map<String, Object> param);
+	//게시글 삭제
+	int deleteNotice(Map<String, Object> param);
+	//필독체크가져오기
+	List<Map<String, String>> selectNoticeCheck(String nName);
 
 }
