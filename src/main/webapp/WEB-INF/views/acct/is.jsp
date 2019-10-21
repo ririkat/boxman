@@ -10,52 +10,58 @@
 	<jsp:param value="Accounting" name="tabTitle"/> 
 	<jsp:param value="" name="pageTitle"/>
 </jsp:include>
+
 <!-- export Excel -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${path }/resources/js/tableExport.js"></script>
-<script type="text/javascript" src="${path }/resources/js/FileSaver.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/libs/FileSaver/FileSaver.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/tableExport.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="${path }/resources/b4/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-<section>
-
 <script type="text/javaScript">
-   function doExcel() {
-     $('#excelstyles').tableExport({
-         type:'excel',
-         mso: {
-           styles: ['background-color'
-                    ]
-         }
-       }
-     );
-   }
+      function doExport() {
+        $('#excelstyles').tableExport({
+            type:'excel',
+            mso: {
+              styles: ['background-color',
+                       'color',
+                       'font-family',
+                       'font-size',
+                       'font-weight',
+                       'text-align',
+                      'lala']
+            }
+          }
+        );
+      }
 </script>
 
-<a href="#" onclick="doExcel()">Export to Excel</a>
+<section>
+
+<a href="#" onclick="doExport()">Export to Excel</a>
 <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
  -->
-          <!-- DataTales Example -->
+     <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold  text-primary">손익 계산표</h6>
+              <h6 class="m-0 font-weight-bold  text-primary">손익  계산표</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered"  id="excelstyles" width="100%" cellspacing="0">
+                <table class="table table-bordered"   id="excelstyles" width="100%" cellspacing="0">
                 <thead>
-			    <tr>
-			        <th style="font-family: arial; font-size: 18px; font-weight: bold">C1</th>
-			        <th style="font-family: arial; font-size: 18px; font-weight: bold">C2</th>
-			        <th style="font-family: arial; font-size: 18px; font-weight: bold">C3</th>
-			    </tr>
-			    
-			    </thead>
+                    <tr>
+                        <th style="font-family: arial; font-size:  18px; font-weight: bold">C1</th>
+                        <th style="font-family: arial; font-size:  18px; font-weight: bold">C2</th>
+                        <th style="font-family: arial; font-size:  18px; font-weight: bold">C3</th>
+                    </tr>
+                    
+                    </thead>
                 </tbody>
                   <tbody>
                     <tr>
                       <td style="background-color">매출</td>
-                      <td style="background-color">₩1,100,000,000</td>
+                      <td  style="background-color">₩1,100,000,000</td>
                       <td style="background-color"></td>
                     </tr>
                     <tr>
@@ -138,11 +144,6 @@
               </div>
             </div>
           </div>
+
 </section>
-
-
-
-
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
