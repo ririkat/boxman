@@ -20,5 +20,7 @@ public interface EmployeeDao {
 	/* 사원등록끝 */
 	/* 사원상세보기 */
 	Map<String, String> selectEmpOne(SqlSessionTemplate session, int empNo);
+	/* 사원로그인*/
+	Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map);
 }
 

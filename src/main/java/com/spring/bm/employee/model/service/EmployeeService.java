@@ -13,5 +13,7 @@ public interface EmployeeService {
 	int insertEmp(Map<String, String> param, List<Map<String, String>> fileList) throws Exception;
 	/* 사원상세보기 */
 	Map<String, String> selectEmpOne(int empNo);
+	/* 사원로그인*/
+	Map<String, String> selectLoginEmp(Map<String, String> map);
 }
 

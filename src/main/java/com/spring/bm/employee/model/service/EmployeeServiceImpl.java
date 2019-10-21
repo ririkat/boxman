@@ -52,6 +52,11 @@ public class EmployeeServiceImpl implements EmployeeService {
       return dao.selectEmpOne(session, empNo);
    }
 	
+	/* 사원로그인*/
+	@Override
+	public Map<String, String> selectLoginEmp(Map<String, String> map) {
+		return dao.selectLoginEmp(session,map);
+	}
 	
 }
 
