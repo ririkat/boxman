@@ -28,8 +28,6 @@ public interface NoticeDao {
 
 	int insertSite(SqlSessionTemplate sqlSession, Map<String, Object> param);
 
-	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
-
 	int updateNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
 
 	int deleteNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
@@ -41,5 +39,9 @@ public interface NoticeDao {
 	List<Notice> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
 	int selectNoticeSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
+	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
+	
+	List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession);
 
 }

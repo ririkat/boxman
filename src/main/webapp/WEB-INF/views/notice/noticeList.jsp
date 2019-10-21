@@ -19,7 +19,7 @@
                  <form id="searchFrm">
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
-                           <input type="text" name="data" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+                           <input type="text" name="data" class="form-control form-control-sm" placeholder="제목으로 검색" aria-controls="dataTable">
                       </label>
                       <button onclick = "searchNotice();" class="btn btn-light btn-icon-split">
                           <span class="icon text-gray-600">
@@ -42,18 +42,7 @@
                  </div>
                   </div>
                  </div>
-           	<div class="col-sm-12 col-md-6">
-                  <div id="dataTable_filter" class="dataTables_filter">
-                     <div style="float:right;">
-                      <a href="${path}/notice/site.do" class="btn btn-light btn-icon-split">
-                    <span class="icon text-gray-600">
-                      <i class="fas fa-arrow-right"></i>
-                    </span>
-                    <span class="text">관련사이트</span>
-                  </a>
-                 </div>
-                  </div>
-                 </div>
+
               </div>
               <div class="row">
                  <div class="col-sm-12">
@@ -70,7 +59,7 @@
                        </thead>
                        <tbody>
                        
-           <%--             <c:forEach items="${list2 }" var ="list2" varStatus="v">
+           <c:forEach items="${list2 }" var ="list2" varStatus="v">
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2.NName}&nReadCount=${list2.NNo}&nNo=${list2.NNo}'>${list2.NName }</a></td>
@@ -79,7 +68,7 @@
 							<td>${list2.NDate }</td>
 							<td>${list2.NReadCount }</td>
 						 </tr> 
-                       </c:forEach> --%>
+                       </c:forEach>
  
                  		<c:forEach items="${list}" var="notice" varStatus="v">
 							<c:choose>							 

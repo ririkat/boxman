@@ -15,6 +15,7 @@ public class Notice {
 	private int nReadCount; //공지사항 조회수
 	private Date nDate; //공지사항 등록일
 	private String deptName;
+	private String nCategory;
 
 	
 	public Notice() {
@@ -35,7 +36,7 @@ public class Notice {
 
 
 	public Notice(int nNo, int deptNo, String nName, String nText, String nCheck, int nReadCount, Date nDate,
-			String deptName) {
+			String deptName, String nCategory) {
 		super();
 		this.nNo = nNo;
 		this.deptNo = deptNo;
@@ -45,6 +46,7 @@ public class Notice {
 		this.nReadCount = nReadCount;
 		this.nDate = nDate;
 		this.deptName = deptName;
+		this.nCategory = nCategory;
 	}
 	
 	

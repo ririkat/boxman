@@ -24,7 +24,7 @@ div#demo-container {
                     <h4 class="card-title">공지사항</h4>
                     <p class="card-description"> 게시글 작성 </p>
                     <form class="forms-sample">
-                    
+                    	<input type = "hidden" name = "nCategory" value = "1"/>
                    	  <div class="col-md-6 grid-margin stretch-card form-check">
                         <label class="form-check-label">
                          <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>

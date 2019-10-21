@@ -60,11 +60,6 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectList("notice.selectSiteList");
-	}
-
-	@Override
 	public int updateNotice(SqlSessionTemplate sqlSession, Map<String, Object> param) {
 		return sqlSession.update("notice.updateNotice", param);
 	}
@@ -97,6 +92,18 @@ public class NoticeDaoImpl implements NoticeDao {
 	public int selectNoticeSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m) {
 		  return sqlSession.selectOne("notice.selectNoticeSearchCount", m);
 	}
+	
+	@Override
+	public List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("notice.selectSiteList");
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("notice.selectSiteList2");
+	}
+	
+	
 	
 	
 	

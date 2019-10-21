@@ -8,7 +8,7 @@
 	</insert>
 <!-- 	게시글 등록 -->
 	<insert id="insertNotice" parameterType="map">
-		insert into notice values(seq_notice.nextval, (select deptNo from department where deptName=#{deptName}), #{nCheck}, #{nName}, #{nText}, default, sysdate)
+		insert into notice values(seq_notice.nextval, (select deptNo from department where deptName=#{deptName}), (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{nCategory}),#{nCheck}, #{nName}, #{nText}, default, sysdate)
 		<selectKey keyProperty="nNo" resultType="string" order="AFTER">
 			SELECT seq_notice.CURRVAL FROM DUAL
 		</selectKey>
@@ -60,10 +60,6 @@
  	<select id="selectNoticeList2" resultType="notice">
  		select * from notice where NCHECK='필독체크'
  	</select>
-<!--  	사이트 리스트 -->
- 	<select id="selectSiteList" resultType="map">
- 		select * from rsite
- 	</select>
 <!--  	상세페이지에서 필독체크인지 아닌지 화면에 띄워주기 -->
  	<select id="selectNoticeCheck" resultType="map">
  		select * from notice where nName=#{nName}
@@ -76,5 +72,14 @@
    <select id = "selectNoticeSearchCount" parameterType="map" resultType="_int">
       SELECT COUNT(*) FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
    </select>
+   
+   <!--  	사이트 리스트(내부) -->
+ 	<select id="selectSiteList" resultType="map">
+ 		select * from rSite where stCheck='내부'
+ 	</select>
+   <!--  	사이트 리스트(외부) -->
+ 	<select id="selectSiteList2" resultType="map">
+ 		select * from rSite where stCheck='외부'
+ 	</select>
 
 </mapper>
