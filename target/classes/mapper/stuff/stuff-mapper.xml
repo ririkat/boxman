@@ -48,6 +48,14 @@
 	<select id = "selectStuffSearchCount" parameterType="map" resultType="_int">
 		SELECT COUNT(*) FROM STUFF WHERE ${type} LIKE '%'||#{data}||'%'
 	</select>
+	
+	<select id = "stuffOne" parameterType="_int" resultType="stuff">
+		SELECT A1.*, B1.SCNAME FROM STUFF A1 , STUFF_SUBCATEGORY B1 WHERE A1.SCNO = B1.SCNO AND STUFFNO = #{stuffNo}
+	</select>
+	
+	<select id = "stuffUploadOne" parameterType="_int" resultType="stuffupload">
+		SELECT * FROM STUFF_UPLOAD WHERE STUFFNO = #{stuffNo}
+	</select>
 
 </mapper>
 

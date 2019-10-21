@@ -89,7 +89,17 @@ public class StuffServiceImpl implements StuffService {
 
 	@Override
 	public Stuff stuffOne(int stuffNo) {
-		return dao.suffOne(sqlSession, stuffNo);
+		return dao.stuffOne(sqlSession, stuffNo);
+	}
+
+	@Override
+	public StuffUpload stuffUploadOne(int stuffNo) {
+		return dao.stuffUploadOne(sqlSession, stuffNo);
+	}
+
+	@Override
+	public String selectMcname(String scName) {
+		return dao.selectMcname(sqlSession, scName);
 	}
 
 

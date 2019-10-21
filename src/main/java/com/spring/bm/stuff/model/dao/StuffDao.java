@@ -35,7 +35,11 @@ public interface StuffDao {
 
 	int selectStuffSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
-	Stuff suffOne(SqlSessionTemplate sqlSession, int stuffNo);
+	Stuff stuffOne(SqlSessionTemplate sqlSession, int stuffNo);
+
+	StuffUpload stuffUploadOne(SqlSessionTemplate sqlSession, int stuffNo);
+
+	String selectMcname(SqlSessionTemplate sqlSession, String scName);
 
 
 

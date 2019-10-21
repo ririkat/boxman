@@ -81,8 +81,22 @@ public class StuffDaoImpl implements StuffDao {
 	}
 
 	@Override
-	public Stuff suffOne(SqlSessionTemplate sqlSession, int stuffNo) {
+	public Stuff stuffOne(SqlSessionTemplate sqlSession, int stuffNo) {
 		
+		return sqlSession.selectOne("stuff.stuffOne", stuffNo);
+		
+	}
+
+	@Override
+	public StuffUpload stuffUploadOne(SqlSessionTemplate sqlSession, int stuffNo) {
+
+		return sqlSession.selectOne("stuff.stuffUploadOne", stuffNo);
+		
+	}
+
+	@Override
+	public String selectMcname(SqlSessionTemplate sqlSession, String scName) {
+		return sqlSession.selectOne("stuff.selectMcname", scName);
 	}
 
 

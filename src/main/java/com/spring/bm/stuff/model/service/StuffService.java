@@ -33,6 +33,10 @@ public interface StuffService {
 
 	Stuff stuffOne(int stuffNo);
 
+	StuffUpload stuffUploadOne(int stuffNo);
+
+	String selectMcname(String scName);
+
 
 
 

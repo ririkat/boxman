@@ -203,13 +203,27 @@ public class StuffController {
 		return list2;
 	}
 	
+	//물품 상세보기
 	@RequestMapping("/stuff/stuffOne.do")
 	public ModelAndView stuffOne(@RequestParam("stuffNo") int stuffNo) {
 		
+		System.out.println(stuffNo);
+		
 		Stuff stuff = service.stuffOne(stuffNo);
+		StuffUpload stuffUpload = service.stuffUploadOne(stuffNo);
+		List<StuffMaincategory> list = service.stuffMaincategoryList();
+		String mcName = service.selectMcname(stuff.getScName());
 		
+		System.out.println("STUFF : " + stuff);
+		System.out.println("STUFFUPLOAD : " + stuffUpload);
 		
-		return null;
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("stuff", stuff);
+		mv.addObject("stuffUpload", stuffUpload);
+		mv.addObject("list", list);
+		mv.setViewName("stuff/stuffOne");
+		
+		return mv;
 	}
 	
 
