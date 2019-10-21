@@ -87,8 +87,8 @@
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffEnroll.do">물품 등록</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 목록</a>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate">메인 카테고리 관리</a>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate">서브 카테고리 관리</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate.do">메인 카테고리 관리</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
             <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>

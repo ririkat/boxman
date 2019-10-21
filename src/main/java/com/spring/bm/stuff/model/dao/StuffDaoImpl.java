@@ -69,48 +69,15 @@ public class StuffDaoImpl implements StuffDao {
 		int cPage = (int) m.get("cPage");
 		int numPerPage = (int) m.get("numPerPage");
 		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
-		String type = (String) m.get("type");
-		String stuffId = "";
-		
-		
-		if(type.equals("stuffName")) {
 			
-			stuffId = "stuff.selectStuffSearchList1";
-			
-		}else if(type.equals("subcategoryName")) {
-			
-			stuffId = "stuff.selectStuffSearchList2";
-			
-		}else if(type.equals("manufacturer")) {
-			
-			stuffId = "stuff.selectStuffSearchList2";
-			
-		}
-		
-		return sqlSession.selectList(stuffId, m, rows);
+		return sqlSession.selectList("stuff.selectStuffSearchList", m, rows);
 	}
 
 	@Override
 	public int selectStuffSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m) {
 		
-		String type = (String) m.get("type");
-		String stuffId = "";
+		return sqlSession.selectOne("stuff.selectStuffSearchCount", m);
 		
-		if(type.equals("stuffName")) {
-			
-			stuffId = "stuff.selectStuffSearchCount1";
-			
-		}else if(type.equals("subcategoryName")) {
-			
-			stuffId = "stuff.selectStuffSearchCount2";
-			
-		}else if(type.equals("manufacturer")) {
-			
-			stuffId = "stuff.selectStuffSearchCount3";
-			
-		}
-		
-		return sqlSession.selectOne(stuffId, m);
 	}
 
 

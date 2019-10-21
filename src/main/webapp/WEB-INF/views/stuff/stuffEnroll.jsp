@@ -146,7 +146,7 @@
     $(function(){
         $("#stuffMain").click(function(){
            $.ajax({
-              url : "${path}/stuff/stuffSubcategoryList",
+              url : "${path}/stuff/stuffSubcategoryList.do",
               type : "post",
               data : { "mcNo" : $("#stuffMain").val()},
               success:function(data){
@@ -202,7 +202,7 @@
 				$('#stuffName').blur(function(){
 					var stuffName = $('#stuffName').val();
 					$.ajax({
-						url:"<%=request.getContextPath()%>/stuff/stuffNameDupliCheck?stuffName="+ stuffName,
+						url:"<%=request.getContextPath()%>/stuff/stuffNameDupliCheck.do?stuffName="+ stuffName,
 						type : "get",
 						dataType : "html",
 						success : function(result) {

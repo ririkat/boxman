@@ -41,29 +41,14 @@
 		SELECT COUNT(*) FROM STUFF WHERE STUFFNAME = #{stuffName}
 	</select>
 	
-	<select id = "selectStuffSearchList1" parameterType="map" resultType = "stuff">
-		SELECT * FROM STUFF WHERE STUFFNAME = #{data}
+	<select id = "selectStuffSearchList" parameterType="map" resultType = "stuff">
+		SELECT * FROM STUFF WHERE ${type} LIKE '%'||#{data}||'%'
 	</select>
 	
-	<select id = "selectStuffSearchList2" parameterType="map" resultType="stuff">
-		SELECT * FROM STUFF WHERE SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{data})
+	<select id = "selectStuffSearchCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM STUFF WHERE ${type} LIKE '%'||#{data}||'%'
 	</select>
-	
-	<select id = "selectStuffSearchList3" parameterType="map" resultType="stuff">
-		SELECT * FROM STUFF WHERE MANUFACTURER = #{data}
-	</select> 
-	
-	<select id = "selectStuffSearchCount1" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM STUFF WHERE STUFFNAME = #{data}
-	</select>
-	
-	<select id = "selectStuffSearchCount2" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM STUFF WHERE SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{data})
-	</select>
-	
-	<select id = "selectStuffSearchCount3" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM STUFF WHERE MANUFACTURER = #{data}
-	</select>
+
 </mapper>
 
 

@@ -24,7 +24,7 @@ public class CategoryController {
 	
 	
 	//메인 카테고리 조회
-	@RequestMapping("/category/maincategoryUpdate")
+	@RequestMapping("/category/maincategoryUpdate.do")
 	public ModelAndView maincategoryUpdate(@RequestParam(value="cPage", 
 			required=false, defaultValue="0") int cPage) {
 		
@@ -34,7 +34,7 @@ public class CategoryController {
 		List<StuffMaincategory> list=service.selectMaincategoryList(cPage,numPerPage);
 		int totalCount = service.selectMaincategoryCount(); 
 		
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/category/maincategoryUpdate"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/category/maincategoryUpdate.do"));
 		mv.addObject("count",totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("category/maincategoryUpdate");
@@ -42,7 +42,7 @@ public class CategoryController {
 	}
 	
 	//서브 카테고리 조회
-	@RequestMapping("/category/subcategoryUpdate")
+	@RequestMapping("/category/subcategoryUpdate.do")
 	public ModelAndView subcategoryUpdate(@RequestParam(value="cPage", 
 			required=false, defaultValue="0") int cPage) {
 		
@@ -53,7 +53,7 @@ public class CategoryController {
 		List<StuffSubcategory> subcategoryList = service.subcategoryList(cPage,numPerPage);
 		int totalCount = service.selectSubcategoryCount(); 
 		
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/category/subcategoryUpdate"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/category/subcategoryUpdate.do"));
 		mv.addObject("list", maincategoryList);
 		mv.addObject("list2", subcategoryList);
 		mv.setViewName("category/subcategoryUpdate");
@@ -65,14 +65,14 @@ public class CategoryController {
 	}
 	
 	//메인 카테고리 추가
-	@RequestMapping("/category/maincategoryEnrollEnd")
+	@RequestMapping("/category/maincategoryEnrollEnd.do")
 	public String maincategoryEnrollEnd(@RequestParam("mcName") String mcName, Model model) {
 		
 		int result = service.maincategoryEnroll(mcName);
 		System.out.println("메인카테고리 결과 : " + result);
 		
 		String msg = "";
-		String loc = "/category/maincategoryUpdate";
+		String loc = "/category/maincategoryUpdate.do";
 		
 		if(result > 0) {
 			
@@ -93,7 +93,7 @@ public class CategoryController {
 	}
 	
 	//서브 카테고리 추가
-	@RequestMapping("/category/subcategoryEnrollEnd")
+	@RequestMapping("/category/subcategoryEnrollEnd.do")
 	public String subcategoryEnrollEnd(@RequestParam("scName") String scName, @RequestParam("stuffMain") String mcName, Model model) {
 		
 		Map<String, Object> m = new HashMap();
@@ -103,7 +103,7 @@ public class CategoryController {
 		int result = service.subcategoryEnroll(m);
 		
 		String msg = "";
-		String loc = "/category/subcategoryUpdate";
+		String loc = "/category/subcategoryUpdate.do";
 		
 		if(result > 0) {
 			
@@ -124,14 +124,14 @@ public class CategoryController {
 		
 	}
 	
-	@RequestMapping("/category/maincategoryDelete")
+	@RequestMapping("/category/maincategoryDelete.do")
 	public String maincategoryDelete(@RequestParam("mcName") String mcName, Model model) {
 		
 		
 		int result = service.maincategoryDelete(mcName);
 		
 		String msg = "";
-		String loc = "/category/maincategoryUpdate";
+		String loc = "/category/maincategoryUpdate.do";
 		
 		if(result > 0) {
 			
@@ -151,14 +151,14 @@ public class CategoryController {
 		return "common/msg";
 	}
 	
-	@RequestMapping("/category/subcategoryDelete")
+	@RequestMapping("/category/subcategoryDelete.do")
 	public String subcategoryDelete(@RequestParam("scName") String scName, Model model) {
 		
 		
 		int result = service.subcategoryDelete(scName);
 		
 		String msg = "";
-		String loc = "/category/subcategoryUpdate";
+		String loc = "/category/subcategoryUpdate.do";
 		
 		if(result > 0) {
 			

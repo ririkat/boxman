@@ -22,7 +22,6 @@
                        <label>Search:
                        	    <select name = "type" id = "stuffMain" class = "form-control form-control-sm">
 										<option value = "stuffName">물품 이름</option>
-										<option value = "subcategoryName">카테고리</option>
 										<option value = "manufacturer">제조사</option>
 							</select>
                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data">
@@ -80,7 +79,7 @@
          						<td>${stuff.scName }</td>
          						<td>
 									<button type="button" class="btn btn-success mr-2"
-									onclick="location.href='${pageContext.request.contextPath }/stuff/stuffSeeMore?stuffNo=${stuff.stuffNo }'">자세히</button>
+									onclick="location.href='${pageContext.request.contextPath }/stuff/stuffSeeMore.do?stuffNo=${stuff.stuffNo }'">자세히</button>
 								</td>
       						</tr>
    						</c:forEach>
@@ -97,8 +96,8 @@
 </section>
 
 <script>
-function maincategoryEnroll(){
-	$("#searchFrm").attr("action","${path}/stuff/searchStuff");
+function searchStuff(){
+	$("#searchFrm").attr("action","${path}/stuff/searchStuff.do");
 	$("#searchFrm").submit();
 }
 </script>

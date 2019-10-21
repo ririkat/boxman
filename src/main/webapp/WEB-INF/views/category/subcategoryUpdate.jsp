@@ -78,7 +78,7 @@
          						<td>${stuffSubcategory.mcName}</td>
          						<td>
 									<button type="button" class="btn btn-success mr-2"
-									onclick="location.href='${pageContext.request.contextPath }/category/subcategoryDelete?scName=${stuffSubcategory.scName}'">삭제</button>
+									onclick="location.href='${pageContext.request.contextPath }/category/subcategoryDelete.do?scName=${stuffSubcategory.scName}'">삭제</button>
 								</td>
       					</tr>
    						</c:forEach>
@@ -96,7 +96,7 @@
 
 <script>
 function maincategoryEnroll(){
-	$("#enrollFrm").attr("action","${path}/category/subcategoryEnrollEnd");
+	$("#enrollFrm").attr("action","${path}/category/subcategoryEnrollEnd.do");
 	$("#enrollFrm").submit();
 }
 </script>

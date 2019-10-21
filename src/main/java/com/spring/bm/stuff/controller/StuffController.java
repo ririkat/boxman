@@ -90,7 +90,7 @@ public class StuffController {
 		}
 		
 		String msg = "";
-		String loc = "/stuff/stuffAllList";
+		String loc = "/stuff/stuffAllList.do";
 		
 		if(result > 0) {
 			
@@ -112,7 +112,7 @@ public class StuffController {
 	}
 	
 	//물품 이름 중복 검사
-	@RequestMapping("/stuff/stuffNameDupliCheck")
+	@RequestMapping("/stuff/stuffNameDupliCheck.do")
 	public @ResponseBody int stuffNameDupliCheck(@RequestParam("stuffName") String stuffName) {
 		
 		int result = service.stuffNameDupliCheck(stuffName);
@@ -121,7 +121,7 @@ public class StuffController {
 	}
 	
 	//등록한 물품 전체 조회
-	@RequestMapping("/stuff/stuffAllList")
+	@RequestMapping("/stuff/stuffAllList.do")
 	public ModelAndView stuffAllList(@RequestParam(value="cPage", 
 			required=false, defaultValue="0") int cPage) {
 		
@@ -139,7 +139,7 @@ public class StuffController {
 	}
 	
 	//물품 자세히 보기
-	@RequestMapping("/stuff/stuffSeeMore")
+	@RequestMapping("/stuff/stuffSeeMore.do")
 	public String stuffSeeMore(Model model, @RequestParam("stuffNo") int stuffNo) {
 		
 		Stuff s = service.stuffSeeMore(stuffNo);
@@ -152,31 +152,37 @@ public class StuffController {
 		return "stuff/stuffSeeMore";
 	}
 	//물품 검색
-	@RequestMapping("/stuff/searchStuff")
+	@RequestMapping("/stuff/searchStuff.do")
 	public ModelAndView searchStuff(@RequestParam(value="cPage", 
 			required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
 		
 		int numPerPage = 10;	
 		Map<String, Object> m = new HashMap();
 		m.put("cPage", cPage);
-		m.put("numberPage", numPerPage);
+		m.put("numPerPage", numPerPage);
 		m.put("data", data); // 빈칸에 입력한 값
 		m.put("type", type); // select에서 가져온 값 
-			
+				
 		List<Stuff> list=service.selectStuffSearchList(m);
 		int totalCount = service.selectStuffSearchCount(m);
-			
-
+		
+		System.out.println("list : " + list);
+		System.out.println("totalCount : " + totalCount);
+		
 		
 		ModelAndView mv = new ModelAndView();
 		
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/stuff/searchStuff"));
+		mv.addObject("count",totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("stuff/stuffList");
 		return mv;
 		
 	}
 	
 	
 	//물품등록 화면에서 사용할 서브카테고리 전체 목록 조회 (Ajax임)
-	@RequestMapping("/stuff/stuffSubcategoryList")
+	@RequestMapping("/stuff/stuffSubcategoryList.do")
 	public @ResponseBody List<StuffSubcategory> stuffSubcategoryList(@RequestParam("mcNo") int mcNo) {
 		
 		List<StuffSubcategory> list2 = service.stuffSubcategoryList(mcNo);
