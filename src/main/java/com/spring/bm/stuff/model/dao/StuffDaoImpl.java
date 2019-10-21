@@ -80,6 +80,11 @@ public class StuffDaoImpl implements StuffDao {
 		
 	}
 
+	@Override
+	public Stuff suffOne(SqlSessionTemplate sqlSession, int stuffNo) {
+		
+	}
+
 
 
 

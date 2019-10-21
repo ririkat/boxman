@@ -47,10 +47,11 @@
 									</select>
       						</td>
       						<td>
-      							<input type = "text" class = "form-control" id = "scName" name = "scName"/>
+      							<input type = "text" class = "form-control" id = "scName" name = "scName" />
+      							<div id="subcategoryNameCheck" class="rg-checkMsg card-title"></div>
       						</td>
          					<td>
-				  		<button onclick = "maincategoryEnroll();" class="btn btn-light btn-icon-split">
+				  		<button type = "button" onclick = "maincategoryEnroll();" class="btn btn-light btn-icon-split" id = "btn">
                    		 <span class="icon text-gray-600">
                     	  <i class="fas fa-arrow-right"></i>
                    		 </span>
@@ -99,6 +100,41 @@ function maincategoryEnroll(){
 	$("#enrollFrm").attr("action","${path}/category/subcategoryEnrollEnd.do");
 	$("#enrollFrm").submit();
 }
+
+//서브 카테고리 이름 중복검사
+$(function(){
+ 	var nameCheck = $('#scName');
+	$('#scName').blur(function(){
+		var scName = $('#scName').val();
+		$.ajax({
+			url:"<%=request.getContextPath()%>/category/subcategoryNameDupliCheck.do?scName="+ scName,
+			type : "get",
+			dataType : "html",
+			success : function(result) {
+				if (result > 0) {
+					$(subcategoryNameCheck).text("존재하는 카테고리 입니다.");
+					$(subcategoryNameCheck).css({
+						"color" : "red",
+						"font-size" : "15px"
+					});
+					$(subcategoryNameCheck).prop("disabled",true);
+					$('#btn').attr('disabled', true);
+				} else {
+					$(subcategoryNameCheck).text("");
+					$(subcategoryNameCheck).prop("disabled",false);
+					} 
+				
+				},
+				error : function(request, status, error) {
+					alert("code = " + request.status
+							+ " message = "
+							+ request.responseText
+							+ " error = " + error);
+				}
+			});
+		});
+	});
+
 </script>
 
 

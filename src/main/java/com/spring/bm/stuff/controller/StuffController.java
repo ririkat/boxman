@@ -172,10 +172,24 @@ public class StuffController {
 		
 		ModelAndView mv = new ModelAndView();
 		
+		if(totalCount > 0) {
+		
 		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/stuff/searchStuff"));
 		mv.addObject("count",totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("stuff/stuffList");
+		
+		} else {
+			
+			String msg = "검색 결과가 없습니다!";
+			String loc = "/stuff/stuffAllList.do";
+			
+			mv.addObject("msg", msg);
+			mv.addObject("loc", loc);
+			mv.setViewName("common/msg");
+			
+		}
+		
 		return mv;
 		
 	}
@@ -187,6 +201,15 @@ public class StuffController {
 		
 		List<StuffSubcategory> list2 = service.stuffSubcategoryList(mcNo);
 		return list2;
+	}
+	
+	@RequestMapping("/stuff/stuffOne.do")
+	public ModelAndView stuffOne(@RequestParam("stuffNo") int stuffNo) {
+		
+		Stuff stuff = service.stuffOne(stuffNo);
+		
+		
+		return null;
 	}
 	
 

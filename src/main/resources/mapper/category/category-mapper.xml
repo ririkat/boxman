@@ -37,6 +37,14 @@
 	<delete id = "subcategoryDelete" parameterType="string">
 		DELETE FROM STUFF_SUBCATEGORY WHERE SCNAME = #{scName}
 	</delete>
+	
+	<select id = "maincategoryNameDupliCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM STUFF_MAINCATEGORY WHERE MCNAME = #{mcName}
+	</select>
+	
+	<select id = "subcategoryNameDupliCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM STUFF_SUBCATEGORY WHERE SCNAME = #{scName}	
+	</select>
 </mapper>
 
 

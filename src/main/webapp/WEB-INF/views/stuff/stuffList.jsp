@@ -79,7 +79,7 @@
          						<td>${stuff.scName }</td>
          						<td>
 									<button type="button" class="btn btn-success mr-2"
-									onclick="location.href='${pageContext.request.contextPath }/stuff/stuffSeeMore.do?stuffNo=${stuff.stuffNo }'">자세히</button>
+									onclick="location.href='${pageContext.request.contextPath }/stuff/stuffOne.do?stuffNo=${stuff.stuffNo }'">자세히</button>
 								</td>
       						</tr>
    						</c:forEach>

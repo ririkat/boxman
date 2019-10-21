@@ -31,6 +31,8 @@ public interface StuffService {
 
 	int selectStuffSearchCount(Map<String, Object> m);
 
+	Stuff stuffOne(int stuffNo);
+
 
 
 

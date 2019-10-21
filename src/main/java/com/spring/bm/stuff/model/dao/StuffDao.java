@@ -35,6 +35,8 @@ public interface StuffDao {
 
 	int selectStuffSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
+	Stuff suffOne(SqlSessionTemplate sqlSession, int stuffNo);
+
 
 
 

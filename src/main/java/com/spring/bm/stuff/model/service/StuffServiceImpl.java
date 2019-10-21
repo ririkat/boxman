@@ -87,6 +87,11 @@ public class StuffServiceImpl implements StuffService {
 		return dao.selectStuffSearchCount(sqlSession, m);
 	}
 
+	@Override
+	public Stuff stuffOne(int stuffNo) {
+		return dao.suffOne(sqlSession, stuffNo);
+	}
+
 
 
 }
