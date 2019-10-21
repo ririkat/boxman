@@ -33,6 +33,9 @@
 	margin-bottom: 5px;
 	display: inline-block;
 }
+.trf {
+	margin-top: 5px;
+}
 </style>
 
 <section>
@@ -46,7 +49,7 @@
 			<p class="card-description">This is the default bootstrap form layout</p>
 			<br/>
 			
-			<form name="enrollConnection" class="forms-sample" action="${path }/connection/connList.do" method="post" onsubmit="return enroll_validate();">
+			<form name="enrollConnection" class="forms-sample" action="${path }/connection/enrollConnEnd.do" method="post" onsubmit="return enroll_validate();">
 				<div class="form-group">
 					<label>거래처 구분</label>
 					<div class="col-sm-4">
@@ -126,6 +129,29 @@
 				</div>
 				<br/>
 
+				<div class="form-group">
+					<label>이체정보</label>
+					<div class="col-sm-4">
+						<div class="form-radio">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="conTransCk" id="conTransCk1" value="Y" checked=""> 입력 <i class="input-helper"></i>
+							</label>
+						</div>
+						<div class="form-radio">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="conTransCk" id="conTransCk2" value="N"> 나중에 <i class="input-helper"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" class="form-control trf" id="trfBkName" name="trfBkName" placeholder="은행명" />
+							<input type="text" class="form-control trf" id="trfAccount" name="trfAccount" placeholder="계좌번호" />
+							<input type="text" class="form-control trf" id="trfAccHolder" name="trfAccHolder" placeholder="예금주명" />
+							<input type="text" class="form-control trf" id="trfNote" name="trfNote" placeholder="비고" />
+						</div>
+					</div>
+				</div>
+				<br/>
+
 				<div class="form-group">			
 					<label>* 주소</label>
 					<br/>
@@ -155,7 +181,7 @@
 				</div>
 				<br/>
 				<button type="submit" class="btn btn-success mr-2">등록</button>
-				<button class="btn btn-light" onclick="#">취소</button>
+				<button class="btn btn-light" onclick="submitCancel();">취소</button>
 			</form>
 		</div>
 	</div>
@@ -177,13 +203,36 @@ $(document).ready(function() {
 	        $("select[name=mCategName]").attr("disabled",false);
 	    }
 	});
+	
+	$("input:radio[name=conTransCk]").click(function() {
+	    if($("input[name=conTransCk]:checked").val() == "N") {
+	        $("input[name=trfBkName]").attr("disabled",true);
+	        $("input[name=trfAccount]").attr("disabled",true);
+	        $("input[name=trfAccHolder]").attr("disabled",true);
+	        $("input[name=trfNote]").attr("disabled",true);
+
+			$("input[name=trfBkName]").attr("required",false);
+			$("input[name=trfAccount]").attr("required",false);
+			$("input[name=trfAccHolder]").attr("required",false);
+	    }
+	    else {
+	        $("input[name=trfBkName]").attr("disabled",false);
+	        $("input[name=trfAccount]").attr("disabled",false);
+	        $("input[name=trfAccHolder]").attr("disabled",false);
+	        $("input[name=trfNote]").attr("disabled",false);
+
+			$("input[name=trfBkName]").attr("required",true);
+			$("input[name=trfAccount]").attr("required",true);
+			$("input[name=trfAccHolder]").attr("required",true);
+	    }
+	});
 });
 
 
 function conNameDuplCheck(){
 	var regExpConName = /^[가-힣a-zA-Z]+$/;
 	
-	var conCateg = $("input[name=conCateg]").val().trim();
+	var conCateg = $("input[name=conCateg]:checked").val().trim();
 	var mCategName = $("#mCategName").val().trim();
 	var conName = $("#conName").val().trim();
 	
@@ -218,32 +267,58 @@ function enroll_validate() {
 	var regExpConTel = /^[0-9]{8,10}$/;
 	var regExpConPhone = /^01([0|1|6|7|8|9]{1})([0-9]{3,4})([0-9]{4})$/;
 	
+	var regExpBankName = /^[가-힣a-zA-Z]+$/;
+	var regExpAccount = /[0-9]/;
+	
 	if($('#conNameCheckResult').val() != "Y") {
 		$('#conName').focus();
 		alert("거래처 상호(이름) 중복검사를 확인해주세요.");
 		return false;
 	}
-	else if(!regExpRepName.test(enrollConnection.conRepName.value)) {
+	if(!regExpRepName.test(enrollConnection.conRepName.value)) {
 		conRepName.focus();
 		alert("대표자명은 한글과 영어만 입력 가능합니다.");
 		return false;
 	}
-	else if(!regExpConTel.test(enrollConnection.conTel.value)) {
+	if(!regExpConTel.test(enrollConnection.conTel.value)) {
 		conTel.focus();
 		alert("전화번호는 8~10자 내의 숫자만 가능합니다.");
 		return false;
 	}
-	else if(($('#conPhone').val() != "") && (!regExpConPhone.test(enrollConnection.conPhone.value))) {
+	if(($('#conPhone').val() != "") && (!regExpConPhone.test(enrollConnection.conPhone.value))) {
 		conPhone.focus();
 		alert("핸드폰번호는 11자 내의 숫자만 가능합니다.");
 		return false;
 	}
-	else if(enrollConnection.postcode1.value == "") {
+	console.log($("input[name=conTransCk]:checked"));
+	if($("input[name=conTransCk]:checked").val() == "Y") {
+		if(!regExpBankName.test(enrollConnection.trfBkName.value)) {
+			trfBkName.focus();
+			alert("은행명은 한글과 영어만 입력 가능합니다.");
+			return false;
+		}
+		if(!regExpAccount.test(enrollConnection.trfAccount.value)) {
+			trfAccount.focus();
+			alert("계좌번호는 숫자만 입력 가능합니다.");
+			return false;
+		}
+		if(!regExpBankName.test(enrollConnection.trfAccHolder.value)) {
+			trfAccHolder.focus();
+			alert("예금주명은 한글과 영어만 입력 가능합니다.");
+			return false;
+		}
+	}
+ 	if(enrollConnection.postcode1.value == "") {
 		postcode1.focus();
 		alert("주소검색을 통해 우편번호 및 주소를 입력하세요.")
 		return false;
-	}
+	} 
 	return true;
+}
+
+
+function submitCancel(){
+	location.href="${path}/connection/connList.do";
 }
 </script>
 

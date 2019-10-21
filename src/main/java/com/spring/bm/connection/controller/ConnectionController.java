@@ -67,6 +67,31 @@ public class ConnectionController {
 		mv.setViewName("connection/connDuplPopUp");
 		return mv;
 	}
+	
+	@RequestMapping("/connection/enrollConnEnd.do")
+	public ModelAndView enrollConnEnd(@RequestParam Map<String,String> param) {
+		int result = 0;
+		try {
+			result = service.enrollConn(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String msg="";
+		String loc="/connection/connList.do";
+		if(result>0) {
+			msg="거래처 등록 성공";
+		}else {
+			msg="거래처 등록 실패";
+		}
+		ModelAndView mv= new ModelAndView();
+				
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		return mv;
+	}
 
 }
 

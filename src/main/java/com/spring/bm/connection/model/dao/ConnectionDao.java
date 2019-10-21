@@ -13,6 +13,9 @@ public interface ConnectionDao {
 	List<Map<String,String>> selectStfMainCateg(SqlSessionTemplate session);
 	
 	int searchDisCon(SqlSessionTemplate session, Map<String,String> param);
-	int searchCon(SqlSessionTemplate session, Map<String,String> param);	
+	int searchCon(SqlSessionTemplate session, Map<String,String> param);
+	
+	int enrollConn(SqlSessionTemplate session, Map<String,String> param);
+	int enrollTransferInfo(SqlSessionTemplate session, Map<String,String> param);
 	
 }

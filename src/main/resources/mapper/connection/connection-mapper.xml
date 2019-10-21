@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="selectConnList" resultType="map">
-		SELECT A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO
+		SELECT  A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+)
 	</select>
 	
 	<select id="selectStfMainCateg" resultType="map">
@@ -21,5 +21,29 @@
 	<select id="searchCon" resultType="_int">
 		SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_} AND MCNO=(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName_})
 	</select>
+	
+	<insert id="enrollConn">
+		INSERT INTO CONNECTION VALUES(seq_conn.nextval, #{conName}, #{conCateg}, #{conRepName}, #{conTel}, #{conPhone},
+			<choose>
+				<when test="conCateg eq '유통'">
+					null,
+				</when>
+				<when test="conCateg eq '매입' or conCateg eq '매출'">
+					(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName}),
+				</when>
+			</choose>
+			#{conUseCk}, #{conTransCk}, '${address} ${address_etc}', 1, 1)
+	</insert>
+	
+	<insert id="enrollTransferInfo">
+		INSERT INTO TRANSFERINFO VALUES(seq_conn.currval, seq_transfer.nextval, #{trfBkName}, #{trfAccount}, #{trfAccHolder}, #{trfNote})
+	</insert>
 
 </mapper>
+
+
+
+
+
+
+

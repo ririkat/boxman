@@ -42,5 +42,20 @@ public class ConnectionServiceImpl implements ConnectionService {
 	public int searchCon(Map<String,String> param) {
 		return dao.searchCon(session,param);
 	}
+
+	@Override
+	public int enrollConn(Map<String, String> param) throws Exception {
+		int result = 0;
+		
+		result = dao.enrollConn(session,param);	//거래처 정보 입력
+		if(result==0) throw new RuntimeException();
+		
+		if(result!=0) {
+			result = dao.enrollTransferInfo(session,param);
+			if(result==0) throw new Exception();
+		}
+		
+		return result;
+	}
 	
 }

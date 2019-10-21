@@ -14,8 +14,8 @@
 				다시 입력해주세요.
 			</c:if>
 			<c:if test="${(conCateg eq '매입') or (conCateg eq '매출')}">
-				${mCategName}을 취급하는 동일한 이름의<br/>
-				${conCateg} 거래처가 존재합니다.<br/>
+				'${mCategName}'을(를) 취급하는 동일한 이름의<br/>
+				'${conCateg}'거래처가 존재합니다.<br/>
 				다시 입력해주세요.
 			</c:if>
 			<br><br>

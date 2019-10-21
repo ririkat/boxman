@@ -36,4 +36,14 @@ public class ConnectionDaoImpl implements ConnectionDao {
 		return session.selectOne("connection.searchCon",param);
 	}
 
+	@Override
+	public int enrollConn(SqlSessionTemplate session, Map<String, String> param) {
+		return session.insert("connection.enrollConn",param);
+	}
+
+	@Override
+	public int enrollTransferInfo(SqlSessionTemplate session, Map<String, String> param) {
+		return session.insert("connection.enrollTransferInfo",param);
+	}
+
 }

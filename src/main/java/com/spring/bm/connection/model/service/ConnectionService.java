@@ -12,5 +12,7 @@ public interface ConnectionService {
 	
 	int searchDisCon(Map<String,String> param);
 	int searchCon(Map<String,String> param);
+	
+	int enrollConn(Map<String,String> param) throws Exception;
 
 }
