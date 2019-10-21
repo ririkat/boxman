@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bm.employee.model.dao.EmployeeDao;
+import com.spring.bm.employee.model.vo.EmpFile;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -17,11 +18,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	EmployeeDao dao;
 	@Autowired
 	SqlSessionTemplate session;
-	
+
 	/* 사원리스트불러오기 */
 	@Override
 	public List<Map<String, String>> selectEmpList(int cPage, int numPerPage) {
-		
+
 		return dao.selectEmpList(session, cPage, numPerPage);
 	}
 	@Override
@@ -32,26 +33,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 	/* 사원리스트불러오기끝 */
 	/* 사원등록 */
 	@Override
-	public int insertEmp(Map<String, String> param, List<Map<String, String>> fileList) throws Exception{
+	public int insertEmp(Map<String, String> param, List<EmpFile> fileList) throws Exception{
 		int result = 0;
 		result = dao.insertEmp(session, param);
 		if(result == 0) throw new Exception();
 		if(fileList.size()>0) {
-			for(Map<String,String> m : fileList) {
-				m.put("empNo", param.get("empNo"));
-				result = dao.insertEmpFile(session, m);
+			for(EmpFile e : fileList) {
+				e.setEmpNo(Integer.parseInt(param.get("empNo")));
+				result = dao.insertEmpFile(session, e);
 				if(result == 0) throw new Exception();
 			}
 		}
 		return result;
 	}
-	
+
 	/* 사원상세보기 */
 	@Override
-   public Map<String, String> selectEmpOne(int empNo) {
-      return dao.selectEmpOne(session, empNo);
-   }
-	
-	
+	public Map<String, String> selectEmpOne(int empNo) {
+		return dao.selectEmpOne(session, empNo);
+	}
+
+	/* 사원로그인*/
+	@Override
+	public Map<String, String> selectLoginEmp(Map<String, String> map) {
+		return dao.selectLoginEmp(session,map);
+	}
+
+
 }
 
