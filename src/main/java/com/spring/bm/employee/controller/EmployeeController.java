@@ -94,24 +94,24 @@ public class EmployeeController {
 	@RequestMapping("/bfLogin/loginEmp.do")
 	public ModelAndView empLogin(@RequestParam Map<String,String> map,HttpSession session) {
 
-		logger.debug((String) map.get("empId"));
-		logger.debug((String) map.get("empPassword"));
+//		logger.debug((String) map.get("empId"));
+//		logger.debug((String) map.get("empPassword"));
 
 		Map<String, String> m = service.selectLoginEmp(map);
 
-		logger.debug("--------------------");
-		logger.debug((String) m.get("EMPID"));
-		logger.debug((String) m.get("EMPPASSWORD"));
+//		logger.debug("--------------------");
+//		logger.debug((String) m.get("EMPID"));
+//		logger.debug((String) m.get("EMPPASSWORD"));
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
 		String loc = "";
-		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
-			/*if (pwEncoder.matches((CharSequence) map.get("password"), m.getPassword())) {*/
+//		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
+		if (pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))) {
 			msg = "로그인 성공";
 			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
-			session.setMaxInactiveInterval(60);//세션유효시간 1분
+			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
 		} else {
 			msg = "로그인 실패";
 			loc="/";
@@ -125,118 +125,118 @@ public class EmployeeController {
 	}
 
 	/* 사원로그아웃*/
-	@RequestMapping("/bfLogin/logoutEmp.do")
+	@RequestMapping("/emp/logoutEmp.do")
 	public String empLogout(HttpSession session) {
 		session.invalidate();//세션 삭제
 		return "redirect:/";
 	}
 
 
-	@RequestMapping("/emp/insertEmpEnd.do")	//사원 등록 완료
-	public ModelAndView insertEmpEnd(@RequestParam Map<String, String> param,
-			@RequestParam(value="upFile", required=false) MultipartFile[] upFile,
-			@RequestParam(value="proImg", required=false) MultipartFile proImg,
-			@RequestParam(value="stampImg", required=false) MultipartFile stampImg,
-			HttpServletRequest request) {
-		logger.debug(param.get("password"));
-		String empPassword = pwEncoder.encode((String)param.get("password"));
-		param.put("empPassword", empPassword);
+	@RequestMapping("/emp/insertEmpEnd.do")   //사원 등록 완료
+	   public ModelAndView insertEmpEnd(@RequestParam Map<String, String> param,
+	         @RequestParam(value="upFile", required=false) MultipartFile[] upFile,
+	         @RequestParam(value="proImg", required=false) MultipartFile proImg,
+	         @RequestParam(value="stampImg", required=false) MultipartFile stampImg,
+	         HttpServletRequest request) {
+	      logger.debug(param.get("password"));
+	      String empPassword = pwEncoder.encode((String)param.get("password"));
+	      param.put("empPassword", empPassword);
+	      
+	      String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
 
-		String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
-
-		List<EmpFile> fileList = new ArrayList();
-
-		File dir = new File(saveDir);
-
-		if(!dir.exists()) logger.debug("생성결과 : " + dir.mkdir());
-		if(!proImg.isEmpty()) {
-			String oriFileName=proImg.getOriginalFilename();
-			String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
-			//규칙설정
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
-			int rdv=(int)(Math.random()*1000);
-			String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
-			//파일 실제 저장하기
-			try {
-				proImg.transferTo(new File(saveDir+"/"+reName));
-			}catch (Exception e) {//IlligalStateException|IOException
-				e.printStackTrace();
-			}
-			EmpFile ef = new EmpFile();
-			ef.setEfcName("증명사진");
-			ef.setEfOrgName(oriFileName);
-			ef.setEfReName(reName);
-			fileList.add(ef);
-		}
-		if(!stampImg.isEmpty()) {
-			String oriFileName=stampImg.getOriginalFilename();
-			String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
-			//규칙설정
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
-			int rdv=(int)(Math.random()*1000);
-			String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
-			//파일 실제 저장하기
-			try {
-				stampImg.transferTo(new File(saveDir+"/"+reName));
-			}catch (Exception e) {//IlligalStateException|IOException
-				e.printStackTrace();
-			}
-			EmpFile ef = new EmpFile();
-			ef.setEfcName("결재도장");
-			ef.setEfOrgName(oriFileName);
-			ef.setEfReName(reName);
-			fileList.add(ef);
-		}
-
-
-		for(MultipartFile f : upFile) {
-			if(!f.isEmpty()) {
-				//파일명 생성(rename)
-				String oriFileName=f.getOriginalFilename();
-				String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
-				//규칙설정
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
-				int rdv=(int)(Math.random()*1000);
-				String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
-				//파일 실제 저장하기
-				try {
-					f.transferTo(new File(saveDir+"/"+reName));
-				}catch (Exception e) {//IlligalStateException|IOException
-					e.printStackTrace();
-				}
-				EmpFile ef = new EmpFile();
-				ef.setEfcName("자격증");
-				ef.setEfOrgName(oriFileName);
-				ef.setEfReName(reName);
-				fileList.add(ef);
-			}
-		}
-
-
-		int result = 0;
-		try {
-			result=service.insertEmp(param,fileList);
-		}catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		String msg = "";
-		String loc = "/emp/empList.do";
-		if(result > 0) {
-			msg = param.get("empName") + "사원이 등록되었습니다.";
-		} else {
-			msg = param.get("empName") + "사원등록이 실패하였습니다.";
-		}
-
-		ModelAndView mv = new ModelAndView();
-
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
-
-		return mv;
-	}
-	/* 사원등록끝 */
+	      List<EmpFile> fileList = new ArrayList();
+	      
+	      File dir = new File(saveDir);
+	      
+	      if(!dir.exists()) logger.debug("생성결과 : " + dir.mkdir());
+	      if(!proImg.isEmpty()) {
+	         String oriFileName=proImg.getOriginalFilename();
+	         String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
+	         //규칙설정
+	         SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
+	         int rdv=(int)(Math.random()*1000);
+	         String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
+	         //파일 실제 저장하기
+	         try {
+	            proImg.transferTo(new File(saveDir+"/"+reName));
+	         }catch (Exception e) {//IlligalStateException|IOException
+	            e.printStackTrace();
+	         }
+	         EmpFile ef = new EmpFile();
+	         ef.setEfcName("증명사진");
+	         ef.setEfOrgName(oriFileName);
+	         ef.setEfReName(reName);
+	         fileList.add(ef);
+	      }
+	      if(!stampImg.isEmpty()) {
+	         String oriFileName=stampImg.getOriginalFilename();
+	         String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
+	         //규칙설정
+	         SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
+	         int rdv=(int)(Math.random()*1000);
+	         String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
+	         //파일 실제 저장하기
+	         try {
+	            stampImg.transferTo(new File(saveDir+"/"+reName));
+	         }catch (Exception e) {//IlligalStateException|IOException
+	            e.printStackTrace();
+	         }
+	         EmpFile ef = new EmpFile();
+	         ef.setEfcName("결재도장");
+	         ef.setEfOrgName(oriFileName);
+	         ef.setEfReName(reName);
+	         fileList.add(ef);
+	      }
+	      
+	      
+	      for(MultipartFile f : upFile) {
+	         if(!f.isEmpty()) {
+	            //파일명 생성(rename)
+	            String oriFileName=f.getOriginalFilename();
+	            String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
+	            //규칙설정
+	            SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
+	            int rdv=(int)(Math.random()*1000);
+	            String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
+	            //파일 실제 저장하기
+	            try {
+	               f.transferTo(new File(saveDir+"/"+reName));
+	            }catch (Exception e) {//IlligalStateException|IOException
+	               e.printStackTrace();
+	            }
+	            EmpFile ef = new EmpFile();
+	            ef.setEfcName("자격증");
+	            ef.setEfOrgName(oriFileName);
+	            ef.setEfReName(reName);
+	            fileList.add(ef);
+	         }
+	      }
+	      
+	      
+	      int result = 0;
+	      try {
+	         result=service.insertEmp(param,fileList);
+	      }catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	      
+	      String msg = "";
+	      String loc = "/emp/empList.do";
+	      if(result > 0) {
+	         msg = param.get("empName") + "사원이 등록되었습니다.";
+	      } else {
+	         msg = param.get("empName") + "사원등록이 실패하였습니다.";
+	      }
+	      
+	      ModelAndView mv = new ModelAndView();
+	      
+	      mv.addObject("msg", msg);
+	      mv.addObject("loc", loc);
+	      mv.setViewName("common/msg");
+	      
+	      return mv;
+	   }
+	   /* 사원등록끝 */
 
 }
 
