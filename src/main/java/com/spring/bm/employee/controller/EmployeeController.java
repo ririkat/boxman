@@ -78,16 +78,10 @@ public class EmployeeController {
 	public ModelAndView selectEmpOne(int empNo, String temp) {
 		Map<String, String> empMap = service.selectEmpOne(empNo);
 
-
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("emp", empMap);
-		if(temp.trim().equals("증명사진")) {
-			mv.setViewName("emp/myPage.do");
-		} else {
-			mv.setViewName("emp/selectEmpOne");
-		}
-
-
+		mv.setViewName("emp/selectEmpOne");
+		
 		return mv;
 	}
 
