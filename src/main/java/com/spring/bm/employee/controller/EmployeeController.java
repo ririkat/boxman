@@ -27,6 +27,8 @@ import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.employee.model.vo.EmpFile;
 
+
+
 @Controller
 public class EmployeeController {
 
@@ -94,24 +96,24 @@ public class EmployeeController {
 	@RequestMapping("/bfLogin/loginEmp.do")
 	public ModelAndView empLogin(@RequestParam Map<String,String> map,HttpSession session) {
 
-		logger.debug((String) map.get("empId"));
-		logger.debug((String) map.get("empPassword"));
+//		logger.debug((String) map.get("empId"));
+//		logger.debug((String) map.get("empPassword"));
 
 		Map<String, String> m = service.selectLoginEmp(map);
 
-		logger.debug("--------------------");
-		logger.debug((String) m.get("EMPID"));
-		logger.debug((String) m.get("EMPPASSWORD"));
+//		logger.debug("--------------------");
+//		logger.debug((String) m.get("EMPID"));
+//		logger.debug((String) m.get("EMPPASSWORD"));
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
 		String loc = "";
-		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
-			/*if (pwEncoder.matches((CharSequence) map.get("password"), m.getPassword())) {*/
+//		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
+		if (pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))) {
 			msg = "로그인 성공";
 			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
-			session.setMaxInactiveInterval(60);//세션유효시간 1분
+			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
 		} else {
 			msg = "로그인 실패";
 			loc="/";
@@ -125,12 +127,11 @@ public class EmployeeController {
 	}
 
 	/* 사원로그아웃*/
-	@RequestMapping("/bfLogin/logoutEmp.do")
+	@RequestMapping("/emp/logoutEmp.do")
 	public String empLogout(HttpSession session) {
 		session.invalidate();//세션 삭제
 		return "redirect:/";
 	}
-
 
 	@RequestMapping("/emp/insertEmpEnd.do")	//사원 등록 완료
 	public ModelAndView insertEmpEnd(@RequestParam Map<String, String> param,
@@ -141,13 +142,13 @@ public class EmployeeController {
 		logger.debug(param.get("password"));
 		String empPassword = pwEncoder.encode((String)param.get("password"));
 		param.put("empPassword", empPassword);
-
+		
 		String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
 
 		List<EmpFile> fileList = new ArrayList();
-
+		
 		File dir = new File(saveDir);
-
+		
 		if(!dir.exists()) logger.debug("생성결과 : " + dir.mkdir());
 		if(!proImg.isEmpty()) {
 			String oriFileName=proImg.getOriginalFilename();
@@ -187,8 +188,8 @@ public class EmployeeController {
 			ef.setEfReName(reName);
 			fileList.add(ef);
 		}
-
-
+		
+		
 		for(MultipartFile f : upFile) {
 			if(!f.isEmpty()) {
 				//파일명 생성(rename)
@@ -211,15 +212,15 @@ public class EmployeeController {
 				fileList.add(ef);
 			}
 		}
-
-
+		
+		
 		int result = 0;
 		try {
 			result=service.insertEmp(param,fileList);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		String msg = "";
 		String loc = "/emp/empList.do";
 		if(result > 0) {
@@ -227,18 +228,35 @@ public class EmployeeController {
 		} else {
 			msg = param.get("empName") + "사원등록이 실패하였습니다.";
 		}
-
+		
 		ModelAndView mv = new ModelAndView();
-
+		
 		mv.addObject("msg", msg);
 		mv.addObject("loc", loc);
 		mv.setViewName("common/msg");
-
+		
 		return mv;
 	}
 	/* 사원등록끝 */
+	
+	/* 사원검색 */
+	@RequestMapping("/emp/searchEmp.do")
+	public ModelAndView searchEmp(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+			@RequestParam Map<String, Object> param) {
+		
+		int numPerPage = 10;
+		param.put("cPage", cPage);
+		param.put("numPerPage", numPerPage);
+		List<Map<String, String>> list = service.selectEmpSearchList(param);
+		int totalCount = service.selectEmpSearchCount(param);
 
-
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/empList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empList");
+		return mv;
+	}
 
 }
 
