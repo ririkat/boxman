@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -134,13 +135,56 @@ public class NoticeController {
 	
 		//게시글 수정
 		@RequestMapping("/notice/updateNotice.do")
-		public ModelAndView updateNotice(@RequestParam Map<String, Object> param) {
+		public ModelAndView updateNotice(@RequestParam Map<String, Object> param,
+									@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
 			
-			int result=noticeService.updateNotice(param);
-			System.out.println("리절트 ====> "+result);
+			String saveDir=request.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+
+			List<UploadNotice> upNoticeList=new ArrayList(); //여러파일 보관용
+
+			File dir=new File(saveDir);
+			
+			for(MultipartFile f : upFile) {
+				if(!f.isEmpty()) {
+					//파일명 생성(rename)
+					String oriFileName=f.getOriginalFilename();
+					String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
+					//규칙설정
+					SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
+					int rdv = (int)(Math.random()*1000);
+					String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
+					try {
+						f.transferTo(new File(saveDir+"/"+reName));
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					//DB에 저장할 데이터 보관
+					UploadNotice un=new UploadNotice();
+					un.setUpNoticeOrgName(oriFileName);
+					un.setUpNoticeReName(reName);
+					upNoticeList.add(un);
+				}
+			}
 			
 			String msg="";
 			String loc="/notice/selectNoticeList.do";
+			
+			int result=0;
+			int result2=0;
+			try {
+				result=noticeService.updateNotice(param);
+				if(result>0) {
+					result2=noticeService.deleteUpNotice(param);
+					
+					if(result2>0) {
+						result2=noticeService.insertUpNotice(param, upNoticeList);
+					}
+				
+				}
+			} catch (Exception e) {
+			
+				e.printStackTrace();
+			}
 			
 			if(result>0) {
 				msg="게시글 수정 완료!";
@@ -287,4 +331,34 @@ public class NoticeController {
 
 				return mv;
 			}
+			
+			
+			//게시판글 검색
+			   @RequestMapping("/notice/searchNotice.do")
+			   public ModelAndView searchNotice(@RequestParam(value="cPage", 
+			         required=false, defaultValue="0") int cPage, HttpServletRequest req) {
+			      
+				   
+				  String data = req.getParameter("data");
+			      int numPerPage = 10;
+			      Map<String, Object> m = new HashMap();
+			      m.put("cPage", cPage);
+			      m.put("numPerPage", numPerPage);
+			      m.put("data", data); // 빈칸에 입력한 값
+			            
+			      List<Notice> list=noticeService.selectNoticeSearchList(m);
+			      int totalCount = noticeService.selectNoticeSearchCount(m);
+			      
+			      System.out.println("list : " + list);
+			      System.out.println("totalCount : " + totalCount);
+			       
+			      ModelAndView mv = new ModelAndView();
+			      
+			      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/searchNotice.do"));
+			      mv.addObject("count",totalCount);
+			      mv.addObject("list",list);
+			      mv.setViewName("notice/noticeList");
+			      return mv;
+			      
+			   }
 }

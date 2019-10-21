@@ -36,4 +36,10 @@ public interface NoticeDao {
 
 	List<Map<String, String>> selectNoticeCheck(SqlSessionTemplate sqlSession, String nName);
 
+	int deleteUpNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
+
+	List<Notice> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
+	int selectNoticeSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
 }

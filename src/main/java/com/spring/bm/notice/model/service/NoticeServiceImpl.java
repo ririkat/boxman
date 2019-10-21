@@ -94,6 +94,40 @@ public class NoticeServiceImpl implements NoticeService {
 	public List<Map<String, String>> selectNoticeCheck(String nName) {
 		return dao.selectNoticeCheck(sqlSession, nName);
 	}
+
+	@Override
+	public int deleteUpNotice(Map<String, Object> param) {
+		return dao.deleteUpNotice(sqlSession, param);
+	}
 	
+	@Override
+	@Transactional(rollbackFor = Exception.class) //RuntimeException 발생시!
+	public int insertUpNotice(Map<String, Object> param, List<UploadNotice> upNoticeList){
+		int result=0;
+		int boardNo=0;
+
+		if(upNoticeList.size()>0) {
+			for(UploadNotice n : upNoticeList) {
+				n.setNNo(Integer.parseInt((String)param.get("nNo")));
+				result=dao.insertUploadNotice(sqlSession, n);
+
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Notice> selectNoticeSearchList(Map<String, Object> m) {
+		return dao.selectNoticeSearchList(sqlSession, m);
+	}
+
+	@Override
+	public int selectNoticeSearchCount(Map<String, Object> m) {
+		return dao.selectNoticeSearchCount(sqlSession, m);
+	}
+	
+	
+
 
 }

@@ -31,5 +31,10 @@ public interface NoticeService {
 	int deleteNotice(Map<String, Object> param);
 	//필독체크가져오기
 	List<Map<String, String>> selectNoticeCheck(String nName);
-
+	//게시글 첨부파일 수정시 기존사진 삭제
+	int deleteUpNotice(Map<String, Object> param);
+	//게시글 첨부파일 수정사진 업로드
+	int insertUpNotice(Map<String, Object> param, List<UploadNotice> upNoticeList);
+	List<Notice> selectNoticeSearchList(Map<String, Object> m);
+	int selectNoticeSearchCount(Map<String, Object> m);
 }

@@ -13,7 +13,6 @@
                     <h4 class="card-title">상세페이지</h4>
                     <p class="card-description"> 각 부서의 노동 정책 및 행정업무에 대한 자료를 보실 수 있습니다. </p>
                     <form class="forms-sample" id="devFrm" enctype="multipart/form-data" method="post">
-                    
                    <c:forEach items="${list2 }" var="list2" varStatus="v">
                   	 <c:choose>							 
 						<c:when test="${list2['NCHECK'] == null}">
@@ -30,6 +29,7 @@
                    		</c:when>
                    	</c:choose>		  
                    </c:forEach>
+                   <input type="hidden" name="nNo" value="${nt.NNo}">
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
                         <input type="text" class="form-control" id="exampleInputName1" name="nName" value="${nt.NName}" >
@@ -41,7 +41,7 @@
 	                  <div class="form-group">
                         <label for="exampleInputEmail3">부서</label>
                          <select name = "deptName" id = "exampleInputEmail3" class="form-control">
-		                  <option value = "0">${nt.deptName }</option>
+		                  <option value = "${nt.deptName }">${nt.deptName }</option>
 		                  <c:forEach items="${deptList}" var="dept">
 		                     <option value = "<c:out value='${dept["DEPTNAME"]}'/>"><c:out value='${dept["DEPTNAME"]}'/></option>
 		                  </c:forEach>
@@ -108,6 +108,13 @@
 </section>
 
 <script>
+
+		$(function(){
+			$('[name=upFile]').on('change',function(){
+				var fileName=this.files[0].name;
+				$(this).next('.custom-file-label').html(fileName);
+			})
+		});
 		//수정버튼 클릭시 목록화면으로
 		function updateNotice(){
 			$("#devFrm").attr("action","${path}/notice/updateNotice.do");
@@ -126,4 +133,5 @@
 		   oName=encodeURIComponent(oName);
 		   location.href="${path}/notice/filedownLoad.do?oName="+oName+"&rName="+rName;
 		}
+		
 </script>

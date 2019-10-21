@@ -16,17 +16,19 @@
            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
               <div class="row">
                  <div class="col-sm-12 col-md-6">
+                 <form id="searchFrm">
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
-                           <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
+                           <input type="text" name="data" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
                       </label>
-                      <a href="#" class="btn btn-light btn-icon-split">
-                    <span class="icon text-gray-600">
-                      <i class="fas fa-arrow-right"></i>
-                    </span>
-                    <span class="text">검색</span>
-                  </a>
+                      <button onclick = "searchNotice();" class="btn btn-light btn-icon-split">
+                          <span class="icon text-gray-600">
+                         <i class="fas fa-arrow-right"></i>
+                          </span>
+                          <span class="text">검색</span>
+                        </button>
                     </div>
+                 </form>
                  </div>
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
@@ -68,7 +70,7 @@
                        </thead>
                        <tbody>
                        
-                       <c:forEach items="${list2 }" var ="list2" varStatus="v">
+           <%--             <c:forEach items="${list2 }" var ="list2" varStatus="v">
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2.NName}&nReadCount=${list2.NNo}&nNo=${list2.NNo}'>${list2.NName }</a></td>
@@ -77,7 +79,7 @@
 							<td>${list2.NDate }</td>
 							<td>${list2.NReadCount }</td>
 						 </tr> 
-                       </c:forEach>
+                       </c:forEach> --%>
  
                  		<c:forEach items="${list}" var="notice" varStatus="v">
 							<c:choose>							 
@@ -112,4 +114,11 @@
 
 ${pageBar }
 </section>
+
+<script>
+	function searchNotice(){
+	   $("#searchFrm").attr("action","${path}/notice/searchNotice.do");
+	   $("#searchFrm").submit();
+	}
+</script>
 

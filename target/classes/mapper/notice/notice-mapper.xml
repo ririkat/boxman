@@ -19,11 +19,19 @@
 	</insert>
 <!-- 	게시글 수정 -->
 	<update id="updateNotice" parameterType="map">
-		update notice set deptNo=(select deptNo from department where deptName=#{deptName}) , nCheck=#{nCheck} , nName=#{nName}, nText=#{nText}, nReadCount=default, nDate=sysdate where NNO=#{NNo}
+		update notice set deptNo=(select deptNo from department where deptName=#{deptName}) , nCheck=#{nCheck} , nName=#{nName}, nText=#{nText}, nReadCount=default, nDate=sysdate where NNO=#{nNo}
+	</update>
+<!-- 	게시글 수정(첨부파일) -->
+	<update id="">
+		update UPNOTICE set upNoticeOrgName = #{upNoticeOrgName}, upNoticeReName = #{upNoticeReName} where NNO = #{nNo} 
 	</update>
 <!-- 	게시글 삭제 -->
 	<delete id="deleteNotice">
 		delete from notice where nName=#{nName}
+	</delete>
+<!-- 	게시글 삭제(첨부파일) -->
+	<delete id="deleteUpNotice">
+		delete from UPNOTICE where nNo=#{nNo}
 	</delete>
 <!-- 	게시글 상세페이지 -->
 	<select id="selectNoticeOne" resultType="notice">
@@ -60,5 +68,13 @@
  	<select id="selectNoticeCheck" resultType="map">
  		select * from notice where nName=#{nName}
  	</select>
+ 	
+ 	<select id = "selectNoticeSearchList" parameterType="map" resultType = "map">
+      SELECT * FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
+   </select>
+   
+   <select id = "selectNoticeSearchCount" parameterType="map" resultType="_int">
+      SELECT COUNT(*) FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
+   </select>
 
 </mapper>

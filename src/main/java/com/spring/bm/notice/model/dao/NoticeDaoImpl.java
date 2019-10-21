@@ -79,4 +79,26 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sqlSession.selectList("notice.selectNoticeCheck", nName);
 	}
 
+	@Override
+	public int deleteUpNotice(SqlSessionTemplate sqlSession, Map<String, Object> param) {
+		return sqlSession.delete("notice.deleteUpNotice", param);
+	}
+
+	@Override
+	public List<Notice> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m) {
+		  int cPage = (Integer) m.get("cPage");
+	      int numPerPage = (Integer) m.get("numPerPage");
+	      RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+	         
+	      return sqlSession.selectList("notice.selectNoticeSearchList", m, rows);
+	}
+
+	@Override
+	public int selectNoticeSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m) {
+		  return sqlSession.selectOne("notice.selectNoticeSearchCount", m);
+	}
+	
+	
+	
+
 }

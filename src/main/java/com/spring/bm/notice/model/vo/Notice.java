@@ -33,6 +33,22 @@ public class Notice {
 		this.deptName = deptName;
 	}
 
+
+	public Notice(int nNo, int deptNo, String nName, String nText, String nCheck, int nReadCount, Date nDate,
+			String deptName) {
+		super();
+		this.nNo = nNo;
+		this.deptNo = deptNo;
+		this.nName = nName;
+		this.nText = nText;
+		this.nCheck = nCheck;
+		this.nReadCount = nReadCount;
+		this.nDate = nDate;
+		this.deptName = deptName;
+	}
+	
+	
+
 	
 }
 
