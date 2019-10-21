@@ -151,34 +151,48 @@ public class StuffController {
 		
 		return "stuff/stuffSeeMore";
 	}
-	//물품 검색
-	@RequestMapping("/stuff/searchStuff.do")
-	public ModelAndView searchStuff(@RequestParam(value="cPage", 
-			required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
-		
-		int numPerPage = 10;	
-		Map<String, Object> m = new HashMap();
-		m.put("cPage", cPage);
-		m.put("numPerPage", numPerPage);
-		m.put("data", data); // 빈칸에 입력한 값
-		m.put("type", type); // select에서 가져온 값 
-				
-		List<Stuff> list=service.selectStuffSearchList(m);
-		int totalCount = service.selectStuffSearchCount(m);
-		
-		System.out.println("list : " + list);
-		System.out.println("totalCount : " + totalCount);
-		
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/stuff/searchStuff"));
-		mv.addObject("count",totalCount);
-		mv.addObject("list",list);
-		mv.setViewName("stuff/stuffList");
-		return mv;
-		
-	}
+	   //물품 검색
+	   @RequestMapping("/stuff/searchStuff.do")
+	   public ModelAndView searchStuff(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
+	      
+	      int numPerPage = 10;   
+	      Map<String, Object> m = new HashMap();
+	      m.put("cPage", cPage);
+	      m.put("numPerPage", numPerPage);
+	      m.put("data", data); // 빈칸에 입력한 값
+	      m.put("type", type); // select에서 가져온 값 
+	            
+	      List<Stuff> list=service.selectStuffSearchList(m);
+	      int totalCount = service.selectStuffSearchCount(m);
+	      
+	      System.out.println("list : " + list);
+	      System.out.println("totalCount : " + totalCount);
+	      
+	      
+	      ModelAndView mv = new ModelAndView();
+	      
+	      if(totalCount > 0) {
+	      
+	      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/stuff/searchStuff"));
+	      mv.addObject("count",totalCount);
+	      mv.addObject("list",list);
+	      mv.setViewName("stuff/stuffList");
+	      
+	      } else {
+	         
+	         String msg = "검색 결과가 없습니다!";
+	         String loc = "/stuff/stuffAllList.do";
+	         
+	         mv.addObject("msg", msg);
+	         mv.addObject("loc", loc);
+	         mv.setViewName("common/msg");
+	         
+	      }
+	      
+	      return mv;
+	      
+	   }
 	
 	
 	//물품등록 화면에서 사용할 서브카테고리 전체 목록 조회 (Ajax임)
