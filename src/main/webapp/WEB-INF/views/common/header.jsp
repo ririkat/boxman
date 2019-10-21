@@ -67,8 +67,6 @@
 					<i class="fas fa-fw fa-chart-area"></i> <span>결제 관리</span>
 			</a></li>
 
-
-			<!-- 인사 관리 -->
       <!-- 인사 관리 -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
