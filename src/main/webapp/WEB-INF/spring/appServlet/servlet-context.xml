@@ -20,9 +20,20 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
+
 	<context:component-scan base-package="com.spring.bm" />
 	
+	<!-- 인터셉트 등록하기 (로그인 필요한 페이지 막기!)-->
+	<interceptors>
+		<interceptor>
+			<mapping path="/**/*.do"/>
+			<exclude-mapping path="/bfLogin/*"/>
+			<beans:bean id="loggerInterceptor" class="com.spring.bm.common.LoggerInterceptor"/>
+		</interceptor>
+	</interceptors>
 	
-	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="10485760"/>
+	</beans:bean>
+
 </beans:beans>

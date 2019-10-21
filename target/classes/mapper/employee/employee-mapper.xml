@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="emp">
+	<!-- 사원리스트 불러오기 -->
+	<select id="selectEmpList" resultType="map">
+		SELECT A.*, DEPTNAME,
+		JOBNAME
+		FROM DEPARTMENT D JOIN EMPLOYEE A ON (A.DEPTNO = D.DEPTNO)
+		JOIN
+		EMPJOB J ON (A.JOBNO=J.JOBNO)
+		ORDER BY A.EMPNO, A.JOBNO
+	</select>
+	<select id="selectEmpCount" resultType="_int">
+		SELECT COUNT(*) FROM
+		EMPLOYEE
+	</select>
+	<!-- 사원리스트 불러오기끝 -->
+
+	<!-- 사원등록 -->
+	<insert id="insertEmp" parameterType="map">
+		INSERT INTO EMPLOYEE VALUES(SEQ_EMPLOYEE.NEXTVAL,#{deptNo}, #{jobNo},
+		#{empSal}, #{empId}, #{empPassword}, #{empName},#{empGender}, #{empPhone}
+		,#{empEmail}, #{empAddr},#{empSSN}, #{empBank}, #{empBankNum},
+		default, null, default)
+		<selectKey keyProperty="empNo" resultType="string"
+			order="AFTER">
+			SELECT SEQ_EMPLOYEE.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+
+	<!-- 사원첨부파일등록 -->
+	<insert id="insertEmpFile" parameterType="map">
+		INSERT INTO EMPFILE
+		VALUES(SEQ_EMPFILE.NEXTVAL,#{empNo}, #{efcName}, #{efOrgName},
+		#{efReName})
+	</insert>
+	<!-- 사원등록끝 -->
+
+	<!-- 사원상세보기 -->
+	<select id="selectEmpOne" resultType="map" parameterType="_int">
+		SELECT
+		* FROM EMPLOYEE WHERE EMPNO=#{empNo}
+	</select>
+	<select id="selectEmpFileList" resultType="map"
+		parameterType="_int">
+		SELECT * FROM EMPFILE WHERE EMPNO=#{empNo}
+	</select>
+	<!-- 사원상세보기끝 -->
+	<!-- 사원로그인 -->
+	<select id="selectLoginEmp" parameterType="map" resultType="map">
+		SELECT * FROM EMPLOYEE WHERE EMPID=#{empId}
+	</select>
+	<!-- 사원로그인끝 -->
+	<!-- 사원검색 -->
+	<select id="selectEmpSearchList" resultType="map" parameterType="map">
+		SELECT A.*, DEPTNAME,
+		JOBNAME
+		FROM DEPARTMENT D JOIN EMPLOYEE A ON (A.DEPTNO = D.DEPTNO)
+		JOIN
+		EMPJOB J ON (A.JOBNO=J.JOBNO)
+		WHERE 1=1 
+ 		<choose>
+			<when test="type eq 'deptName'">
+				AND A.DEPTNO=(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME = #{data}) 
+			</when>
+			<when test="type eq 'jobName'">
+				AND A.JOBNO=(SELECT JOBNO FROM EMPJOB WHERE JOBNAME = #{data}) 
+			</when>
+			<otherwise>
+				AND A.${type} LIKE '%'||#{data}||'%' 
+			</otherwise>
+		</choose>
+		ORDER BY A.EMPNO, A.JOBNO
+	</select>
+	<select id="selectEmpSearchCount" resultType="_int" parameterType="map">
+		SELECT COUNT(*) FROM EMPLOYEE A WHERE 1=1
+		<choose>
+			<when test="type == 'deptName'">
+				AND A.DEPTNO=(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME = #{data}) 
+			</when>
+			<when test="type == 'jobName'">
+				AND A.JOBNO=(SELECT JOBNO FROM EMPJOB WHERE JOBNAME = #{data}) 
+			</when>
+			<otherwise>
+				AND A.${type} LIKE '%'||#{data}||'%' 
+			</otherwise>
+		</choose>
+	</select>
+</mapper>
+
