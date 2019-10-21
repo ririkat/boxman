@@ -32,7 +32,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
 	/* 부서상세 */
 	@Override
-	public Map<String, String> selectDeptOne(SqlSessionTemplate session, int deptNo) {
+	public Map<String, Object> selectDeptOne(SqlSessionTemplate session, int deptNo) {
 		// TODO Auto-generated method stub
 		return session.selectOne("dept.selectDeptOne", deptNo);
 	}

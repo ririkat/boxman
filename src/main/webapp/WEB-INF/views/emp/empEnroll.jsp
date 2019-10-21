@@ -367,9 +367,9 @@
    
    function validate() {
       var empAddr = $('#sample6_postcode').val();
-      empAddr += "|" + $('#sample6_address').val();
-      empAddr += "|" + $('#sample6_detailAddress').val();
-      empAddr += "|" + $('#sample6_extraAddress').val();
+      empAddr += "/" + $('#sample6_address').val();
+      empAddr += "/" + $('#sample6_detailAddress').val();
+      empAddr += "/" + $('#sample6_extraAddress').val();
       $('#empAddr').val(empAddr);
       $('#empFrm').attr("action","${pageContext.request.contextPath}/emp/insertEmpEnd.do");
       $('#empFrm').submit();

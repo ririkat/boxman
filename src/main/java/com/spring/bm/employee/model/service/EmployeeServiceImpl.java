@@ -49,10 +49,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	/* 사원상세보기 */
 	@Override
-	public Map<String, String> selectEmpOne(int empNo) {
+	public Map<String, Object> selectEmpOne(int empNo) {
 		return dao.selectEmpOne(session, empNo);
 	}
-
+	
+	@Override
+	public List<EmpFile> selectEmpFileList(int empNo) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpFileList(session, empNo);
+	}
 	/* 사원로그인*/
 	@Override
 	public Map<String, String> selectLoginEmp(Map<String, String> map) {

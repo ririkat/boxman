@@ -49,8 +49,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	/* 사원상세보기 */
 	@Override
-	public Map<String, String> selectEmpOne(SqlSessionTemplate sqlSession, int empNo) {
-		return sqlSession.selectOne("emp.selectEmpOne",empNo);
+	public Map<String, Object> selectEmpOne(SqlSessionTemplate session, int empNo) {
+		return session.selectOne("emp.selectEmpOne",empNo);
+	}
+	
+	@Override
+	public List<EmpFile> selectEmpFileList(SqlSessionTemplate session, int empNo) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.selectEmpFileList", empNo);
 	}
 
 	/* 사원로그인*/
@@ -77,6 +83,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		logger.debug((String)param.get("data"));
 		return session.selectOne("emp.selectEmpSearchCount", param);
 	}
+
+
 
 
 }

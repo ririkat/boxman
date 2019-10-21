@@ -39,14 +39,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public int updateDept(Map<String, Object> map) throws Exception{
 		int result = dao.updateDept(session, map);
-		System.out.println(result);
 		if(result < 0) throw new Exception();
 		return result;
 	}
 
 	/* 부서상세 */
 	@Override
-	public Map<String, String> selectDeptOne(int deptNo) {
+	public Map<String, Object> selectDeptOne(int deptNo) {
 		// TODO Auto-generated method stub
 		return dao.selectDeptOne(session, deptNo);
 	}

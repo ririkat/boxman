@@ -76,11 +76,25 @@ public class EmployeeController {
 	/* 사원상세보기 */
 	@RequestMapping("/emp/selectEmpOne.do")
 	public ModelAndView selectEmpOne(int empNo, String temp) {
-		Map<String, String> empMap = service.selectEmpOne(empNo);
+		Map<String, Object> empMap = service.selectEmpOne(empNo);
+		List<EmpFile> list = service.selectEmpFileList(empNo);
+		
+		Map<String, Object> dept = dService.selectDeptOne(Integer.parseInt(String.valueOf(empMap.get("DEPTNO"))));
+		Map<String, Object> job = jService.selectEmpJobOne(Integer.parseInt(String.valueOf(empMap.get("JOBNO"))));
+		List<Map<String, String>> deptList = dService.selectDeptList();
+		List<Map<String, String>> jobList = jService.empJobList();
+		String strAddr = String.valueOf(empMap.get("EMPADDR"));
+		String[] addr = strAddr.split("/");
 
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("emp", empMap);
-		mv.setViewName("emp/selectEmpOne");
+		mv.addObject("addr", addr);
+		mv.addObject("dept", dept);
+		mv.addObject("job", job);
+		mv.addObject("deptList", deptList);
+		mv.addObject("jobList", jobList);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empOne");
 		
 		return mv;
 	}

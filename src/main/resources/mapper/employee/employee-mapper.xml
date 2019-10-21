@@ -41,7 +41,7 @@
 		SELECT
 		* FROM EMPLOYEE WHERE EMPNO=#{empNo}
 	</select>
-	<select id="selectEmpFileList" resultType="map"
+	<select id="selectEmpFileList" resultType="empFile"
 		parameterType="_int">
 		SELECT * FROM EMPFILE WHERE EMPNO=#{empNo}
 	</select>

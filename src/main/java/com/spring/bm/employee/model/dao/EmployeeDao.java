@@ -21,11 +21,13 @@ public interface EmployeeDao {
 	int insertEmpFile(SqlSessionTemplate session, EmpFile e);
 	/* 사원등록끝 */
 	/* 사원상세보기 */
-	Map<String, String> selectEmpOne(SqlSessionTemplate session, int empNo);
+	Map<String, Object> selectEmpOne(SqlSessionTemplate session, int empNo);
+	List<EmpFile> selectEmpFileList(SqlSessionTemplate session, int empNo);
 	/* 사원로그인*/
 	Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map);
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param);
 	int selectEmpSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+	
 }
 
