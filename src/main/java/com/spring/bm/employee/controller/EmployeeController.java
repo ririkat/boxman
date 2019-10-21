@@ -141,13 +141,13 @@ public class EmployeeController {
 		logger.debug(param.get("password"));
 		String empPassword = pwEncoder.encode((String)param.get("password"));
 		param.put("empPassword", empPassword);
-
+		
 		String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
 
 		List<EmpFile> fileList = new ArrayList();
-
+		
 		File dir = new File(saveDir);
-
+		
 		if(!dir.exists()) logger.debug("생성결과 : " + dir.mkdir());
 		if(!proImg.isEmpty()) {
 			String oriFileName=proImg.getOriginalFilename();
@@ -187,8 +187,8 @@ public class EmployeeController {
 			ef.setEfReName(reName);
 			fileList.add(ef);
 		}
-
-
+		
+		
 		for(MultipartFile f : upFile) {
 			if(!f.isEmpty()) {
 				//파일명 생성(rename)
@@ -211,15 +211,15 @@ public class EmployeeController {
 				fileList.add(ef);
 			}
 		}
-
-
+		
+		
 		int result = 0;
 		try {
 			result=service.insertEmp(param,fileList);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 		String msg = "";
 		String loc = "/emp/empList.do";
 		if(result > 0) {
@@ -227,13 +227,13 @@ public class EmployeeController {
 		} else {
 			msg = param.get("empName") + "사원등록이 실패하였습니다.";
 		}
-
+		
 		ModelAndView mv = new ModelAndView();
-
+		
 		mv.addObject("msg", msg);
 		mv.addObject("loc", loc);
 		mv.setViewName("common/msg");
-
+		
 		return mv;
 	}
 	/* 사원등록끝 */

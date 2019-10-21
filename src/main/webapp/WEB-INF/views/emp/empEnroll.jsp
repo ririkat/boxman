@@ -238,8 +238,8 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">결재도장등록</label>
                <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="stampImg" id="upFile2">
-                    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
+                    <input type="file" class="custom-file-input" name="stampImg" id="upFile3">
+                    <label class="custom-file-label" for="upFile3">파일을 선택하세요</label>
                 </div>
              </div>
            </div>
@@ -248,13 +248,13 @@
            <div class="col-md-6">
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">자격증사진 </label>
-	       			<button type="button" class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
+	       			<button class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
 	              		<span class="text">추가</span>
             		</button>
                <div class="custom-file">
                		<div id="fileBox">
-	                    <input type="file" class="custom-file-input" name="upFile" id="upFile3">
-	                    <label class="custom-file-label" for="upFile3">파일을 선택하세요</label>
+	                    <input type="file" class="custom-file-input" name="upFile" id="upFile2">
+	                    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
                     </div>
                 </div>
              </div>
@@ -277,7 +277,7 @@
 	var setHeight = $('#setHeight').height();
 	
 	/* 아이디 중복검사 */
-	$(function(){
+	/* $(function(){
 		$('#empId').keyup(function(){
 			var userId = $(this).val().trim();
 			if(userId.length<4) {
@@ -299,7 +299,7 @@
 				}
 			});
 		});
-	});
+	}); */
 	//파일등록시 
 	$(function(){
 		$(document).on("change",$('[name=upFile]'), function(event){

@@ -19,7 +19,7 @@
 	<!-- 사원등록 -->
 	<insert id="insertEmp" parameterType="map">
 		INSERT INTO EMPLOYEE VALUES(SEQ_EMPLOYEE.NEXTVAL,#{deptNo}, #{jobNo},
-		#{empSal}, #{empId}, #{empPassword}, #{empName},#{empPhone}
+		#{empSal}, #{empId}, #{empPassword}, #{empName},#{empGender}, #{empPhone}
 		,#{empEmail}, #{empAddr},#{empSSN}, #{empBank}, #{empBankNum},
 		default, null, default)
 		<selectKey keyProperty="empNo" resultType="string"
