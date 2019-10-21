@@ -58,7 +58,5 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Map<String, String> selectLoginEmp(Map<String, String> map) {
 		return dao.selectLoginEmp(session,map);
 	}
-
-
 }
 

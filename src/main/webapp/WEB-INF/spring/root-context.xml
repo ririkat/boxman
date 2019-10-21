@@ -63,7 +63,7 @@
 		</tx:advice>
 		<!-- aop와 연결하여 트랜젝션을 적용 -->
 		<aop:config>
-			<aop:pointcut expression="execution(* com.kh.spring..*ServiceImpl.*(..))" id="serviceMethod"/>
+			<aop:pointcut expression="execution(* com.spring.bm..*ServiceImpl.*(..))" id="serviceMethod"/>
 			<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethod"/>
 		</aop:config>
 		

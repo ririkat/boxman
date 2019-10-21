@@ -22,13 +22,13 @@ public class LoggerInterceptor extends HandlerInterceptorAdapter {
 		
 		
 		// 로그인시에만 dev 등록 및 목록조회를 할수 있게 수정
-		if(request.getSession().getAttribute("loginMember")==null) {
+		if(request.getSession().getAttribute("loginEmp")==null) {
 			request.setAttribute("msg", " 로그인 후 이용하세요!");
 			request.setAttribute("loc", "/");
 			request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp").forward(request, response);
 			return false;
 		} else {
-			logger.debug("로그인 했으니깐 진정해!");
+			logger.debug("로그인 했으니깐 진행해!");
 			return super.preHandle(request, response, handler);
 		}
 		

@@ -43,17 +43,16 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	/* 사원등록끝 */
 
 	/* 사원상세보기 */
-	@Override
-	public Map<String, String> selectEmpOne(SqlSessionTemplate sqlSession, int empNo) {
-		return sqlSession.selectOne("emp.selectEmpOne",empNo);
-	}
-
-	/* 사원로그인*/
-	@Override
-	public Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map) {
-		return session.selectOne("emp.selectLoginEmp",map);
-	}
-
+    @Override
+    public Map<String, String> selectEmpOne(SqlSessionTemplate sqlSession, int empNo) {
+       return sqlSession.selectOne("emp.selectEmpOne",empNo);
+    }
+	
+    /* 사원로그인*/
+    @Override
+    public Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map) {
+    	return session.selectOne("emp.selectLoginEmp",map);
+    }
 
 }
 

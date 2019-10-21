@@ -16,17 +16,17 @@
 	</select>
 	<!-- 사원리스트 불러오기끝 -->
 
-	<!-- 사원등록 -->
-	<insert id="insertEmp" parameterType="map">
-		INSERT INTO EMPLOYEE VALUES(SEQ_EMPLOYEE.NEXTVAL,#{deptNo}, #{jobNo},
-		#{empSal}, #{empId}, #{empPassword}, #{empName},#{empPhone}
-		,#{empEmail}, #{empAddr},#{empSSN}, #{empBank}, #{empBankNum},
-		default, null, default)
-		<selectKey keyProperty="empNo" resultType="string"
-			order="AFTER">
-			SELECT SEQ_EMPLOYEE.CURRVAL FROM DUAL
-		</selectKey>
-	</insert>
+<!-- 사원등록 -->
+   <insert id="insertEmp" parameterType="map">
+      INSERT INTO EMPLOYEE VALUES(SEQ_EMPLOYEE.NEXTVAL,#{deptNo}, #{jobNo},
+      #{empSal}, #{empId}, #{empPassword}, #{empName},#{empGender}, #{empPhone}
+      ,#{empEmail}, #{empAddr},#{empSSN}, #{empBank}, #{empBankNum},
+      default, null, default)
+      <selectKey keyProperty="empNo" resultType="string"
+         order="AFTER">
+         SELECT SEQ_EMPLOYEE.CURRVAL FROM DUAL
+      </selectKey>
+   </insert>
 	<!-- 사원첨부파일등록 -->
 	<insert id="insertEmpFile" parameterType="map">
 		INSERT INTO EMPFILE
@@ -47,8 +47,7 @@
 	<!-- 사원상세보기끝 -->
 	<!-- 사원로그인 -->
 	<select id="selectLoginEmp" parameterType="map" resultType="map">
-		SELECT * FROM EMPLOYEE WHERE EMPID=#{empId} AND
-		EMPPASSWORD=#{empPassword}
+		SELECT * FROM EMPLOYEE WHERE EMPID=#{empId}
 	</select>
 	<!-- 사원로그인끝 -->
 </mapper>
