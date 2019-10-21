@@ -16,6 +16,7 @@
   <meta name="author" content="">
 
   <title>${param.tabTitle }</title>
+
   <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 
   <!-- Custom fonts for this template-->
@@ -24,6 +25,7 @@
 
   <!-- CSS -->
   <link href="${path }/resources/b4/css/sb-admin-2.min.css" rel="stylesheet">
+  
 
 </head>
 
@@ -86,8 +88,10 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffEnroll.do">물품 등록</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 목록</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate.do">메인 카테고리 관리</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
             <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
             <div class="collapse-divider"></div>
             <h6 class="collapse-header">Other Pages:</h6>
