@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<style>
+<!-- <style>
 li > div {
     border: 1px solid #5a6f89;
     border-radius: 3px;
@@ -42,64 +42,54 @@ li {
     padding: 0;
 }
 
-</style>
+</style> -->
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
    <jsp:param name="pageTitle" value=""/>
 </jsp:include>
 <section id="content">
- <div class="content">
-	   <div class="title">
-	   		<h3>관련사이트</h3>
-	   </div>
-	   <div>
-	   	<ul>
-	   		<li>
-	   			<div>
-	   				<a class="b-related btn btn-outline-success my-2 my-sm-0" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   		<li>
-	   			<div>
-	   				<a class="b-related" href="#"><span>사이트연결</span></a>
-	   			</div>
-	   		</li>
-	   	</ul>
-	   </div>
-   </div>
+
+<div class="col-lg-6 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">관련사이트</h4>
+                    <p class="card-description"> 내부/외부 사이트 <code>바로가기</code> </p>
+                    <table class="table">
+                      <thead>
+                       <div class="col-sm-12 col-md-6">
+		                  <div id="dataTable_filter" class="dataTables_filter">
+		                     <div style="float:right;">
+		                      <a href="${path}/notice/insertSite.do" class="btn btn-light btn-icon-split">
+		                    <span class="icon text-gray-600">
+		                      <i class="fas fa-arrow-right"></i>
+		                    </span>
+		                    <span class="text">사이트등록</span>
+		                  </a>
+		                 </div>
+		                  </div>
+		                 </div>
+                        <tr>
+                          <th>번호</th>
+                          <th>형식</th>
+                          <th>업체명</th>
+                          <th>링크</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <c:forEach items="${list }" var ="list" varStatus="v">
+                        <tr>
+                          <td>${v.count}</td>
+                          <td><c:out value='${list["STCHECK"]}'/></td>
+                          <td><c:out value='${list["STNAME"]}'/></td>
+                          <td>
+                            <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list['STLINK']}" target="_blank"><span>사이트연결</span></a></label>
+                          </td>
+                        </tr>
+                        </c:forEach>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
 </section>
 

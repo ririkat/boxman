@@ -59,7 +59,75 @@ public class NoticeServiceImpl implements NoticeService {
 	public int updateReadCount(int nReadCount) {
 		return dao.updateReadCount(sqlSession, nReadCount);
 	}
+
+	@Override
+	public List<UploadNotice> selectUpNoticeList(int nNo) {
+		return dao.selectUpNoticeList(sqlSession, nNo);
+	}
+
+	@Override
+	public List<Notice> selectNoticeList2() {
+		return dao.selectNoticeList2(sqlSession);
+	}
+
+	@Override
+	public int insertSite(Map<String, Object> param) {
+		return dao.insertSite(sqlSession, param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSiteList() {
+		return dao.selectSiteList(sqlSession);
+	}
+
+	@Override
+	public int updateNotice(Map<String, Object> param) {
+		return dao.updateNotice(sqlSession, param);
+	}
+
+	@Override
+	public int deleteNotice(Map<String, Object> param) {
+		return dao.deleteNotice(sqlSession, param);
+	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeCheck(String nName) {
+		return dao.selectNoticeCheck(sqlSession, nName);
+	}
+
+	@Override
+	public int deleteUpNotice(Map<String, Object> param) {
+		return dao.deleteUpNotice(sqlSession, param);
+	}
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class) //RuntimeException 발생시!
+	public int insertUpNotice(Map<String, Object> param, List<UploadNotice> upNoticeList){
+		int result=0;
+		int boardNo=0;
+
+		if(upNoticeList.size()>0) {
+			for(UploadNotice n : upNoticeList) {
+				n.setNNo(Integer.parseInt((String)param.get("nNo")));
+				result=dao.insertUploadNotice(sqlSession, n);
+
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Notice> selectNoticeSearchList(Map<String, Object> m) {
+		return dao.selectNoticeSearchList(sqlSession, m);
+	}
+
+	@Override
+	public int selectNoticeSearchCount(Map<String, Object> m) {
+		return dao.selectNoticeSearchCount(sqlSession, m);
+	}
 	
 	
+
 
 }

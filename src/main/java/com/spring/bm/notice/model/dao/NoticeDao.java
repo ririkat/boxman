@@ -22,4 +22,24 @@ public interface NoticeDao {
 
 	int insertUploadNotice(SqlSessionTemplate sqlSession, UploadNotice n);
 
+	List<UploadNotice> selectUpNoticeList(SqlSessionTemplate sqlSession, int nNo);
+
+	List<Notice> selectNoticeList2(SqlSessionTemplate sqlSession);
+
+	int insertSite(SqlSessionTemplate sqlSession, Map<String, Object> param);
+
+	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
+
+	int updateNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
+
+	int deleteNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
+
+	List<Map<String, String>> selectNoticeCheck(SqlSessionTemplate sqlSession, String nName);
+
+	int deleteUpNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
+
+	List<Notice> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
+	int selectNoticeSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
 }
