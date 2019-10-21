@@ -42,6 +42,8 @@ public class EmployeeController {
 	@RequestMapping("/emp/insertEmpEnd.do")	//사원 등록 완료
 	public ModelAndView insertEmpEnd(@RequestParam Map<String, String> param,
 			@RequestParam(value="upFile", required=false) MultipartFile[] upFile,
+			@RequestParam(value="proImg", required=false) MultipartFile proImg,
+			@RequestParam(value="stampImg", required=false) MultipartFile stampImg,
 			HttpServletRequest request) {
 		
 		String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
