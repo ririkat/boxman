@@ -125,16 +125,20 @@
           <span>일정 관리</span></a>
       </li>
 
-     
-      
-      <!-- 게시판 관리 -->
-      <li class="nav-item">
-        <a class="nav-link" href="${path }/notice/selectNoticeList.do">
-          <i class="fas fa-fw fa-table"></i>
-          <span>게시판 관리</span></a>
+     <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotice" aria-expanded="true" aria-controls="collapseNotice">
+          <i class="fas fa-fw fa-cog"></i>
+          <span>게시판 관리</span>
+        </a>
+        <div id="collapseNotice" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <h6 class="collapse-header">Custom Components:</h6>
+            <a class="collapse-item" href="${path }/emp/empList.do">부서별관리</a>
+            <a class="collapse-item" href="${path }/dept/deptList.do">메인관리</a>
+            <a class="collapse-item" href="${path }/empJob/empJobList.do">직급관리</a>
+          </div>
+        </div>
       </li>
-
-      
 
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
