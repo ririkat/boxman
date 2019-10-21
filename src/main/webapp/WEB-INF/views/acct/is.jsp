@@ -10,99 +10,68 @@
 	<jsp:param value="Accounting" name="tabTitle"/> 
 	<jsp:param value="" name="pageTitle"/>
 </jsp:include>
+<!-- export Excel -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="${path }/resources/js/tableExport.js"></script>
+<script type="text/javascript" src="${path }/resources/js/FileSaver.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="${path }/resources/b4/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+
+
+<script type="text/javaScript">
+   function doExcel() {
+     $('#excelstyles').tableExport({
+         type:'excel',
+         mso: {
+           styles: ['background-color'
+                    ]
+         }
+       }
+     );
+   }
+</script>
 
 <section>
 
-
+<a href="#" onclick="doExcel()">Export to Excel</a>
 <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
  -->
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Income Statement</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                </tbody>
-                  <tbody>
-                    <tr>
-                      <td>매출</td>
-                      <td>₩1,100,000,000</td>
-                    </tr>
-                    <tr>
-                      <td>매출 원가</td>
-                      <td>(₩890,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td><strong>총 수익</strong></td>
-                      <td><strong>₩210,000,000</strong></td>
-                    </tr>
-                    </tbody>
-                    
-                    <tbody>
-                    <tr>
-                      <td>경영비</td>
-                    </tr>
-                    <tr>
-                      <td>월세</td>
-                      <td>(₩3,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>임금</td>
-                      <td>(₩100,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>임금세</td>
-                      <td>(₩10,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>보험</td>
-                      <td>(₩5,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>법무 관련 수수료</td>
-                      <td>(₩2,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>지급 이자</td>
-                      <td>(₩3,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>지급 기타</td>
-                      <td>(₩2,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>지급 퇴직금</td>
-                      <td>(₩6,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>출장비</td>
-                      <td>(₩1,500,000)</td>
-                    </tr>
-                    <tr>
-                      <td>지급 세금</td>
-                      <td>(₩20,000,000)</td>
-                    </tr>
-                    <tr>
-                      <td>총 경영비</td>
-                      <td><strong>(₩152,500,000)</strong></td>
-                    </tr>
-                    <tr>
-                      <td>순 이익</td>
-                      <td><strong>₩57,500,000</strong></td>
-                    </tr>
-                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-
-
-
-
+          <table id="excelstyles">
+    <thead>
+    <tr>
+        <th style="font-family: arial; font-size: 18px; font-weight: bold">C1</th>
+        <th style="font-family: arial; font-size: 18px; font-weight: bold">C2</th>
+        <th style="font-family: arial; font-size: 18px; font-weight: bold">C3</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="background-color:red">A</td>
+        <td style="background-color:green">B</td>
+        <td style="background-color:blue">C</td>
+    </tr>
+    <tr>
+        <td style="text-align:left">D</td>
+        <td style="text-align:center">E</td>
+        <td style="text-align:right">F</td>
+    </tr>
+    <tr>
+        <td style="color:green">G</td>
+        <td style="color:blue">H</td>
+        <td style="color:red">I</td>
+    </tr>
+    <tr>
+      <td style="lala:green">J</td>
+      <td style="lala:blue">K</td>
+      <td style="lala:red">L</td>
+  </tr>
+    </tbody>
+</table>
 </section>
+
+
+
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -7,7 +7,14 @@
 	</settings>
 	<typeAliases>
 		<!-- <typeAlias type="com.kh.spring.demo.model.vo.Dev" alias="dev"/> -->
-		
+
+		<typeAlias type="com.spring.bm.notice.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.spring.bm.notice.model.vo.UploadNotice" alias="upNotice"/>
+		<typeAlias type = "com.spring.bm.stuff.model.vo.Stuff" alias = "stuff"/>
+		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffMaincategory" alias = "maincategory"/>
+		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffSubcategory" alias = "subcategory"/>
+		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffUpload" alias = "stuffupload"/>	
+
 	</typeAliases>
 
 </configuration>
