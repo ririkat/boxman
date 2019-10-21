@@ -27,6 +27,8 @@ import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.employee.model.vo.EmpFile;
 
+
+
 @Controller
 public class EmployeeController {
 
@@ -94,24 +96,24 @@ public class EmployeeController {
 	@RequestMapping("/bfLogin/loginEmp.do")
 	public ModelAndView empLogin(@RequestParam Map<String,String> map,HttpSession session) {
 
-		logger.debug((String) map.get("empId"));
-		logger.debug((String) map.get("empPassword"));
+//		logger.debug((String) map.get("empId"));
+//		logger.debug((String) map.get("empPassword"));
 
 		Map<String, String> m = service.selectLoginEmp(map);
 
-		logger.debug("--------------------");
-		logger.debug((String) m.get("EMPID"));
-		logger.debug((String) m.get("EMPPASSWORD"));
+//		logger.debug("--------------------");
+//		logger.debug((String) m.get("EMPID"));
+//		logger.debug((String) m.get("EMPPASSWORD"));
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
 		String loc = "";
-		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
-			/*if (pwEncoder.matches((CharSequence) map.get("password"), m.getPassword())) {*/
+//		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
+		if (pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))) {
 			msg = "로그인 성공";
 			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
-			session.setMaxInactiveInterval(60);//세션유효시간 1분
+			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
 		} else {
 			msg = "로그인 실패";
 			loc="/";
@@ -125,12 +127,11 @@ public class EmployeeController {
 	}
 
 	/* 사원로그아웃*/
-	@RequestMapping("/bfLogin/logoutEmp.do")
+	@RequestMapping("/emp/logoutEmp.do")
 	public String empLogout(HttpSession session) {
 		session.invalidate();//세션 삭제
 		return "redirect:/";
 	}
-
 
 	@RequestMapping("/emp/insertEmpEnd.do")	//사원 등록 완료
 	public ModelAndView insertEmpEnd(@RequestParam Map<String, String> param,
@@ -256,8 +257,6 @@ public class EmployeeController {
 		mv.setViewName("emp/empList");
 		return mv;
 	}
-
-
 
 }
 

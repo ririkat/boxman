@@ -11,5 +11,6 @@ public class CommonController {
 		
 		return "common/main";
 	}
+	
 
 }

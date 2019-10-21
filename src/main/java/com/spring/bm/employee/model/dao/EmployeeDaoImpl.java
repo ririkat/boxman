@@ -64,8 +64,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param) {
 		logger.debug((String)param.get("type"));
 		logger.debug((String)param.get("data"));
-		int cPage = (int)(param.get("cPage"));
-		int numPerPage = (int)(param.get("numPerPage"));
+		int cPage = (Integer)(param.get("cPage"));
+		int numPerPage = (Integer)(param.get("numPerPage"));
 		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
 		return session.selectList("emp.selectEmpSearchList", param, rows);
 	}
@@ -77,9 +77,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		logger.debug((String)param.get("data"));
 		return session.selectOne("emp.selectEmpSearchCount", param);
 	}
-	
-	
-	
 
 
 }
