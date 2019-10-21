@@ -7,7 +7,8 @@
 	</settings>
 	<typeAliases>
 		<!-- <typeAlias type="com.kh.spring.demo.model.vo.Dev" alias="dev"/> -->
-		
+		<typeAlias type="com.spring.bm.notice.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.spring.bm.notice.model.vo.UploadNotice" alias="upNotice"/>
 	</typeAliases>
 
 </configuration>
