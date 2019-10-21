@@ -237,6 +237,25 @@ public class EmployeeController {
 		return mv;
 	}
 	/* 사원등록끝 */
+	
+	/* 사원검색 */
+	@RequestMapping("/emp/searchEmp.do")
+	public ModelAndView searchEmp(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+			@RequestParam Map<String, Object> param) {
+		
+		int numPerPage = 10;
+		param.put("cPage", cPage);
+		param.put("numPerPage", numPerPage);
+		List<Map<String, String>> list = service.selectEmpSearchList(param);
+		int totalCount = service.selectEmpSearchCount(param);
+
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/empList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empList");
+		return mv;
+	}
 
 
 

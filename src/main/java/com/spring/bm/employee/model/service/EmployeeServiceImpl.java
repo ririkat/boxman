@@ -58,6 +58,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Map<String, String> selectLoginEmp(Map<String, String> map) {
 		return dao.selectLoginEmp(session,map);
 	}
+	
+	/* 사원검색 */
+	@Override
+	public List<Map<String, String>> selectEmpSearchList(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpSearchList(session, param);
+	}
+	@Override
+	public int selectEmpSearchCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpSearchCount(session, param);
+	}
+	
+	
+	
 
 
 }

@@ -117,9 +117,9 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">성별</label>
                <div class="col-sm-9">
-                 <select class="form-control">
-                   <option>Male</option>
-                   <option>Female</option>
+                 <select class="form-control" name="empGender">
+                   <option value="M">Male</option>
+                   <option value="F">Female</option>
                  </select>
                </div>
              </div>
@@ -248,7 +248,7 @@
            <div class="col-md-6">
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">자격증사진 </label>
-	       			<button class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
+	       			<button type="button" class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
 	              		<span class="text">추가</span>
             		</button>
                <div class="custom-file">
