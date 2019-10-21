@@ -252,9 +252,9 @@
                        <span class="text">추가</span>
                   </button>
                <div class="custom-file">
-                     <div id="fileBox">
-                       <input type="file" class="custom-file-input" name="upFile" id="upFile2">
-                       <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
+               		<div id="fileBox">
+	                    <input type="file" class="custom-file-input" name="upFile" id="upFile2">
+	                    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
                     </div>
                 </div>
              </div>
@@ -274,63 +274,63 @@
  </div>
 </section>
 <script>
-   var setHeight = $('#setHeight').height();
-   
-   /* 아이디 중복검사 */
-   /* $(function(){
-      $('#empId').keyup(function(){
-         var userId = $(this).val().trim();
-         if(userId.length<4) {
-            $(".guide").hide();
-            return;
-         }
-         $.ajax({
-            url:"${path}/emp/checkId.do",
-            data:{"userId":userId},
-            success:function(data){
-               console.log(data);
-               if(data.isUsable == true) {
-                  $("span.ok").show();
-                  $("span.error").hide();
-               } else {
-                  $("span.ok").hide();
-                  $("span.error").show();
-               }
-            }
-         });
-      });
-   }); */
-   //파일등록시 
-   $(function(){
-      $(document).on("change",$('[name=upFile]'), function(event){
-         var fileName=this.files[0].name;
-         $(this).next('.custom-file-label').html(fileName);
-      });
-      $('[name=proImg]').on('change', function(event){
-         var fileName=this.files[0].name;
-         $(this).next('.custom-file-label').html(fileName);
-      });
-      $('[name=stampImg]').on('change', function(event){
-         var fileName=this.files[0].name;
-         $(this).next('.custom-file-label').html(fileName);
-      });
-   });
-   var count = 4;
-   
-   //파일추가
-   $(function(){
-      $('#addFile').click(function(){
-         setHeight = setHeight + 80;
-         $('#setHeight').css("height",setHeight + "px");
-         var addWrap = '<div class="custom-file" style="height:80px;">'; 
-          addWrap += '<input type="file" class="custom-file-input" name="upFile" id="upFile' + count + '"'
-          addWrap += '>';
-          addWrap += '<label class="custom-file-label" for="upFile' + count + '"';
-          addWrap += '>';
-          addWrap += "파일을 선택하세요";
-          addWrap += "</label>";
-           addWrap += '<input type="button" name="removeFile" class="btn" id="btnRemove" value="삭제">';
-           addWrap += '</div>'; 
+	var setHeight = $('#setHeight').height();
+	
+	/* 아이디 중복검사 */
+	/* $(function(){
+		$('#empId').keyup(function(){
+			var userId = $(this).val().trim();
+			if(userId.length<4) {
+				$(".guide").hide();
+				return;
+			}
+			$.ajax({
+				url:"${path}/emp/checkId.do",
+				data:{"userId":userId},
+				success:function(data){
+					console.log(data);
+					if(data.isUsable == true) {
+						$("span.ok").show();
+						$("span.error").hide();
+					} else {
+						$("span.ok").hide();
+						$("span.error").show();
+					}
+				}
+			});
+		});
+	}); */
+	//파일등록시 
+	$(function(){
+		$(document).on("change",$('[name=upFile]'), function(event){
+			var fileName=this.files[0].name;
+			$(this).next('.custom-file-label').html(fileName);
+		});
+		$('[name=proImg]').on('change', function(event){
+			var fileName=this.files[0].name;
+			$(this).next('.custom-file-label').html(fileName);
+		});
+		$('[name=stampImg]').on('change', function(event){
+			var fileName=this.files[0].name;
+			$(this).next('.custom-file-label').html(fileName);
+		});
+	});
+	var count = 4;
+	
+	//파일추가
+	$(function(){
+		$('#addFile').click(function(){
+			setHeight = setHeight + 80;
+			$('#setHeight').css("height",setHeight + "px");
+			var addWrap = '<div class="custom-file" style="height:80px;">'; 
+    		addWrap += '<input type="file" class="custom-file-input" name="upFile" id="upFile' + count + '"'
+    		addWrap += '>';
+    		addWrap += '<label class="custom-file-label" for="upFile' + count + '"';
+    		addWrap += '>';
+    		addWrap += "파일을 선택하세요";
+    		addWrap += "</label>";
+	        addWrap += '<input type="button" name="removeFile" class="btn" id="btnRemove" value="삭제">';
+	        addWrap += '</div>'; 
             $(this).next().after(addWrap);
             count++;
       }); 
