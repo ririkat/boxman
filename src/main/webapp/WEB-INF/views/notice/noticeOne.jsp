@@ -61,16 +61,14 @@
                       </div>
                        <div class="form-group">
                       	<div class=" custom-file">
-                      	<label for="upFile">다운로드</label>
-		                   
-									  <c:forEach items="${upNotice}" var="a">
-							            <button type="button" 
-							                    class="btn btn-outline-success btn-block"
-							                    onclick="fileDownload('${a.upNoticeOrgName}','${a.upNoticeReName }');">
-							                첨부파일${vs.count} - ${a.upNoticeOrgName }
-							            </button>
-							        </c:forEach>
-							
+                      	<label for="upFile">다운로드</label>		                   
+							<c:forEach items="${upNotice}" var="a" varStatus="vs">
+					            <button type="button" 
+					                    class="btn btn-outline-success btn-block"
+					                    onclick="fileDownload('${a.upNoticeOrgName}','${a.upNoticeReName }');">
+					                								첨부파일${vs.count} - ${a.upNoticeOrgName }
+					            </button>
+					        </c:forEach>
 		                </div>
                		  </div>
                       <button name="addButton" type="button" value="추가" class="btn btn-light btn-icon-split" 
@@ -88,7 +86,7 @@
 												  <div class="form-group">
 							                      <label for="upFile">첨부파일</label>
 							                      	<div class=" custom-file">
-									                    <input type="file" class="custom-file-input" name="upFile" id="addImg">
+									                    <input type="file" class="custom-file-input" name="upFile" id="addImg" value="">
 									                    <label class="custom-file-label" for="addImg"></label>
 									                </div>
 							               		  </div>	
@@ -108,7 +106,6 @@
 </section>
 
 <script>
-
 		$(function(){
 			$('[name=upFile]').on('change',function(){
 				var fileName=this.files[0].name;
@@ -133,5 +130,4 @@
 		   oName=encodeURIComponent(oName);
 		   location.href="${path}/notice/filedownLoad.do?oName="+oName+"&rName="+rName;
 		}
-		
 </script>
