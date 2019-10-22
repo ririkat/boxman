@@ -8,9 +8,14 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
    <jsp:param value="사원등록" name="tabTitle"/> 
-   <jsp:param value="사원등록" name="pageTitle"/>
+   <jsp:param value="" name="pageTitle"/>
 </jsp:include>
-
+<style>
+	div#userId-container{position:relative; padding:0px;}
+	div#userId-container span.guide {display:none;font-size: 12px;position:absolute; top:12px; right:0px;}
+	div#userId-container span.ok{color:green;}
+	div#userId-container span.no{color:red;}
+</style>
 <section>
 <div class="col-12 grid-margin">
    <div class="card">
@@ -46,10 +51,10 @@
                <label class="col-sm-3 col-form-label">아이디</label>
                <div class="col-sm-9">
                  <div id = "userId-container">
-               <input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="empId" id="empId" required>
-               <span class="guide ok" style="display:none;">이 아이디는 사용할 수 있음</span>
-               <span class="guide error" style="display:none;">이 아이디는 사용할 수 없음</span>
-            </div>
+	               <input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="empId" id="empId" required>
+	               <span class="guide ok okId">이 아이디는 사용할 수 있습니다</span>
+	               <span class="guide no noId">이 아이디는 사용할 수 없습니다</span>
+            	</div>
                </div>
              </div>
            </div>
@@ -72,7 +77,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">비밀번호</label>
                <div class="col-sm-9">
-                 <input type="password" class="form-control" name="password" required>
+                 <input type="password" class="form-control" name="password" id="pw" required>
                </div>
              </div>
            </div>
@@ -90,7 +95,11 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">비밀번호확인</label>
                <div class="col-sm-9">
-                 <input type="password" class="form-control" name="pw2" required>
+               	 <div id = "userId-container">
+	                 <input type="password" class="form-control" name="pw2" id="pw2" required>
+	                 <span class="guide ok okPw">비밀번호 확인이 일치합니다.</span>
+		             <span class="guide no noPw">비밀번호가 일치하지 않습니다.</span>
+	             </div>
                </div>
              </div>
            </div>
@@ -138,7 +147,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">전화번호</label>
                <div class="col-sm-9" style="">
-                 <input type="text" class="form-control" name="empPhone" placeholder="-없이 입력하세요" required>
+                 <input type="text" class="form-control" name="empPhone" placeholder="-없이 입력하세요" id="empPhone" required>
                </div>
              </div>
            </div>
@@ -164,12 +173,12 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">주소</label>
                <div class="col-sm-9">
-                    <input type="text" id="sample6_postcode" placeholder="우편번호" style="width:350px;">
-               <input type="button" class="btn-light btn-icon-split" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-               <input type="text" id="sample6_address" placeholder="주소" style="width:350px;"><br>
-               <input type="text" id="sample6_detailAddress" placeholder="상세주소" style="width:172.5px;">
-               <input type="text" id="sample6_extraAddress" placeholder="참고항목" style="width:172.5px;">
-               <input type="hidden" name="empAddr" id="empAddr"/>
+                   <input type="text" id="sample6_postcode" placeholder="우편번호" style="width:200px;display:inline;" class="form-control">
+	               <input type="button" class="btn btn-success mr-2" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" style="float:right;"><br>
+	               <input type="text" id="sample6_address" placeholder="주소" class="form-control" >
+	               <input type="text" id="sample6_detailAddress" placeholder="상세주소" class="form-control" style="display:inline;">
+	               <input type="text" id="sample6_extraAddress" placeholder="참고항목" class="form-control" style="display:inline;">
+	               <input type="hidden" name="empAddr" id="empAddr"/>
                <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
                <script>
                    function sample6_execDaumPostcode() {
@@ -228,6 +237,9 @@
            <div class="col-md-6">
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">사원사진</label>
+               <div class="col-sm-9">
+					<img src="#" style="width:200px; height:auto;display:none;" id="proImg"/>
+				</div>
                <div class="custom-file">
                     <input type="file" class="custom-file-input" name="proImg" id="upFile1">
                     <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
@@ -237,6 +249,9 @@
            <div class="col-md-6">
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">결재도장등록</label>
+               <div class="col-sm-9">
+					<img src="#" style="width:200px; height:auto; display:none;" id="proImg"/>
+				</div>
                <div class="custom-file">
                     <input type="file" class="custom-file-input" name="stampImg" id="upFile3">
                     <label class="custom-file-label" for="upFile3">파일을 선택하세요</label>
@@ -244,17 +259,20 @@
              </div>
            </div>
          </div>
-         <div class="row">
+         <!-- <div class="row">
            <div class="col-md-6">
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">자격증사진 </label>
+               		<div class="col-sm-9">
+						<img src="#" style="width:200px; height:auto; display:none;" id="licenImg1"/>
+					</div>
                    <button type="button" class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
                        <span class="text">추가</span>
                   </button>
                <div class="custom-file">
-                     <div id="fileBox">
-                       <input type="file" class="custom-file-input" name="upFile" id="upFile2">
-                       <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
+               		<div id="fileBox">
+	                    <input type="file" class="custom-file-input" name="upFile" id="upFile2">
+	                    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
                     </div>
                 </div>
              </div>
@@ -263,78 +281,87 @@
              <div class="form-group row" id="setHeight" style="height:40px;">
              </div>
            </div>
-         </div>
+         </div> -->
          <div style="margin:0 auto; width:fit-content;">
             <input type="button" class="btn btn-success mr-2" value="등록" onclick="return validate();" style="width:150px;">
          </div>
        </form>
-     </div>
- 
+   	</div>
    </div>
  </div>
 </section>
 <script>
-   var setHeight = $('#setHeight').height();
-   
-   /* 아이디 중복검사 */
-   /* $(function(){
-      $('#empId').keyup(function(){
-         var userId = $(this).val().trim();
-         if(userId.length<4) {
-            $(".guide").hide();
-            return;
-         }
-         $.ajax({
-            url:"${path}/emp/checkId.do",
-            data:{"userId":userId},
-            success:function(data){
-               console.log(data);
-               if(data.isUsable == true) {
-                  $("span.ok").show();
-                  $("span.error").hide();
-               } else {
-                  $("span.ok").hide();
-                  $("span.error").show();
-               }
-            }
-         });
-      });
-   }); */
-   //파일등록시 
-   $(function(){
-      $(document).on("change",$('[name=upFile]'), function(event){
-         var fileName=this.files[0].name;
-         $(this).next('.custom-file-label').html(fileName);
-      });
-      $('[name=proImg]').on('change', function(event){
-         var fileName=this.files[0].name;
-         $(this).next('.custom-file-label').html(fileName);
-      });
-      $('[name=stampImg]').on('change', function(event){
-         var fileName=this.files[0].name;
-         $(this).next('.custom-file-label').html(fileName);
-      });
-   });
-   var count = 4;
-   
-   //파일추가
-   $(function(){
-      $('#addFile').click(function(){
-         setHeight = setHeight + 80;
-         $('#setHeight').css("height",setHeight + "px");
-         var addWrap = '<div class="custom-file" style="height:80px;">'; 
-          addWrap += '<input type="file" class="custom-file-input" name="upFile" id="upFile' + count + '"'
-          addWrap += '>';
-          addWrap += '<label class="custom-file-label" for="upFile' + count + '"';
-          addWrap += '>';
-          addWrap += "파일을 선택하세요";
-          addWrap += "</label>";
-           addWrap += '<input type="button" name="removeFile" class="btn" id="btnRemove" value="삭제">';
-           addWrap += '</div>'; 
+	var setHeight = $('#setHeight').height();
+	
+	/* 아이디 중복검사 */
+	$(function(){
+		$('#empId').keyup(function(){
+			var empId = $(this).val().trim();
+			if(empId.length<4) {
+				$(".guide").hide();
+				return;
+			}
+			$.ajax({
+				url:"${path}/emp/checkId.do",
+				data:{"empId":empId},
+				success:function(data){
+					console.log(data);
+					if(data == 0) {
+						$("span.okId").show();
+						$("span.noId").hide();
+					} else {
+						$("span.okId").hide();
+						$("span.noId").show();
+					}
+				}
+			});
+		});
+	});
+	//파일등록시 
+	$(function(){
+		/* $(document).on("change",$('[name=upFile]'), function(event){
+			var fileName=this.files[0].name;
+			$(this).next('.custom-file-label').html(fileName);
+		}); */
+		$('[name=proImg]').on('change', function(event){
+			var fileName=this.files[0].name;
+			var reader = new FileReader();
+			$(this).next('.custom-file-label').html(fileName);
+			reader.onload = function(e) {
+				$('#proImg').attr("src",e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		});
+		$('[name=stampImg]').on('change', function(event){
+			var fileName=this.files[0].name;
+			var reader = new FileReader();
+			$(this).next('.custom-file-label').html(fileName);
+			reader.onload = function(e) {
+				$('#stampImg').attr("src",e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		});
+	});
+	var count = 4;
+	
+	//파일추가
+	/* $(function(){
+		$('#addFile').click(function(){
+			setHeight = setHeight + 80;
+			$('#setHeight').css("height",setHeight + "px");
+			var addWrap = '<div class="custom-file" style="height:80px;">'; 
+    		addWrap += '<input type="file" class="custom-file-input" name="upFile" id="upFile' + count + '"'
+    		addWrap += '>';
+    		addWrap += '<label class="custom-file-label" for="upFile' + count + '"';
+    		addWrap += '>';
+    		addWrap += "파일을 선택하세요";
+    		addWrap += "</label>";
+	        addWrap += '<input type="button" name="removeFile" class="btn" id="btnRemove" value="삭제">';
+	        addWrap += '</div>'; 
             $(this).next().after(addWrap);
             count++;
       }); 
-   });
+   }); */
    
    //유효성검사
    $(function(){
@@ -363,14 +390,67 @@
                return;
             }
          });
-      });
+         
+         
+         $('#empPhone').on("keyup",function() {
+   		  $(this).val($(this).val().replace(/[^0-9]/g, ""));
+   	   	 });
+         
+         $('#pw2').blur(function(){
+	         var pw = $('#pw').val();
+	         var pw2 = $('#pw2').val();
+        	 if(pw == pw2) {
+        		$("span.okPw").show();
+				$("span.noPw").hide();
+        	 } else {
+        		$("span.okPw").hide();
+ 				$("span.noPw").show();
+        	 }
+         });
+         
+   });
    
    function validate() {
       var empAddr = $('#sample6_postcode').val();
-      empAddr += "|" + $('#sample6_address').val();
-      empAddr += "|" + $('#sample6_detailAddress').val();
-      empAddr += "|" + $('#sample6_extraAddress').val();
+      empAddr += "/" + $('#sample6_address').val();
+      empAddr += "/" + $('#sample6_detailAddress').val();
+      empAddr += "/" + $('#sample6_extraAddress').val();
       $('#empAddr').val(empAddr);
+      
+      if($('span.noId').is(":visible")) {
+    	  alert("아이디를 확인하세요.");
+    	  return false;
+      }
+      
+      if($('span.noPw').is(":visible")) {
+    	  alert("비밀번호를 확인하세요.");
+    	  return false;
+      }
+      
+      if($('#deptNo').val()=='0') {
+    	  alert("부서를 선택하세요.");
+    	  return false;
+      } 
+      
+      if($('#jobNo').val()=='0') {
+    	  alert("직급을 선택하세요.");
+    	  return false;
+      }
+      
+      if($('#empBank').val()=='0') {
+    	  alert("은행을 선택하세요.");
+    	  return false;
+      }
+      
+      if($('#upFile1').val()==null || $('#upFile1').val()=="") {
+    	  alert("사원사진을 등록해주세요.");
+    	  return false;
+      }
+      if($('#upFile3').val()==null || $('#upFile3').val()=="") {
+    	  alert("결재도장을 등록해주세요.");
+    	  return false;
+      }
+      
       $('#empFrm').attr("action","${pageContext.request.contextPath}/emp/insertEmpEnd.do");
       $('#empFrm').submit();
    }

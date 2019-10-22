@@ -87,6 +87,27 @@ public class StuffServiceImpl implements StuffService {
 		return dao.selectStuffSearchCount(sqlSession, m);
 	}
 
+	@Override
+	public Stuff stuffOne(int stuffNo) {
+		return dao.stuffOne(sqlSession, stuffNo);
+	}
+
+	@Override
+	public StuffUpload stuffUploadOne(int stuffNo) {
+		return dao.stuffUploadOne(sqlSession, stuffNo);
+	}
+
+	@Override
+	public StuffMaincategory selectMaincategory(int scNo) {
+		return dao.selectMaincategory(sqlSession, scNo);
+	}
+
+	@Override
+	public int updateStuff(Map<String, String> param) {
+		return dao.updateStuff(sqlSession, param);
+	}
+
+
 
 
 }

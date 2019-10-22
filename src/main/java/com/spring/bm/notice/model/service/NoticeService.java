@@ -23,8 +23,6 @@ public interface NoticeService {
 	List<Notice> selectNoticeList2();
 	//사이트등록
 	int insertSite(Map<String, Object> param);
-	//등록한 사이트 목록
-	List<Map<String, Object>> selectSiteList();
 	//게시글 수정
 	int updateNotice(Map<String, Object> param);
 	//게시글 삭제
@@ -35,6 +33,12 @@ public interface NoticeService {
 	int deleteUpNotice(Map<String, Object> param);
 	//게시글 첨부파일 수정사진 업로드
 	int insertUpNotice(Map<String, Object> param, List<UploadNotice> upNoticeList);
-	List<Notice> selectNoticeSearchList(Map<String, Object> m);
+	//게시글 제목으로 검색
+	List<Map<String, String>> selectNoticeSearchList(Map<String, Object> m);
+	//게시글 제목으로 검색
 	int selectNoticeSearchCount(Map<String, Object> m);
+	//등록한 사이트 목록 (내부)
+	List<Map<String, Object>> selectSiteList();
+	//등록한 사이트 목록 (외부)
+	List<Map<String, Object>> selectSiteList2();
 }

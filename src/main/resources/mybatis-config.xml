@@ -14,7 +14,7 @@
 		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffMaincategory" alias = "maincategory"/>
 		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffSubcategory" alias = "subcategory"/>
 		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffUpload" alias = "stuffupload"/>	
-
+		<typeAlias type = "com.spring.bm.employee.model.vo.EmpFile" alias = "empFile"/>	
 	</typeAliases>
 
 </configuration>

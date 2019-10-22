@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -10,69 +9,171 @@
 	<jsp:param value="Accounting" name="tabTitle"/> 
 	<jsp:param value="" name="pageTitle"/>
 </jsp:include>
+
 <!-- export Excel -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="${path }/resources/js/tableExport.js"></script>
-<script type="text/javascript" src="${path }/resources/js/FileSaver.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/libs/FileSaver/FileSaver.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/libs/jsPDF/jspdf.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/bluebird.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/html2canvas.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/tableExport.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="${path }/resources/b4/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-
-
 <script type="text/javaScript">
-   function doExcel() {
-     $('#excelstyles').tableExport({
-         type:'excel',
-         mso: {
-           styles: ['background-color'
-                    ]
-         }
-       }
-     );
-   }
+
+      function doExport() {
+        $('#excelstyles').tableExport({
+            type:'excel'
+          }
+        );
+      }
+      
+      function pdfExport(){
+
+    	    // 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
+    	    html2canvas(document.getElementById("pdfstyles"), {
+    	        onrendered: function (canvas) {
+
+    	            // 캔버스를 이미지로 변환
+    	            var imgData = canvas.toDataURL('image/png');
+
+    	            var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+    	            var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+    	            var imgHeight = canvas.height * imgWidth / canvas.width;
+    	            var heightLeft = imgHeight;
+
+    	            var doc = new jsPDF('p', 'mm');
+    	            var position = 0;
+
+    	            // 첫 페이지 출력
+    	            doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    	            heightLeft -= pageHeight;
+
+    	            // 한 페이지 이상일 경우 루프 돌면서 출력
+    	            while (heightLeft >= 20) {
+    	                position = heightLeft - imgHeight;
+    	                doc.addPage();
+    	                doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    	                heightLeft -= pageHeight;
+    	            }
+
+    	            // 파일 저장
+    	            doc.save('손익계산표.pdf');
+    	        }
+    	    });
+    	}
 </script>
 
 <section>
 
-<a href="#" onclick="doExcel()">Export to Excel</a>
+     <nav class="navbar navbar-expand-lg ">
+            <form class="form-inline ml-auto">
+                <a class="btn btn-outline-success pull-right" href="#" role="button" onclick="doExport()"><i class="fas fa-file-excel"></i> &nbsp Excel</a>
+					&nbsp
+					<a class="btn btn-outline-danger pull-right" href="#" role="button" onclick="pdfExport()"><i class="fas fa-file-pdf"></i> &nbsp PDF</a>
+            </form>
+    </nav>
+
 <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
  -->
-          <table id="excelstyles">
-    <thead>
-    <tr>
-        <th style="font-family: arial; font-size: 18px; font-weight: bold">C1</th>
-        <th style="font-family: arial; font-size: 18px; font-weight: bold">C2</th>
-        <th style="font-family: arial; font-size: 18px; font-weight: bold">C3</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td style="background-color:red">A</td>
-        <td style="background-color:green">B</td>
-        <td style="background-color:blue">C</td>
-    </tr>
-    <tr>
-        <td style="text-align:left">D</td>
-        <td style="text-align:center">E</td>
-        <td style="text-align:right">F</td>
-    </tr>
-    <tr>
-        <td style="color:green">G</td>
-        <td style="color:blue">H</td>
-        <td style="color:red">I</td>
-    </tr>
-    <tr>
-      <td style="lala:green">J</td>
-      <td style="lala:blue">K</td>
-      <td style="lala:red">L</td>
-  </tr>
-    </tbody>
-</table>
+     <!-- DataTales Example -->
+          <div class="card shadow mb-4" id = "pdfstyles">
+            <div class="card-header py-3 nav">
+              <h6 class="m-0 font-weight-bold  text-primary">손익  계산표</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered pdfstyles"   id="excelstyles" width="100%" cellspacing="0">
+                </tbody>
+                  <tbody>
+                    <tr>
+                      <td style="background-color">매출</td>
+                      <td  style="background-color">₩1,100,000,000</td>
+                      <td style="background-color"></td>
+                    </tr>
+                    <tr>
+                      <td>매출 원가</td>
+                      <td>(₩890,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td><strong>총 수익</strong></td>
+                      <td></td>
+                      <td><strong>₩210,000,000</strong></td>
+                    </tr>
+                    <tr>
+                      <td>경영비</td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>월세</td>
+                      <td>(₩3,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>임금</td>
+                      <td>(₩100,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>임금세</td>
+                      <td>(₩10,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>보험</td>
+                      <td>(₩5,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>법무 관련 수수료</td>
+                      <td>(₩2,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>지급 이자</td>
+                      <td>(₩3,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>지급 기타</td>
+                      <td>(₩2,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>지급 퇴직금</td>
+                      <td>(₩6,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>출장비</td>
+                      <td>(₩1,500,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>지급 세금</td>
+                      <td>(₩20,000,000)</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>총 경영비</td>
+                      <td></td>
+                      <td><strong>(₩152,500,000)</strong></td>
+                    </tr>
+                    <tr>
+                      <td>순 이익</td>
+                      <td></td>
+                      <td><strong>₩57,500,000</strong></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
 </section>
 
-
-
-
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-

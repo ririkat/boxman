@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.category.model.service.CategoryService;
@@ -176,6 +177,31 @@ public class CategoryController {
 		model.addAttribute("loc", loc);
 		
 		return "common/msg";
+	}
+	
+	
+	//메인 카테고리 이름 중복 검사
+	@RequestMapping("/category/maincategoryNameDupliCheck.do")
+	public @ResponseBody int maincategoryNameDupliCheck(@RequestParam("mcName") String mcName) {
+		
+		System.out.println(mcName);
+		
+		int result = service.maincategoryNameDupliCheck(mcName);
+		System.out.println(result);
+		
+		return result;
+	}
+	
+	//서브 카테고리 이름 중복 검사
+	@RequestMapping("/category/subcategoryNameDupliCheck.do")
+	public @ResponseBody int subcategoryNameDupliCheck(@RequestParam("scName") String scName) {
+		
+		System.out.println(scName);
+		
+		int result = service.subcategoryNameDupliCheck(scName);
+		System.out.println(result);
+		
+		return result;
 	}
 
 }
