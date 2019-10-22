@@ -80,7 +80,7 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
-	public List<Notice> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m) {
+	public List<Map<String, String>> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m) {
 		  int cPage = (Integer) m.get("cPage");
 	      int numPerPage = (Integer) m.get("numPerPage");
 	      RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
@@ -102,10 +102,6 @@ public class NoticeDaoImpl implements NoticeDao {
 	public List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("notice.selectSiteList2");
 	}
-	
-	
-	
-	
 	
 
 }

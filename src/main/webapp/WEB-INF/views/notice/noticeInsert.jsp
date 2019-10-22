@@ -29,7 +29,7 @@ div#demo-container {
                         <label class="form-check-label">
                          <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>
                       </div>
-                            
+
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
                         <input type="text" class="form-control" id="exampleInputName1" name="nName" placeholder="">

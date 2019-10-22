@@ -8,7 +8,8 @@
 	</insert>
 <!-- 	게시글 등록 -->
 	<insert id="insertNotice" parameterType="map">
-		insert into notice values(seq_notice.nextval, (select deptNo from department where deptName=#{deptName}), (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{nCategory}),#{nCheck}, #{nName}, #{nText}, default, sysdate)
+		insert into notice values(seq_notice.nextval, (select deptNo from department where deptName=#{deptName}),
+		 (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{nCategory}), #{nCheck}, #{nName}, #{nText}, default, sysdate)
 		<selectKey keyProperty="nNo" resultType="string" order="AFTER">
 			SELECT seq_notice.CURRVAL FROM DUAL
 		</selectKey>
@@ -48,30 +49,22 @@
 					 where nNo=a.nNo) as upNoticeCount
 					 from notice a order by nDate desc
 	</select>
-<!-- 	게시글 조회수 -->
+	<!-- 게시글 조회수 -->
 	<update id="updateReadCount" parameterType="_int">
 	  UPDATE NOTICE SET NREADCOUNT = NREADCOUNT + 1 WHERE NNO = #{nReadCount}
 	</update>
-<!-- 	게시글 첨부파일 조회 -->
+	<!-- 게시글 첨부파일 조회 -->
 	<select id="selectUpNoticeList" resultType="upNotice" parameterType="_int">
  		select * from upnotice where NNO=#{NNo}
  	</select>
-<!--  	게시글 필독체크 조회 -->
+	<!-- 게시글 필독체크 조회 -->
  	<select id="selectNoticeList2" resultType="notice">
  		select * from notice where NCHECK='필독체크'
  	</select>
-<!--  	상세페이지에서 필독체크인지 아닌지 화면에 띄워주기 -->
+	<!-- 상세페이지에서 필독체크인지 아닌지 화면에 띄워주기 -->
  	<select id="selectNoticeCheck" resultType="map">
  		select * from notice where nName=#{nName}
  	</select>
- 	
- 	<select id = "selectNoticeSearchList" parameterType="map" resultType = "map">
-      SELECT * FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
-   </select>
-   
-   <select id = "selectNoticeSearchCount" parameterType="map" resultType="_int">
-      SELECT COUNT(*) FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
-   </select>
    
    <!--  	사이트 리스트(내부) -->
  	<select id="selectSiteList" resultType="map">
@@ -82,4 +75,18 @@
  		select * from rSite where stCheck='외부'
  	</select>
 
+	<!-- 게시판에서 제목으로 검색 -->
+ 	<select id = "selectNoticeSearchList" parameterType="map" resultType = "map">
+      select a.*,(select count(*)
+					 from upNotice
+					 where nNo=a.nNo) as upNoticeCount
+					 from notice a WHERE a.nName LIKE '%'||#{data}||'%'
+					 order by nDate desc 
+   </select>
+	<!-- 게시판 제목으로 조회시 포함되는 글갯수 -->
+   <select id = "selectNoticeSearchCount" parameterType="map" resultType="_int">
+      SELECT COUNT(*) FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
+   </select>
+ 	<!-- 게시글검색 -->
+ 
 </mapper>

@@ -36,12 +36,11 @@ public interface NoticeDao {
 
 	int deleteUpNotice(SqlSessionTemplate sqlSession, Map<String, Object> param);
 
-	List<Notice> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m);
+	List<Map<String, String>> selectNoticeSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
 	int selectNoticeSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
 	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
 	
 	List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession);
-
 }

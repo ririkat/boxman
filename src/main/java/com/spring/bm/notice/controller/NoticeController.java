@@ -80,7 +80,13 @@ public class NoticeController {
 	@RequestMapping("/notice/insertNotice.do")
 	public ModelAndView insertNotice(@RequestParam Map<String, Object> param,
 			@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
+		
 
+		if(param.get("nCheck") == null || !param.get("nCheck").equals("필독체크") || param.get("nCheck").equals("null")) {
+
+			param.remove("nCheck");
+			param.put("nCheck", "필수아님");
+		}
 		//	             파일업로드 처리하기
 		//	      1.저장경로 지정하기
 		String saveDir=request.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
@@ -120,8 +126,17 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 		
-		String msg="";
-		String loc="/notice/selectNoticeList.do";
+		String nCategory = request.getParameter("nCategory");
+		
+		String msg="";		
+		String loc="";
+		
+		switch(nCategory) {
+			case "1" : loc="/notice/selectNoticeList.do"; break;
+			case "2" : loc="/notice/selectNoticeDeptList.do"; break;
+			case "3" : loc="/notice/guidelineList.do"; break;
+		}
+
 		if(result>0) {
 			msg="게시판등록성공!";
 		}else {
@@ -249,7 +264,7 @@ public class NoticeController {
 	//메인화면에서 게시판화면으로 화면전환, 게시판목록 (페이징처리)
 	//ModelAndView : 모델과 view를 한번에 묶어서 처리
 		@RequestMapping("/notice/selectNoticeList.do")
-		public ModelAndView selectList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
+		public ModelAndView selectList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
 
 			//반환될 modelAndView객체 생성
 			ModelAndView mv = new ModelAndView();
@@ -401,8 +416,7 @@ public class NoticeController {
 
 				return mv;
 			}
-			
-			
+				
 			//게시판글 검색
 			   @RequestMapping("/notice/searchNotice.do")
 			   public ModelAndView searchNotice(@RequestParam(value="cPage", 
@@ -416,7 +430,8 @@ public class NoticeController {
 			      m.put("numPerPage", numPerPage);
 			      m.put("data", data); // 빈칸에 입력한 값
 			            
-			      List<Notice> list=noticeService.selectNoticeSearchList(m);
+			      List<Map<String,String>> list=noticeService.selectNoticeSearchList(m);
+			      List<Notice> list2 = noticeService.selectNoticeList2();
 			      
 			      int totalCount = noticeService.selectNoticeSearchCount(m);
 			      
@@ -428,8 +443,18 @@ public class NoticeController {
 			      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/searchNotice.do"));
 			      mv.addObject("count",totalCount);
 			      mv.addObject("list",list);
+			      mv.addObject("list2",list2);
+
+			      String  = req.getParameter("");				
+			      switch() {
+					case "" : mv.setViewName("notice/noticeList"); break;
+					case "" : mv.setViewName("notice/noticeDeptList"); break;
+					case "" : mv.setViewName("notice/guidelineList"); break;
+					}
+
 			      mv.setViewName("notice/noticeList");
 			      return mv;
-			      
+
 			   }
+
 }

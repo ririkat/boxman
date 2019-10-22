@@ -51,7 +51,7 @@
                          <tr>
                         	<th>번호</th>
 							<th>제목</th>
-							<th>담당부서</th>
+							<th>작성자</th>
 							<th>첨부파일</th>
 							<th>등록일</th>
 							<th>조회수</th>
@@ -59,20 +59,22 @@
                        </thead>
                        <tbody>
                        
-           <c:forEach items="${list2 }" var ="list2" varStatus="v">
+            <c:forEach items="${list2 }" var ="list2" varStatus="v">
+                       <c:if test="${list2.NCategory == '2' }">
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2.NName}&nReadCount=${list2.NNo}&nNo=${list2.NNo}'>${list2.NName }</a></td>
-							<td>${list2.NText }</td>
+							<td></td>
 							<td><img src="${path}/resources/b4/img/btn_disk.gif" alt="첨부파일 있음"></td>
 							<td>${list2.NDate }</td>
 							<td>${list2.NReadCount }</td>
 						 </tr> 
+						 </c:if>
                        </c:forEach>
- 
                  		<c:forEach items="${list}" var="notice" varStatus="v">
+						 <c:if test="${notice['NCATEGORY'] == '2' }">
 							<c:choose>							 
-							    <c:when test="${notice['NCHECK'] == null && notice['UPNOTICECOUNT']>0}">
+							    <c:when test="${notice['NCHECK'] eq '필수아님' && notice['UPNOTICECOUNT']>0}">
 							    <tr>
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
@@ -82,7 +84,7 @@
 									<td><c:out value='${notice["NREADCOUNT"]}'/></td>
 								</tr>
 							    </c:when>
-							    <c:when test="${notice['NCHECK'] == null && notice['UPNOTICECOUNT']==0}">
+							    <c:when test="${notice['NCHECK'] eq '필수아님' && notice['UPNOTICECOUNT']==0}">
 							    <tr>
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
@@ -94,7 +96,8 @@
 								</tr>
 							    </c:when>
 							</c:choose>
-						</c:forEach>                
+						</c:if>        
+						</c:forEach>        
                        </tbody>
                      </table>
                    </div>

@@ -34,7 +34,7 @@ public interface NoticeService {
 	//게시글 첨부파일 수정사진 업로드
 	int insertUpNotice(Map<String, Object> param, List<UploadNotice> upNoticeList);
 	//게시글 제목으로 검색
-	List<Notice> selectNoticeSearchList(Map<String, Object> m);
+	List<Map<String, String>> selectNoticeSearchList(Map<String, Object> m);
 	//게시글 제목으로 검색
 	int selectNoticeSearchCount(Map<String, Object> m);
 	//등록한 사이트 목록 (내부)
