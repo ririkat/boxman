@@ -14,5 +14,13 @@ public interface ConnectionService {
 	int searchCon(Map<String,String> param);
 	
 	int enrollConn(Map<String,String> param) throws Exception;
+	
+	Map<String,String> selectConnection(int conCode);
+	String selectThisMainCateg(int conCode);
+	Map<String,String> selectTransferInfo(int conCode);
+	
+	int modifyConn(Map<String,String> param) throws Exception;
+	
+	int deleteConn(int conCode);
 
 }

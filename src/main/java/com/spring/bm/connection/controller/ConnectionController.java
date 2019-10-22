@@ -1,10 +1,12 @@
 package com.spring.bm.connection.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -83,6 +85,69 @@ public class ConnectionController {
 			msg="거래처 등록 성공";
 		}else {
 			msg="거래처 등록 실패";
+		}
+		ModelAndView mv= new ModelAndView();
+				
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	@RequestMapping("/connection/modifyConn.do")
+	public ModelAndView modifyConn(HttpServletRequest req) {
+		int conCode = Integer.parseInt(req.getParameter("conCode"));
+		
+		Map<String,String> conn = service.selectConnection(conCode);
+		String mainCateg = service.selectThisMainCateg(conCode);
+		Map<String,String> transfer =  service.selectTransferInfo(conCode);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("conn",conn);
+		mv.addObject("mCateg",mainCateg);
+		mv.addObject("transferInfo",transfer);
+		mv.setViewName("connection/modifyConn");
+		return mv;
+	}
+	
+	@RequestMapping("/connection/modifyConnEnd.do")
+	public ModelAndView modifyConnEnd(@RequestParam Map<String,String> param) {
+		int result = 0;
+		try {
+			result = service.modifyConn(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String msg="";
+		String loc="/connection/connList.do";
+		if(result>0) {
+			msg="거래처 수정 성공";
+		}else {
+			msg="거래처 수정 실패";
+		}
+		ModelAndView mv= new ModelAndView();
+				
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	@RequestMapping("/connection/deleteConn.do")
+	public ModelAndView deleteConn(HttpServletRequest req) {
+		int conCode = Integer.parseInt(req.getParameter("conCode"));
+		
+		int result = service.deleteConn(conCode);
+		
+		String msg="";
+		String loc="/connection/connList.do";
+		if(result>0) {
+			msg="거래처 삭제 성공";
+		}else {
+			msg="거래처 삭제 실패";
 		}
 		ModelAndView mv= new ModelAndView();
 				

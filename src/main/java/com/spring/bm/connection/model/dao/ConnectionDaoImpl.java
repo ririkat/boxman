@@ -46,4 +46,34 @@ public class ConnectionDaoImpl implements ConnectionDao {
 		return session.insert("connection.enrollTransferInfo",param);
 	}
 
+	@Override
+	public Map<String, String> selectConnection(SqlSessionTemplate session, int conCode) {
+		return session.selectOne("connection.selectConnection", conCode);
+	}
+
+	@Override
+	public String selectThisMainCateg(SqlSessionTemplate session, int conCode) {
+		return session.selectOne("connection.selectThisMainCateg", conCode);
+	}
+
+	@Override
+	public Map<String, String> selectTransferInfo(SqlSessionTemplate session, int conCode) {
+		return session.selectOne("connection.selectTransferInfo", conCode);
+	}
+
+	@Override
+	public int modifyConn(SqlSessionTemplate session, Map<String, String> param) {
+		return session.update("connection.modifyConn",param);
+	}
+
+	@Override
+	public int modifyTransferInfo(SqlSessionTemplate session, Map<String, String> param) {
+		return session.update("connection.modifyTransferInfo",param);
+	}
+
+	@Override
+	public int deleteConn(SqlSessionTemplate session, int conCode) {
+		return session.delete("connection.deleteConn", conCode);
+	}
+
 }

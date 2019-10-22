@@ -142,11 +142,12 @@
 								<input type="radio" class="form-check-input" name="conTransCk" id="conTransCk2" value="N"> 나중에 <i class="input-helper"></i>
 							</label>
 						</div>
+						<br>
 						<div class="form-group">
-							<input type="text" class="form-control trf" id="trfBkName" name="trfBkName" placeholder="은행명" />
-							<input type="text" class="form-control trf" id="trfAccount" name="trfAccount" placeholder="계좌번호" />
-							<input type="text" class="form-control trf" id="trfAccHolder" name="trfAccHolder" placeholder="예금주명" />
-							<input type="text" class="form-control trf" id="trfNote" name="trfNote" placeholder="비고" />
+							<label>은행명<input type="text" class="form-control trf" id="trfBkName" name="trfBkName" placeholder="은행명" /></label>
+							<label>계좌번호<input type="text" class="form-control trf" id="trfAccount" name="trfAccount" placeholder="계좌번호" /></label>
+							<label>예금주명<input type="text" class="form-control trf" id="trfAccHolder" name="trfAccHolder" placeholder="예금주명" /></label>
+							<label>비고<input type="text" class="form-control trf" id="trfNote" name="trfNote" placeholder="비고" /></label>
 						</div>
 					</div>
 				</div>

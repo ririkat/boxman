@@ -7,7 +7,7 @@
 	</select>
 	
 	<select id="selectConnList" resultType="map">
-		SELECT  A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+)
+		SELECT  A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+) ORDER BY CONCODE
 	</select>
 	
 	<select id="selectStfMainCateg" resultType="map">
@@ -32,12 +32,42 @@
 					(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName}),
 				</when>
 			</choose>
-			#{conUseCk}, #{conTransCk}, '${address} ${address_etc}', 1, 1)
+			#{conUseCk}, #{conTransCk}, '${postcode1}-${postcode2} ${address} (${address_etc})', 1, 1)
 	</insert>
 	
 	<insert id="enrollTransferInfo">
 		INSERT INTO TRANSFERINFO VALUES(seq_conn.currval, seq_transfer.nextval, #{trfBkName}, #{trfAccount}, #{trfAccHolder}, #{trfNote})
 	</insert>
+	
+	<select id="selectConnection" parameterType="_int" resultType="map">
+		SELECT * FROM CONNECTION WHERE CONCODE=#{conCode}
+	</select>
+	
+	<select id="selectThisMainCateg" parameterType="_int" resultType="string">
+		SELECT MCNAME FROM STUFF_MAINCATEGORY WHERE MCNO=(SELECT MCNO FROM CONNECTION WHERE CONCODE=#{conCode})
+	</select>
+	
+	<select id="selectTransferInfo" parameterType="_int" resultType="map">
+		SELECT * FROM TRANSFERINFO WHERE CONCODE=#{conCode}
+	</select>
+	
+	<update id="modifyConn" parameterType="map">
+		UPDATE CONNECTION
+		SET CONREPNAME=#{conRepName}, CONTEL=#{conTel},
+			CONPHONE=#{conPhone}, CONUSECK=#{conUseCk}, CONTRANSCK=#{conTransCk},
+			CONADDR='${postcode1}-${postcode2} ${address} (${address_etc})'
+		WHERE CONCODE=#{conCode}
+	</update>
+	
+	<update id="modifyTransferInfo">
+		UPDATE TRANSFERINFO
+		SET TRFBKNAME=#{trfBkName}, TRFACCOUNT=#{trfAccount}, TRFACCHOLDER=#{trfAccHolder}, TRFNOTE=#{trfNote}
+		WHERE CONCODE=#{conCode} AND TRFCODE=#{trfCode}
+	</update>
+	
+	<delete id="deleteConn" parameterType="_int">
+		DELETE FROM CONNECTION WHERE CONCODE=#{conCode}
+	</delete>
 
 </mapper>
 

@@ -65,7 +65,7 @@
                        <tbody>
                           <c:forEach items="${list }" var="c">
 								<tr>
-									<td><a href='#'><c:out value='${c["CONCODE"] }'/></a></td>
+									<td><a href='${path }/connection/modifyConn.do?conCode=${c["CONCODE"]}&conTransCk=${c["CONTRANSCK"]}'><c:out value='${c["CONCODE"] }'/></a></td>
 									<td><c:out value='${c["CONNAME"] }' /></td>
 									<td><c:out value='${c["CONREPNAME"] }' /></td>
 									<td><c:out value='${c["CONTEL"] }' /></td>

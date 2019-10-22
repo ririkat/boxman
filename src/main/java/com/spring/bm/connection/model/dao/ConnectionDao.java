@@ -18,4 +18,13 @@ public interface ConnectionDao {
 	int enrollConn(SqlSessionTemplate session, Map<String,String> param);
 	int enrollTransferInfo(SqlSessionTemplate session, Map<String,String> param);
 	
+	Map<String, String> selectConnection(SqlSessionTemplate session, int conCode);
+	String selectThisMainCateg(SqlSessionTemplate session, int conCode);
+	Map<String, String> selectTransferInfo(SqlSessionTemplate session, int conCode);
+	
+	int modifyConn(SqlSessionTemplate session, Map<String, String> param);
+	int modifyTransferInfo(SqlSessionTemplate session, Map<String,String> param);
+	
+	int deleteConn(SqlSessionTemplate session, int conCode);
+	
 }
