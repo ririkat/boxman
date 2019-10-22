@@ -68,18 +68,19 @@
 
 <section>
 
-	<ul class="nav nav-pills">
-	    <li><a href="#" onclick="doExport()">Export to Excel</a></li>
-	    <li><a href="#" onclick="pdfExport()">Export to PDF</a></li>
-	</ul>
-  
-
+     <nav class="navbar navbar-expand-lg ">
+            <form class="form-inline ml-auto">
+                <a class="btn btn-outline-success pull-right" href="#" role="button" onclick="doExport()"><i class="fas fa-file-excel"></i> &nbsp Excel</a>
+					&nbsp
+					<a class="btn btn-outline-danger pull-right" href="#" role="button" onclick="pdfExport()"><i class="fas fa-file-pdf"></i> &nbsp PDF</a>
+            </form>
+    </nav>
 
 <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
  -->
      <!-- DataTales Example -->
           <div class="card shadow mb-4" id = "pdfstyles">
-            <div class="card-header py-3">
+            <div class="card-header py-3 nav">
               <h6 class="m-0 font-weight-bold  text-primary">손익  계산표</h6>
             </div>
             <div class="card-body">
@@ -175,3 +176,4 @@
 
 </section>
 
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

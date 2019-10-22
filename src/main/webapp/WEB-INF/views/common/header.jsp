@@ -28,6 +28,16 @@
   <!-- CSS -->
   <link href="${path }/resources/b4/css/sb-admin-2.min.css" rel="stylesheet">
   
+      <!-- Bootstrap core JavaScript-->
+  <script src="${path }/resources/b4/vendor/jquery/jquery.min.js"></script>
+  <script src="${path }/resources/b4/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="${path }/resources/b4/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="${path }/resources/b4/js/sb-admin-2.min.js"></script>
+  
 
 </head>
 
