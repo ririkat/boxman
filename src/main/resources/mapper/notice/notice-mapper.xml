@@ -8,8 +8,8 @@
 	</insert>
 <!-- 	게시글 등록 -->
 	<insert id="insertNotice" parameterType="map">
-		insert into notice values(seq_notice.nextval, (select deptNo from department where deptName=#{deptName}),
-		 (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{nCategory}), #{nCheck}, #{nName}, #{nText}, default, sysdate)
+		insert into notice values(seq_notice.nextval, (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{categoryNo}),
+											 #{nCheck}, #{nName}, #{nText}, default, sysdate)
 		<selectKey keyProperty="nNo" resultType="string" order="AFTER">
 			SELECT seq_notice.CURRVAL FROM DUAL
 		</selectKey>
@@ -20,7 +20,7 @@
 	</insert>
 <!-- 	게시글 수정 -->
 	<update id="updateNotice" parameterType="map">
-		update notice set deptNo=(select deptNo from department where deptName=#{deptName}) , nCheck=#{nCheck} , nName=#{nName}, nText=#{nText}, nReadCount=default, nDate=sysdate where NNO=#{nNo}
+		update notice set nCheck=#{nCheck} , nName=#{nName}, nText=#{nText}, nReadCount=default, nDate=sysdate where NNO=#{nNo}
 	</update>
 <!-- 	게시글 수정(첨부파일) -->
 	<update id="">
@@ -36,7 +36,7 @@
 	</delete>
 <!-- 	게시글 상세페이지 -->
 	<select id="selectNoticeOne" resultType="notice">
-		select A.* , B.deptname from notice A , department B where A.deptNo = B.deptNo AND nName=#{nName}
+		select * from notice where  nName=#{nName}
 	</select>
 <!-- 	페이징처리 -->
 	<select id="selectNoticeCount" resultType="_int">
@@ -65,7 +65,7 @@
  	<select id="selectNoticeCheck" resultType="map">
  		select * from notice where nName=#{nName}
  	</select>
-   
+
    <!--  	사이트 리스트(내부) -->
  	<select id="selectSiteList" resultType="map">
  		select * from rSite where stCheck='내부'
@@ -87,6 +87,9 @@
    <select id = "selectNoticeSearchCount" parameterType="map" resultType="_int">
       SELECT COUNT(*) FROM NOTICE WHERE nName LIKE '%'||#{data}||'%'
    </select>
- 	<!-- 게시글검색 -->
+ 	<!--  -->
+ 	<select id="selectLoginEmp" parameterType="map" resultType="map">
+		SELECT EMPNAME, EMPPHONE FROM EMPLOYEE WHERE EMPID=#{empId}
+	</select>
  
 </mapper>

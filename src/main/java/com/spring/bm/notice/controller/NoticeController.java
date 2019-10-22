@@ -81,9 +81,8 @@ public class NoticeController {
 	public ModelAndView insertNotice(@RequestParam Map<String, Object> param,
 			@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
 		
-
+		
 		if(param.get("nCheck") == null || !param.get("nCheck").equals("필독체크") || param.get("nCheck").equals("null")) {
-
 			param.remove("nCheck");
 			param.put("nCheck", "필수아님");
 		}
@@ -126,12 +125,12 @@ public class NoticeController {
 			e.printStackTrace();
 		}
 		
-		String nCategory = request.getParameter("nCategory");
+		String categoryNo = request.getParameter("categoryNo");
 		
 		String msg="";		
 		String loc="";
 		
-		switch(nCategory) {
+		switch(categoryNo) {
 			case "1" : loc="/notice/selectNoticeList.do"; break;
 			case "2" : loc="/notice/selectNoticeDeptList.do"; break;
 			case "3" : loc="/notice/guidelineList.do"; break;
@@ -158,13 +157,11 @@ public class NoticeController {
 
 		Notice nt = noticeService.selectNoticeOne(nName);
 		List<UploadNotice> upNotice  = noticeService.selectUpNoticeList(nNo);
-		List<Map<String, String>> list = deptservice.selectDeptList();	
 		List<Map<String,String>> list2 = noticeService.selectNoticeCheck(nName);
 		//조회수 +1
 		int rc = noticeService.updateReadCount(nReadCount);
 
 		model.addAttribute("upNotice",upNotice);
-		model.addAttribute("deptList",list);
 		model.addAttribute("list2",list2);
 		model.addAttribute("nt",nt);
 		model.addAttribute("rc",rc);
@@ -444,17 +441,9 @@ public class NoticeController {
 			      mv.addObject("count",totalCount);
 			      mv.addObject("list",list);
 			      mv.addObject("list2",list2);
-
-//			      String  = req.getParameter("");				
-//			      switch() {
-//					case "" : mv.setViewName("notice/noticeList"); break;
-//					case "" : mv.setViewName("notice/noticeDeptList"); break;
-//					case "" : mv.setViewName("notice/guidelineList"); break;
-//					}
-
 			      mv.setViewName("notice/noticeList");
 			      return mv;
-
+			      
 			   }
 
 }

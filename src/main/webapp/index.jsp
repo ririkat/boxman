@@ -28,12 +28,11 @@
 <style>
 .vertical-center {
 	min-height: 100%; /* Fallback for browsers do NOT support vh unit */
-	min-height: 100vh; /* These two lines are counted as one :-)       */
+	min-height: 100vh; /* These two lines are counted as one :-) */
 	display: flex;
 	align-items: center;
 }
 </style>
-
 </head>
 
 <body class="bg-gradient-primary vertical-center">

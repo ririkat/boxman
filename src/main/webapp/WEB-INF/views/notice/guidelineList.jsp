@@ -59,11 +59,11 @@
                        </thead>
                        <tbody>
       <c:forEach items="${list2 }" var ="list2" varStatus="v">
-                       <c:if test="${list2.NCategory eq '3' }">
+                       <c:if test="${list2.categoryNo eq '3' }">
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2.NName}&nReadCount=${list2.NNo}&nNo=${list2.NNo}'>${list2.NName }</a></td>
-							<td></td>
+							<td>${loginEmp['EMPNAME'] }</td>
 							<td><img src="${path}/resources/b4/img/btn_disk.gif" alt="첨부파일 있음"></td>
 							<td>${list2.NDate }</td>
 							<td>${list2.NReadCount }</td>
@@ -71,13 +71,13 @@
 						 </c:if>
                        </c:forEach>
                  		<c:forEach items="${list}" var="notice" varStatus="v">
-						 <c:if test="${notice['NCATEGORY'] eq '3' }">
+						 <c:if test="${notice['CATEGORYNO'] eq '3' }">
 							<c:choose>							 
 							    <c:when test="${notice['NCHECK'] eq '필수아님' && notice['UPNOTICECOUNT']>0}">
 							    <tr>
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
-									<td><c:out value='${notice["NTEXT"]}'/></td>							 
+									<td>${loginEmp['EMPNAME'] }</td>							 
 									<td><img src="${path}/resources/b4/img/btn_disk.gif" alt="첨부파일 있음"></td>									
 									<td><c:out value='${notice["NDATE"]}'/></td>
 									<td><c:out value='${notice["NREADCOUNT"]}'/></td>
@@ -87,7 +87,7 @@
 							    <tr>
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
-									<td><c:out value='${notice["NTEXT"]}'/></td>							 
+									<td>${loginEmp['EMPNAME'] }</td>							 
 									<td></td>
 
 									<td><c:out value='${notice["NDATE"]}'/></td>
