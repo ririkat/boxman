@@ -39,7 +39,9 @@ public interface StuffDao {
 
 	StuffUpload stuffUploadOne(SqlSessionTemplate sqlSession, int stuffNo);
 
-	String selectMcname(SqlSessionTemplate sqlSession, String scName);
+	StuffMaincategory selectMaincategory(SqlSessionTemplate sqlSession, int scNo);
+
+	int updateStuff(SqlSessionTemplate sqlSession, Map<String, String> param);
 
 
 

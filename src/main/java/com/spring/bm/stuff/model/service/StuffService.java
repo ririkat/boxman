@@ -35,7 +35,10 @@ public interface StuffService {
 
 	StuffUpload stuffUploadOne(int stuffNo);
 
-	String selectMcname(String scName);
+	StuffMaincategory selectMaincategory(int scNo);
+
+	int updateStuff(Map<String, String> param);
+
 
 
 

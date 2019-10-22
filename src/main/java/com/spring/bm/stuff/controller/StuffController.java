@@ -207,21 +207,54 @@ public class StuffController {
 	@RequestMapping("/stuff/stuffOne.do")
 	public ModelAndView stuffOne(@RequestParam("stuffNo") int stuffNo) {
 		
-		System.out.println(stuffNo);
-		
+
 		Stuff stuff = service.stuffOne(stuffNo);
 		StuffUpload stuffUpload = service.stuffUploadOne(stuffNo);
 		List<StuffMaincategory> list = service.stuffMaincategoryList();
-		String mcName = service.selectMcname(stuff.getScName());
-		
-		System.out.println("STUFF : " + stuff);
-		System.out.println("STUFFUPLOAD : " + stuffUpload);
+		StuffMaincategory stuffMaincategory = service.selectMaincategory(stuff.getScNo());
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("stuff", stuff);
 		mv.addObject("stuffUpload", stuffUpload);
 		mv.addObject("list", list);
+		mv.addObject("stuffMaincategory", stuffMaincategory);
 		mv.setViewName("stuff/stuffOne");
+		
+		
+		return mv;
+	}
+	
+	//물품 수정
+	@RequestMapping("/stuff/stuffUpdateEnd.do")
+	public ModelAndView stuffUpdate(@RequestParam Map<String,String> param, HttpServletRequest request,
+			@RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
+		
+		
+		int stuffNo = Integer.parseInt(param.get("stuffNo"));
+		
+		for ( String key : param.keySet() ) {
+		    System.out.println("key : " + key +" / value : " + param.get(key));
+		}
+		System.out.println("=======================");
+		
+		
+		int result = service.updateStuff(param);
+		System.out.println("변경 되었는가? : " + result);
+		
+		
+		String msg = "";
+		String loc = "/stuff/stuffOne.do?stuffNo="+stuffNo;
+		
+		if(result > 0 ) {
+			msg = "물품 수정 완료!";
+		} else {
+			msg = "물품 수정 실패!";
+		}
+	
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
 		
 		return mv;
 	}

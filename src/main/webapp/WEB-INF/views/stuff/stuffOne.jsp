@@ -13,9 +13,10 @@
 
 <section>
 <div class = "card shadow mb-4">
-<form id = "stuffFrm" enctype="multipart/form-data" method="post" action="${path}/stuff/stuffEnrollEnd.do" onsubmit="return checkValue();">
+<form id = "stuffFrm" enctype="multipart/form-data" method="post" action="${path}/stuff/stuffUpdateEnd.do" onsubmit="return checkValue();">
 	<div class="card-body">
 		<h4 class="card-title">물품 상세</h4>
+		<input type = "hidden" name = "stuffNo" value = "${stuff.stuffNo }"/>
 		<p class="card-description" style = "color : red">수정을 원하시면 값을 다시 입력해주세요.</p>
 			<div>
 				<label for="exampleInputName1">물품 이미지</label>
@@ -96,14 +97,14 @@
 				<label class = "col-sm-2 col-form-labe">물품 카테고리</label>
 				<div class = "col-sm-10">
 					<select name = "stuffMain" id = "stuffMain" class = "form-control" required="required">
-						<option value = "0">선택1</option>
+						<option value = "${stuffMaincategory.mcNo }">${stuffMaincategory.mcName }</option>
 						<c:forEach var = "mc" items = "${list }">
 							<option value = "${mc.mcNo }">${mc.mcName }</option>
 						</c:forEach>
 					</select>
 					<br>
 					<select name = "stuffSub" id = "stuffSub"  class = "form-control">
-						<option value = "${stuff.scName }">${stuff.scName }</option>
+						<option value = "${stuff.scName}">${stuff.scName }</option>
 					</select>
 				</div>
 			</div>
@@ -113,14 +114,26 @@
 				<div class = "form-group row">
 				<div class = "col-sm-10">
 				<div class="card-title">결함 유무</div>
+				<c:if test='${fn:trim(stuff.stuffStatus) eq "Y"}'>
 					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus0" value = "Y" required="required"/>
+						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus0" value = "Y" required="required" checked/>
 						<label class = "from-check-label" for = "stuffStatus0">결함 있음</label>
 					</div>
 					<div class = "form-check from-check-inline">
 						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus1" value = "N" required="required"/>
 						<label class = "from-check-label" for = "stuffStatus1">결함 없음</label>
 					</div>
+				</c:if>
+				<c:if test='${fn:trim(stuff.stuffStatus) eq "N"}'>
+					<div class = "form-check from-check-inline">
+						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus0" value = "Y" required="required"/>
+						<label class = "from-check-label" for = "stuffStatus0">결함 있음</label>
+					</div>
+					<div class = "form-check from-check-inline">
+						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus1" value = "N" required="required" checked/>
+						<label class = "from-check-label" for = "stuffStatus1">결함 없음</label>
+					</div>
+				</c:if>
 				</div>
 			</div>
 					</div>
@@ -135,14 +148,14 @@
 				<label class = "col-sm-2 col-form-labe">물품 이미지</label>
 				<div class = "col-sm-10">
 					<div class="custom-file">
-                    <input type="file" class="custom-file-input" name="upFile" id="upFile" required="required">
-                    <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
+                    <input type="file" class="custom-file-input" name="upFile" id="upFile">
+                    <label class="custom-file-label" for="upFile">${stuffUpload.imgOriname }</label>
                 	</div>
 				</div>
 			</div>
 
 
-			<input type = "submit" class = "btn btn-success mr-2" value="등록" id = "btn">
+			<input type = "submit" class = "btn btn-success mr-2" value="수정" id = "btn">
 
 
 			</div>		

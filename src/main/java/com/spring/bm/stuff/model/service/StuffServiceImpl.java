@@ -98,9 +98,15 @@ public class StuffServiceImpl implements StuffService {
 	}
 
 	@Override
-	public String selectMcname(String scName) {
-		return dao.selectMcname(sqlSession, scName);
+	public StuffMaincategory selectMaincategory(int scNo) {
+		return dao.selectMaincategory(sqlSession, scNo);
 	}
+
+	@Override
+	public int updateStuff(Map<String, String> param) {
+		return dao.updateStuff(sqlSession, param);
+	}
+
 
 
 

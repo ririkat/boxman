@@ -45,6 +45,10 @@
 	<select id = "subcategoryNameDupliCheck" parameterType="string" resultType="_int">
 		SELECT COUNT(*) FROM STUFF_SUBCATEGORY WHERE SCNAME = #{scName}	
 	</select>
+	
+	<select id = "selectMaincategory" parameterType="_int" resultType="maincategory">
+		SELECT * FROM STUFF_MAINCATEGORY WHERE MCNO = (SELECT MCNO FROM STUFF_SUBCATEGORY WHERE SCNO = #{scNo})
+	</select>
 </mapper>
 
 
