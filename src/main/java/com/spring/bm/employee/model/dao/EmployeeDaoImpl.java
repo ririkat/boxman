@@ -105,6 +105,15 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.update("emp.updateEmp", param);
 	}
 	
+	/* 비밀번호변경 */
+	@Override
+	public int updatePassword(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("emp.updatePassword", param);
+	}
+	
+	
+	
 	
 	
 	

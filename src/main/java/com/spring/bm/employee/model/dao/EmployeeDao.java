@@ -34,6 +34,8 @@ public interface EmployeeDao {
 	int deleteEmpFile(SqlSessionTemplate session, int efNo);
 	/* 사원수정 */
 	int updateEmp(SqlSessionTemplate session, Map<String, Object> param);
+	/* 비밀번호변경 */
+	int updatePassword(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
 

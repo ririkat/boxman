@@ -252,11 +252,16 @@
 					</c:forEach>
 					<div style="margin: 0 auto; width: fit-content;">
 						<input type="button" id="updateEmp" class="btn btn-success mr-2"
-							value="수정" style="width: 150px;">
+							value="정보수정" style="width: 150px;">
+						<input type="button" id="updatePwEmp" class="btn btn-success mr-2"
+							value="비밀번호 변경" style="width: 150px;">
 					</div>
 				</form>
 			</div>
 			<form name="updateFrm" action="${path }/emp/selectEmpOne.do">
+				<input type="hidden" value='${emp[EMPNO]}' name="empNo" />
+			</form>
+			<form name="updatePwFrm">
 				<input type="hidden" value='${emp[EMPNO]}' name="empNo" />
 			</form>
 		</div>
@@ -266,7 +271,7 @@
 	//수정버튼 누를때
 	$(function(){
 		$('#updateEmp').click(function(){
-			if($('#updateEmp').val()=="수정") {
+			if($('#updateEmp').val()=="정보수정") {
 				$('input').attr("readonly", false);
 				$('input.noFalse').attr("readonly", true);
 				$('#btnPost').show();
@@ -284,6 +289,18 @@
 				$('#empUpFrm').attr("action","${path}/emp/updateEmpEnd.do");
 				$('#empUpFrm').submit();
 			}
+		});
+		
+		//비밀번호 변경
+		$('#updatePwEmp').click(function() {
+			var url = '${path}/emp/updatePassword.do?empNo=${emp[EMPNO]}';
+			var status = "width=600, height=400, resizable=no, status=no, toolbars=no, menubar=no";
+			var title="비밀번호 변경"
+			var popUp = open("", title, status);
+			window.name="parentWin"; 
+			updatePwFrm.target = title;
+			updatePwFrm.action=url;
+			updatePwFrm.submit();
 		});
 	});
    
