@@ -209,7 +209,7 @@
 								<div class="form-group row">
 									<label class="col-sm-3 col-form-label">결재도장</label>
 									<div class="col-sm-9">
-											<img src="${path}/resources/upload/emp/${f.efReName}" style="width:200px; height:auto;"/>
+											<img src="${path}/resources/upload/emp/${f.efReName}" style="width:200px; height:auto;" id="stampImg"/>
 										
 									</div>
 									<div class="custom-file divFile" style="display:none;">
@@ -220,7 +220,7 @@
 							</div>
 							</c:if>
 						</div>
-						<div class="row">
+						<%-- <div class="row">
 							<c:if test="${f.efcName eq '자격증'}">
 							<input type="hidden" value='${f.efNo}' name="licenNo"/>
 							<input type="hidden" value='${f.efReName}' name="licenReName"/>
@@ -248,7 +248,7 @@
 								<div class="form-group row" id="setHeight" style="height: 40px;">
 								</div>
 							</div>
-						</div>
+						</div> --%>
 					</c:forEach>
 					<div style="margin: 0 auto; width: fit-content;">
 						<input type="button" id="updateEmp" class="btn btn-success mr-2"
@@ -308,7 +308,7 @@
 			var reader = new FileReader();
 			$(this).next('.custom-file-label').html(fileName);
 			reader.onload = function(e) {
-				$('#proImg').attr("src",e.target.result);
+				$('#stampImg').attr("src",e.target.result);
 			}
 			reader.readAsDataURL(this.files[0]);
 		});
@@ -316,7 +316,7 @@
 	var count = 4;
 	
 	//파일추가
-	$(function(){
+	/* $(function(){
 		$('#addFile').click(function(){
 			setHeight = setHeight + 80;
 			$('#setHeight').css("height",setHeight + "px");
@@ -332,7 +332,7 @@
             $(this).next().after(addWrap);
             count++;
       }); 
-   });
+   }); */
 	
 
 	function sample6_execDaumPostcode() {

@@ -259,7 +259,7 @@
              </div>
            </div>
          </div>
-         <div class="row">
+         <!-- <div class="row">
            <div class="col-md-6">
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">자격증사진 </label>
@@ -281,13 +281,12 @@
              <div class="form-group row" id="setHeight" style="height:40px;">
              </div>
            </div>
-         </div>
+         </div> -->
          <div style="margin:0 auto; width:fit-content;">
             <input type="button" class="btn btn-success mr-2" value="등록" onclick="return validate();" style="width:150px;">
          </div>
        </form>
-     </div>
- 
+   	</div>
    </div>
  </div>
 </section>
@@ -338,7 +337,7 @@
 			var reader = new FileReader();
 			$(this).next('.custom-file-label').html(fileName);
 			reader.onload = function(e) {
-				$('#proImg').attr("src",e.target.result);
+				$('#stampImg').attr("src",e.target.result);
 			}
 			reader.readAsDataURL(this.files[0]);
 		});
@@ -346,7 +345,7 @@
 	var count = 4;
 	
 	//파일추가
-	$(function(){
+	/* $(function(){
 		$('#addFile').click(function(){
 			setHeight = setHeight + 80;
 			$('#setHeight').css("height",setHeight + "px");
@@ -362,7 +361,7 @@
             $(this).next().after(addWrap);
             count++;
       }); 
-   });
+   }); */
    
    //유효성검사
    $(function(){
@@ -440,6 +439,15 @@
       
       if($('#empBank').val()=='0') {
     	  alert("은행을 선택하세요.");
+    	  return false;
+      }
+      
+      if($('#upFile1').val()==null || $('#upFile1').val()=="") {
+    	  alert("사원사진을 등록해주세요.");
+    	  return false;
+      }
+      if($('#upFile3').val()==null || $('#upFile3').val()=="") {
+    	  alert("결재도장을 등록해주세요.");
     	  return false;
       }
       
