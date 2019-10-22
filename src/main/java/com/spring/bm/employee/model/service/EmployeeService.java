@@ -14,11 +14,19 @@ public interface EmployeeService {
 	/* 사원등록 */
 	int insertEmp(Map<String, String> param, List<EmpFile> fileList) throws Exception;
 	/* 사원상세보기 */
-	Map<String, String> selectEmpOne(int empNo);
+	Map<String, Object> selectEmpOne(int empNo);
+	List<EmpFile> selectEmpFileList(int empNo);
 	/* 사원로그인*/
 	Map<String, String> selectLoginEmp(Map<String, String> map);
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(Map<String, Object> param);
 	int selectEmpSearchCount(Map<String, Object> param);
+	/* 아이디중복확인 */
+	int checkId(String empId);
+	/* 첨부파일삭제 */
+	int deleteEmpFile(int efNo) throws Exception;
+	/* 사원수정 */
+	int updateEmp(Map<String, Object> param, List<EmpFile> fileList) throws Exception;
+	
 }
 

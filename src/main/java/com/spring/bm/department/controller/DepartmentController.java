@@ -35,7 +35,7 @@ public class DepartmentController {
 	@RequestMapping("/dept/updateDept.do")
 	public ModelAndView updateDept(int deptNo) {
 		
-		Map<String, String> dept = service.selectDeptOne(deptNo);
+		Map<String, Object> dept = service.selectDeptOne(deptNo);
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("dept", dept);
 		mv.addObject("temp", "수정");
