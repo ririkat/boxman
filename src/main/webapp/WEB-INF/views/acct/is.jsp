@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -14,6 +13,8 @@
 <!-- export Excel -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="${path }/resources/moog/libs/FileSaver/FileSaver.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/libs/jsPDF/jspdf.min.js"></script>
+<script type="text/javascript" src="${path }/resources/moog/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
 <script type="text/javascript" src="${path }/resources/moog/tableExport.js"></script>
 <!-- Core plugin JavaScript-->
 <script src="${path }/resources/b4/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -21,24 +22,27 @@
 <script type="text/javaScript">
       function doExport() {
         $('#excelstyles').tableExport({
-            type:'excel',
-            mso: {
-              styles: ['background-color',
-                       'color',
-                       'font-family',
-                       'font-size',
-                       'font-weight',
-                       'text-align',
-                      'lala']
-            }
+            type:'excel'
           }
         );
+      }
+      
+      function pdfExport() {
+    	  
+          $('.pdfstyles').tableExport({type:'pdf',
+                                       jspdf: {orientation: 'p',
+                                               margins: {right: 20, left: 20, top: 30, bottom: 30},
+                                               autotable: {styles: {fillColor: 'inherit',
+                                                                    textColor: 'inherit',
+                                                                    fontStyle: 'inherit'},
+                                                           tableWidth: 'wrap'}}});
       }
 </script>
 
 <section>
 
 <a href="#" onclick="doExport()">Export to Excel</a>
+<a href="#" onclick="pdfExport()">Export to PDF</a>
 <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
  -->
      <!-- DataTales Example -->
@@ -48,15 +52,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-bordered"   id="excelstyles" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th style="font-family: arial; font-size:  18px; font-weight: bold">C1</th>
-                        <th style="font-family: arial; font-size:  18px; font-weight: bold">C2</th>
-                        <th style="font-family: arial; font-size:  18px; font-weight: bold">C3</th>
-                    </tr>
-                    
-                    </thead>
+                <table class="table table-bordered pdfstyles"   id="excelstyles" width="100%" cellspacing="0">
                 </tbody>
                   <tbody>
                     <tr>
