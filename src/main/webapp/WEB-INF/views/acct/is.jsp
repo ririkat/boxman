@@ -68,8 +68,13 @@
 
 <section>
 
-<a href="#" onclick="doExport()">Export to Excel</a>
-<a href="#" onclick="pdfExport()">Export to PDF</a>
+	<ul class="nav nav-pills">
+	    <li><a href="#" onclick="doExport()">Export to Excel</a></li>
+	    <li><a href="#" onclick="pdfExport()">Export to PDF</a></li>
+	</ul>
+  
+
+
 <!-- <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
  -->
      <!-- DataTales Example -->
