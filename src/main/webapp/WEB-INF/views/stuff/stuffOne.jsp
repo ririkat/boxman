@@ -156,6 +156,7 @@
 
 
 			<input type = "submit" class = "btn btn-success mr-2" value="수정" id = "btn">
+			<button type="button" class="btn btn-light" onclick="deleteStuff();">삭제</button>
 
 
 			</div>		
@@ -203,6 +204,12 @@ $(function(){
 	
 	})  
   });
+  
+function deleteStuff(){
+	if(confirm("삭제시 해당 물품에 관한 모든 정보가 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
+		location.href="${path}/stuff/deleteStuff.do?stuffNo=${stuff.stuffNo}";
+	}
+}
 </script>
 
 

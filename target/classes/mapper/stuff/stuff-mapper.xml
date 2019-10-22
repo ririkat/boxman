@@ -60,6 +60,10 @@
    <update id="updateStuff" parameterType = "map">
       UPDATE STUFF SET STUFFNAME = #{stuffName}, PRICE = #{price} * 10000, STUFFCOUNT = #{stuffCount}, WEIGHT = #{weight}, SIZE1 = #{size1}, SIZE2 = #{size2}, SIZE3 = #{size3}, MANUFACTURER = #{manufacturer}, MANUFACTURINGDATE = #{manufacturingDate}, MANUFACTURINGCOUNTRY = #{manufacturingCountry}, COLOR = #{color}, MATERIAL = #{material}, ETC = #{etc}, STUFFSTATUS = #{stuffStatus}, SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}) WHERE STUFFNO = #{stuffNo}
    </update>
+   
+   <delete id = "deleteStuff" parameterType="_int">
+   	  DELETE FROM STUFF WHERE STUFFNO = #{stuffNo}
+   </delete>
 
 </mapper>
 

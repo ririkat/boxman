@@ -259,6 +259,16 @@ public class StuffController {
       return mv;
    }
    
+   //물품 삭제
+   @RequestMapping("/stuff/deleteStuff.do")
+   public ModelAndView deleteStuff(@RequestParam(value = "stuffNo") int stuffNo) {
+	   
+	   System.out.println("물품번호 : " + stuffNo);
+	   int result = service.deleteStuff(stuffNo);
+	   
+	   return null;
+   }
+   
 
    
 

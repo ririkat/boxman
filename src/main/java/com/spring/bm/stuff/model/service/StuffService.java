@@ -39,6 +39,8 @@ public interface StuffService {
 
 	int updateStuff(Map<String, String> param);
 
+	int deleteStuff(int stuffNo);
+
 
 
 

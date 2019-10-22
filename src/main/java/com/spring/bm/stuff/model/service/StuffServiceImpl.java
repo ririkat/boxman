@@ -107,6 +107,11 @@ public class StuffServiceImpl implements StuffService {
 		return dao.updateStuff(sqlSession, param);
 	}
 
+	@Override
+	public int deleteStuff(int stuffNo) {
+		return dao.deleteStuff(sqlSession, stuffNo);
+	}
+
 
 
 

@@ -43,6 +43,8 @@ public interface StuffDao {
 
 	int updateStuff(SqlSessionTemplate sqlSession, Map<String, String> param);
 
+	int deleteStuff(SqlSessionTemplate sqlSession, int stuffNo);
+
 
 
 

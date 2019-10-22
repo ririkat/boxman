@@ -104,6 +104,11 @@ public class StuffDaoImpl implements StuffDao {
 		return sqlSession.update("stuff.updateStuff",param);
 	}
 
+	@Override
+	public int deleteStuff(SqlSessionTemplate sqlSession, int stuffNo) {
+		return sqlSession.delete("stuff.deleteStuff", stuffNo);
+	}
+
 
 
 
