@@ -86,5 +86,19 @@
 			</otherwise>
 		</choose>
 	</select>
+	<!-- 아이디중복확인 -->
+	<select id="checkId" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM EMPLOYEE WHERE EMPID=#{empId}
+	</select>
+	<!-- 첨부파일삭제 -->
+	<delete id="deleteEmpFile" parameterType="_int">
+		DELETE FROM EMPFILE WHERE EFNO=#{efNo}
+	</delete>
+	<!-- 사원수정 -->
+	<update id="updateEmp" parameterType="map">
+		UPDATE EMPLOYEE SET EMPSAL=#{empSal}, EMPPHONE=#{empPhone}, EMPEMAIL=#{empEmail}, 
+			DEPTNO=#{deptNo}, JOBNO=#{jobNo}, EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr}
+			WHERE EMPNO=#{empNo}
+	</update>
 </mapper>
 

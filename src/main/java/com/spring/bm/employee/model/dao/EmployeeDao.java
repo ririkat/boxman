@@ -28,6 +28,12 @@ public interface EmployeeDao {
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param);
 	int selectEmpSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+	/* 아이디 중복확인 */
+	int checkId(SqlSessionTemplate session, String empId);
+	/* 첨부파일삭제 */
+	int deleteEmpFile(SqlSessionTemplate session, int efNo);
+	/* 사원수정 */
+	int updateEmp(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
 

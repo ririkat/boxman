@@ -84,6 +84,32 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.selectOne("emp.selectEmpSearchCount", param);
 	}
 
+	/* 아이디중복확인 */
+	@Override
+	public int checkId(SqlSessionTemplate session, String empId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.checkId", empId);
+	}
+
+	/* 첨부파일삭제 */
+	@Override
+	public int deleteEmpFile(SqlSessionTemplate session, int efNo) {
+		// TODO Auto-generated method stub
+		return session.delete("emp.deleteEmpFile", efNo);
+	}
+
+	/* 사원수정 */
+	@Override
+	public int updateEmp(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("emp.updateEmp", param);
+	}
+	
+	
+	
+	
+	
+
 
 
 

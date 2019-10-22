@@ -75,6 +75,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return dao.selectEmpSearchCount(session, param);
 	}
+	/* 아이디중복확인 */
+	@Override
+	public int checkId(String empId) {
+		// TODO Auto-generated method stub
+		return dao.checkId(session, empId);
+	}
+	
+	/* 첨부파일삭제 */
+	@Override
+	public int deleteEmpFile(int efNo) throws Exception{
+		int result = 0;
+		result = dao.deleteEmpFile(session, efNo);
+		if(result == 0) throw new Exception();
+		
+		return result;
+	}
+	
+	/* 사원수정 */
+	@Override
+	public int updateEmp(Map<String, Object> param, List<EmpFile> fileList) throws Exception {
+		int result = 0;
+		result = dao.updateEmp(session, param);
+		if(result == 0) throw new Exception();
+		if(fileList.size()>0) {
+			for(EmpFile e : fileList) {
+				e.setEmpNo(Integer.parseInt(String.valueOf(param.get("empNo"))));
+				result = dao.insertEmpFile(session, e);
+				if(result == 0) throw new Exception();
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
 
 }
 
