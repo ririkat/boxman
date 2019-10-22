@@ -28,4 +28,8 @@ public interface CategoryDao {
 
 	int selectSubcategoryCount(SqlSessionTemplate sqlSession);
 
+	int maincategoryNameDupliCheck(SqlSessionTemplate sqlSession, String mcName);
+
+	int subcategoryNameDupliCheck(SqlSessionTemplate sqlSession, String scName);
+
 }

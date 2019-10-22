@@ -31,6 +31,15 @@ public interface StuffService {
 
 	int selectStuffSearchCount(Map<String, Object> m);
 
+	Stuff stuffOne(int stuffNo);
+
+	StuffUpload stuffUploadOne(int stuffNo);
+
+	StuffMaincategory selectMaincategory(int scNo);
+
+	int updateStuff(Map<String, String> param);
+
+
 
 
 

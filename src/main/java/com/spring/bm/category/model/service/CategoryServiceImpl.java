@@ -64,6 +64,16 @@ public class CategoryServiceImpl implements CategoryService {
 	public int selectSubcategoryCount() {
 		return dao.selectSubcategoryCount(sqlSession);
 	}
+
+	@Override
+	public int maincategoryNameDupliCheck(String mcName) {
+		return dao.maincategoryNameDupliCheck(sqlSession, mcName);
+	}
+
+	@Override
+	public int subcategoryNameDupliCheck(String scName) {
+		return dao.subcategoryNameDupliCheck(sqlSession, scName);
+	}
 	
 	
 

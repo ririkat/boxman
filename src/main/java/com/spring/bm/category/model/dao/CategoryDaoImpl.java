@@ -60,4 +60,14 @@ public class CategoryDaoImpl implements CategoryDao {
 		return sqlSession.selectOne("category.selectSubcategoryCount");
 	}
 
+	@Override
+	public int maincategoryNameDupliCheck(SqlSessionTemplate sqlSession, String mcName) {
+		return sqlSession.selectOne("category.maincategoryNameDupliCheck", mcName);
+	}
+
+	@Override
+	public int subcategoryNameDupliCheck(SqlSessionTemplate sqlSession, String scName) {
+		return sqlSession.selectOne("category.subcategoryNameDupliCheck", scName);
+	}
+
 }
