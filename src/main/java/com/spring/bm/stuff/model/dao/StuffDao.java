@@ -35,6 +35,14 @@ public interface StuffDao {
 
 	int selectStuffSearchCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
+	Stuff stuffOne(SqlSessionTemplate sqlSession, int stuffNo);
+
+	StuffUpload stuffUploadOne(SqlSessionTemplate sqlSession, int stuffNo);
+
+	StuffMaincategory selectMaincategory(SqlSessionTemplate sqlSession, int scNo);
+
+	int updateStuff(SqlSessionTemplate sqlSession, Map<String, String> param);
+
 
 
 

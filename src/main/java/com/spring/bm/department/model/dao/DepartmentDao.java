@@ -14,6 +14,6 @@ public interface DepartmentDao {
 	/* 부서삭제 */
 	int updateDept(SqlSessionTemplate session, Map<String, Object> map);
 	/* 부서상세 */
-	Map<String, String> selectDeptOne(SqlSessionTemplate session, int deptNo);
+	Map<String, Object> selectDeptOne(SqlSessionTemplate session, int deptNo);
 
 }

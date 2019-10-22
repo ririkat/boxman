@@ -1,3 +1,4 @@
+  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -27,6 +28,16 @@
 
   <!-- CSS -->
   <link href="${path }/resources/b4/css/sb-admin-2.min.css" rel="stylesheet">
+  
+      <!-- Bootstrap core JavaScript-->
+  <script src="${path }/resources/b4/vendor/jquery/jquery.min.js"></script>
+  <script src="${path }/resources/b4/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="${path }/resources/b4/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="${path }/resources/b4/js/sb-admin-2.min.js"></script>
   
 
 </head>
@@ -66,8 +77,6 @@
 					<i class="fas fa-fw fa-chart-area"></i> <span>결제 관리</span>
 			</a></li>
 
-
-			<!-- 인사 관리 -->
       <!-- 인사 관리 -->
       <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
@@ -100,11 +109,6 @@
             <a class="collapse-item"  href="${path}/connection/connList.do">거래처관리</a>
             <a class="collapse-item" href="#">구매관리</a>
             <a class="collapse-item" href="#">판매관리</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
           </div>
         </div>
       </li>   
@@ -133,9 +137,21 @@
 
 
 			<!-- 게시판 관리 -->
-			<li class="nav-item"><a class="nav-link" href="tables.html">
-					<i class="fas fa-fw fa-table"></i> <span>게시판 관리</span>
-			</a></li>
+			<li class="nav-item">
+	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotice" aria-expanded="true" aria-controls="collapseNotice">
+	          <i class="fas fa-fw fa-cog"></i>
+	          <span>게시판 관리</span>
+	        </a>
+	        <div id="collapseNotice" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+	          <div class="bg-white py-2 collapse-inner rounded">
+	            <h6 class="collapse-header">Custom Components:</h6>
+	            <a class="collapse-item" href="${path }/notice/selectNoticeList.do">공지사항</a>
+	            <a class="collapse-item" href="${path }/notice/selectNoticeDeptList.do">부서별게시판</a>
+	            <a class="collapse-item" href="${path }/notice/guidelineList.do">편람/지침</a>
+	            <a class="collapse-item" href="${path }/notice/site.do">관련사이트</a>
+	          </div>
+	        </div>
+	      </li>
 
 
 

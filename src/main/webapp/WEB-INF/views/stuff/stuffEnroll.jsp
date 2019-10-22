@@ -135,7 +135,7 @@
 			</div>
 
 
-			<input type = "submit" class = "btn btn-success mr-2" value="등록">
+			<input type = "submit" class = "btn btn-success mr-2" value="등록" id = "btn">
 
 
 			</div>		
@@ -213,6 +213,7 @@
 									"font-size" : "15px"
 								});
 								$(stuffNameCheck).prop("disabled",true);
+								$('#btn').attr('disabled', true);
 							} else {
 								$(stuffNameCheck).text("");
 								$(stuffNameCheck).prop("disabled",false);

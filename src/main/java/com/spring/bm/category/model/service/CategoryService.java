@@ -26,4 +26,8 @@ public interface CategoryService {
 
 	int selectSubcategoryCount();
 
+	int maincategoryNameDupliCheck(String mcName);
+
+	int subcategoryNameDupliCheck(String scName);
+
 }

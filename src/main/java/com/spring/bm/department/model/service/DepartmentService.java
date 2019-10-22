@@ -12,7 +12,7 @@ public interface DepartmentService {
 	/* 부서수정 */
 	int updateDept(Map<String, Object> map) throws Exception;
 	/* 부서상세 */
-	Map<String, String> selectDeptOne(int deptNo);
+	Map<String, Object> selectDeptOne(int deptNo);
 
 
 }
