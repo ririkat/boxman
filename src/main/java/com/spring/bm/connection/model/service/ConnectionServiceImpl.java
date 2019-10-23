@@ -92,5 +92,15 @@ public class ConnectionServiceImpl implements ConnectionService {
 	public int deleteConn(int conCode) {
 		return dao.deleteConn(session,conCode);
 	}
+
+	@Override
+	public List<Map<String, String>> selectConnSearchList(Map<String, Object> m) {
+		return dao.selectConnSearchList(session, m);
+	}
+
+	@Override
+	public int selectConnSearchCount(Map<String, Object> m) {
+		return dao.selectConnSearchCount(session, m);
+	}
 	
 }

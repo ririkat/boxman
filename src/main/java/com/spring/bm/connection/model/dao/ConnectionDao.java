@@ -27,4 +27,6 @@ public interface ConnectionDao {
 	
 	int deleteConn(SqlSessionTemplate session, int conCode);
 	
+	List<Map<String, String>> selectConnSearchList(SqlSessionTemplate session, Map<String, Object> m);
+	int selectConnSearchCount(SqlSessionTemplate session, Map<String, Object> m);
 }

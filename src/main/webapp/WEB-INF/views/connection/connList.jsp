@@ -21,17 +21,27 @@
            <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
               <div class="row">
                  <div class="col-sm-12 col-md-6">
+                 <form id="searchFrm">
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
-							<input type="search" class="form-control form-control-sm" aria-controls="dataTable">
+                       		<select name="type" id="searchKeyword" class="form-control form-control-sm">
+								<option value="conCode">거래처코드</option>
+								<option value="conName">거래처명</option>
+								<option value="conRepName">대표자명</option>
+								<option value="mcNo">분류</option>
+								<option value="conCateg">구분</option>
+								<option value="conUseCk">사용구분</option>
+							</select>
+							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
 						</label>
-						<a href="#" class="btn btn-light btn-icon-split">
-							<span class="icon text-gray-600">
-								<i class="fas fa-arrow-right"></i>
-	                    	</span>
-	                    	<span class="text">검색</span>
-                  		</a>
+						<button onclick = "searchConnection();" class="btn btn-light btn-icon-split">
+	                   		<span class="icon text-gray-600">
+	                    		<i class="fas fa-arrow-right"></i>
+	                   		</span>
+	                   		<span class="text">검색</span>
+                 		</button>
                     </div>
+                   </form>
                  </div>
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
@@ -56,7 +66,8 @@
 							<th>대표자명</th>
 							<th>전화번호</th>
 							<th>핸드폰번호</th>
-							<th>검색창내용</th>
+							<th>분류</th>
+							<th>구분</th>
 							<th>사용구분</th>
 							<th>이체정보</th>
 							<th>주소</th>
@@ -70,7 +81,8 @@
 									<td><c:out value='${c["CONREPNAME"] }' /></td>
 									<td><c:out value='${c["CONTEL"] }' /></td>
 									<td><c:out value='${c["CONPHONE"] }' /></td>
-									<td><c:out value='${c["MCNAME"] }'/><c:out value='${c["CONCATEG"] }'/></td>
+									<td><c:out value='${c["MCNAME"] }'/></td>
+									<td><c:out value='${c["CONCATEG"] }'/></td>
 									<td><c:out value='${c["CONUSECK"] }' /></td>
 									<td><c:out value='${c["CONTRANSCK"] }' /></td>
 									<td><c:out value='${c["CONADDR"] }' /></td>
@@ -87,3 +99,10 @@
 	</div>
 
 </section>
+
+<script>
+function searchConnection(){
+	$("#searchFrm").attr("action","${path}/connection/searchConnection.do");
+	$("#searchFrm").submit();
+}
+</script>

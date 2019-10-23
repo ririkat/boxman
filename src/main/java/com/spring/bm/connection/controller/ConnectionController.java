@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.connection.model.service.ConnectionService;
+import com.spring.bm.stuff.model.vo.Stuff;
 
 @Controller
 public class ConnectionController {
@@ -158,6 +159,33 @@ public class ConnectionController {
 		return mv;
 	}
 
+	@RequestMapping("/connection/searchConnection.do")
+	public ModelAndView searchConnection(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam(value="type") String type, @RequestParam(value="data") String data) {
+
+		int numPerPage = 10;
+		Map<String, Object> m = new HashMap();
+		m.put("cPage", cPage);
+		m.put("numPerPage", numPerPage);
+		m.put("type", type);
+		m.put("data", data);
+
+		List<Map<String,String>> list = service.selectConnSearchList(m);
+		int totalCount = service.selectConnSearchCount(m);
+
+		System.out.println("list : " + list);
+		System.out.println("totalCount : " + totalCount);
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("connection/connList");
+
+		return mv;
+	}
+	
 }
 
 

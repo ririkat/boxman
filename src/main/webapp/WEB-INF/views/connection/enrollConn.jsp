@@ -42,11 +42,10 @@
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">거래처 등록</h6>
+			<h6 class="m-0 font-weight-bold text-primary"></h6>
         </div>
 		<div class="card-body">
-			<h4 class="card-title">Input size</h4>
-			<p class="card-description">This is the default bootstrap form layout</p>
+			<h4 class="card-title">거래처 등록</h4>
 			<br/>
 			
 			<form name="enrollConnection" class="forms-sample" action="${path }/connection/enrollConnEnd.do" method="post" onsubmit="return enroll_validate();">

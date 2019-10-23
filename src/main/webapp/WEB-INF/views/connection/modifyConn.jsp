@@ -329,7 +329,7 @@ function submitConn(){
 }
 
 function deleteConn(){
-	if(confirm("거래처 삭제시 등록된 이체정보와 연결된 판매정보 및 구매정보가 전부 삭제됩니다. 정말 삭제하시겠습니까?")) {
+	if(confirm("거래처 삭제시 등록된 이체정보와\n연결된 판매정보 및 구매정보가 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
 		location.href="${path}/connection/deleteConn.do?conCode=${conn['CONCODE']}";
 	}
 }

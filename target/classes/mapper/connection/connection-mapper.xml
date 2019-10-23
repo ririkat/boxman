@@ -68,7 +68,26 @@
 	<delete id="deleteConn" parameterType="_int">
 		DELETE FROM CONNECTION WHERE CONCODE=#{conCode}
 	</delete>
-
+	
+	<select id="selectConnSearchList" parameterType="map" resultType="map">
+		SELECT * FROM (SELECT A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+))
+		<choose>
+			<when test="type eq 'mcNo'">
+				WHERE ${type}=(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME LIKE '%'||#{data}||'%')
+			</when>
+			<otherwise>
+				WHERE ${type} LIKE '%'||#{data}||'%'
+			</otherwise>
+		</choose>
+		ORDER BY CONCODE
+	</select>
+	
+	<select id="selectConnSearchCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM (SELECT A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+))
+		WHERE ${type} LIKE '%'||#{data}||'%'
+		ORDER BY CONCODE
+	</select>
+	
 </mapper>
 
 

@@ -76,4 +76,17 @@ public class ConnectionDaoImpl implements ConnectionDao {
 		return session.delete("connection.deleteConn", conCode);
 	}
 
+	@Override
+	public List<Map<String, String>> selectConnSearchList(SqlSessionTemplate session, Map<String, Object> m) {
+		int cPage = (Integer)m.get("cPage");
+		int numPerPage = (Integer)m.get("numPerPage");
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("connection.selectConnSearchList",m,rows);
+	}
+
+	@Override
+	public int selectConnSearchCount(SqlSessionTemplate session, Map<String, Object> m) {
+		return session.selectOne("connection.selectConnSearchCount",m);
+	}
+
 }
