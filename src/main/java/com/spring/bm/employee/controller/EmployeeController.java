@@ -358,9 +358,10 @@ public class EmployeeController {
 	
 	/* 비밀번호 변경 팝업창 */
 	@RequestMapping("/emp/updatePassword.do")
-	public ModelAndView updatePassword(@RequestParam Map<String, Object> param) {
+	public ModelAndView updatePassword(String empNo) {
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("empNo", param.get("empNo"));
+		logger.debug(String.valueOf(empNo));
+		mv.addObject("empNo", empNo);
 		mv.setViewName("emp/empUpPassword");
 		return mv;
 	}
@@ -369,13 +370,12 @@ public class EmployeeController {
 	@RequestMapping("/emp/updatePasswordEnd.do")
 	@ResponseBody
 	public int responsBody(@RequestParam Map<String, Object> param, Model model) throws JsonProcessingException {
-		String empPassword = pwEncoder.encode((String)param.get("password"));
+		String empPassword = pwEncoder.encode((String)param.get("empPassword"));
 		param.put("empPassword", empPassword);
 		int result = 0;
 		try {
 			result = service.updatePassword(param);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return result;

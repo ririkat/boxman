@@ -44,7 +44,12 @@
 
 <!-- Custom scripts for all pages-->
 <script src="${path }/resources/b4/js/sb-admin-2.min.js"></script>
-
+<style>
+	div#userId-container{position:relative; padding:0px;}
+	div#userId-container span.guide {display:none;font-size: 12px;position:absolute; top:12px; right:0px;}
+	div#userId-container span.ok{color:green;}
+	div#userId-container span.no{color:red;}
+</style>
 
 </head>
 <body>
@@ -54,10 +59,11 @@
 				<div class="card-body">
 					<h4 class="card-title">비밀번호 변경</h4>
 					<form class="forms-sample" id="upPwFrm">
+					<input type="hidden" id="empNo" value="${empNo }"/>
 						<div class="form-group row">
 							<label for="exampleInputEmail2" class="col-sm-3 col-form-label">비밀번호</label>
 							<div class="col-sm-9">
-								<input type="password" name="password" class="form-control" id="password"
+								<input type="password" name="password" class="form-control" id="pw"
 									placeholder="비밀번호입력">
 							</div>
 						</div>
@@ -65,13 +71,17 @@
 							<label for="exampleInputPassword2"
 								class="col-sm-3 col-form-label">비밀번호 확인</label>
 							<div class="col-sm-9">
-								<input type="password" class="form-control"
-									id="password2" placeholder="비밀번호입력">
+								<div id="userId-container">
+									<input type="password" class="form-control"
+										id="pw2" placeholder="비밀번호입력">
+									<span class="guide ok okPw">비밀번호 확인이 일치합니다.</span>
+			             			<span class="guide no noPw">비밀번호가 일치하지 않습니다.</span>
+			             		</div>
 							</div>
 						</div>
-						<div>
-							<button type="button" class="btn btn-success mr-2">완료</button>
-							<button class="btn btn-light">Cancel</button>
+						<div style="margin: 0 auto; width:fit-content;">
+							<button type="button" class="btn btn-success mr-2" onclick="return validate();">완료</button>
+							<button class="btn btn-light" id="pwCancel">Cancel</button>
 						</div>
 					</form>
 				</div>
@@ -79,9 +89,49 @@
 		</div>
 	</section>
 	<script>
+		$(function(){
+			$('#pw2').blur(function(){
+		         var pw = $('#pw').val();
+		         var pw2 = $('#pw2').val();
+	        	 if(pw == pw2) {
+	        		$("span.okPw").show();
+					$("span.noPw").hide();
+	        	 } else {
+	        		$("span.okPw").hide();
+	 				$("span.noPw").show();
+	        	 }
+	         });
+			
+			$('#pwCancel').click(function(){
+				self.close();
+			});
+		});
 		
-	
-	
+		function validate() {
+			if($('span.noPw').is(":visible")) {
+		    	  alert("비밀번호를 확인하세요.");
+		    	  return false;
+		     }
+			var empPassword = $('#pw').val().trim();
+			var empNo = $('#empNo').val().trim();
+			if(empPassword.length < 4) {
+				alert("비밀번호는 4자 이상으로 입력해주세요.");
+				return false;
+			}
+			$.ajax({
+				url:"${path}/emp/updatePasswordEnd.do?empNo="+empNo,
+				data:{"empPassword":empPassword},
+				success:function(data) {
+					if(data==1) {
+						alert("비밀번호가 변경되었습니다.");
+						self.close();
+					} else {
+						alert("비밀번호 변경이 실패하였습니다.");
+					}
+				}
+			})
+		}
+		
 	</script>
 </body>
 </html>

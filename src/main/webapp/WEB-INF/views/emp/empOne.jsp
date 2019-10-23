@@ -15,7 +15,7 @@
 			<div class="card-body">
 				<form class="form-sample" id="empUpFrm" method="post"
 					enctype="multipart/form-data">
-					<input type="hidden" value='${emp["EMPNO"]}' name="empNo"/>
+					<input type="hidden" value='${emp["EMPNO"]}' name="empNo" id="empNo"/>
 					<p class="card-description">Personal info</p>
 					<div class="row">
 						<div class="col-md-6">
@@ -259,10 +259,10 @@
 				</form>
 			</div>
 			<form name="updateFrm" action="${path }/emp/selectEmpOne.do">
-				<input type="hidden" value='${emp[EMPNO]}' name="empNo" />
+				<input type="hidden" value='${emp["EMPNO"]}' name="empNo" />
 			</form>
 			<form name="updatePwFrm">
-				<input type="hidden" value='${emp[EMPNO]}' name="empNo" />
+				<input type="hidden" value='${emp["EMPNO"]}' name="empNo" />
 			</form>
 		</div>
 	</div>
@@ -293,13 +293,17 @@
 		
 		//비밀번호 변경
 		$('#updatePwEmp').click(function() {
-			var url = '${path}/emp/updatePassword.do?empNo=${emp[EMPNO]}';
+			/* var empNo = $('#empNo').val().trim();
+			console.log(empNo); */
+			console.log('');
+			var url = '${path}/emp/updatePassword.do';
 			var status = "width=600, height=400, resizable=no, status=no, toolbars=no, menubar=no";
-			var title="비밀번호 변경"
+			var title="비밀번호 변경";
 			var popUp = open("", title, status);
 			window.name="parentWin"; 
 			updatePwFrm.target = title;
 			updatePwFrm.action=url;
+			updatePwFrm.method="post";
 			updatePwFrm.submit();
 		});
 	});
