@@ -22,7 +22,18 @@
 				<label for="exampleInputName1">물품 이미지</label>
 			</div>
 			<div class="form-group">
-				<img class="img-fluid rounded" src="${path}/resources/upload/stuff/${stuffUpload.imgRename}" style = "border: 0.5px solid #d1d3e2"/>
+				<img class="img-fluid rounded" src="${path}/resources/upload/stuff/${stuffUpload.imgRename}" style = "width : 500px; height : 500px; border: 0.5px solid #d1d3e2;"/>
+			</div>
+			<div>
+				<label for="exampleInputName1">첨부파일</label>
+			</div>
+			<div class="form-group">
+            <button type="button" 
+                    class="btn btn-outline-success btn-block"
+                    onclick="fileDownload('${stuffUpload.imgOriname}','${stuffUpload.imgRename }');">
+                    ${stuffUpload.imgOriname}
+            </button>
+
 			</div>
 			<div class="form-group">
 				<label for="exampleInputName1">물품 이름</label> <input type="text"
@@ -209,6 +220,11 @@ function deleteStuff(){
 	if(confirm("삭제시 해당 물품에 관한 모든 정보가 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
 		location.href="${path}/stuff/deleteStuff.do?stuffNo=${stuff.stuffNo}";
 	}
+}
+
+function fileDownload(oName, rName){
+   oName=encodeURIComponent(oName);
+   location.href="${path}/stuff/filedownLoad.do?oName="+oName+"&rName="+rName;
 }
 </script>
 

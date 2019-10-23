@@ -72,9 +72,9 @@
 						</tr>
                        </thead>
                        <tbody>
-                          <c:forEach items="${list2}" var="stuffSubcategory">
+                          <c:forEach items="${list2}" var="stuffSubcategory" varStatus = "v">
       					<tr>
-         						<td>${stuffSubcategory.scNo}</td>
+         						<td><c:out value="${v.count }"/></td>
          						<td>${stuffSubcategory.scName}</td>
          						<td>${stuffSubcategory.mcName}</td>
          						<td>
@@ -122,6 +122,7 @@ $(function(){
 				} else {
 					$(subcategoryNameCheck).text("");
 					$(subcategoryNameCheck).prop("disabled",false);
+					$('#btn').attr('disabled', false);
 					} 
 				
 				},

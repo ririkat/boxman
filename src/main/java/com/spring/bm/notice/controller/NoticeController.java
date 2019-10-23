@@ -89,7 +89,7 @@ public class NoticeController {
 		}
 		//	             파일업로드 처리하기
 		//	      1.저장경로 지정하기
-		String saveDir=request.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+		String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/notice");
 
 		List<UploadNotice> upNoticeList=new ArrayList(); //여러파일 보관용
 
@@ -177,7 +177,7 @@ public class NoticeController {
 		public ModelAndView updateNotice(@RequestParam Map<String, Object> param,
 									@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
 
-			String saveDir=request.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+			String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/notice");
 
 			List<UploadNotice> upNoticeList=new ArrayList(); //여러파일 보관용
 
@@ -335,7 +335,7 @@ public class NoticeController {
 		   public void fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
 		      BufferedInputStream bis = null;
 		      ServletOutputStream sos = null;
-		      String dir = req.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+		      String dir = req.getSession().getServletContext().getRealPath("/resources/upload/notice");
 		      File saveFile = new File(dir + "/" + rName);
 		      try {
 		         FileInputStream fis = new FileInputStream(saveFile);

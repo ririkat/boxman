@@ -1,12 +1,17 @@
 package com.spring.bm.stuff.controller;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -329,6 +334,52 @@ public class StuffController {
 	      
 	      return mv;
    }
+   
+   //파일 다운로드
+   @RequestMapping("/stuff/filedownLoad.do")
+	public void fileDownLoad(String oName,String rName,
+			HttpServletRequest req, HttpServletResponse res){
+		BufferedInputStream bis=null;
+		ServletOutputStream sos=null;
+		
+		String dir=req.getSession()
+				.getServletContext().getRealPath("/resources/upload/stuff");
+		File saveFile=new File(dir+"/"+rName);
+		try {
+			FileInputStream fis=new FileInputStream(saveFile);
+			bis=new BufferedInputStream(fis);
+			sos=res.getOutputStream();
+			String resFileName="";
+			boolean isMSIE=req.getHeader("user-agent").indexOf("MSIE")!=-1||
+					req.getHeader("user-agent").indexOf("Trident")!=-1;
+			if(isMSIE) {
+				resFileName=URLEncoder.encode(oName,"UTF-8");
+				resFileName=resFileName.replaceAll("\\+", "%20");
+			}else {
+				resFileName=new String(oName.getBytes("UTF-8"),"ISO-8859-1");
+			}
+			res.setContentType("application/octet-stream;charset=utf-8");
+			res.addHeader("Content-Disposition",
+					"stuffUpload;filename=\""+resFileName+"\"");
+			res.setContentLength((int)saveFile.length());
+			
+			int read=0;
+			while((read=bis.read())!=-1) {
+				sos.write(read);
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				sos.close();
+				bis.close();
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
    
 
    
