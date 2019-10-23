@@ -41,6 +41,10 @@ public interface StuffService {
 
 	int deleteStuff(int stuffNo);
 
+	int deleteStuffUpload(Map<String, String> param);
+
+	int stuffUpdateEnd(Map<String, String> param, List<StuffUpload> stuffUploadList) throws Exception;
+
 
 
 

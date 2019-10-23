@@ -45,6 +45,8 @@ public interface StuffDao {
 
 	int deleteStuff(SqlSessionTemplate sqlSession, int stuffNo);
 
+	int deleteStuffUpload(SqlSessionTemplate sqlSession, Map<String, String> param);
+
 
 
 

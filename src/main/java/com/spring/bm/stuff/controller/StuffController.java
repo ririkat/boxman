@@ -131,7 +131,7 @@ public class StuffController {
       List<Stuff> list=service.selectStuffList(cPage,numPerPage);
       int totalCount = service.selectStuffCount();
       
-      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/stuffAllList"));
+      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/stuffAllList.do"));
       mv.addObject("count",totalCount);
       mv.addObject("list",list);
       mv.setViewName("stuff/stuffList");
@@ -174,7 +174,7 @@ public class StuffController {
       
       if(totalCount > 0) {
       
-      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/stuff/searchStuff"));
+      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/searchStuff.do"));
       mv.addObject("count",totalCount);
       mv.addObject("list",list);
       mv.setViewName("stuff/stuffList");
@@ -229,23 +229,70 @@ public class StuffController {
    public ModelAndView stuffUpdate(@RequestParam Map<String,String> param, HttpServletRequest request,
          @RequestParam(value="upFile", required=false) MultipartFile[] upFile) {
       
-      
+      int result1 = 0, result2 = 0;
       int stuffNo = Integer.parseInt(param.get("stuffNo"));
-      
-      for ( String key : param.keySet() ) {
-          System.out.println("key : " + key +" / value : " + param.get(key));
-      }
+
       System.out.println("=======================");
       
+      System.out.println(upFile[0].getOriginalFilename());
       
-      int result = service.updateStuff(param);
-      System.out.println("변경 되었는가? : " + result);
-      
+      if(upFile[0].getOriginalFilename() != "") {
+    	  
+    	  //기존에 있던 DB의 업로드 정보 삭제 
+    	  int result3 = service.deleteStuffUpload(param);
+    	  
+    	  //다시 업로드 추가
+    	  String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/stuff");
+          List<StuffUpload> stuffUploadList = new ArrayList();
+          
+          File dir = new File(saveDir);
+          
+          if(!dir.exists()) {
+             dir.mkdirs();
+          }
+          
+          for(MultipartFile f : upFile) {
+             if(!f.isEmpty()) {
+                String imgOriname = f.getOriginalFilename();
+                String ext = imgOriname.substring(imgOriname.lastIndexOf("."));
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
+                int rdv = (int)(Math.random()*1000);
+                String reName = sdf.format(System.currentTimeMillis()) + "_" + rdv + ext;
+                
+                try {
+                   f.transferTo(new File(saveDir + "/" + reName));
+                } catch (Exception e) {
+                   e.printStackTrace();
+                }
+                
+                StuffUpload su = new StuffUpload();
+                su.setImgOriname(imgOriname);
+                su.setImgRename(reName);
+                stuffUploadList.add(su);
+             }
+          }
+          
+          //물품 정보 수정 및 업로드 재입력
+          
+          try {
+             result2 = service.stuffUpdateEnd(param, stuffUploadList);
+          } catch (Exception e) {
+             // TODO Auto-generated catch block
+             e.printStackTrace();
+          }
+    	 
+      } else {
+    	  
+    	  //첨부파일 미변경시 물품 내용만 변경
+    	  result1 = service.updateStuff(param);
+   	  
+      }
       
       String msg = "";
       String loc = "/stuff/stuffOne.do?stuffNo="+stuffNo;
       
-      if(result > 0 ) {
+      if(result1 > 0 || result2 > 0) {
          msg = "물품 수정 완료!";
       } else {
          msg = "물품 수정 실패!";
@@ -266,7 +313,21 @@ public class StuffController {
 	   System.out.println("물품번호 : " + stuffNo);
 	   int result = service.deleteStuff(stuffNo);
 	   
-	   return null;
+	      String msg = "";
+	      String loc = "/stuff/stuffAllList.do";
+	      
+	      if(result > 0) {
+	         msg = "물품 삭제 완료!";
+	      } else {
+	         msg = "물품 삭제 실패!";
+	      }
+	   
+	      ModelAndView mv = new ModelAndView();
+	      mv.addObject("msg", msg);
+	      mv.addObject("loc", loc);
+	      mv.setViewName("common/msg");
+	      
+	      return mv;
    }
    
 
