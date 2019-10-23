@@ -100,5 +100,9 @@
 			DEPTNO=#{deptNo}, JOBNO=#{jobNo}, EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr}
 			WHERE EMPNO=#{empNo}
 	</update>
+	<!-- 비밀번호변경 -->
+	<update id="updatePassword" parameterType="map">
+		UPDATE EMPLOYEE SET EMPPASSWORD=#{empPassword} WHERE EMPNO=#{empNo}
+	</update>
 </mapper>
 
