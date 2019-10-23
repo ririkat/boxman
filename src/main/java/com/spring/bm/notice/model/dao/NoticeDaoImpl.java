@@ -34,6 +34,16 @@ public class NoticeDaoImpl implements NoticeDao {
 	}
 
 	@Override
+	public int selectNoticeCount2(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("notice.selectNoticeCount2");
+	}
+
+	@Override
+	public int selectNoticeCount3(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("notice.selectNoticeCount3");
+	}
+
+	@Override
 	public List<Map<String, String>> selectNoticeList(SqlSessionTemplate sqlSession, int cPage, int numPerPage) {
 		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return sqlSession.selectList("notice.selectNoticeList", null, rows);

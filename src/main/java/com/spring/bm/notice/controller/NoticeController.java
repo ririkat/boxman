@@ -32,47 +32,47 @@ import com.spring.bm.notice.model.vo.UploadNotice;
 
 @Controller
 public class NoticeController {
-	
+
 	@Autowired
 	NoticeService noticeService;
 	@Autowired
 	DepartmentService deptservice;
 	@Autowired
 	EmployeeService empSerivce;
-                                                                           //	@RequestParam(name="empNo") int empNo
+	//	@RequestParam(name="empNo") int empNo
 	//게시판에서 게시판등록화면으로 화면전환
 	@RequestMapping("/notice/notice.do")
 	public String Notice(Model model) {
 		List<Map<String, String>> list = deptservice.selectDeptList();
-//		Map<String, String> empMap = empSerivce.selectEmpOne(empNo);
+		//		Map<String, String> empMap = empSerivce.selectEmpOne(empNo);
 
-//		model.addAttribute("empOne",empMap);
+		//		model.addAttribute("empOne",empMap);
 		model.addAttribute("deptList",list);
-		
+
 		return "notice/noticeInsert";
 	}
-	
+
 	//부서별게시판에서 부서별게시판등록화면으로 화면전환
 	@RequestMapping("/notice/noticeDept.do")
 	public String NoticeDept(Model model) {
 		List<Map<String, String>> list = deptservice.selectDeptList();
-//		Map<String, String> empMap = empSerivce.selectEmpOne(empNo);
+		//		Map<String, String> empMap = empSerivce.selectEmpOne(empNo);
 
-//		model.addAttribute("empOne",empMap);
+		//		model.addAttribute("empOne",empMap);
 		model.addAttribute("deptList",list);
-		
+
 		return "notice/noticeDeptInsert";
 	}
-	
+
 	//가이드라인화면에서 가이드라인등록화면으로 화면전환
 	@RequestMapping("/notice/guideline.do")
 	public String NoticeGuideline(Model model) {
 		List<Map<String, String>> list = deptservice.selectDeptList();
-//		Map<String, String> empMap = empSerivce.selectEmpOne(empNo);
+		//		Map<String, String> empMap = empSerivce.selectEmpOne(empNo);
 
-//		model.addAttribute("empOne",empMap);
+		//		model.addAttribute("empOne",empMap);
 		model.addAttribute("deptList",list);
-		
+
 		return "notice/guidelineInsert";
 	}
 
@@ -80,20 +80,20 @@ public class NoticeController {
 	@RequestMapping("/notice/insertNotice.do")
 	public ModelAndView insertNotice(@RequestParam Map<String, Object> param,
 			@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
-		
-		
+
+
 		if(param.get("nCheck") == null || !param.get("nCheck").equals("필독체크") || param.get("nCheck").equals("null")) {
 			param.remove("nCheck");
 			param.put("nCheck", "필수아님");
 		}
 		//	             파일업로드 처리하기
 		//	      1.저장경로 지정하기
-		String saveDir=request.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+		String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/notice");
 
 		List<UploadNotice> upNoticeList=new ArrayList(); //여러파일 보관용
 
 		File dir=new File(saveDir);
-		
+
 		for(MultipartFile f : upFile) {
 			if(!f.isEmpty()) {
 				//파일명 생성(rename)
@@ -119,21 +119,21 @@ public class NoticeController {
 		int result=0;
 		try {
 			result=noticeService.insertNotice(param,upNoticeList);
-			
+
 		} catch (Exception e) {
-		
+
 			e.printStackTrace();
 		}
-		
+
 		String categoryNo = request.getParameter("categoryNo");
-		
+
 		String msg="";		
 		String loc="";
-		
+
 		switch(categoryNo) {
-			case "1" : loc="/notice/selectNoticeList.do"; break;
-			case "2" : loc="/notice/selectNoticeDeptList.do"; break;
-			case "3" : loc="/notice/guidelineList.do"; break;
+		case "1" : loc="/notice/selectNoticeList.do"; break;
+		case "2" : loc="/notice/selectNoticeDeptList.do"; break;
+		case "3" : loc="/notice/guidelineList.do"; break;
 		}
 
 		if(result>0) {
@@ -146,7 +146,7 @@ public class NoticeController {
 		mv.addObject("msg",msg);
 		mv.addObject("loc",loc);
 		mv.setViewName("common/msg");
-		
+
 		return mv;
 	}
 
@@ -169,12 +169,19 @@ public class NoticeController {
 		return "notice/noticeOne";
 	}
 
-		//게시글 수정
-		@RequestMapping("/notice/updateNotice.do")
-		public ModelAndView updateNotice(@RequestParam Map<String, Object> param,
-									@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
+	//게시글 수정
+	@RequestMapping("/notice/updateNotice.do")
+	public ModelAndView updateNotice(@RequestParam Map<String, Object> param,
+			@RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
 
-			String saveDir=request.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+		int result=0;
+		int result2=0;
+		
+		if(upFile[0].getOriginalFilename() != "") {
+
+			int result3 = noticeService.deleteUpNotice(param);
+
+			String saveDir=request.getSession().getServletContext().getRealPath("/resources/upload/notice");
 
 			List<UploadNotice> upNoticeList=new ArrayList(); //여러파일 보관용
 
@@ -202,248 +209,244 @@ public class NoticeController {
 				}
 			}
 
-			String msg="";
-			String loc="/notice/selectNoticeList.do";
-
-			int result=0;
-			int result2=0;
 			try {
-				result=noticeService.updateNotice(param);
-				if(result>0) {
-					result2=noticeService.deleteUpNotice(param);
-
-					if(result2>0) {
-						result2=noticeService.insertUpNotice(param, upNoticeList);
-					}
-
-				}
+				
+				result2=noticeService.updateNotice(param,upNoticeList);
 			} catch (Exception e) {
 
 				e.printStackTrace();
 			}
 
-			if(result>0) {
-				msg="게시글 수정 완료!";
-			}else {
-				msg="게시글 수정 실패!";
-			}
+		} else {
 
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("msg",msg);
-			mv.addObject("loc",loc);
-			mv.setViewName("common/msg");
-			return mv;
+			result = noticeService.updateNotice(param);
 		}
+		
+		String msg="";
+		String loc="/";
+		if(result > 0 || result2 > 0) {
+	         msg = "게시글 수정 완료!";
+	      } else {
+	         msg = "게시글 수정 실패!";
+	      }
+	   
+	      ModelAndView mv = new ModelAndView();
+	      mv.addObject("msg", msg);
+	      mv.addObject("loc", loc);
+	      mv.setViewName("common/msg");
 
-		//게시글 삭제
-		@RequestMapping("/notice/deleteNotice.do")
-		public ModelAndView deleteNotice(@RequestParam Map<String, Object> param) {
+		return mv;
+	}
 
-			int result = noticeService.deleteNotice(param);
+	//게시글 삭제
+	@RequestMapping("/notice/deleteNotice.do")
+	public ModelAndView deleteNotice(@RequestParam Map<String, Object> param) {
 
-			String msg="";
-			String loc="/notice/selectNoticeList.do";
+		int result = noticeService.deleteNotice(param);
 
-			if(result>0) {
-				msg="게시글 삭제 완료!";
-			}else {
-				msg="게시글 삭제 실패!";
-			}
-			ModelAndView mv = new ModelAndView();
+		String msg="";
+		String loc="/notice/selectNoticeList.do";
 
-			mv.addObject("msg",msg);
-			mv.addObject("loc",loc);
-			mv.setViewName("common/msg");
-			return mv;
-
+		if(result>0) {
+			msg="게시글 삭제 완료!";
+		}else {
+			msg="게시글 삭제 실패!";
 		}
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+
+	}
 
 	//메인화면에서 게시판화면으로 화면전환, 게시판목록 (페이징처리)
 	//ModelAndView : 모델과 view를 한번에 묶어서 처리
-		@RequestMapping("/notice/selectNoticeList.do")
-		public ModelAndView selectList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+	@RequestMapping("/notice/selectNoticeList.do")
+	public ModelAndView selectList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
 
-			//반환될 modelAndView객체 생성
-			ModelAndView mv = new ModelAndView();
-			int numPerPage = 5;
-			List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
-			List<Notice> list2 = noticeService.selectNoticeList2();
-			int totalCount = noticeService.selectNoticeCount();
+		//반환될 modelAndView객체 생성
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
+		List<Notice> list2 = noticeService.selectNoticeList2();
+		int totalCount = noticeService.selectNoticeCount();
 
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));
-			mv.addObject("count", totalCount);
-			mv.addObject("list",list);   //key value형식 -> model로 들어감
-			mv.addObject("list2",list2); //필독체크 리스트
-			
-			mv.setViewName("notice/noticeList");   // -> view
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);   //key value형식 -> model로 들어감
+		mv.addObject("list2",list2); //필독체크 리스트
 
-			return mv;
-		}
+		mv.setViewName("notice/noticeList");   // -> view
 
-		//메인화면에서 부서별 게시판화면으로 화면전환, 부서별게시판목록 (페이징처리)
-		@RequestMapping("/notice/selectNoticeDeptList.do")
-		public ModelAndView selectDeptList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
+		return mv;
+	}
 
-			//반환될 modelAndView객체 생성
-			ModelAndView mv = new ModelAndView();
-			int numPerPage = 5;
-			List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
-			List<Notice> list2 = noticeService.selectNoticeList2();
-			int totalCount = noticeService.selectNoticeCount();
+	//메인화면에서 부서별 게시판화면으로 화면전환, 부서별게시판목록 (페이징처리)
+	@RequestMapping("/notice/selectNoticeDeptList.do")
+	public ModelAndView selectDeptList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
 
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeDeptList.do"));
-			mv.addObject("count", totalCount);
-			mv.addObject("list",list);   //key value형식 -> model로 들어감
-			mv.addObject("list2",list2); //필독체크 리스트
+		//반환될 modelAndView객체 생성
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
+		List<Notice> list2 = noticeService.selectNoticeList2();
+		int totalCount = noticeService.selectNoticeCount2();
 
-			mv.setViewName("notice/noticeDeptList");   // -> view
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeDeptList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);   //key value형식 -> model로 들어감
+		mv.addObject("list2",list2); //필독체크 리스트
 
-			return mv;
-		}
-		
-		//메인화면에서 가이드라인리스트화면으로
-		@RequestMapping("/notice/guidelineList.do")
-		public ModelAndView guideLineList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
+		mv.setViewName("notice/noticeDeptList");   // -> view
 
-			//반환될 modelAndView객체 생성
-			ModelAndView mv = new ModelAndView();
-			int numPerPage = 5;
-			List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
-			List<Notice> list2 = noticeService.selectNoticeList2();
-			int totalCount = noticeService.selectNoticeCount();
+		return mv;
+	}
 
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/guidelineList.do"));
-			mv.addObject("count", totalCount);
-			mv.addObject("list",list);   //key value형식 -> model로 들어감
-			mv.addObject("list2",list2); //필독체크 리스트
+	//메인화면에서 가이드라인리스트화면으로
+	@RequestMapping("/notice/guidelineList.do")
+	public ModelAndView guideLineList(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
 
-			mv.setViewName("notice/guidelineList");   // -> view
+		//반환될 modelAndView객체 생성
+		ModelAndView mv = new ModelAndView();
+		int numPerPage = 5;
+		List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
+		List<Notice> list2 = noticeService.selectNoticeList2();
+		int totalCount = noticeService.selectNoticeCount3();
 
-			return mv;
-		}
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/guidelineList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);   //key value형식 -> model로 들어감
+		mv.addObject("list2",list2); //필독체크 리스트
 
-		@RequestMapping("/notice/noticeForm")
-		public String boardForm() {
-			return "notice/noticeForm";
-		}
-		
-		//업로드된 첨부파일 다운로드
-		@RequestMapping("/notice/filedownLoad.do")
-		   public void fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
-		      BufferedInputStream bis = null;
-		      ServletOutputStream sos = null;
-		      String dir = req.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
-		      File saveFile = new File(dir + "/" + rName);
-		      try {
-		         FileInputStream fis = new FileInputStream(saveFile);
-		         bis = new BufferedInputStream(fis);
-		         sos = res.getOutputStream();
-		         String resFileName = "";
-		         boolean isMSIE = req.getHeader("user-agent").indexOf("MSIE")!=-1 ||
-		               req.getHeader("user-agent").indexOf("Trident")!= -1;
-		         if(isMSIE) {
-		            resFileName = URLEncoder.encode(oName,"UTF-8");
-		            resFileName = resFileName.replaceAll("\\+", "%20");   //띄어쓰기 바꿔주는것
-		         } else {
-		            resFileName = new String(oName.getBytes("UTF-8"),"ISO-8859-1");
-		         }
-		         res.setContentType("application/octet-stream;charset=utf-8");
-		         res.addHeader("Content-Disposition", "attachment;filename=\"" + resFileName + "\"");
-		         res.setContentLength((int)saveFile.length());
-		         
-		         int read = 0;
-		         while((read=bis.read()) != -1) {
-		            sos.write(read);
-		         }
-		      } catch(IOException e) {
-		         e.printStackTrace();
-		      } finally {
-		         try {
-		            sos.close();
-		            bis.close();
-		         } catch(IOException e) {
-		            e.printStackTrace();
-		         }
-		      }
-		   }
-		
-		//사이트등록화면
-		@RequestMapping("/notice/insertSite.do")
-		public String insertSite() {
-			return "notice/insertSite";
-		}
+		mv.setViewName("notice/guidelineList");   // -> view
 
-		//사이트등록완료
-		@RequestMapping("/notice/insertSiteEnd.do")
-		public ModelAndView insertSiteEnd(@RequestParam Map<String, Object> param) {
-			
-			int result=noticeService.insertSite(param);
-				
-			String msg="";
-			String loc="/notice/site.do";
-			if(result>0) {
-				msg="사이트등록성공!";
-			}else {
-				msg="사이트등록실패!";
+		return mv;
+	}
+
+	@RequestMapping("/notice/noticeForm")
+	public String boardForm() {
+		return "notice/noticeForm";
+	}
+
+	//업로드된 첨부파일 다운로드
+	@RequestMapping("/notice/filedownLoad.do")
+	public void fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
+		BufferedInputStream bis = null;
+		ServletOutputStream sos = null;
+		String dir = req.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+		File saveFile = new File(dir + "/" + rName);
+		try {
+			FileInputStream fis = new FileInputStream(saveFile);
+			bis = new BufferedInputStream(fis);
+			sos = res.getOutputStream();
+			String resFileName = "";
+			boolean isMSIE = req.getHeader("user-agent").indexOf("MSIE")!=-1 ||
+					req.getHeader("user-agent").indexOf("Trident")!= -1;
+			if(isMSIE) {
+				resFileName = URLEncoder.encode(oName,"UTF-8");
+				resFileName = resFileName.replaceAll("\\+", "%20");   //띄어쓰기 바꿔주는것
+			} else {
+				resFileName = new String(oName.getBytes("UTF-8"),"ISO-8859-1");
 			}
+			res.setContentType("application/octet-stream;charset=utf-8");
+			res.addHeader("Content-Disposition", "attachment;filename=\"" + resFileName + "\"");
+			res.setContentLength((int)saveFile.length());
 
-			ModelAndView mv = new ModelAndView();
-			mv.addObject("msg",msg);
-			mv.addObject("loc",loc);
-			mv.setViewName("common/msg");
-
-			return mv;
-		}
-		
-		//관련사이트 목록
-			@RequestMapping("/notice/site.do")
-			public ModelAndView siteList() {
-
-				//반환될 modelAndView객체 생성
-				ModelAndView mv = new ModelAndView();
-				
-				List<Map<String,Object>> list = noticeService.selectSiteList(); //내부
-				System.out.println("내부 ---->"+list);
-				List<Map<String,Object>> list2 = noticeService.selectSiteList2(); //외부
-				System.out.println("외부 ---->"+list2);
-				
-				mv.addObject("list",list);
-				mv.addObject("list2",list2);
-				mv.setViewName("notice/noticeSite");   // -> view
-
-				return mv;
+			int read = 0;
+			while((read=bis.read()) != -1) {
+				sos.write(read);
 			}
-				
-			//게시판글 검색
-			   @RequestMapping("/notice/searchNotice.do")
-			   public ModelAndView searchNotice(@RequestParam(value="cPage", 
-			         required=false, defaultValue="0") int cPage, HttpServletRequest req) {
-			      
-				   
-				  String data = req.getParameter("data");
-			      int numPerPage = 10;
-			      Map<String, Object> m = new HashMap();
-			      m.put("cPage", cPage);
-			      m.put("numPerPage", numPerPage);
-			      m.put("data", data); // 빈칸에 입력한 값
-			            
-			      List<Map<String,String>> list=noticeService.selectNoticeSearchList(m);
-			      List<Notice> list2 = noticeService.selectNoticeList2();
-			      
-			      int totalCount = noticeService.selectNoticeSearchCount(m);
-			      
-			      System.out.println("list : " + list);
-			      System.out.println("totalCount : " + totalCount);
-			       
-			      ModelAndView mv = new ModelAndView();
-			      
-			      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/searchNotice.do"));
-			      mv.addObject("count",totalCount);
-			      mv.addObject("list",list);
-			      mv.addObject("list2",list2);
-			      mv.setViewName("notice/noticeList");
-			      return mv;
-			      
-			   }
+		} catch(IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				sos.close();
+				bis.close();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	//사이트등록화면
+	@RequestMapping("/notice/insertSite.do")
+	public String insertSite() {
+		return "notice/insertSite";
+	}
+
+	//사이트등록완료
+	@RequestMapping("/notice/insertSiteEnd.do")
+	public ModelAndView insertSiteEnd(@RequestParam Map<String, Object> param) {
+
+		int result=noticeService.insertSite(param);
+
+		String msg="";
+		String loc="/notice/site.do";
+		if(result>0) {
+			msg="사이트등록성공!";
+		}else {
+			msg="사이트등록실패!";
+		}
+
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+
+		return mv;
+	}
+
+	//관련사이트 목록
+	@RequestMapping("/notice/site.do")
+	public ModelAndView siteList() {
+
+		//반환될 modelAndView객체 생성
+		ModelAndView mv = new ModelAndView();
+
+		List<Map<String,Object>> list = noticeService.selectSiteList(); //내부
+		System.out.println("내부 ---->"+list);
+		List<Map<String,Object>> list2 = noticeService.selectSiteList2(); //외부
+		System.out.println("외부 ---->"+list2);
+
+		mv.addObject("list",list);
+		mv.addObject("list2",list2);
+		mv.setViewName("notice/noticeSite");   // -> view
+
+		return mv;
+	}
+
+	//게시판글 검색
+	@RequestMapping("/notice/searchNotice.do")
+	public ModelAndView searchNotice(@RequestParam(value="cPage", 
+	required=false, defaultValue="0") int cPage, HttpServletRequest req) {
+
+
+		String data = req.getParameter("data");
+		int numPerPage = 10;
+		Map<String, Object> m = new HashMap();
+		m.put("cPage", cPage);
+		m.put("numPerPage", numPerPage);
+		m.put("data", data); // 빈칸에 입력한 값
+
+		List<Map<String,String>> list=noticeService.selectNoticeSearchList(m);
+		List<Notice> list2 = noticeService.selectNoticeList2();
+
+		int totalCount = noticeService.selectNoticeSearchCount(m);
+
+		System.out.println("list : " + list);
+		System.out.println("totalCount : " + totalCount);
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/searchNotice.do"));
+		mv.addObject("count",totalCount);
+		mv.addObject("list",list);
+		mv.addObject("list2",list2);
+		mv.setViewName("notice/noticeList");
+		return mv;
+
+	}
 
 }

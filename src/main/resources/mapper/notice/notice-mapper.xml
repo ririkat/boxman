@@ -20,7 +20,10 @@
 	</insert>
 <!-- 	게시글 수정 -->
 	<update id="updateNotice" parameterType="map">
-		update notice set nCheck=#{nCheck} , nName=#{nName}, nText=#{nText}, nReadCount=default, nDate=sysdate where NNO=#{nNo}
+		update notice set nCheck=#{nCheck} , nName=#{nName}, nText=#{nText}, nReadCount=default where NNO=#{nNo}
+		<selectKey keyProperty="nNo" resultType="string" order="AFTER">
+			SELECT nNo from notice where nNo=#{nNo}
+		</selectKey>
 	</update>
 <!-- 	게시글 수정(첨부파일) -->
 	<update id="">
@@ -38,9 +41,17 @@
 	<select id="selectNoticeOne" resultType="notice">
 		select * from notice where  nName=#{nName}
 	</select>
-<!-- 	페이징처리 -->
+	<!-- 페이징처리1 -->
 	<select id="selectNoticeCount" resultType="_int">
-		select count(*) from notice
+		select count(*) from notice where categoryNo='1'
+	</select>
+	<!-- 페이징처리2 -->
+	<select id="selectNoticeCount2" resultType="_int">
+		select count(*) from notice where categoryNo='2'
+	</select>
+	<!-- 페이징처리3 -->
+	<select id="selectNoticeCount3" resultType="_int">
+		select count(*) from notice where categoryNo='3'
 	</select>
 <!-- 	게시판 리스트 -->
 	<select id="selectNoticeList" resultType="map">

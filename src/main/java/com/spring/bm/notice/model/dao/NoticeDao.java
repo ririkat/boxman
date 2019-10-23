@@ -13,6 +13,10 @@ public interface NoticeDao {
 	Notice selectNoticeOne(SqlSessionTemplate sqlSession, String nName);
 
 	int selectNoticeCount(SqlSessionTemplate sqlSession);
+	
+	int selectNoticeCount2(SqlSessionTemplate sqlSession);
+
+	int selectNoticeCount3(SqlSessionTemplate sqlSession);
 
 	List<Map<String, String>> selectNoticeList(SqlSessionTemplate sqlSession, int cPage, int numPerPage);
 
@@ -43,4 +47,5 @@ public interface NoticeDao {
 	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
 	
 	List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession);
+
 }
