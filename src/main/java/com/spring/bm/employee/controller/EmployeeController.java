@@ -109,17 +109,24 @@ public class EmployeeController {
 	public ModelAndView empLogin(@RequestParam Map<String,String> map,HttpSession session) {
 
 		Map<String, String> m = service.selectLoginEmp(map);
+		
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
 		String loc = "";
 		//		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
-		if (pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))) {
+		if(m==null) {
+			msg = "존재하지 않는 아이디입니다.";
+			loc="/";
+		}else if (pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))) {
 			msg = "로그인 성공";
 			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
 			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
-		} else {
+		} else if(pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))==false){
+			msg = "비밀번호가 일치하지 않습니다.";
+			loc="/";
+		}else {
 			msg = "로그인 실패";
 			loc="/";
 		}

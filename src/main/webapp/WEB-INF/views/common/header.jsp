@@ -72,10 +72,20 @@
 			<!-- Heading -->
 			<div class="sidebar-heading">index</div>
 
-			<!-- 결제 관리 -->
-			<li class="nav-item"><a class="nav-link" href="charts.html">
-					<i class="fas fa-fw fa-chart-area"></i> <span>결제 관리</span>
-			</a></li>
+			<!-- 결재 관리 -->
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseApv" aria-expanded="true" aria-controls="collapseApv">
+						<i class="fas fa-fw fa-chart-area"></i> <span>결재 관리</span>
+				</a>
+				<div id="collapseApv" class="collapse" aria-labelledby="headingApv" data-parent="#accordionSidebar">
+		          <div class="bg-white py-2 collapse-inner rounded">
+		            <a class="collapse-item" href="${path }/apv/sendApv.do">상신결재함</a>
+		            <a class="collapse-item" href="${path }/apv/receiveApv.do">수신결재함</a>
+		            <a class="collapse-item" href="${path }/apv/apvLine.do">결재라인관리</a>
+		            <a class="collapse-item" href="${path }/apv/apvDoc.do">결재양식관리</a>
+		          </div>
+        		</div>
+			</li>
 
       <!-- 인사 관리 -->
       <li class="nav-item">
