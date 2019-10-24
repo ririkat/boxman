@@ -48,7 +48,7 @@
 	<!-- 사원상세보기끝 -->
 	<!-- 사원로그인 -->
 	<select id="selectLoginEmp" parameterType="map" resultType="map">
-		SELECT * FROM EMPLOYEE E JOIN EMPFILE EF ON E.EMPNO=EF.EMPNO (+) WHERE E.EMPID=#{empId} AND E.EMPENTYN='N'
+		SELECT * FROM EMPLOYEE E JOIN EMPFILE EF ON E.EMPNO=EF.EMPNO (+) WHERE E.EMPID=#{empId} AND E.EMPENTYN='N' AND EFCNAME='증명사진'
 	</select>
 	<!-- 사원로그인끝 -->
 	<!-- 사원검색 -->

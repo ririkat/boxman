@@ -82,6 +82,12 @@ public class EmployeeController {
 	@RequestMapping("/emp/selectEmpOne.do")
 	public ModelAndView selectEmpOne(int empNo, String temp) {
 		Map<String, Object> empMap = service.selectEmpOne(empNo);
+		try {
+			empMap.replace("EMPSSN", enc.decrypt(String.valueOf(empMap.get("EMPSSN"))));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		List<EmpFile> list = service.selectEmpFileList(empNo);
 
 		Map<String, Object> dept = dService.selectDeptOne(Integer.parseInt(String.valueOf(empMap.get("DEPTNO"))));
