@@ -107,6 +107,37 @@ public class StuffServiceImpl implements StuffService {
 		return dao.updateStuff(sqlSession, param);
 	}
 
+	@Override
+	public int deleteStuff(int stuffNo) {
+		return dao.deleteStuff(sqlSession, stuffNo);
+	}
+
+	@Override
+	public int deleteStuffUpload(Map<String, String> param) {
+		return dao.deleteStuffUpload(sqlSession, param);
+	}
+
+	@Override
+	public int stuffUpdateEnd(Map<String, String> param, List<StuffUpload> stuffUploadList) throws Exception{
+		
+		int result = 0;
+		int stuffNo = 0;
+		
+		result = dao.updateStuff(sqlSession, param);
+		System.out.println("Service에서 조회한 물품 번호 : " + result);
+		
+		if(result == 0 ) throw new RuntimeException();
+		if(stuffUploadList.size() > 0) {
+			for(StuffUpload su : stuffUploadList) {
+				su.setStuffNo(Integer.parseInt(param.get("stuffNo")));
+				result = dao.insertStuffImage(sqlSession, su);
+				if(result == 0) throw new Exception();
+			}
+		}
+		
+		return result;
+	}
+
 
 
 

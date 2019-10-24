@@ -128,8 +128,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffEnroll.do">물품 등록</a>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 목록</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate.do">메인 카테고리 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
             <a class="collapse-item"  href="${path}/connection/connList.do">거래처관리</a>
