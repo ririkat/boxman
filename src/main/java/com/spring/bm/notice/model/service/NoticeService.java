@@ -9,8 +9,6 @@ import com.spring.bm.notice.model.vo.UploadNotice;
 public interface NoticeService {
 	//상세페이지
 	Notice selectNoticeOne(String nName);
-	//페이징
-	int selectNoticeCount();
 	//게시판 목록
 	List<Map<String, String>> selectNoticeList(int cPage, int numPerPage);
 	//조회수 +1
@@ -23,8 +21,6 @@ public interface NoticeService {
 	List<Notice> selectNoticeList2();
 	//사이트등록
 	int insertSite(Map<String, Object> param);
-	//게시글 수정
-	int updateNotice(Map<String, Object> param);
 	//게시글 삭제
 	int deleteNotice(Map<String, Object> param);
 	//필독체크가져오기
@@ -41,4 +37,12 @@ public interface NoticeService {
 	List<Map<String, Object>> selectSiteList();
 	//등록한 사이트 목록 (외부)
 	List<Map<String, Object>> selectSiteList2();
+	//게시글 수정 첨부파일포함
+	int updateNotice(Map<String, Object> param, List<UploadNotice> upNoticeList) throws Exception;
+	//게시글 수정
+	int updateNotice(Map<String, Object> param);
+	//페이징
+	int selectNoticeCount();
+	int selectNoticeCount2();
+	int selectNoticeCount3();
 }
