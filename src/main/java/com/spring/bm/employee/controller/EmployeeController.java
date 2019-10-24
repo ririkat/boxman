@@ -4,7 +4,6 @@ package com.spring.bm.employee.controller;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.encrypt.MyEncrypt;
 import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
@@ -46,6 +45,8 @@ public class EmployeeController {
 	EmpJobService jService;
 	@Autowired
 	BCryptPasswordEncoder pwEncoder;
+	@Autowired
+	MyEncrypt enc;
 
 	/* 사원등록 */
 	@RequestMapping("/emp/insertEmp.do")	//사원등록 폼으로 전환
@@ -145,6 +146,7 @@ public class EmployeeController {
 		return "redirect:/";
 	}
 
+	/* 사원등록 */
 	@RequestMapping("/emp/insertEmpEnd.do")	//사원 등록 완료
 	public ModelAndView insertEmpEnd(@RequestParam Map<String, String> param,
 			//			@RequestParam(value="upFile", required=false) MultipartFile[] upFile,
@@ -154,6 +156,14 @@ public class EmployeeController {
 
 		logger.debug(param.get("password"));
 		String empPassword = pwEncoder.encode((String)param.get("password"));
+		
+		try {
+			param.replace("empSSN", enc.encrypt(String.valueOf(param.get("empSSN"))));
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
 		param.put("empPassword", empPassword);
 
 		String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/emp");
@@ -201,31 +211,6 @@ public class EmployeeController {
 			ef.setEfReName(reName);
 			fileList.add(ef);
 		}
-
-
-		//		for(MultipartFile f : upFile) {
-		//			if(!f.isEmpty()) {
-		//				//파일명 생성(rename)
-		//				String oriFileName=f.getOriginalFilename();
-		//				String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
-		//				//규칙설정
-		//				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
-		//				int rdv=(int)(Math.random()*1000);
-		//				String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
-		//				//파일 실제 저장하기
-		//				try {
-		//					f.transferTo(new File(saveDir+"/"+reName));
-		//				}catch (Exception e) {//IlligalStateException|IOException
-		//					e.printStackTrace();
-		//				}
-		//				EmpFile ef = new EmpFile();
-		//				ef.setEfcName("자격증");
-		//				ef.setEfOrgName(oriFileName);
-		//				ef.setEfReName(reName);
-		//				fileList.add(ef);
-		//			}
-		//		}
-
 
 		int result = 0;
 		try {
@@ -361,73 +346,7 @@ public class EmployeeController {
 					}
 				}
 			}
-			//			if(efc.getEfcName().equals("자격증")) {
-			//				int count = 0;
-			//				for(MultipartFile f : upFile) {
-			//					for(EmpFile efc1 : oriFileList) {
-			//						String oriFileName=f.getOriginalFilename();
-			//						if(oriFileName.equals(efc1.getEfOrgName())) {
-			//							logger.debug(""+f);
-			//							logger.debug(efc.getEfOrgName());
-			//							count++;
-			//						}
-			//					}
-			//				}
-			//				if(count==0) {
-			//					int result = 0;
-			//					try {
-			//						result = service.deleteEmpFile(efc.getEfNo());
-			//					} catch (Exception e) {
-			//						// TODO Auto-generated catch block
-			//						e.printStackTrace();
-			//					}
-			//					if(result > 0) {
-			//						String oriFileName=f.getOriginalFilename();
-			//						String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
-			//						//규칙설정
-			//						SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
-			//						int rdv=(int)(Math.random()*1000);
-			//						String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
-			//						//파일 실제 저장하기
-			//						try {
-			//							f.transferTo(new File(saveDir+"/"+reName));
-			//						}catch (Exception e) {//IlligalStateException|IOException
-			//							e.printStackTrace();
-			//						}
-			//						EmpFile ef = new EmpFile();
-			//						ef.setEfcName("자격증");
-			//						ef.setEfOrgName(oriFileName);
-			//						ef.setEfReName(reName);
-			//						fileList.add(ef);
-			//					}
-			//				}
 		}
-
-
-		//자격증 새로 등록 
-//		for(MultipartFile f : upFile) {
-//			if(!f.isEmpty()) {
-//				//파일명 생성(rename)
-//				String oriFileName=f.getOriginalFilename();
-//				String ext=oriFileName.substring(oriFileName.lastIndexOf("."));
-//				//규칙설정
-//				SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd_HHMMssSSS");
-//				int rdv=(int)(Math.random()*1000);
-//				String reName=sdf.format(System.currentTimeMillis())+"_"+rdv+ext;
-//				//파일 실제 저장하기
-//				try {
-//					f.transferTo(new File(saveDir+"/"+reName));
-//				}catch (Exception e) {//IlligalStateException|IOException
-//					e.printStackTrace();
-//				}
-//				EmpFile ef = new EmpFile();
-//				ef.setEfcName("자격증");
-//				ef.setEfOrgName(oriFileName);
-//				ef.setEfReName(reName);
-//				fileList.add(ef);
-//			}
-//		}
-
 
 		int result = 0;
 		try {
@@ -452,5 +371,31 @@ public class EmployeeController {
 
 		return mv;
 	}
+	
+	/* 비밀번호 변경 팝업창 */
+	@RequestMapping("/emp/updatePassword.do")
+	public ModelAndView updatePassword(String empNo) {
+		ModelAndView mv = new ModelAndView();
+		logger.debug(String.valueOf(empNo));
+		mv.addObject("empNo", empNo);
+		mv.setViewName("emp/empUpPassword");
+		return mv;
+	}
+	
+	/* 비밀번호 변경 */
+	@RequestMapping("/emp/updatePasswordEnd.do")
+	@ResponseBody
+	public int responsBody(@RequestParam Map<String, Object> param, Model model) throws JsonProcessingException {
+		String empPassword = pwEncoder.encode((String)param.get("empPassword"));
+		param.put("empPassword", empPassword);
+		int result = 0;
+		try {
+			result = service.updatePassword(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 }
 

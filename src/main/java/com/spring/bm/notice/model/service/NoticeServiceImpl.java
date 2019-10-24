@@ -49,6 +49,17 @@ public class NoticeServiceImpl implements NoticeService {
 	public int selectNoticeCount() {
 		return dao.selectNoticeCount(sqlSession);
 	}
+	
+
+	@Override
+	public int selectNoticeCount2() {
+		return dao.selectNoticeCount2(sqlSession);
+	}
+
+	@Override
+	public int selectNoticeCount3() {
+		return dao.selectNoticeCount3(sqlSession);
+	}
 
 	@Override
 	public List<Map<String, String>> selectNoticeList(int cPage, int numPerPage) {
@@ -73,11 +84,6 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public int insertSite(Map<String, Object> param) {
 		return dao.insertSite(sqlSession, param);
-	}
-
-	@Override
-	public int updateNotice(Map<String, Object> param) {
-		return dao.updateNotice(sqlSession, param);
 	}
 
 	@Override
@@ -132,4 +138,29 @@ public class NoticeServiceImpl implements NoticeService {
 		return dao.selectSiteList2(sqlSession);
 	}
 
+	@Override
+	public int updateNotice(Map<String, Object> param, List<UploadNotice> upNoticeList) throws Exception {
+		int result=0;
+		int boardNo=0;
+
+		result = dao.updateNotice(sqlSession, param);
+		if(result == 0 ) throw new RuntimeException();
+		if(upNoticeList.size()>0) {
+			for(UploadNotice n : upNoticeList) {
+				n.setNNo(Integer.parseInt((String)param.get("nNo")));
+				result=dao.insertUploadNotice(sqlSession, n);
+				 if(result == 0) throw new Exception();
+			}
+		}
+		
+		return result;
+	}
+
+	@Override
+	public int updateNotice(Map<String, Object> param) {
+		return dao.updateNotice(sqlSession, param);
+	}
+	
+
+	
 }

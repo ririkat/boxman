@@ -24,7 +24,7 @@ div#demo-container {
                     <h4 class="card-title">부서별 공지사항</h4>
                     <p class="card-description"> 게시글 작성(부서별) </p>
                     <form class="forms-sample">
-                    	<input type = "hidden" name = "nCategory" value = "3"/>
+                    	<input type = "hidden" name = "categoryNo" value = "3"/>
                    	  <div class="col-md-6 grid-margin stretch-card form-check">
                         <label class="form-check-label">
                          <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>
@@ -35,21 +35,12 @@ div#demo-container {
                         <input type="text" class="form-control" id="exampleInputName1" name="nName" placeholder="">
                       </div>
                       <div class="form-group">
-                        <label for="exampleInputEmail3">부서</label>
-                         <select name = "deptName" id = "exampleInputEmail3" class="form-control">
-		                  <option value = "0">해당 부서를 선택하세요</option>
-		                  <c:forEach items="${deptList}" var="dept">
-		                     <option value = "<c:out value='${dept["DEPTNAME"]}'/>"><c:out value='${dept["DEPTNAME"]}'/></option>
-		                  </c:forEach>
-		               </select>
-                      </div>
-                      <div class="form-group">
                         <label for="exampleInputPassword4">작성자</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="" disabled>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${loginEmp['EMPNAME'] }" disabled>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">전화번호</label>
-                        <input type="number" class="form-control" id="exampleInputPassword4" value="" disabled>
+                        <input type="number" class="form-control" id="exampleInputPassword4" value="${loginEmp['EMPPHONE'] }" disabled>
                       </div>                 
                      
                       <div class="form-group">

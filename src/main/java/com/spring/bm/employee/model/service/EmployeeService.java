@@ -27,6 +27,8 @@ public interface EmployeeService {
 	int deleteEmpFile(int efNo) throws Exception;
 	/* 사원수정 */
 	int updateEmp(Map<String, Object> param, List<EmpFile> fileList) throws Exception;
+	/* 비밀번호변경 */
+	int updatePassword(Map<String, Object> param) throws Exception;
 	
 }
 

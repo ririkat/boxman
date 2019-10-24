@@ -65,9 +65,7 @@
                           <c:forEach items="${list}" var="stuffMaincategory" varStatus = "v">
       							<tr>
          						<td>				
-         						<c:if test="${param.cPage!=1 }">
 									<c:out value="${v.count }"/>
-								</c:if>
 								</td>
          							<td>${stuffMaincategory.mcName}</td>
          							<td>
@@ -116,6 +114,7 @@ $(function(){
 				} else {
 					$(maincategoryNameCheck).text("");
 					$(maincategoryNameCheck).prop("disabled",false);
+					$('#btn').attr('disabled', false);
 					} 
 				
 				},

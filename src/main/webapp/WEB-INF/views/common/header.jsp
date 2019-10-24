@@ -71,6 +71,22 @@
 
 			<!-- Heading -->
 			<div class="sidebar-heading">index</div>
+			
+			<!-- 마이페이지 -->
+		      <li class="nav-item">
+		        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMy" aria-expanded="true" aria-controls="collapseTwo">
+		          <i class="fas fa-fw fa-cog"></i>
+		          <span>마이페이지</span>
+		        </a>
+		        <div id="collapseMy" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		          <div class="bg-white py-2 collapse-inner rounded">
+		            <h6 class="collapse-header">Custom Components:</h6>
+		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}">내정보확인</a>
+		            <a class="collapse-item" href="${path }/dept/deptList.do">근태관리</a>
+		            <a class="collapse-item" href="${path }/empJob/empJobList.do">연차확인</a>
+		          </div>
+		        </div>
+		      </li>
 
 			<!-- 결재 관리 -->
 			<li class="nav-item">
@@ -112,8 +128,7 @@
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffEnroll.do">물품 등록</a>
-            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 목록</a>
+            <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate.do">메인 카테고리 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
             <a class="collapse-item"  href="${path}/connection/connList.do">거래처관리</a>
@@ -345,7 +360,7 @@
 								<div
 									class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 									aria-labelledby="userDropdown">
-									<a class="dropdown-item" href="#"> <i
+									<a href="${path}/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}" class="dropdown-item" href="#"> <i
 										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 										Profile
 									</a> <a class="dropdown-item" href="#"> <i

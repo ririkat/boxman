@@ -109,6 +109,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	/* 비밀번호수정 */
+	@Override
+	public int updatePassword(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.updatePassword(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
+	
+	
 	
 	
 	

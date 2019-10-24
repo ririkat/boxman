@@ -38,22 +38,13 @@
                         <label for="exampleInputPassword4">등록일</label>
                         <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.NDate}" readonly>
                       </div>                     
-	                  <div class="form-group">
-                        <label for="exampleInputEmail3">부서</label>
-                         <select name = "deptName" id = "exampleInputEmail3" class="form-control">
-		                  <option value = "${nt.deptName }">${nt.deptName }</option>
-		                  <c:forEach items="${deptList}" var="dept">
-		                     <option value = "<c:out value='${dept["DEPTNAME"]}'/>"><c:out value='${dept["DEPTNAME"]}'/></option>
-		                  </c:forEach>
-		               </select>
-                      </div>  
                       <div class="form-group">
                         <label for="exampleInputPassword4">작성자</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="" readonly>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${loginEmp['EMPNAME'] }" readonly>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">전화번호</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="" readonly>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${loginEmp['EMPPHONE'] }" readonly>
                       </div>
                       <div class="form-group">
                         <label for="exampleTextarea1">내용</label>
