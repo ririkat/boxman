@@ -42,10 +42,9 @@
 
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary"></h6>
+			<h6 class="m-0 font-weight-bold text-primary">거래처 등록</h6>
         </div>
 		<div class="card-body">
-			<h4 class="card-title">거래처 등록</h4>
 			<br/>
 			
 			<form name="enrollConnection" class="forms-sample" action="${path }/connection/enrollConnEnd.do" method="post" onsubmit="return enroll_validate();">
@@ -70,16 +69,6 @@
 							</label>
 						</div>
 					</div>
-				</div>
-				<br/>
-				
-				<div class="form-group">
-					<label for="exampleFormControlSelect2">품목 카테고리</label>
-					<select class="form-control" id="mCategName" name="mCategName">
-						<c:forEach items="${list }" var="m">
-							<option>${m["MCNAME"] }</option>
-						</c:forEach>
-					</select>
 				</div>
 				<br/>
 				
@@ -188,21 +177,12 @@
 
 	<form name="checkconNameDuplFrm" method="post">
 		<input type="hidden" name="conCateg_" />
-		<input type="hidden" name="mCategName_" />
 		<input type="hidden" name="conName_" />
 	</form>
 </section>
 
 <script>
 $(document).ready(function() {
-	$("input:radio[name=conCateg]").click(function() {
-	    if($("input[name=conCateg]:checked").val() == "유통") {
-	        $("select[name=mCategName]").attr("disabled",true);
-	    }
-	    else {
-	        $("select[name=mCategName]").attr("disabled",false);
-	    }
-	});
 	
 	$("input:radio[name=conTransCk]").click(function() {
 	    if($("input[name=conTransCk]:checked").val() == "N") {
@@ -233,7 +213,6 @@ function conNameDuplCheck(){
 	var regExpConName = /^[가-힣a-zA-Z]+$/;
 	
 	var conCateg = $("input[name=conCateg]:checked").val().trim();
-	var mCategName = $("#mCategName").val().trim();
 	var conName = $("#conName").val().trim();
 	
 	if(conName==="") {
@@ -252,7 +231,6 @@ function conNameDuplCheck(){
 		    var popup = open("", name, option);
 		    
 		    checkconNameDuplFrm.conCateg_.value = conCateg;
-		    checkconNameDuplFrm.mCategName_.value = mCategName;
 		    checkconNameDuplFrm.conName_.value = conName;
 		    checkconNameDuplFrm.target = name;
 		    checkconNameDuplFrm.action = url;

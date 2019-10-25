@@ -7,11 +7,7 @@
 	</select>
 	
 	<select id="selectConnList" resultType="map">
-		SELECT  A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+) ORDER BY CONCODE
-	</select>
-	
-	<select id="selectStfMainCateg" resultType="map">
-		SELECT * FROM STUFF_MAINCATEGORY
+		SELECT * FROM CONNECTION ORDER BY CONCODE DESC
 	</select>
 	
 	<select id="searchDisCon" resultType="_int">
@@ -24,14 +20,6 @@
 	
 	<insert id="enrollConn">
 		INSERT INTO CONNECTION VALUES(seq_conn.nextval, #{conName}, #{conCateg}, #{conRepName}, #{conTel}, #{conPhone},
-			<choose>
-				<when test="conCateg eq '유통'">
-					null,
-				</when>
-				<when test="conCateg eq '매입' or conCateg eq '매출'">
-					(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName}),
-				</when>
-			</choose>
 			#{conUseCk}, #{conTransCk}, '${postcode1}-${postcode2} ${address} (${address_etc})', 1, 1)
 	</insert>
 	
@@ -70,20 +58,13 @@
 	</delete>
 	
 	<select id="selectConnSearchList" parameterType="map" resultType="map">
-		SELECT * FROM (SELECT A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+))
-		<choose>
-			<when test="type eq 'mcNo'">
-				WHERE ${type}=(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME LIKE '%'||#{data}||'%')
-			</when>
-			<otherwise>
-				WHERE ${type} LIKE '%'||#{data}||'%'
-			</otherwise>
-		</choose>
+		SELECT * FROM CONNECTION
+		WHERE ${type} LIKE '%'||#{data}||'%'
 		ORDER BY CONCODE
 	</select>
 	
 	<select id="selectConnSearchCount" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM (SELECT A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+))
+		SELECT COUNT(*) FROM CONNECTION
 		WHERE ${type} LIKE '%'||#{data}||'%'
 		ORDER BY CONCODE
 	</select>

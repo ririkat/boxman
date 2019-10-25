@@ -7,14 +7,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="거래처 관리" name="tabTitle"/> 
+   <jsp:param value="구매 관리" name="tabTitle"/> 
 </jsp:include>
 
 <section>
 
 	<div class="card shadow mb-4">
        <div class="card-header py-3">
-         <h6 class="m-0 font-weight-bold text-primary">거래처 목록</h6>
+         <h6 class="m-0 font-weight-bold text-primary">구매 목록</h6>
        </div>
        <div class="card-body">
          <div class="table-responsive">
@@ -25,15 +25,11 @@
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
                        		<select name="type" id="searchKeyword" class="form-control form-control-sm">
-								<option value="conCode">거래처코드</option>
-								<option value="conName">거래처명</option>
-								<option value="conRepName">대표자명</option>
-								<option value="conCateg">구분</option>
-								<option value="conUseCk">사용구분</option>
+								<option value="#">구매코드</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
 						</label>
-						<button onclick = "searchConnection();" class="btn btn-light btn-icon-split">
+						<button onclick = "searchPurInfo();" class="btn btn-light btn-icon-split">
 	                   		<span class="icon text-gray-600">
 	                    		<i class="fas fa-arrow-right"></i>
 	                   		</span>
@@ -45,11 +41,11 @@
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
                      <div style="float:right;">
-	                      <a href="${path }/connection/enrollConn.do" class="btn btn-light btn-icon-split">
+	                      <a href="${path }/purchase/enrollPurInfo.do" class="btn btn-light btn-icon-split">
 		                      <span class="icon text-gray-600">
 		                      	<i class="fas fa-arrow-right"></i>
 		                      </span>
-		                      <span class="text">거래처등록</span>
+		                      <span class="text">구매정보 등록</span>
 	                  	  </a>
 	                 </div>
                   </div>
@@ -60,29 +56,31 @@
                     <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
                          <tr>
-                           <th>거래처코드</th>
-							<th>거래처명</th>
-							<th>대표자명</th>
-							<th>전화번호</th>
-							<th>핸드폰번호</th>
-							<th>구분</th>
-							<th>사용구분</th>
-							<th>이체정보</th>
-							<th>주소</th>
+                            <th>구매코드</th>
+							<th>등록일자</th>
+							<th>거래처</th>
+							<th>담당자</th>
+							<th>거래유형</th>
+							<th>구매총액</th>
+							<th>구매확정</th>
+							<th>구매일자</th>
+							<th>입금여부</th>
+							<th>입금일자</th>
                          </tr>
                        </thead>
                        <tbody>
-                          <c:forEach items="${list }" var="c">
+                          <c:forEach items="${list }" var="p">
 								<tr>
-									<td><a href='${path }/connection/modifyConn.do?conCode=${c["CONCODE"]}&conTransCk=${c["CONTRANSCK"]}'><c:out value='${c["CONCODE"] }'/></a></td>
-									<td><c:out value='${c["CONNAME"] }' /></td>
-									<td><c:out value='${c["CONREPNAME"] }' /></td>
-									<td><c:out value='${c["CONTEL"] }' /></td>
-									<td><c:out value='${c["CONPHONE"] }' /></td>
-									<td><c:out value='${c["CONCATEG"] }'/></td>
-									<td><c:out value='${c["CONUSECK"] }' /></td>
-									<td><c:out value='${c["CONTRANSCK"] }' /></td>
-									<td><c:out value='${c["CONADDR"] }' /></td>
+									<td><a href='#'><c:out value='${p["PURCODE"] }'/></a></td>
+									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
+									<td><c:out value='${p["CONNAME"] }' /></td>
+									<td><c:out value='${p["EMPNAME"] }' /></td>
+									<td><c:out value='${p["PURTRANTYPE"] }' /></td>
+									<td><c:out value='${p["PURTOTAMT"] }'/></td>
+									<td><c:out value='${p["PURCK"] }'/></td>
+									<td><c:out value='${p["PURDATE"] }' /></td>
+									<td><c:out value='${p["DEPOSCK"] }' /></td>
+									<td><c:out value='${p["DEPOSDATE"] }' /></td>
 								</tr>
 							</c:forEach>
                        </tbody>
@@ -98,8 +96,8 @@
 </section>
 
 <script>
-function searchConnection(){
-	$("#searchFrm").attr("action","${path}/connection/searchConnection.do");
+function searchPurInfo(){
+	$("#searchFrm").attr("action","${path}/purchase/searchPurInfo.do");
 	$("#searchFrm").submit();
 }
 </script>

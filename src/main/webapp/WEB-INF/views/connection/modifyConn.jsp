@@ -45,8 +45,6 @@
 			<h6 class="m-0 font-weight-bold text-primary">거래처 수정</h6>
         </div>
 		<div class="card-body">
-			<h4 class="card-title">Input size</h4>
-			<p class="card-description">This is the default bootstrap form layout</p>
 			<br/>
 			
 			<form id="modifyConnection" name="modifyConnection" class="forms-sample" method="post" onsubmit="return modify_validate();">
@@ -73,12 +71,6 @@
 							</label>
 						</div>
 					</div>
-				</div>
-				<br/>
-				
-				<div class="form-group">
-					<label for="exampleFormControlSelect2">품목 카테고리</label>
-					<input type="text" class="form-control" id="mCategName" name="mCategName" value="${mCateg}" disabled/>
 				</div>
 				<br/>
 				

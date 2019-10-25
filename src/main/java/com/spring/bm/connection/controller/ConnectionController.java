@@ -40,31 +40,20 @@ public class ConnectionController {
 	@RequestMapping("/connection/enrollConn.do")
 	public ModelAndView enrollConn() {
 		ModelAndView mv = new ModelAndView();
-		List<Map<String,String>> list = service.selectStfMainCateg();
-		
-		mv.addObject("list",list);
 		mv.setViewName("connection/enrollConn");
-		
 		return mv;
 	}
 	
 	@RequestMapping("/connection/checkConNameDupl.do")
 	public ModelAndView checkConNameDupl(@RequestParam Map<String,String> param) {
 		String conCateg = param.get("conCateg_");
-		String mCategName = param.get("mCategName_");
 		String conName = param.get("conName_");
-		int result = -1;
+		int result = 0;
 		
-		if(conCateg.equals("유통")) {
-			result = service.searchDisCon(param);
-		}
-		else {
-			result = service.searchCon(param);
-		}
+		result = service.searchDisCon(param);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("conCateg",conCateg);
-		mv.addObject("mCategName",mCategName);
 		mv.addObject("conName",conName);
 		mv.addObject("result",result);
 		mv.setViewName("connection/connDuplPopUp");
@@ -101,12 +90,10 @@ public class ConnectionController {
 		int conCode = Integer.parseInt(req.getParameter("conCode"));
 		
 		Map<String,String> conn = service.selectConnection(conCode);
-		String mainCateg = service.selectThisMainCateg(conCode);
 		Map<String,String> transfer =  service.selectTransferInfo(conCode);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("conn",conn);
-		mv.addObject("mCateg",mainCateg);
 		mv.addObject("transferInfo",transfer);
 		mv.setViewName("connection/modifyConn");
 		return mv;
