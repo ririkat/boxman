@@ -385,8 +385,6 @@ function deleteConn(){
 			<h6 class="m-0 font-weight-bold text-primary">거래처 수정</h6>
         </div>
 		<div class="card-body">
-			<h4 class="card-title">Input size</h4>
-			<p class="card-description">This is the default bootstrap form layout</p>
 			<br/>
 			
 			<form id="modifyConnection" name="modifyConnection" class="forms-sample" method="post" onsubmit="return modify_validate();">
@@ -413,12 +411,6 @@ function deleteConn(){
 							</label>
 						</div>
 					</div>
-				</div>
-				<br/>
-				
-				<div class="form-group">
-					<label for="exampleFormControlSelect2">품목 카테고리</label>
-					<input type="text" class="form-control" id="mCategName" name="mCategName" value="${mCateg}" disabled/>
 				</div>
 				<br/>
 				
@@ -669,7 +661,7 @@ function submitConn(){
 }
 
 function deleteConn(){
-	if(confirm("거래처 삭제시 등록된 이체정보와 연결된 판매정보 및 구매정보가 전부 삭제됩니다. 정말 삭제하시겠습니까?")) {
+	if(confirm("거래처 삭제시 등록된 이체정보와\n연결된 판매정보 및 구매정보가 전부 삭제됩니다.\n정말 삭제하시겠습니까?")) {
 		location.href="${path}/connection/deleteConn.do?conCode=${conn['CONCODE']}";
 	}
 }
