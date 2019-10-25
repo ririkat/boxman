@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bm.connection.model.vo.Connection;
 import com.spring.bm.stuff.model.vo.Stuff;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
 import com.spring.bm.stuff.model.vo.StuffSubcategory;
@@ -55,7 +56,7 @@ public class StuffDaoImpl implements StuffDao {
 
 	@Override
 	public int selectStuffCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("stuff.selectBoardCount");
+		return sqlSession.selectOne("stuff.selectStuffCount");
 	}
 
 	@Override
@@ -112,6 +113,16 @@ public class StuffDaoImpl implements StuffDao {
 	@Override
 	public int deleteStuffUpload(SqlSessionTemplate sqlSession, Map<String, String> param) {
 		return sqlSession.delete("stuff.deleteStuffUpload",param);
+	}
+
+	@Override
+	public List<Connection> stuffConnectionList(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("stuff.selectConnectionList");
+	}
+
+	@Override
+	public Connection connectionName(SqlSessionTemplate sqlSession, int conCode) {
+		return sqlSession.selectOne("stuff.connectionName", conCode);
 	}
 
 
