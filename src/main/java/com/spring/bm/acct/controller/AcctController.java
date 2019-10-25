@@ -18,9 +18,9 @@ public class AcctController {
 	@RequestMapping("acct/is.do")
 	public String is() {
 		List <Map<String, String>> list = service.selectICList();
-		System.out.println("////////////////");
-		System.out.println(list.get(0).get("EMPNAME"));
-		System.out.println(list.get(0).get("EMPADDR"));
+		//System.out.println("////////////////");
+		//System.out.println(list.get(0).get("EMPNAME"));
+		//System.out.println(list.get(0).get("EMPADDR"));
 		return "acct/is";
 	}
 	
