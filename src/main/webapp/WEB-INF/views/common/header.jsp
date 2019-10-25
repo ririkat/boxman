@@ -341,7 +341,7 @@
 										<div class="small text-gray-500">Chicken the Dog · 2w</div>
 									</div>
 								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="#">Read More Messages</a>
+									href="${path }/chat/chatList.do">Read More Messages</a>
 							</div></li>
 
 						<div class="topbar-divider d-none d-sm-block"></div>

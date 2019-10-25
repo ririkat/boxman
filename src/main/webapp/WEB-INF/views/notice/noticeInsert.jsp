@@ -24,12 +24,11 @@ div#demo-container {
                     <h4 class="card-title">공지사항</h4>
                     <p class="card-description"> 게시글 작성 </p>
                     <form class="forms-sample">
-                    	<input type = "hidden" name = "categoryNo" value = "1"/>
-                   	  <div class="col-md-6 grid-margin stretch-card form-check">
-                        <label class="form-check-label">
-                         <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>
-                      </div>
-
+                    	<input type = "hidden" name = "categoryNo" value = "1"/>                  	
+                    	 <div class="custom-control custom-checkbox mb-3">
+					      <input type="checkbox" class="custom-control-input" id="customCheck" name="nCheck" value="필독체크">
+					      <label class="custom-control-label" for="customCheck">필독체크</label>
+					    </div>
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
                         <input type="text" class="form-control" id="exampleInputName1" name="nName" placeholder="">

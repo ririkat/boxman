@@ -69,8 +69,11 @@
        select * from upnotice where NNO=#{NNo}
     </select>
    <!-- 게시글 필독체크 조회 -->
-    <select id="selectNoticeList2" resultType="notice">
-       select * from notice where NCHECK='필독체크'
+    <select id="selectNoticeList2" resultType="map">
+       select a.*,(select count(*)
+                from upNotice
+                where nNo=a.nNo) as upNoticeCount
+                from notice a where NCHECK='필독체크'
     </select>
    <!-- 상세페이지에서 필독체크인지 아닌지 화면에 띄워주기 -->
     <select id="selectNoticeCheck" resultType="map">

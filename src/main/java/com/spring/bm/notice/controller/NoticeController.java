@@ -174,6 +174,12 @@ public class NoticeController {
    public ModelAndView updateNotice(@RequestParam Map<String, Object> param,
          @RequestParam(value="upFile", required=false) MultipartFile[] upFile, HttpServletRequest request) {
 
+	   
+	   if(param.get("nCheck") == null || !param.get("nCheck").equals("필독체크") || param.get("nCheck").equals("null")) {
+	         param.remove("nCheck");
+	         param.put("nCheck", "필수아님");
+	      }
+	   
       int result=0;
       int result2=0;
       
@@ -223,7 +229,7 @@ public class NoticeController {
       }
       
       String msg="";
-      String loc="/";
+      String loc="/notice/selectNoticeList.do";
       if(result > 0 || result2 > 0) {
             msg = "게시글 수정 완료!";
          } else {
@@ -271,6 +277,7 @@ public class NoticeController {
       int numPerPage = 5;
       List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
       List<Notice> list2 = noticeService.selectNoticeList2();
+      System.out.println("list2 ==============>>> "+list2);
       int totalCount = noticeService.selectNoticeCount();
 
       mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));
