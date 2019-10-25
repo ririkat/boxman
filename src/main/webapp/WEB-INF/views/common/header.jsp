@@ -39,6 +39,7 @@
   <!-- Custom scripts for all pages-->
   <script src="${path }/resources/b4/js/sb-admin-2.min.js"></script>
   
+  <!-- favicon -->
   <link rel="icon" href="${path }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
   
 </head>
