@@ -41,7 +41,31 @@
   
 
 </head>
+<style>
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
 
+.btn-success{
+	background-color: #4e73df;
+	border-color: #4e73df;
+}
+
+.btn-success hover{
+	background-color: white;
+	border-color: #4e73df;
+}
+
+.btn-outline-success{
+	background-color: #4e73df;
+	border-color: #4e73df;
+	color: white;
+}
+
+</style>
 <body id="page-top">
 
 	<!-- Page Wrapper -->

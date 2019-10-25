@@ -2,75 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="connection">
 
-	<select id="selectConnCount" resultType="_int">
-		select count(*) from connection
-	</select>
-	
-	<select id="selectConnList" resultType="map">
-		SELECT  A.*, B.MCNAME FROM CONNECTION A, STUFF_MAINCATEGORY B WHERE A.MCNO=B.MCNO(+) ORDER BY CONCODE
-	</select>
-	
-	<select id="selectStfMainCateg" resultType="map">
-		SELECT * FROM STUFF_MAINCATEGORY
-	</select>
-	
-	<select id="searchDisCon" resultType="_int">
-		SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_}
-	</select>
-	
-	<select id="searchCon" resultType="_int">
-		SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_} AND MCNO=(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName_})
-	</select>
-	
-	<insert id="enrollConn">
-		INSERT INTO CONNECTION VALUES(seq_conn.nextval, #{conName}, #{conCateg}, #{conRepName}, #{conTel}, #{conPhone},
-			<choose>
-				<when test="conCateg eq '유통'">
-					null,
-				</when>
-				<when test="conCateg eq '매입' or conCateg eq '매출'">
-					(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName}),
-				</when>
-			</choose>
-			#{conUseCk}, #{conTransCk}, '${postcode1}-${postcode2} ${address} (${address_etc})', 1, 1)
-	</insert>
-	
-	<insert id="enrollTransferInfo">
-		INSERT INTO TRANSFERINFO VALUES(seq_conn.currval, seq_transfer.nextval, #{trfBkName}, #{trfAccount}, #{trfAccHolder}, #{trfNote})
-	</insert>
-	
-	<select id="selectConnection" parameterType="_int" resultType="map">
-		SELECT * FROM CONNECTION WHERE CONCODE=#{conCode}
-	</select>
-	
-	<select id="selectThisMainCateg" parameterType="_int" resultType="string">
-		SELECT MCNAME FROM STUFF_MAINCATEGORY WHERE MCNO=(SELECT MCNO FROM CONNECTION WHERE CONCODE=#{conCode})
-	</select>
-	
-	<select id="selectTransferInfo" parameterType="_int" resultType="map">
-		SELECT * FROM TRANSFERINFO WHERE CONCODE=#{conCode}
-	</select>
-	
-	<update id="modifyConn" parameterType="map">
-		UPDATE CONNECTION
-		SET CONREPNAME=#{conRepName}, CONTEL=#{conTel},
-			CONPHONE=#{conPhone}, CONUSECK=#{conUseCk}, CONTRANSCK=#{conTransCk},
-			CONADDR='${postcode1}-${postcode2} ${address} (${address_etc})'
-		WHERE CONCODE=#{conCode}
-	</update>
-	
-	<update id="modifyTransferInfo">
-		UPDATE TRANSFERINFO
-		SET TRFBKNAME=#{trfBkName}, TRFACCOUNT=#{trfAccount}, TRFACCHOLDER=#{trfAccHolder}, TRFNOTE=#{trfNote}
-		WHERE CONCODE=#{conCode} AND TRFCODE=#{trfCode}
-	</update>
-	
-	<delete id="deleteConn" parameterType="_int">
-		DELETE FROM CONNECTION WHERE CONCODE=#{conCode}
-	</delete>
-
+   <select id="selectConnCount" resultType="_int">
+      select count(*) from connection
+   </select>
+   
+   <select id="selectConnList" resultType="map">
+      SELECT * FROM CONNECTION ORDER BY CONCODE DESC
+   </select>
+   
+   <select id="searchDisCon" resultType="_int">
+      SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_}
+   </select>
+   
+   <select id="searchCon" resultType="_int">
+      SELECT COUNT(*) FROM CONNECTION WHERE CONCATEG=#{conCateg_} AND CONNAME=#{conName_} AND MCNO=(SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME=#{mCategName_})
+   </select>
+   
+   <insert id="enrollConn">
+      INSERT INTO CONNECTION VALUES(seq_conn.nextval, #{conName}, #{conCateg}, #{conRepName}, #{conTel}, #{conPhone},
+         #{conUseCk}, #{conTransCk}, '${postcode1}-${postcode2} ${address} (${address_etc})', 1, 1)
+   </insert>
+   
+   <insert id="enrollTransferInfo">
+      INSERT INTO TRANSFERINFO VALUES(seq_conn.currval, seq_transfer.nextval, #{trfBkName}, #{trfAccount}, #{trfAccHolder}, #{trfNote})
+   </insert>
+   
+   <select id="selectConnection" parameterType="_int" resultType="map">
+      SELECT * FROM CONNECTION WHERE CONCODE=#{conCode}
+   </select>
+   
+   <select id="selectThisMainCateg" parameterType="_int" resultType="string">
+      SELECT MCNAME FROM STUFF_MAINCATEGORY WHERE MCNO=(SELECT MCNO FROM CONNECTION WHERE CONCODE=#{conCode})
+   </select>
+   
+   <select id="selectTransferInfo" parameterType="_int" resultType="map">
+      SELECT * FROM TRANSFERINFO WHERE CONCODE=#{conCode}
+   </select>
+   
+   <update id="modifyConn" parameterType="map">
+      UPDATE CONNECTION
+      SET CONREPNAME=#{conRepName}, CONTEL=#{conTel},
+         CONPHONE=#{conPhone}, CONUSECK=#{conUseCk}, CONTRANSCK=#{conTransCk},
+         CONADDR='${postcode1}-${postcode2} ${address} (${address_etc})'
+      WHERE CONCODE=#{conCode}
+   </update>
+   
+   <update id="modifyTransferInfo">
+      UPDATE TRANSFERINFO
+      SET TRFBKNAME=#{trfBkName}, TRFACCOUNT=#{trfAccount}, TRFACCHOLDER=#{trfAccHolder}, TRFNOTE=#{trfNote}
+      WHERE CONCODE=#{conCode} AND TRFCODE=#{trfCode}
+   </update>
+   
+   <delete id="deleteConn" parameterType="_int">
+      DELETE FROM CONNECTION WHERE CONCODE=#{conCode}
+   </delete>
+   
+   <select id="selectConnSearchList" parameterType="map" resultType="map">
+      SELECT * FROM CONNECTION
+      WHERE ${type} LIKE '%'||#{data}||'%'
+      ORDER BY CONCODE
+   </select>
+   
+   <select id="selectConnSearchCount" parameterType="map" resultType="_int">
+      SELECT COUNT(*) FROM CONNECTION
+      WHERE ${type} LIKE '%'||#{data}||'%'
+      ORDER BY CONCODE
+   </select>
+   
 </mapper>
-
 
 
 

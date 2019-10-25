@@ -22,7 +22,8 @@
                        <label>Search:
                        	    <select name = "type" id = "stuffMain" class = "form-control form-control-sm">
 										<option value = "stuffName">물품 이름</option>
-										<option value = "manufacturer">제조사</option>
+										<option value = "conName">거래처 이름</option>
+										<option value = "scName">카테고리</option>
 							</select>
                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data">
                       </label>
@@ -58,7 +59,7 @@
 							<th scope="col">가격</th>
 							<th scope="col">수량</th>							
 							<th scope="col">등록날짜</th>
-							<th scope="col">제조사</th>
+							<th scope="col">거래처</th>
 							<th scope="col">비고</th>
 							<th scope="col"></th>
 						</tr>
@@ -75,7 +76,7 @@
          						<td>${stuff.price}</td>
          						<td>${stuff.stuffCount}</td>         						
          						<td>${stuff.enrollDate}</td>
-         						<td>${stuff.manufacturer}</td>
+         						<td>${stuff.conName}</td>
          						<td>${stuff.scName }</td>
          						<td>
 									<button type="button" class="btn btn-success mr-2"
