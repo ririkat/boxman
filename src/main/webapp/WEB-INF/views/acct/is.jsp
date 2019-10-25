@@ -120,7 +120,7 @@
                     </tr>
                     <tr>
                       <td>임금세</td>
-                      <td>₩(<c:out value="${list ['SALTAX']}"/>)</td>
+                      <td id="saltax">₩(<c:out value="${list ['SALTAX']}"/>)</td>
                       <td></td>
                     </tr>
                     <tr>
@@ -145,12 +145,12 @@
                     </tr>
                     <tr>
                       <td>퇴직금</td>
-                      <td>₩(<c:out value="${list['SEVERANCE'] }"/>)</td>
+                      <td id="severance">₩(<c:out value="${list['SEVERANCE'] }"/>)</td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>출장비</td>
-                      <td>₩(<c:out value="${list['BIZTRIP'] }"/>)</td>
+                      <td id="biztrip" val="ee">₩(<c:out value="${list['BIZTRIP'] }"/>)</td>
                       <td></td>
                     </tr>
                     <tr>
@@ -161,7 +161,7 @@
                     <tr>
                       <td>총 경영비</td>
                       <td></td>
-                      <td><strong id="totalExpense">(₩152,500,000)</strong></td>
+                      <!-- <td><strong id="totalExpense">${list['SEVERANCE']+list['BIZTRIP'] }</strong></td> -->
                     </tr>
                     <tr>
                       <td>순 이익</td>
@@ -179,11 +179,11 @@
 
 <script>
 	
-	function calc(){
-		
-	}
+	$(function calc(){
+		console.log($("#biztrip").val());
+	})
 	
-	window.onload = calc();
+	var obj = JSON.parse(data);
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
