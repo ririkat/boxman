@@ -33,6 +33,13 @@ public interface EmployeeService {
 	int checkLocation(Map<String, Object> param);
 	/* 출근등록 */
 	int insertGotoWork(Map<String, Object> param) throws Exception;
+	/* 퇴근등록 */
+	int updateOffWork(Map<String, Object> param) throws Exception;
+	/* 근태하나보기 */
+	Map<String, Object> selectAttenOne(Map<String, Object> param);
+	/* 근태현황보기 */
+	List<Map<String, String>> selectAttenList(Map<String, Object> param, int cPage, int numPerPage);
+	int selectAttenCount(Map<String, Object> param);
 	
 }
 

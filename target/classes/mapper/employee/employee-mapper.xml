@@ -75,10 +75,10 @@
 	<select id="selectEmpSearchCount" resultType="_int" parameterType="map">
 		SELECT COUNT(*) FROM EMPLOYEE A WHERE 1=1
 		<choose>
-			<when test="type == 'deptName'">
+			<when test="type eq 'deptName'">
 				AND A.DEPTNO=(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME = #{data}) 
 			</when>
-			<when test="type == 'jobName'">
+			<when test="type eq 'jobName'">
 				AND A.JOBNO=(SELECT JOBNO FROM EMPJOB WHERE JOBNAME = #{data}) 
 			</when>
 			<otherwise>
@@ -119,10 +119,37 @@
 		)
 	</insert>
 	
+	<!-- 출근 시퀀스값 받아오기 -->
+	<select id="selectAttenNo" parameterType="map" resultType="_int">
+		SELECT ATTENNO FROM ATTENDANCE WHERE ATTENNO=${attenNo}
+	</select>
+	
 	<!-- 퇴근등록 -->
-	<update id="insertOffWork" parameterType="map">
-		UPDATE ATTENDANCE SET attenEnd = DEFAULT WHERE `
-	</insert>
+	<update id="updateOffWork" parameterType="map">
+		UPDATE ATTENDANCE SET attenEnd = DEFAULT WHERE EMPNO=${empNo} and TO_CHAR(SYSDATE,'YYYY-MM-DD')=TO_CHAR(ATTENSTART,'YYYY-MM-DD')
+	</update>
+	
+	<select id="selectAttenOne" parameterType="map" resultType="map">
+		SELECT * FROM ATTENDANCE WHERE EMPNO=${empNo} AND TO_CHAR(SYSDATE,'YYYY-MM-DD')=TO_CHAR(ATTENSTART,'YYYY-MM-DD')
+	</select>
+	
+	<!-- 근태리스트출력 -->
+	<select id="selectAttenList" parameterType="map" resultType="map">
+		SELECT A.EMPNO, TO_CHAR(A.ATTENSTART,'YYYY-MM-DD') AS DAY, TO_CHAR(A.ATTENSTART,'HH24:MI:SS') AS STARTTIME,
+			TO_CHAR(A.ATTENEND,'HH24:MI:SS') AS ENDTIME,
+		 TO_CHAR(ATTENSTART,'DY') AS DY, A.ATTENCATE FROM ATTENDANCE A WHERE 1=1
+		<choose>
+			<when test="temp eq my">
+				AND	EMPNO=${empNo}
+			</when>
+			<when test="temp eq search">
+				AND ATTENSTART BETWEEN ${start} AND ${end}
+			</when>
+		</choose>
+	</select>
+	<select id="selectAttenCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM ATTENDANCE
+	</select>
 	
 </mapper>
 

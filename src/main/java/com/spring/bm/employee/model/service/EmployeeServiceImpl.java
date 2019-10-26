@@ -134,6 +134,40 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	/* 퇴근등록 */
+	@Override
+	public int updateOffWork(Map<String, Object> param) throws Exception{
+		int result = 0;
+		result = dao.updateOffWork(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
+	/* 근태하나보기 */
+	@Override
+	public Map<String, Object> selectAttenOne(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenOne(session, param);
+	}
+	
+	/* 근태현황보기 */
+	@Override
+	public List<Map<String, String>> selectAttenList(Map<String, Object> param, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenList(session, param, cPage, numPerPage);
+	}
+	
+	@Override
+	public int selectAttenCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenCount(session, param);
+	}
+	/* 근태현황보기끝 */
+	
+	
+	
+	
+	
 	
 	
 	

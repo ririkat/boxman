@@ -41,7 +41,10 @@
   
   <!-- favicon -->
   <link rel="icon" href="${path }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
-  
+  <!-- datepicker -->
+  <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
+  <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
+  <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
 </head>
 <style>
 .table-responsive {
@@ -108,7 +111,7 @@
 		          <div class="bg-white py-2 collapse-inner rounded">
 		            <h6 class="collapse-header">Custom Components:</h6>
 		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}">내정보확인</a>
-		            <a class="collapse-item" href="${path }/emp/empAttenList.do?empNo=${loginEmp.EMPNO}">근태관리</a>
+		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태관리</a>
 		            <a class="collapse-item" href="${path }/empJob/empJobList.do">연차확인</a>
 		          </div>
 		        </div>
@@ -226,8 +229,29 @@
 				<!-- Topbar -->
 				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-						<input type="button" id="goToWork" class="btn btn-success mr-2" value="출근체크" style="width: 150px;">
-						<input type="button" id="offWork" class="btn btn-success mr-2" value="퇴근체크" style="width: 150px;">
+						<input type="button" id="goToWork" class="btn btn-success mr-2" value="출근체크" style="width: 100px;display:none;">
+						<input type="button" id="offWork" class="btn btn-success mr-2" value="퇴근체크" style="width: 100px;display:none;" >
+					<!-- 각 날자에 출퇴근이 있는지 확인, 없으면 출근체크 버튼 나타남 -->
+					<script>
+					$(function(){
+						var d = new Date();
+						var day = d.getFullYear()+"-"+d.getMonth()+1+"-"+d.getDate();
+						var empNo = $('#empNo').val().trim();
+						$.ajax({
+							url:"${path}/emp/selectAttenOne.do",
+							data:{"day":day, "empNo":empNo},
+							method:"post",
+							success:function(data) {
+								if(data > 0) {
+									$('#offWork').show();
+								} else {
+									$('#goToWork').show();
+								}
+							}
+						});
+					})
+					
+					</script>
 					<!-- Sidebar Toggle (Topbar) -->
 					<button id="sidebarToggleTop"
 						class="btn btn-link d-md-none rounded-circle mr-3">
@@ -241,10 +265,9 @@
 					<input type="hidden" value="${loginEmp.EMPNO}" name="empNo" id="empNo"/>
 					<script>
 						$(function(){
-							
+							var empNo = $('#empNo').val().trim();
 							//출근
 							$('#goToWork').click(function(){
-								var empNo = $('#empNo').val().trim();
 								if (navigator.geolocation) {
 						            //위치 정보를 얻기
 						            navigator.geolocation.getCurrentPosition (function(pos) {
@@ -254,15 +277,16 @@
 						                var lo = pos.coords.longitude;
 						                var d = new Date();
 						                var currentTime = d.getHours() + "시 " + d.getMinutes() + "분 " + d.getSeconds() + "초";
-						                console.log(d);
 						                
 						                $.ajax({
 						                	url:"${path}/emp/empGotoWork.do",
 						                	data:{"la":la,"lo":lo, "empNo":empNo},
 						                	method:"post",
 						                	success:function(data){
-						                		if(data==1) {
+						                		if(data>0) {
 						                			alert(currentTime + " 출근체크되었습니다.");
+						                			$('#offWork').show();
+						                			$('#goToWork').hide();
 						                		} else {
 						                			alert("지정된 위치에서 출근체크 해주세요.");
 						                		}
@@ -286,8 +310,8 @@
 						                var d = new Date();
 						                var currentTime = d.getHours() + "시 " + d.getMinutes() + "분 " + d.getSeconds() + "초";
 						                $.ajax({
-						                	url:"${path}/emp/checkLocation.do",
-						                	data:{"la":la,"lo":lo},
+						                	url:"${path}/emp/empOffWork.do",
+						                	data:{"la":la,"lo":lo, "empNo":empNo},
 						                	method:"post",
 						                	success:function(data){
 						                		if(data==1) {
@@ -296,7 +320,7 @@
 						                			alert("지정된 위치에서 출근체크 해주세요.");
 						                		}
 						                	}
-						                });
+						                }); 
 						            });
 						        } else {
 						            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")

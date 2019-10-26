@@ -422,17 +422,53 @@ public class EmployeeController {
 		return result;
 	}
 	
+	/* 퇴근입력 */
+	@RequestMapping("/emp/empOffWork.do")
+	@ResponseBody
+	public int responseBody1(@RequestParam Map<String, Object> param, Model model) {
+		int result = 0;
+		result = service.checkLocation(param);		//위치확인
+		if(result > 0) {	//위치가 맞을 경우
+			try {
+				result = service.updateOffWork(param);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		logger.debug(""+result);
+		return result;
+	}
+	
+	/* 근태하나보기 */
+	@RequestMapping("/emp/selectAttenOne.do")
+	@ResponseBody
+	public int responseBody2(@RequestParam Map<String, Object> param, Model model) {
+		Map<String, Object> map = service.selectAttenOne(param);
+		int result = 0;
+		if(map!=null) {
+			result = 1;
+		}
+		return result;
+	}
+	
 	/* 근태현황리스트 출력 */
-//	@RequestMapping("/emp/empAttenList.do")
-//	public ModelAndView attendanceList(int empNo) {
-//		
-//		List<Map<String, Object>> list = service.attendanceList(empNo);
-//		
-//		
-//		
-//		ModelAndView mv = new ModelAndView();
-//		return mv;
-//	}
+	@RequestMapping("/emp/selectAttenList.do")
+	public ModelAndView selectAttenList(@RequestParam Map<String, Object> param,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,String>> list = new ArrayList();
+
+		list = service.selectAttenList(param, cPage, numPerPage);		
+		int totalCount = service.selectAttenCount(param);
+
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empAttendanceList");
+		return mv;
+	}
 	
 }
 

@@ -40,6 +40,15 @@ public interface EmployeeDao {
 	int checkLocation(SqlSessionTemplate session, Map<String, Object> param);
 	/* 출근등록 */
 	int insertGotoWork(SqlSessionTemplate session, Map<String, Object> param);
+	/* 퇴근등록 */
+	int updateOffWork(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태하나보기 */
+	Map<String, Object> selectAttenOne(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태현황보기 */
+	List<Map<String, String>> selectAttenList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage);
+	int selectAttenCount(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태현황보기 끝 */
 	
 }
 
