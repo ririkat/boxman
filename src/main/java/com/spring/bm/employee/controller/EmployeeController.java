@@ -403,5 +403,36 @@ public class EmployeeController {
 		return result;
 	}
 	
+	
+	/* 출퇴근위치정보 확인/출근입력 */
+	@RequestMapping("/emp/empGotoWork.do")
+	@ResponseBody
+	public int responseBody(@RequestParam Map<String, Object> param, Model model) {
+		int result = 0;
+		result = service.checkLocation(param);		//위치확인
+		if(result > 0) {	//위치가 맞을 경우
+			try {
+				result = service.insertGotoWork(param);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	/* 근태현황리스트 출력 */
+//	@RequestMapping("/emp/empAttenList.do")
+//	public ModelAndView attendanceList(int empNo) {
+//		
+//		List<Map<String, Object>> list = service.attendanceList(empNo);
+//		
+//		
+//		
+//		ModelAndView mv = new ModelAndView();
+//		return mv;
+//	}
+	
 }
 

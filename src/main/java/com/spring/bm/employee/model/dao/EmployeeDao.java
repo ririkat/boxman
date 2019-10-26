@@ -36,6 +36,10 @@ public interface EmployeeDao {
 	int updateEmp(SqlSessionTemplate session, Map<String, Object> param);
 	/* 비밀번호변경 */
 	int updatePassword(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출퇴근 위치정보 확인 */
+	int checkLocation(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출근등록 */
+	int insertGotoWork(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
 

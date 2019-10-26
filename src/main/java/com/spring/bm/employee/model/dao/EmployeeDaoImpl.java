@@ -111,6 +111,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.update("emp.updatePassword", param);
 	}
+
+	/* 출퇴근 위치정보 확인 */
+	@Override
+	public int checkLocation(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.checkLocation", param);
+	}
+
+	/* 출근등록 */
+	@Override
+	public int insertGotoWork(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertGotoWork", param);
+	}
 	
 	
 	

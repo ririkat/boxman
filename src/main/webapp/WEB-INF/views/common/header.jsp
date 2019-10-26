@@ -108,7 +108,7 @@
 		          <div class="bg-white py-2 collapse-inner rounded">
 		            <h6 class="collapse-header">Custom Components:</h6>
 		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}">내정보확인</a>
-		            <a class="collapse-item" href="${path }/dept/deptList.do">근태관리</a>
+		            <a class="collapse-item" href="${path }/emp/empAttenList.do?empNo=${loginEmp.EMPNO}">근태관리</a>
 		            <a class="collapse-item" href="${path }/empJob/empJobList.do">연차확인</a>
 		          </div>
 		        </div>
@@ -226,13 +226,85 @@
 				<!-- Topbar -->
 				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
+						<input type="button" id="goToWork" class="btn btn-success mr-2" value="출근체크" style="width: 150px;">
+						<input type="button" id="offWork" class="btn btn-success mr-2" value="퇴근체크" style="width: 150px;">
 					<!-- Sidebar Toggle (Topbar) -->
 					<button id="sidebarToggleTop"
 						class="btn btn-link d-md-none rounded-circle mr-3">
 						<i class="fa fa-bars"></i>
 					</button>
-
+					<ul>
+				        <li>위도:<span id="latitude"></span></li>
+				        <li>경도:<span id="longitude"></span></li>
+				    </ul>
+					<!-- 출퇴근 스크립트 -->
+					<input type="hidden" value="${loginEmp.EMPNO}" name="empNo" id="empNo"/>
+					<script>
+						$(function(){
+							
+							//출근
+							$('#goToWork').click(function(){
+								var empNo = $('#empNo').val().trim();
+								if (navigator.geolocation) {
+						            //위치 정보를 얻기
+						            navigator.geolocation.getCurrentPosition (function(pos) {
+						                $('#latitude').html(pos.coords.latitude);     // 위도
+						                $('#longitude').html(pos.coords.longitude); // 경도
+						                var la = pos.coords.latitude;
+						                var lo = pos.coords.longitude;
+						                var d = new Date();
+						                var currentTime = d.getHours() + "시 " + d.getMinutes() + "분 " + d.getSeconds() + "초";
+						                console.log(d);
+						                
+						                $.ajax({
+						                	url:"${path}/emp/empGotoWork.do",
+						                	data:{"la":la,"lo":lo, "empNo":empNo},
+						                	method:"post",
+						                	success:function(data){
+						                		if(data==1) {
+						                			alert(currentTime + " 출근체크되었습니다.");
+						                		} else {
+						                			alert("지정된 위치에서 출근체크 해주세요.");
+						                		}
+						                	}
+						                }); 
+						            });
+						        } else {
+						            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+						        }
+							});
+							
+							//퇴근
+							$('#offWork').click(function(){
+								if (navigator.geolocation) {
+						            //위치 정보를 얻기
+						            navigator.geolocation.getCurrentPosition (function(pos) {
+						                $('#latitude').html(pos.coords.latitude);     // 위도
+						                $('#longitude').html(pos.coords.longitude); // 경도
+						                var la = pos.coords.latitude;
+						                var lo = pos.coords.longitude;
+						                var d = new Date();
+						                var currentTime = d.getHours() + "시 " + d.getMinutes() + "분 " + d.getSeconds() + "초";
+						                $.ajax({
+						                	url:"${path}/emp/checkLocation.do",
+						                	data:{"la":la,"lo":lo},
+						                	method:"post",
+						                	success:function(data){
+						                		if(data==1) {
+						                			alert(currentTime + " 퇴근체크되었습니다.");
+						                		} else {
+						                			alert("지정된 위치에서 출근체크 해주세요.");
+						                		}
+						                	}
+						                });
+						            });
+						        } else {
+						            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+						        }
+							});
+						})
+					
+					</script>
 
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">

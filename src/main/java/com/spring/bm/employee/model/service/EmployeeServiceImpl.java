@@ -118,6 +118,24 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	/* 출퇴근위치정보 확인 */
+	@Override
+	public int checkLocation(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.checkLocation(session, param);
+	}
+	
+	/* 출근등록 */
+	@Override
+	public int insertGotoWork(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertGotoWork(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
+	
+	
 	
 	
 	
