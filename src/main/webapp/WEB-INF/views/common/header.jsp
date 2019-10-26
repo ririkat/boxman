@@ -39,9 +39,35 @@
   <!-- Custom scripts for all pages-->
   <script src="${path }/resources/b4/js/sb-admin-2.min.js"></script>
   
-
+  <!-- favicon -->
+  <link rel="icon" href="${path }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
+  
 </head>
+<style>
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+}
 
+.btn-success{
+	background-color: #4e73df;
+	border-color: #4e73df;
+}
+
+.btn-success hover{
+	background-color: white;
+	border-color: #4e73df;
+}
+
+.btn-outline-success{
+	background-color: #4e73df;
+	border-color: #4e73df;
+	color: white;
+}
+
+</style>
 <body id="page-top">
 
 	<!-- Page Wrapper -->
@@ -132,7 +158,7 @@
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate.do">메인 카테고리 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
             <a class="collapse-item"  href="${path}/connection/connList.do">거래처관리</a>
-            <a class="collapse-item" href="#">구매관리</a>
+            <a class="collapse-item" href="${path}/purchase/purList.do">구매관리</a>
             <a class="collapse-item" href="#">판매관리</a>
           </div>
         </div>

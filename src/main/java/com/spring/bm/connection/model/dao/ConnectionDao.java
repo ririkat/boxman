@@ -7,10 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 public interface ConnectionDao {
 
-	public int selectConnCount(SqlSessionTemplate session);
-	List<Map<String, String>> selectConnList(SqlSessionTemplate session, int cPage, int numPerPage);
+   public int selectConnCount(SqlSessionTemplate session);
+   List<Map<String, String>> selectConnList(SqlSessionTemplate session, int cPage, int numPerPage);
 
-	List<Map<String,String>> selectStfMainCateg(SqlSessionTemplate session);
+   List<Map<String,String>> selectStfMainCateg(SqlSessionTemplate session);
 	
 	int searchDisCon(SqlSessionTemplate session, Map<String,String> param);
 	int searchCon(SqlSessionTemplate session, Map<String,String> param);
@@ -27,4 +27,6 @@ public interface ConnectionDao {
 	
 	int deleteConn(SqlSessionTemplate session, int conCode);
 	
+	List<Map<String, String>> selectConnSearchList(SqlSessionTemplate session, Map<String, Object> m);
+	int selectConnSearchCount(SqlSessionTemplate session, Map<String, Object> m);
 }

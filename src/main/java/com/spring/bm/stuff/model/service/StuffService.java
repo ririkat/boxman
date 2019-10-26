@@ -3,6 +3,7 @@ package com.spring.bm.stuff.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.bm.connection.model.vo.Connection;
 import com.spring.bm.stuff.model.vo.Stuff;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
 import com.spring.bm.stuff.model.vo.StuffSubcategory;
@@ -44,6 +45,10 @@ public interface StuffService {
 	int deleteStuffUpload(Map<String, String> param);
 
 	int stuffUpdateEnd(Map<String, String> param, List<StuffUpload> stuffUploadList) throws Exception;
+
+	List<Connection> stuffConnectionList();
+
+	Connection connectionName(int conCode);
 
 
 

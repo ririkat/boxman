@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.bm.connection.model.vo.Connection;
 import com.spring.bm.stuff.model.vo.Stuff;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
 import com.spring.bm.stuff.model.vo.StuffSubcategory;
@@ -46,6 +47,10 @@ public interface StuffDao {
 	int deleteStuff(SqlSessionTemplate sqlSession, int stuffNo);
 
 	int deleteStuffUpload(SqlSessionTemplate sqlSession, Map<String, String> param);
+
+	List<Connection> stuffConnectionList(SqlSessionTemplate sqlSession);
+
+	Connection connectionName(SqlSessionTemplate sqlSession, int conCode);
 
 
 

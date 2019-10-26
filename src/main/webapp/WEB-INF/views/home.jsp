@@ -25,6 +25,9 @@
   <!-- Custom styles for this template-->
   <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+
+  <!-- favicon -->
+  <link rel="icon" href="${pageContext.request.contextPath }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
 </head>
 
 <body id="page-top">

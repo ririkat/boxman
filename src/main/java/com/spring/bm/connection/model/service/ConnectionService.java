@@ -22,5 +22,8 @@ public interface ConnectionService {
 	int modifyConn(Map<String,String> param) throws Exception;
 	
 	int deleteConn(int conCode);
+	
+	List<Map<String,String>> selectConnSearchList(Map<String, Object> m);
+	int selectConnSearchCount(Map<String, Object> m);
 
 }
