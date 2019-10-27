@@ -50,6 +50,8 @@ public interface StuffService {
 
 	Connection connectionName(int conCode);
 
+	List<Stuff> searchStuffName(String stuffName);
+
 
 
 

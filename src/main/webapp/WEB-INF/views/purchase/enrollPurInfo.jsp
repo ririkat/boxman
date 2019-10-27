@@ -36,23 +36,24 @@
 			<h6 class="m-0 font-weight-bold text-primary">구매정보 등록</h6>
         </div>
 		<div class="card-body">
-			
-			<form name="enrollPurInfo" class="forms-sample" action="${path }/purchase/enrollPurInfoEnd.do" method="post" onsubmit="return enroll_validate();">
+			<form id = "searchFrm1" class="forms-sample" method="post">
 				<div class="dataTables_length" id="dataTable_length">
 					<label>거래처 검색
-						<select name="type" id="searchKeyword" class="form-control form-control-sm">
-							<option value="#">거래처명</option>
-							<option value="#">거래처 코드</option>
+						<select name="type" id="type" class="form-control form-control-sm">
+							<option value="conName">거래처명</option>
+							<option value="conCode">거래처 코드</option>
 						</select>
-						<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
+						<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable" id = "data">
 					</label>
-					<button onclick="#" class="btn btn-light btn-icon-split">
-						<span class="icon text-gray-600">
-							<i class="fas fa-arrow-right"></i>
-						</span>
-						<span class="text">검색</span>
-					</button>
+				    <button onclick = "searchConnection();" class="btn btn-light btn-icon-split">
+                   		 <span class="icon text-gray-600">
+                    	  <i class="fas fa-arrow-right"></i>
+                   		 </span>
+                   		 <span class="text">검색</span>
+                    </button>
 				</div>
+			</form>
+			<%-- <form id = "searchFrm2" name="enrollPurInfo" class="forms-sample" action="${path }/purchase/enrollPurInfoEnd.do" method="post" onsubmit="return enroll_validate();"> --%>
 				<div class="inputConName form-group">
 					<input type="text" class="form-control" id="conName" name="conName" placeholder="거래처명" required readonly />
 				</div>
@@ -61,16 +62,17 @@
 				
 				<div class="inputChargeName form-group">
 					<label>담당자</label>
-					<input type="text" class="form-control" id="chargeName" name="chargeName" value="#" required />
+					<input type="text" class="form-control" id="chargeName" name="chargeName" value="${loginEmp['EMPNAME'] }" readonly="readonly" />
 				</div>
 				<br/>
 				
 				<div class="form-group">
 					<legend>구매 품목 리스트</legend>
 					<div class="searchStuffName input-group mb-4">
-			            <input type="search" placeholder="제품명으로 검색" aria-describedby="button-addon5" class="form-control">
+			            <input type="search" placeholder="제품명으로 검색" aria-describedby="button-addon5" class="form-control" name = "stuffName" id = "stuffName">
 			            <div class="input-group-append">
-			              <button id="button-addon5" type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+			              <button id="button-addon5" type="button" class="btn btn-primary" onclick = "searchStuff();">
+			              <i class="fa fa-search"></i></button>
 			            </div>
 			        </div>
 			        <div class="row">
@@ -92,19 +94,19 @@
 		                         </tr>
 		                       </thead>
 		                       <tbody>
-		                          <c:forEach items="#" var="#">
+		                          <c:forEach items="${list1}" var="stuff" varStatus = "v">
 										<tr>
-											<td><a href='#'><c:out value=''/></a></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
-											<td><c:out value='' /></td>
+											<td><a href='#'><c:out value='${stuff.stuffNo }'/></a></td>
+											<td><c:out value='${stuff.stuffName }' /></td>
+											<td><c:out value='${stuff.scName }' /></td>
+											<td><c:out value='${stuff.price }' /></td>
+											<td><c:out value='${stuff.weight }' /></td>
+											<td><c:out value='${stuff.size1 }' /></td>
+											<td><c:out value='${stuff.size2 }' /></td>
+											<td><c:out value='${stuff.size3 }' /></td>
+											<td><c:out value='${stuff.color }' /></td>
+											<td><c:out value='${stuff.material }' /></td>
+											<td></td>
 										</tr>
 									</c:forEach>
 		                       </tbody>
@@ -174,14 +176,34 @@
 				<br/>
 				<button type="submit" class="btn btn-success mr-2">등록</button>
 				<button class="btn btn-light" onclick="submitCancel();">취소</button>
-			</form>
+<!-- 			</form> -->
 		</div>
 	</div>
 
 </section>
 
 <script>
+function searchConnection(){
+		       
+ 			var url = "${path}/connection/searchConnection2.do?";
+			var name = "거래처";
+			var option = "width=800, height=800, top=100, left=500, location=no, menubar=no, status=no"
+			var popup = open("", name, option);
+			
+			searchFrm1.target = name;
+			searchFrm1.action = url;
+			searchFrm1.submit();
+}
+		
+function searchStuff(){
+	
+	var name = $('#stuffName').val();
+	console.log(name);
 
+	var url="${path}/stuff/searchStuffName.do?stuffName="+name;
+	location.href=url;
+}
+	
 </script>
 
 

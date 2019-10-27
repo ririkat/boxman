@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.bm.connection.model.vo.Connection;
+
 public interface ConnectionDao {
 
    public int selectConnCount(SqlSessionTemplate session);
@@ -29,4 +31,8 @@ public interface ConnectionDao {
 	
 	List<Map<String, String>> selectConnSearchList(SqlSessionTemplate session, Map<String, Object> m);
 	int selectConnSearchCount(SqlSessionTemplate session, Map<String, Object> m);
+	
+	//구매정보 등록 거래처 검색
+	public List<Connection> searchConnection(SqlSessionTemplate session, Map<String, Object> m);
+	public int serchConnectionCount(SqlSessionTemplate session, Map<String, Object> m);
 }

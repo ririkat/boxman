@@ -100,5 +100,8 @@
    	  SELECT * FROM CONNECTION WHERE CONCODE = #{conCode}
    </select>
 
+   <select id = "searchStuffName" parameterType="string" resultType="stuff">
+   	  SELECT A1.*, B1.SCNAME FROM STUFF A1, STUFF_SUBCATEGORY B1 WHERE A1.SCNO = B1.SCNO AND STUFFNAME LIKE '%'||#{stuffName}||'%'
+   </select>
 </mapper>
 
