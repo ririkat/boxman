@@ -378,17 +378,13 @@ public class StuffController {
    
    //이름으로만 물품조회
    @RequestMapping("/stuff/searchStuffName.do")
-   public ModelAndView searchStuffName(@RequestParam(value = "stuffName") String stuffName) {
+   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value = "stuffName") String stuffName) {
 	   
 	   System.out.println(stuffName);
 	   
 	   List<Stuff> list = service.searchStuffName(stuffName);
-	   
-	   ModelAndView mv = new ModelAndView();
-	   mv.addObject("list1", list);
-	   mv.setViewName("purchase/enrollPurInfo");
-	   
-	   return mv;
+	    
+	   return list;
    }
    
 

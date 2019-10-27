@@ -71,13 +71,13 @@
 					<div class="searchStuffName input-group mb-4">
 			            <input type="search" placeholder="제품명으로 검색" aria-describedby="button-addon5" class="form-control" name = "stuffName" id = "stuffName">
 			            <div class="input-group-append">
-			              <button id="button-addon5" type="button" class="btn btn-primary" onclick = "searchStuff();">
+			              <button id="button-addon5" type="button" class="btn btn-primary">
 			              <i class="fa fa-search"></i></button>
 			            </div>
 			        </div>
 			        <div class="row">
 		                 <div class="col-sm-12">
-		                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+		                    <table class="table table-striped table-hover" id="dataTable1" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
 		                       <thead>
 		                         <tr>
 		                            <th>품번</th>
@@ -94,7 +94,7 @@
 		                         </tr>
 		                       </thead>
 		                       <tbody>
-		                          <c:forEach items="${list1}" var="stuff" varStatus = "v">
+<%-- 		                          <c:forEach items="${list1}" var="stuff" varStatus = "v">
 										<tr>
 											<td><a href='#'><c:out value='${stuff.stuffNo }'/></a></td>
 											<td><c:out value='${stuff.stuffName }' /></td>
@@ -108,13 +108,13 @@
 											<td><c:out value='${stuff.material }' /></td>
 											<td></td>
 										</tr>
-									</c:forEach>
+									</c:forEach> --%>
 		                       </tbody>
 		                     </table>
 		                   </div>
                  	</div>
                  	<div class="row">
-		                 <div class="col-sm-12">
+		                 <div class="col-sm-12" id = "area">
 		                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
 		                       <thead>
 		                         <tr>
@@ -196,13 +196,47 @@ function searchConnection(){
 }
 		
 function searchStuff(){
-	
 	var name = $('#stuffName').val();
 	console.log(name);
 
 	var url="${path}/stuff/searchStuffName.do?stuffName="+name;
 	location.href=url;
 }
+
+$(function(){
+	var name = $('#stuffName').val();
+    $("#button-addon5").click(function(){
+       $.ajax({
+          url : "${path}/stuff/searchStuffName.do?stuffName="+name,
+          type : "post",
+          success:function(data){
+				
+			for(var i = 0; i < data.length; i++) {
+				
+	            tr = $('<tr/>');
+	            tr.append("<td>" + data[i].stuffNo + "</td>");
+	            tr.append("<td>" + data[i].stuffName + "</td>");
+	            tr.append("<td>" + data[i].scName + "</td>");
+	            tr.append("<td>" + data[i].price + "</td>");
+	            tr.append("<td>" + data[i].weight + "</td>");
+	            tr.append("<td>" + data[i].size1 + "</td>");
+	            tr.append("<td>" + data[i].size2 + "</td>");
+	            tr.append("<td>" + data[i].size3 + "</td>");
+	            tr.append("<td>" + data[i].color + "</td>");
+	            tr.append("<td>" + data[i].material + "</td>");
+	            tr.append("<td>" + "" + "</td>");
+	            
+	            
+	            $('#dataTable1').append(tr);
+			}
+
+			}
+		});
+	});
+});
+
+
+
 	
 </script>
 
