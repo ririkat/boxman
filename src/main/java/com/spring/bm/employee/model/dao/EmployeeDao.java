@@ -48,7 +48,10 @@ public interface EmployeeDao {
 	List<Map<String, String>> selectAttenList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
 			int numPerPage);
 	int selectAttenCount(SqlSessionTemplate session, Map<String, Object> param);
-	/* 근태현황보기 끝 */
+	/* 휴가리스트 출력 */
+	List<Map<String, String>> selectDayOffList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage);
+	int selectDayOffCount(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
 

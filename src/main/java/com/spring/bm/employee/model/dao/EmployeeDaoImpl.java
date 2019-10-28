@@ -153,6 +153,21 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.selectOne("emp.selectAttenCount", param);
 	}
 	/* 근태현황보기 끝 */
+
+	/* 휴가리스트출력 */
+	@Override
+	public List<Map<String, String>> selectDayOffList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("emp.selectDayOffList", param, rows);
+	}
+
+	@Override
+	public int selectDayOffCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("emp.selectDayOffCount", param);
+	}
+	/* 휴가리스트출력 끝 */
+	
 	
 	
 	

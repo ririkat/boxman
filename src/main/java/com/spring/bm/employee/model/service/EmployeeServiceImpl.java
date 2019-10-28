@@ -164,6 +164,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	/* 근태현황보기끝 */
 	
+	/* 휴가리스트출력 */
+	@Override
+	public List<Map<String, String>> selectDayOffList(Map<String, Object> param, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDayOffList(session, param, cPage, numPerPage);
+	}
+	@Override
+	public int selectDayOffCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectDayOffCount(session, param);
+	}
+	/* 휴가리스트출력 끝 */
+	
+	
+	
 	
 	
 	

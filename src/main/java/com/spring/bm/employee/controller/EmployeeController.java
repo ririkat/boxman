@@ -2,6 +2,8 @@
 package com.spring.bm.employee.controller;
 
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -461,12 +463,54 @@ public class EmployeeController {
 
 		list = service.selectAttenList(param, cPage, numPerPage);		
 		int totalCount = service.selectAttenCount(param);
-
+		
+		String startStr = String.valueOf(param.get("startDay")).trim();
+		String endStr = String.valueOf(param.get("endDay")).trim();
+		Date startDay = null;
+		Date endDay = null;
 		ModelAndView mv=new ModelAndView();
+		if(!startStr.equals("null") && !endStr.equals("null")) {
+			startDay = Date.valueOf(startStr);
+			endDay = Date.valueOf(endStr);
+			mv.addObject("startDay",startDay);
+			mv.addObject("endDay",endDay);
+		}
+		
 		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("emp/empAttendanceList");
+		return mv;
+	}
+	
+	/* 휴가리스트출력 */
+	@RequestMapping("/emp/selectDayOffList.do")
+	public ModelAndView selectDayOffList(@RequestParam Map<String, Object> param,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,String>> list = new ArrayList();
+
+		list = service.selectDayOffList(param, cPage, numPerPage);		
+		int totalCount = service.selectDayOffCount(param);
+		
+		String startStr = String.valueOf(param.get("startDay")).trim();
+		String endStr = String.valueOf(param.get("endDay")).trim();
+		Date startDay = null;
+		Date endDay = null;
+		ModelAndView mv=new ModelAndView();
+		if(!startStr.equals("null") && !endStr.equals("null")) {
+			startDay = Date.valueOf(startStr);
+			endDay = Date.valueOf(endStr);
+			mv.addObject("startDay",startDay);
+			mv.addObject("endDay",endDay);
+		}
+		
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("temp", String.valueOf(param.get("temp")));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empDayOffList");
 		return mv;
 	}
 	

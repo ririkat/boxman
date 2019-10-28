@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">근태현황</h6>
+			<h6 class="m-0 font-weight-bold text-primary">휴가관리</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -65,6 +65,18 @@
 								</div>
 							</form>
 						</div>
+						<c:if test="${temp eq 'my' or temp eq 'search'}"> 
+							<div class="col-sm-12 col-md-6">
+								<div id="dataTable_filter" class="dataTables_filter">
+									<div style="float: right;">
+										<!-- 휴가신청 결재로 이동하기 -->
+										<button type="button" onclick="location.href='${path}/emp/insertDayOff.do'" class="btn btn-primary mr-2">
+				               				휴가신청
+				                 		</button>
+									</div>
+								</div>
+							</div>
+						</c:if>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
@@ -78,11 +90,11 @@
 											<th>이름</th>
 											<th>부서</th>
 										</c:if>
-										<th>일자</th>
-										<th>요일</th>
-										<th>출근시간</th>
-										<th>퇴근시간</th>
+										<th>시작일자</th>
+										<th>종료일자</th>
+										<th>일수</th>
 										<th>구분</th>
+										<th>승인여부</th>
 									</tr>
 								</thead>
 								<tbody>
