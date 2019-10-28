@@ -3,7 +3,18 @@
 <mapper namespace="chat">
 
 	<select id="selectChatList" resultType="map">
-		select * from chat
+		select employee.empno, empjob.jobname, employee.empname, department.deptname 
+    	from employee 
+        join empjob on employee.jobno=empjob.jobno 
+        join department on employee.DEPTNO = department.DEPTNO
 	</select>
-
+	<select id="selectChatListEmp" resultType="map">
+		select * from chat where empNo=#{empNo}
+	</select>
+	<select id="selectChatOneEmp" resultType="chat">
+		select * from chat where empNo=#{empNo} and chatNo='11'
+	</select>
+	<insert id="insertchatting" parameterType="chat">
+		insert into chat values(seq_chat.nextval, empNo=#{empNo}, sender=${loginEmp['EMPNO']}, chatText=#{chatTest}, sysdate)
+	</insert>
 </mapper>
