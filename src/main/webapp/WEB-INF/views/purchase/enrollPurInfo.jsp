@@ -94,21 +94,7 @@
 		                         </tr>
 		                       </thead>
 		                       <tbody>
-<%-- 		                          <c:forEach items="${list1}" var="stuff" varStatus = "v">
-										<tr>
-											<td><a href='#'><c:out value='${stuff.stuffNo }'/></a></td>
-											<td><c:out value='${stuff.stuffName }' /></td>
-											<td><c:out value='${stuff.scName }' /></td>
-											<td><c:out value='${stuff.price }' /></td>
-											<td><c:out value='${stuff.weight }' /></td>
-											<td><c:out value='${stuff.size1 }' /></td>
-											<td><c:out value='${stuff.size2 }' /></td>
-											<td><c:out value='${stuff.size3 }' /></td>
-											<td><c:out value='${stuff.color }' /></td>
-											<td><c:out value='${stuff.material }' /></td>
-											<td></td>
-										</tr>
-									</c:forEach> --%>
+
 		                       </tbody>
 		                     </table>
 		                   </div>

@@ -38,7 +38,7 @@
 							</tr>
       						<tr>
       						<td>
-      							<input type = "text" class = "form-control" id = "mcName" name = "mcName" required="required"/>
+      							<input type = "text" class = "form-control" id = "mcName" name = "mcName"/>
       							<div id="maincategoryNameCheck" class="rg-checkMsg card-title"></div>
       						</td>
          					<td>
@@ -64,8 +64,16 @@
                        <tbody>
                           <c:forEach items="${list}" var="stuffMaincategory" varStatus = "v">
       							<tr>
-         						<td>				
-									<c:out value="${v.count }"/>
+         						<td>
+         						<c:if test="${param.cPage eq null }">
+         								<c:out value="${v.count }"/>
+         						</c:if>
+             					<c:if test="${param.cPage == 1 }">
+										<c:out value="${v.count }"/>
+								</c:if>			
+         						<c:if test="${param.cPage > 1 }">
+										<c:out value="${v.count+(10*(param.cPage-1)) }"/>
+								</c:if>
 								</td>
          							<td>${stuffMaincategory.mcName}</td>
          							<td>
@@ -88,15 +96,20 @@
 
 <script>
 function maincategoryEnroll(){
-	$("#enrollFrm").attr("action","${path}/category/maincategoryEnrollEnd.do");
-	$("#enrollFrm").submit();
+	
+	if($('#mcName').val() != "") {
+		$("#enrollFrm").attr("action","${path}/category/maincategoryEnrollEnd.do");
+		$("#enrollFrm").submit();
+	} else {
+		alert("등록하실 메인카테고리를 입력해주세요.");
+	}
 }
 
 
 //메인 카테고리 이름 중복검사
 $(function(){
  	var nameCheck = $('#mcName');
-	$('#mcName').blur(function(){
+	$('#mcName').keyup(function(){
 		var mcName = $('#mcName').val();
 		$.ajax({
 			url:"<%=request.getContextPath()%>/category/maincategoryNameDupliCheck.do?mcName="+ mcName,
@@ -127,6 +140,9 @@ $(function(){
 			});
 		});
 	});
+	
+	console.log(${param.cPage});
+	
 </script>
 
 

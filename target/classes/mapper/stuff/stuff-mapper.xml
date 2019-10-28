@@ -11,7 +11,7 @@
    </select>
    
    <insert id = "stuffEnroll" parameterType = "map">
-      INSERT INTO STUFF VALUES(SEQ_STUFF.NEXTVAL, #{stuffName}, #{price} * 10000, #{stuffCount}, #{weight}, #{size1}, #{size2}, #{size3}, #{manufacturingDate}, #{manufacturingCountry}, #{color}, #{material}, #{etc}, SYSDATE, (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}), (SELECT CONCODE FROM CONNECTION WHERE CONNAME = #{conName}))
+      INSERT INTO STUFF VALUES(SEQ_STUFF.NEXTVAL, #{stuffName}, #{price} * 10000, #{stuffCount}, #{weight}, #{size1}, #{size2}, #{size3}, #{manufacturingDate}, #{manufacturingCountry}, #{color}, #{material}, #{etc}, SYSDATE, (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}), (SELECT CONCODE FROM CONNECTION WHERE CONNAME = #{conName} AND CONCATEG = '매입'))
       <selectKey keyProperty="stuffNo" resultType = "string" order = "AFTER">
          SELECT SEQ_STUFF.CURRVAL FROM DUAL
       </selectKey>
@@ -78,7 +78,7 @@
    </select>
    
    <update id="updateStuff" parameterType = "map">
-      UPDATE STUFF SET STUFFNAME = #{stuffName}, PRICE = #{price} * 10000, STUFFCOUNT = #{stuffCount}, WEIGHT = #{weight}, SIZE1 = #{size1}, SIZE2 = #{size2}, SIZE3 = #{size3}, MANUFACTURINGDATE = #{manufacturingDate}, MANUFACTURINGCOUNTRY = #{manufacturingCountry}, COLOR = #{color}, MATERIAL = #{material}, ETC = #{etc}, SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}), CONCODE = (SELECT CONCODE FROM CONNECTION WHERE CONNAME = #{conName}) WHERE STUFFNO = #{stuffNo}
+      UPDATE STUFF SET STUFFNAME = #{stuffName}, PRICE = #{price} * 10000, STUFFCOUNT = #{stuffCount}, WEIGHT = #{weight}, SIZE1 = #{size1}, SIZE2 = #{size2}, SIZE3 = #{size3}, MANUFACTURINGDATE = #{manufacturingDate}, MANUFACTURINGCOUNTRY = #{manufacturingCountry}, COLOR = #{color}, MATERIAL = #{material}, ETC = #{etc}, SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}), CONCODE = (SELECT CONCODE FROM CONNECTION WHERE CONNAME = #{conName} AND CONCATEG = '매입') WHERE STUFFNO = #{stuffNo}
    	  <selectKey keyProperty="stuffNo" resultType = "string" order = "AFTER">
          SELECT STUFFNO FROM STUFF WHERE STUFFNO = #{stuffNo}
       </selectKey>
