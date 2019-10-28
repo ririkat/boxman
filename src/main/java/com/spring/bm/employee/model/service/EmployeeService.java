@@ -29,6 +29,17 @@ public interface EmployeeService {
 	int updateEmp(Map<String, Object> param, List<EmpFile> fileList) throws Exception;
 	/* 비밀번호변경 */
 	int updatePassword(Map<String, Object> param) throws Exception;
+	/* 출퇴근위치정보 확인 */
+	int checkLocation(Map<String, Object> param);
+	/* 출근등록 */
+	int insertGotoWork(Map<String, Object> param) throws Exception;
+	/* 퇴근등록 */
+	int updateOffWork(Map<String, Object> param) throws Exception;
+	/* 근태하나보기 */
+	Map<String, Object> selectAttenOne(Map<String, Object> param);
+	/* 근태현황보기 */
+	List<Map<String, String>> selectAttenList(Map<String, Object> param, int cPage, int numPerPage);
+	int selectAttenCount(Map<String, Object> param);
 	
 }
 

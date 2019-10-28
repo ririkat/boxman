@@ -82,6 +82,12 @@ public class EmployeeController {
 	@RequestMapping("/emp/selectEmpOne.do")
 	public ModelAndView selectEmpOne(int empNo, String temp) {
 		Map<String, Object> empMap = service.selectEmpOne(empNo);
+		try {
+			empMap.replace("EMPSSN", enc.decrypt(String.valueOf(empMap.get("EMPSSN"))));
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		List<EmpFile> list = service.selectEmpFileList(empNo);
 
 		Map<String, Object> dept = dService.selectDeptOne(Integer.parseInt(String.valueOf(empMap.get("DEPTNO"))));
@@ -395,6 +401,73 @@ public class EmployeeController {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	
+	/* 출퇴근위치정보 확인/출근입력 */
+	@RequestMapping("/emp/empGotoWork.do")
+	@ResponseBody
+	public int responseBody(@RequestParam Map<String, Object> param, Model model) {
+		int result = 0;
+		result = service.checkLocation(param);		//위치확인
+		if(result > 0) {	//위치가 맞을 경우
+			try {
+				result = service.insertGotoWork(param);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	/* 퇴근입력 */
+	@RequestMapping("/emp/empOffWork.do")
+	@ResponseBody
+	public int responseBody1(@RequestParam Map<String, Object> param, Model model) {
+		int result = 0;
+		result = service.checkLocation(param);		//위치확인
+		if(result > 0) {	//위치가 맞을 경우
+			try {
+				result = service.updateOffWork(param);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		logger.debug(""+result);
+		return result;
+	}
+	
+	/* 근태하나보기 */
+	@RequestMapping("/emp/selectAttenOne.do")
+	@ResponseBody
+	public int responseBody2(@RequestParam Map<String, Object> param, Model model) {
+		Map<String, Object> map = service.selectAttenOne(param);
+		int result = 0;
+		if(map!=null) {
+			result = 1;
+		}
+		return result;
+	}
+	
+	/* 근태현황리스트 출력 */
+	@RequestMapping("/emp/selectAttenList.do")
+	public ModelAndView selectAttenList(@RequestParam Map<String, Object> param,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,String>> list = new ArrayList();
+
+		list = service.selectAttenList(param, cPage, numPerPage);		
+		int totalCount = service.selectAttenCount(param);
+
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empAttendanceList");
+		return mv;
 	}
 	
 }

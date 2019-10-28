@@ -111,6 +111,49 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.update("emp.updatePassword", param);
 	}
+
+	/* 출퇴근 위치정보 확인 */
+	@Override
+	public int checkLocation(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.checkLocation", param);
+	}
+
+	/* 출근등록 */
+	@Override
+	public int insertGotoWork(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.insert("emp.insertGotoWork", param);
+	}
+
+	/* 퇴근등록 */
+	@Override
+	public int updateOffWork(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("emp.updateOffWork", param);
+	}
+	
+	/* 근태하나보기 */
+	@Override
+	public Map<String, Object> selectAttenOne(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectAttenOne", param);
+	}
+
+	/* 근태현황보기 */
+	@Override
+	public List<Map<String, String>> selectAttenList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("emp.selectAttenList", param, rows);
+	}
+
+	@Override
+	public int selectAttenCount(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectAttenCount", param);
+	}
+	/* 근태현황보기 끝 */
+	
 	
 	
 	

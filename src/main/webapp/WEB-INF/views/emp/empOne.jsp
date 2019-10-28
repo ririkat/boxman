@@ -281,13 +281,15 @@
 				$('.divFile').show();
 				$('#updateEmp').val("수정완료");
 			} else {
-				var empAddr = $('#sample6_postcode').val();
-			    empAddr += "/" + $('#sample6_address').val();
-			    empAddr += "/" + $('#sample6_detailAddress').val();
-			    empAddr += "/" + $('#sample6_extraAddress').val();
-			    $('#empAddr').val(empAddr);
-				$('#empUpFrm').attr("action","${path}/emp/updateEmpEnd.do");
-				$('#empUpFrm').submit();
+				if(confirm('수정하시겠습니까?')) {
+					var empAddr = $('#sample6_postcode').val();
+				    empAddr += "/" + $('#sample6_address').val();
+				    empAddr += "/" + $('#sample6_detailAddress').val();
+				    empAddr += "/" + $('#sample6_extraAddress').val();
+				    $('#empAddr').val(empAddr);
+					$('#empUpFrm').attr("action","${path}/emp/updateEmpEnd.do");
+					$('#empUpFrm').submit();
+				}
 			}
 		});
 		
