@@ -34,6 +34,16 @@
 				<img class="img-fluid rounded" src="${path}/resources/upload/stuff/${stuffUpload.imgRename}" style = "width : 500px; height : 500px; border: 0.5px solid #d1d3e2;"/>
 			</div>
 			<div>
+				<label for="exampleInputName1">위치 보기</label>
+			</div>
+			<div class="form-group">
+            <button type="button" 
+                    class="btn btn-outline-success btn-block"
+                    onclick="seeMap()">
+                                        위치 보기
+            </button>
+			</div>
+			<div>
 				<label for="exampleInputName1">첨부파일</label>
 			</div>
 			<div class="form-group">
@@ -42,7 +52,6 @@
                     onclick="fileDownload('${stuffUpload.imgOriname}','${stuffUpload.imgRename }');">
                     ${stuffUpload.imgOriname}
             </button>
-
 			</div>
 			<div class="form-group">
 				<label for="exampleInputName1">물품 이름</label> <input type="text"
@@ -112,6 +121,7 @@
 				<label class = "col-sm-2 col-form-labe">카테고리</label>
 			</div>
 				<div class = "col-sm-10">
+				<input type = "hidden" id = "mainName" value = "${stuffMaincategory.mcNo }"/>
 					<select name = "stuffMain" id = "stuffMain" class = "form-control" required="required">
 						<option value = "${stuffMaincategory.mcNo }">${stuffMaincategory.mcName }</option>
 						<c:forEach var = "mc" items = "${list }">
@@ -214,6 +224,28 @@ function deleteStuff(){
 function fileDownload(oName, rName){
    oName=encodeURIComponent(oName);
    location.href="${path}/stuff/filedownLoad.do?oName="+oName+"&rName="+rName;
+}
+
+function seeMap(){
+	
+	var a = $('#stuffMain').val();
+	console.log(a);
+	
+	if(a == 1) {
+		window.open("${path}/resources/upload/warehouseMap/A.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 2) {
+		window.open("${path}/resources/upload/warehouseMap/B.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 3) {
+		window.open("${path}/resources/upload/warehouseMap/C.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 4) {
+		window.open("${path}/resources/upload/warehouseMap/D.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 5) {
+		window.open("${path}/resources/upload/warehouseMap/E.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 6) {
+		window.open("${path}/resources/upload/warehouseMap/F.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else {
+		window.open("${path}/resources/upload/warehouseMap/update.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	}
 }
 </script>
 

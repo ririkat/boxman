@@ -15,7 +15,6 @@ public class Stuff {
 	private int size1;
 	private int size2;
 	private int size3;
-	private String manufacturer;
 	private Date manufacturingDate;
 	private String manufacturingCountry;
 	private String color;
@@ -32,7 +31,7 @@ public class Stuff {
 	}
 
 	public Stuff(int stuffNo, String stuffName, int price, int stuffCount, int weight, int size1, int size2, int size3,
-			String manufacturer, Date manufacturingDate, String manufacturingCountry, String color, String material,
+			Date manufacturingDate, String manufacturingCountry, String color, String material,
 			String etc, Date enrollDate, int scNo, String scName, int conCode, String conName) {
 		super();
 		this.stuffNo = stuffNo;
@@ -43,7 +42,6 @@ public class Stuff {
 		this.size1 = size1;
 		this.size2 = size2;
 		this.size3 = size3;
-		this.manufacturer = manufacturer;
 		this.manufacturingDate = manufacturingDate;
 		this.manufacturingCountry = manufacturingCountry;
 		this.color = color;
