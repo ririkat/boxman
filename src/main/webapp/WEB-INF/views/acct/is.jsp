@@ -85,8 +85,8 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
+              	<c:forEach items="${list }" var="list">
                 <table class="table table-bordered pdfstyles"   id="excelstyles" width="100%" cellspacing="0">
-                </tbody>
                   <tbody>
                     <tr>
                       <td style="background-color">매출</td>
@@ -115,12 +115,12 @@
                     </tr>
                     <tr>
                       <td>임금</td>
-                      <td>(₩100,000,000)</td>
+                      <td id='salaries'>₩(<c:out value='${list["SALARIES"] }'/>)</td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>임금세</td>
-                      <td>(₩10,000,000)</td>
+                      <td id="saltax">₩(<c:out value="${list ['SALTAX']}"/>)</td>
                       <td></td>
                     </tr>
                     <tr>
@@ -144,13 +144,13 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <td>지급 퇴직금</td>
-                      <td>(₩6,000,000)</td>
+                      <td>퇴직금</td>
+                      <td id="severance">₩(<c:out value="${list['SEVERANCE'] }"/>)</td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>출장비</td>
-                      <td>(₩1,500,000)</td>
+                      <td id="biztrip" val="ee">₩(<c:out value="${list['BIZTRIP'] }"/>)</td>
                       <td></td>
                     </tr>
                     <tr>
@@ -161,7 +161,7 @@
                     <tr>
                       <td>총 경영비</td>
                       <td></td>
-                      <td><strong>(₩152,500,000)</strong></td>
+                      <!-- <td><strong id="totalExpense">${list['SEVERANCE']+list['BIZTRIP'] }</strong></td> -->
                     </tr>
                     <tr>
                       <td>순 이익</td>
@@ -170,10 +170,20 @@
                     </tr>
                   </tbody>
                 </table>
+                </c:forEach>
               </div>
             </div>
           </div>
 
 </section>
+
+<script>
+	
+	$(function calc(){
+		console.log($("#biztrip").val());
+	})
+	
+	var obj = JSON.parse(data);
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

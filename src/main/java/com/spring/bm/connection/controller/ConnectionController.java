@@ -1,5 +1,6 @@
 package com.spring.bm.connection.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.connection.model.service.ConnectionService;
+import com.spring.bm.connection.model.vo.Connection;
 
 @Controller
 public class ConnectionController {
@@ -38,31 +40,20 @@ public class ConnectionController {
 	@RequestMapping("/connection/enrollConn.do")
 	public ModelAndView enrollConn() {
 		ModelAndView mv = new ModelAndView();
-		List<Map<String,String>> list = service.selectStfMainCateg();
-		
-		mv.addObject("list",list);
 		mv.setViewName("connection/enrollConn");
-		
 		return mv;
 	}
 	
 	@RequestMapping("/connection/checkConNameDupl.do")
 	public ModelAndView checkConNameDupl(@RequestParam Map<String,String> param) {
 		String conCateg = param.get("conCateg_");
-		String mCategName = param.get("mCategName_");
 		String conName = param.get("conName_");
-		int result = -1;
+		int result = 0;
 		
-		if(conCateg.equals("유통")) {
-			result = service.searchDisCon(param);
-		}
-		else {
-			result = service.searchCon(param);
-		}
+		result = service.searchDisCon(param);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("conCateg",conCateg);
-		mv.addObject("mCategName",mCategName);
 		mv.addObject("conName",conName);
 		mv.addObject("result",result);
 		mv.setViewName("connection/connDuplPopUp");
@@ -99,12 +90,10 @@ public class ConnectionController {
 		int conCode = Integer.parseInt(req.getParameter("conCode"));
 		
 		Map<String,String> conn = service.selectConnection(conCode);
-		String mainCateg = service.selectThisMainCateg(conCode);
 		Map<String,String> transfer =  service.selectTransferInfo(conCode);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("conn",conn);
-		mv.addObject("mCateg",mainCateg);
 		mv.addObject("transferInfo",transfer);
 		mv.setViewName("connection/modifyConn");
 		return mv;
@@ -157,8 +146,58 @@ public class ConnectionController {
 		return mv;
 	}
 
-}
+	@RequestMapping("/connection/searchConnection.do")
+	public ModelAndView searchConnection(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam(value="type") String type, @RequestParam(value="data") String data) {
 
+		int numPerPage = 10;
+		Map<String, Object> m = new HashMap();
+		m.put("cPage", cPage);
+		m.put("numPerPage", numPerPage);
+		m.put("type", type);
+		m.put("data", data);
+
+		List<Map<String,String>> list = service.selectConnSearchList(m);
+		int totalCount = service.selectConnSearchCount(m);
+
+		System.out.println("list : " + list);
+		System.out.println("totalCount : " + totalCount);
+
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("connection/connList");
+
+		return mv;
+	}
+	
+	//구매 정보 등록에서 거래처 이름 검색
+	@RequestMapping("/connection/searchConnection2.do")
+	public ModelAndView searchConnection2(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
+		
+	    int numPerPage = 10;   
+	    Map<String, Object> m = new HashMap();
+	    m.put("cPage", cPage);
+	    m.put("numPerPage", numPerPage);
+	    m.put("data", data); // 빈칸에 입력한 값
+	    m.put("type", type); // select에서 가져온 값 
+	    
+	    List<Connection> list = service.searchConnection(m);
+	    int totalCount = service.searchConnectionCount(m);
+	    System.out.println("list : " + list + "/" + "count : " + totalCount);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection2.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("connection/connSearchPopUp");
+		return mv;
+	}
+	
+}
 
 
 

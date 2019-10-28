@@ -11,7 +11,7 @@
    </select>
    
    <insert id = "stuffEnroll" parameterType = "map">
-      INSERT INTO STUFF VALUES(SEQ_STUFF.NEXTVAL, #{stuffName}, #{price} * 10000, #{stuffCount}, #{weight}, #{size1}, #{size2}, #{size3}, #{manufacturer}, #{manufacturingDate}, #{manufacturingCountry}, #{color}, #{material}, #{etc}, #{stuffStatus}, SYSDATE, (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}))
+      INSERT INTO STUFF VALUES(SEQ_STUFF.NEXTVAL, #{stuffName}, #{price} * 10000, #{stuffCount}, #{weight}, #{size1}, #{size2}, #{size3}, #{manufacturingDate}, #{manufacturingCountry}, #{color}, #{material}, #{etc}, SYSDATE, (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}), (SELECT CONCODE FROM CONNECTION WHERE CONNAME = #{conName}))
       <selectKey keyProperty="stuffNo" resultType = "string" order = "AFTER">
          SELECT SEQ_STUFF.CURRVAL FROM DUAL
       </selectKey>
@@ -22,10 +22,10 @@
    </insert>
    
    <select id = "selectStuffList" resultType = "stuff">
-      SELECT A1.* , B1.SCNAME FROM STUFF A1 , STUFF_SUBCATEGORY B1 WHERE A1.SCNO = B1.SCNO ORDER BY A1.STUFFNO ASC
+	  SELECT A1.* , B1.CONNAME , C1.SCNAME FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO ORDER BY A1.STUFFNO ASC
    </select>
    
-   <select id = "selectBoardCount" resultType="_int">
+   <select id = "selectStuffCount" resultType="_int">
       SELECT COUNT(*) FROM STUFF
    </select>
    
@@ -42,11 +42,31 @@
    </select>
    
    <select id = "selectStuffSearchList" parameterType="map" resultType = "stuff">
-      SELECT * FROM STUFF WHERE ${type} LIKE '%'||#{data}||'%'
+   		<choose>
+   			<when test = "type eq 'stuffName'">
+   				SELECT A1.* , B1.CONNAME , C1.SCNAME FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO AND A1.STUFFNAME LIKE '%'||#{data}||'%' ORDER BY A1.STUFFNO ASC
+   			</when>
+   			<when test = "type eq 'conName'">
+   				SELECT A1.* , B1.CONNAME , C1.SCNAME FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO AND B1.CONNAME LIKE '%'||#{data}||'%' ORDER BY A1.STUFFNO ASC
+   			</when>
+   			<when test = "type eq 'scName'">
+   				SELECT A1.* , B1.CONNAME , C1.SCNAME FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO AND C1.SCNAME LIKE '%'||#{data}||'%' ORDER BY A1.STUFFNO ASC
+   			</when>		
+   		</choose>
    </select>
    
    <select id = "selectStuffSearchCount" parameterType="map" resultType="_int">
-      SELECT COUNT(*) FROM STUFF WHERE ${type} LIKE '%'||#{data}||'%'
+         <choose>
+   			<when test = "type eq 'stuffName'">
+   				SELECT COUNT(*) FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO AND A1.STUFFNAME LIKE '%'||#{data}||'%' ORDER BY A1.STUFFNO ASC
+   			</when>
+   			<when test = "type eq 'conName'">
+   				SELECT COUNT(*) FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO AND B1.CONNAME LIKE '%'||#{data}||'%' ORDER BY A1.STUFFNO ASC
+   			</when>	
+   			<when test = "type eq 'scName'">
+   				SELECT COUNT(*) FROM STUFF A1 , CONNECTION B1 , STUFF_SUBCATEGORY C1 WHERE A1.CONCODE = B1.CONCODE AND A1.SCNO = C1.SCNO AND C1.SCNAME LIKE '%'||#{data}||'%' ORDER BY A1.STUFFNO ASC
+   			</when>	
+   		</choose>
    </select>
    
    <select id = "stuffOne" parameterType="_int" resultType="stuff">
@@ -58,7 +78,7 @@
    </select>
    
    <update id="updateStuff" parameterType = "map">
-      UPDATE STUFF SET STUFFNAME = #{stuffName}, PRICE = #{price} * 10000, STUFFCOUNT = #{stuffCount}, WEIGHT = #{weight}, SIZE1 = #{size1}, SIZE2 = #{size2}, SIZE3 = #{size3}, MANUFACTURER = #{manufacturer}, MANUFACTURINGDATE = #{manufacturingDate}, MANUFACTURINGCOUNTRY = #{manufacturingCountry}, COLOR = #{color}, MATERIAL = #{material}, ETC = #{etc}, STUFFSTATUS = #{stuffStatus}, SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}) WHERE STUFFNO = #{stuffNo}
+      UPDATE STUFF SET STUFFNAME = #{stuffName}, PRICE = #{price} * 10000, STUFFCOUNT = #{stuffCount}, WEIGHT = #{weight}, SIZE1 = #{size1}, SIZE2 = #{size2}, SIZE3 = #{size3}, MANUFACTURINGDATE = #{manufacturingDate}, MANUFACTURINGCOUNTRY = #{manufacturingCountry}, COLOR = #{color}, MATERIAL = #{material}, ETC = #{etc}, SCNO = (SELECT SCNO FROM STUFF_SUBCATEGORY WHERE SCNAME = #{stuffSub}), CONCODE = (SELECT CONCODE FROM CONNECTION WHERE CONNAME = #{conName}) WHERE STUFFNO = #{stuffNo}
    	  <selectKey keyProperty="stuffNo" resultType = "string" order = "AFTER">
          SELECT STUFFNO FROM STUFF WHERE STUFFNO = #{stuffNo}
       </selectKey>
@@ -71,6 +91,17 @@
    <delete id = "deleteStuffUpload" parameterType="map">
    	  DELETE FROM STUFF_UPLOAD WHERE STUFFNO = ${stuffNo}
    </delete>
+   
+   <select id = "selectConnectionList" resultType="connection">
+   	  SELECT * FROM CONNECTION WHERE CONCATEG = '매입'
+   </select>
+   
+   <select id = "connectionName" parameterType="_int" resultType="connection">
+   	  SELECT * FROM CONNECTION WHERE CONCODE = #{conCode}
+   </select>
 
+   <select id = "searchStuffName" parameterType="string" resultType="stuff">
+   	  SELECT A1.*, B1.SCNAME FROM STUFF A1, STUFF_SUBCATEGORY B1 WHERE A1.SCNO = B1.SCNO AND STUFFNAME LIKE '%'||#{stuffName}||'%'
+   </select>
 </mapper>
 

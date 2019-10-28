@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.bm.acct.service.AcctService;
@@ -16,11 +17,9 @@ public class AcctController {
 	AcctService service;
 
 	@RequestMapping("acct/is.do")
-	public String is() {
+	public String is(Model model) {
 		List <Map<String, String>> list = service.selectICList();
-		System.out.println("////////////////");
-		System.out.println(list.get(0).get("EMPNAME"));
-		System.out.println(list.get(0).get("EMPADDR"));
+		model.addAttribute("list", list);
 		return "acct/is";
 	}
 	

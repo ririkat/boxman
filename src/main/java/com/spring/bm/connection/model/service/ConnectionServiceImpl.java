@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bm.connection.model.dao.ConnectionDao;
+import com.spring.bm.connection.model.vo.Connection;
 
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
@@ -91,6 +92,27 @@ public class ConnectionServiceImpl implements ConnectionService {
 	@Override
 	public int deleteConn(int conCode) {
 		return dao.deleteConn(session,conCode);
+	}
+
+	@Override
+	public List<Map<String, String>> selectConnSearchList(Map<String, Object> m) {
+		return dao.selectConnSearchList(session, m);
+	}
+
+	@Override
+	public int selectConnSearchCount(Map<String, Object> m) {
+		return dao.selectConnSearchCount(session, m);
+	}
+
+	//구매정보 등록 거래처 검색
+	@Override
+	public List<Connection> searchConnection(Map<String, Object> m) {
+		return dao.searchConnection(session, m);
+	}
+
+	@Override
+	public int searchConnectionCount(Map<String, Object> m) {
+		return dao.serchConnectionCount(session, m);
 	}
 	
 }

@@ -9,13 +9,22 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="물품 등록" name="tabTitle" />
 </jsp:include>
+<style>
+.form-control , .input-group{
+	width : 700px;
+}
 
+#stuffMain , #stuffSub , .custom-file , #conName{
+	width : 690px;
+}
+
+</style>
 <section>
 <div class = "card shadow mb-4">
 <form id = "stuffFrm" enctype="multipart/form-data" method="post" action="${path}/stuff/stuffEnrollEnd.do" onsubmit="return checkValue();">
 	<div class="card-body">
 		<h4 class="card-title">물품 등록</h4>
-		<p class="card-description">등록하실 물품의 정보를 입력하세요.</p>
+		<p class="card-description">등록하실 물품의 정보를 입력하세요.</p>				
 			<div class="form-group">
 				<label for="exampleInputName1">물품 이름</label> <input type="text"
 					class="form-control" id="stuffName" placeholder="물품 이름"
@@ -30,7 +39,7 @@
 					<span class="input-group-text">￦</span>
 				</div>
 				<input type="number" class="form-control"
-					aria-label="Amount (to the nearest dollar)" name="price" required="required">
+					aria-label="Amount (to the nearest dollar)" name="price" required="required" placeholder = "">
 			</div>
 			<div>단위 : (만원)</div>
 			<br>
@@ -60,11 +69,6 @@
 					placeholder="높이(H)" name="size3" required="required">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputName1">제조사</label> <input type="text"
-					class="form-control" id="exampleInputName1" placeholder="제조사"
-					name="manufacturer" required="required">
-			</div>
-			<div class="form-group">
 				<label for="exampleInputName1">제조일자</label> <input type="date"
 					class="form-control" id="exampleInputName1"
 					name="manufacturingDate" required="required">
@@ -86,7 +90,8 @@
 			</div>
 			
 			<div class = "form-group row">
-				<label class = "col-sm-2 col-form-labe">물품 카테고리</label>
+				<label class = "col-sm-2 col-form-labe">카테고리</label>
+				</div>
 				<div class = "col-sm-10">
 					<select name = "stuffMain" id = "stuffMain" class = "form-control" required="required">
 						<option value = "0">선택1</option>
@@ -99,25 +104,20 @@
 						<option>선택2</option>
 					</select>
 				</div>
+				<br>
+			 <div class = "form-group row">
+				<label class = "col-sm-2 col-form-labe">거래처</label>
+			 </div>
+				<div class = "col-sm-10">
+					<select name = "conName" id = "conName" class = "form-control" required="required">
+						<option value = "0">거래처 선택</option>
+						<c:forEach var = "con" items = "${list2 }">
+							<option value = "${con.conName }">${con.conName }</option>
+						</c:forEach>
+					</select>
 			</div>
 
-			<div class="card">
-				<div class="card-body">
-				<div class = "form-group row">
-				<div class = "col-sm-10">
-				<div class="card-title">결함 유무</div>
-					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus0" value = "Y" required="required"/>
-						<label class = "from-check-label" for = "stuffStatus0">결함 있음</label>
-					</div>
-					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus1" value = "N" required="required"/>
-						<label class = "from-check-label" for = "stuffStatus1">결함 없음</label>
-					</div>
-				</div>
-			</div>
-					</div>
-				</div>
+
 			<br><br>
 			<div class="form-group">
                         <label for="exampleTextarea1">기타 사항</label>
@@ -126,16 +126,20 @@
 
 			<div class = "form-group row">
 				<label class = "col-sm-2 col-form-labe">물품 이미지</label>
+			</div>
 				<div class = "col-sm-10">
 					<div class="custom-file">
                     <input type="file" class="custom-file-input" name="upFile" id="upFile" required="required">
                     <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
                 	</div>
 				</div>
-			</div>
+				
+				<br><br>
+
 
 
 			<input type = "submit" class = "btn btn-success mr-2" value="등록" id = "btn">
+
 
 
 			</div>		
@@ -216,7 +220,7 @@
 								$('#btn').attr('disabled', true);
 							} else {
 								$(stuffNameCheck).text("");
-								$(stuffNameCheck).prop("disabled",false);
+								$('#btn').prop("disabled",false);
 								} 
 							
 							},
