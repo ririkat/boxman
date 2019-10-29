@@ -180,7 +180,7 @@
 						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a>
 						<a class="collapse-item" href="${path }/acct/wage.do">월급 관리</a> 
 						<a class="collapse-item" href="${path }/acct/cf.do">출장비 관리</a>
-						<a class="collapse-item" href="${path }/acct/cf.do">퇴직금 관리</a>
+						<a class="collapse-item" href="${path }/note/saveNote.do">퇴직금 관리</a>
 					</div>
 				</div></li>
 

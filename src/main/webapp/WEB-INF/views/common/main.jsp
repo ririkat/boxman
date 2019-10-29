@@ -23,6 +23,7 @@
 	  <div class="card-body">
 	    <textarea class="form-control" id="note" rows="3"><c:out value="${cookie.note.value}"></c:out></textarea>
 	  </div>
+	  
 	</div>
 	
 	<script>
@@ -38,6 +39,19 @@
 				});
 			})
 		})
+		$(document).ready(function()
+			{
+			    $(window).bind("beforeunload", function() { 
+			    	var note = $('textarea#note').val();
+					note=note.replace(/\s/g,"_");
+					console.log(note);
+					$.ajax({
+						url: "${path}/note/saveNote.do?empNo=${loginEmp.EMPNO}",
+						data: {"note": note},
+						type:"post"
+					});
+			    });
+			});
 	</script>
 	
 </section>
