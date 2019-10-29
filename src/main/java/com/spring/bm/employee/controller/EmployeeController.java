@@ -107,10 +107,10 @@ public class EmployeeController {
 
 	/* 사원로그인*/
 	@RequestMapping("/bfLogin/loginEmp.do")
-	public ModelAndView empLogin(@RequestParam Map<String,String> map,HttpSession session) {
+	public ModelAndView empLogin(@RequestParam Map<String,Object> map,HttpSession session) {
 
-		Map<String, String> m = service.selectLoginEmp(map);
-		
+		Map<String, Object> m = service.selectLoginEmp(map);
+		System.out.println(m.get("EMPNO"));
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
@@ -119,12 +119,12 @@ public class EmployeeController {
 		if(m==null) {
 			msg = "존재하지 않는 아이디입니다.";
 			loc="/";
-		}else if (pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))) {
+		}else if (pwEncoder.matches((CharSequence) map.get("empPassword"),(String)m.get("EMPPASSWORD"))) {
 			msg = "로그인 성공";
 			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
 			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
-		} else if(pwEncoder.matches((CharSequence) map.get("empPassword"), m.get("EMPPASSWORD"))==false){
+		} else if(pwEncoder.matches((CharSequence) map.get("empPassword"), (String)m.get("EMPPASSWORD"))==false){
 			msg = "비밀번호가 일치하지 않습니다.";
 			loc="/";
 		}else {

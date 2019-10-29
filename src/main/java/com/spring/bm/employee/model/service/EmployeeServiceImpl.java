@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	/* 사원로그인*/
 	@Override
-	public Map<String, String> selectLoginEmp(Map<String, String> map) {
+	public Map<String, Object> selectLoginEmp(Map<String, Object> map) {
 		return dao.selectLoginEmp(session,map);
 	}
 	
@@ -117,12 +117,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(result == 0) throw new Exception();
 		return result;
 	}
-	
-	
-	
-	
-	
-	
 
 }
 

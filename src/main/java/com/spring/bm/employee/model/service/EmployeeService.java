@@ -17,7 +17,7 @@ public interface EmployeeService {
 	Map<String, Object> selectEmpOne(int empNo);
 	List<EmpFile> selectEmpFileList(int empNo);
 	/* 사원로그인*/
-	Map<String, String> selectLoginEmp(Map<String, String> map);
+	Map<String, Object> selectLoginEmp(Map<String, Object> map);
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(Map<String, Object> param);
 	int selectEmpSearchCount(Map<String, Object> param);
