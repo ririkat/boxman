@@ -170,16 +170,17 @@
 			<!-- 회계 관리 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> <i
-					class="fas fa-fw fa-wrench"></i> <span>회계 관리</span>
+				aria-expanded="true" aria-controls="collapseUtilities"> 
+				<i class="fas fa-fw fa-wrench"></i> <span>회계 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Accounting</h6>
-						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a> <a
-							class="collapse-item" href="${path }/acct/bs.do">대차대조표</a> <a
-							class="collapse-item" href="${path }/acct/cf.do">현금흐름표</a>
+						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a>
+						<a class="collapse-item" href="${path }/acct/wage.do">월급 관리</a> 
+						<a class="collapse-item" href="${path }/acct/cf.do">출장비 관리</a>
+						<a class="collapse-item" href="${path }/acct/cf.do">퇴직금 관리</a>
 					</div>
 				</div></li>
 
@@ -188,14 +189,13 @@
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 
-
-
 			<!-- 게시판 관리 -->
 			<li class="nav-item">
 	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotice" aria-expanded="true" aria-controls="collapseNotice">
 	          <i class="fas fa-fw fa-cog"></i>
 	          <span>게시판 관리</span>
 	        </a>
+	        
 	        <div id="collapseNotice" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 	          <div class="bg-white py-2 collapse-inner rounded">
 	            <h6 class="collapse-header">Custom Components:</h6>
