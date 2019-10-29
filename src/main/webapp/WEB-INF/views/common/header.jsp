@@ -171,7 +171,7 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
 				aria-expanded="true" aria-controls="collapseUtilities"> 
-				<i class="fas fa-fw fa-wrench"></i> <span>회계 관리</span>
+				<i class="fas fa-calculator"></i> <span>회계 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -179,8 +179,8 @@
 						<h6 class="collapse-header">Accounting</h6>
 						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a>
 						<a class="collapse-item" href="${path }/acct/wage.do">월급 관리</a> 
-						<a class="collapse-item" href="${path }/acct/cf.do">출장비 관리</a>
-						<a class="collapse-item" href="${path }/note/saveNote.do">퇴직금 관리</a>
+						<a class="collapse-item" href="${path }/acct/biztrip.do">출장비 관리</a>
+						<a class="collapse-item" href="${path }/acct/severance.do">퇴직금 관리</a>
 					</div>
 				</div></li>
 

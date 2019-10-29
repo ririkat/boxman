@@ -18,15 +18,13 @@ import com.spring.bm.note.service.NoteService;
 @Controller
 public class NoteController {
 	
-	Cookie noteCookie;
-	
 	@Autowired
 	NoteService service;
 	
 	@RequestMapping("/note/saveCache.do")
 	@ResponseBody
 	public String saveCache(String note, HttpServletResponse response) throws JsonProcessingException {
-		noteCookie = new Cookie("note", note);
+		Cookie noteCookie = new Cookie("note", note);
 		noteCookie.setMaxAge(60*60*24*365);
 		noteCookie.setPath("/");
 		
@@ -38,15 +36,18 @@ public class NoteController {
 	
 	@RequestMapping("/note/saveNote.do")
 	@ResponseBody
-	public void saveNote(int empNo, HttpServletResponse response) throws JsonProcessingException {
+	public void saveNote(String note, int empNo, HttpServletResponse response) throws JsonProcessingException {
 		
 		Map<String, Object> map = new HashMap();
-		map.put("empNo", empNo);
-		map.put("noteCookie", noteCookie.getValue());
-		System.out.println("///////////////");
-		System.out.println(noteCookie.getValue());
-		int result = service.updateNote(map);
+		try {
+			map.put("empNo", empNo);
+			map.put("note", note);
+			int result = service.updateNote(map);
+		} catch (NullPointerException e) {
+			
+		}
 		
 	}
+	
 	
 }

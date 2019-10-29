@@ -8,7 +8,7 @@
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
 	<jsp:param value="Accounting" name="tabTitle"/> 
-	<jsp:param value="Cash Flow" name="pageTitle"/>
+	<jsp:param value="퇴직금" name="pageTitle"/>
 </jsp:include>
 
 <section>

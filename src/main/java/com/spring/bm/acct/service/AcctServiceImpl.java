@@ -23,4 +23,10 @@ public class AcctServiceImpl implements AcctService {
 		return dao.selectICList(session);
 	}
 
+	@Override
+	public List<Map<String, String>> selectEmpList() {
+		return dao.selectEmpList(session);
+	}
+
+
 }

@@ -8,6 +8,9 @@ public interface AcctService {
 
 	List<Map<String, String>> selectICList();
 
+	List<Map<String, String>> selectEmpList();
+
+	
 	
 
 }

@@ -9,4 +9,7 @@ public interface AcctDao {
 
 	List<Map<String, String>> selectICList(SqlSessionTemplate session);
 
+	List<Map<String, String>> selectEmpList(SqlSessionTemplate session);
+
+
 }

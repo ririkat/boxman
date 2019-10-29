@@ -11,7 +11,15 @@ public class AccDaoImpl implements AcctDao {
 
 	@Override
 	public List<Map<String, String>> selectICList(SqlSessionTemplate session) {
-		return session.selectList("acct.selectEmployee");
+		return session.selectList("acct.selectIc");
 	}
+
+	@Override
+	public List<Map<String, String>> selectEmpList(SqlSessionTemplate session) {
+		return session.selectList("acct.selectEmpList");
+	}
+
+	
+	
 
 }

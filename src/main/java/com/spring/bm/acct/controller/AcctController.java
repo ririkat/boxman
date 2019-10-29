@@ -39,14 +39,23 @@ public class AcctController {
 		
 	}
 	
-	@RequestMapping("acct/bs.do")
-	public String bs() {
-		return "acct/bs";
+	@RequestMapping("/acct/wage.do")
+	public String wage(Model model) {
+		List <Map<String, String>> list = service.selectEmpList();
+		model.addAttribute("list", list);
+		return "acct/wage";
 	}
 	
-	@RequestMapping("acct/cf.do")
-	public String cf() {
-		return "acct/cf";
+	@RequestMapping("/acct/biztrip.do")
+	public String bizTrip() {
+		
+		return "acct/biztrip";
+	}
+	
+	@RequestMapping("/acct/severance.do")
+	public String severance() {
+		
+		return "acct/severance";
 	}
 	
 }
