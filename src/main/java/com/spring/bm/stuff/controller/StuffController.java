@@ -378,12 +378,14 @@ public class StuffController {
    
    //이름으로만 물품조회
    @RequestMapping("/stuff/searchStuffName.do")
-   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value = "stuffName") String stuffName) {
+   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value="stuffName") String stuffName,
+		   @RequestParam(value="conName") String conName) {
+	   Map<String,String> map = new HashMap();
+	   map.put("stuffName",stuffName);
+	   map.put("conName",conName);
 	   
-	   System.out.println(stuffName);
+	   List<Stuff> list = service.searchStuffName(map);
 	   
-	   List<Stuff> list = service.searchStuffName(stuffName);
-	    
 	   return list;
    }
    

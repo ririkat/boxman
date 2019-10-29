@@ -9,5 +9,7 @@ public interface PurchaseService {
 	int selectPurCount();
 	
 	List<Map<String,String>> selectConnList();
+	
+	Map<String,String> addStuffToTemp(String stuffNo);
 
 }

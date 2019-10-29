@@ -26,4 +26,9 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		return session.selectList("purchase.selectConnList");
 	}
 
+	@Override
+	public Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo) {
+		return session.selectOne("purchase.addStuffToTemp", stuffNo);
+	}
+
 }

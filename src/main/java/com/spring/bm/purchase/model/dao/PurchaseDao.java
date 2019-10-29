@@ -12,4 +12,6 @@ public interface PurchaseDao {
 	
 	List<Map<String, String>> selectConnList(SqlSessionTemplate session);
 
+	Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo);
+	
 }

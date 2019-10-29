@@ -16,5 +16,9 @@
 	<select id="selectConnList" resultType="map">
 		SELECT * FROM CONNECTION WHERE CONCATEG='매입'
 	</select>
+	
+	<select id="addStuffToTemp" parameterType="string" resultType="map">
+		SELECT * FROM STUFF WHERE STUFFNO=#{stuffNo}
+	</select>
 
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
@@ -42,6 +43,23 @@ public class PurchaseController {
 		mv.setViewName("purchase/enrollPurInfo");		
 		return mv;
 	}
+	
+	@RequestMapping("/purchase/addStuffToTemp.do")
+	public @ResponseBody Map<String,String> addStuffToTemp(@RequestParam Map<String,String> param) {
+		String stuffNo = param.get("stuffNo");
+		
+		Map<String,String> stuff = service.addStuffToTemp(stuffNo);
+		
+		return stuff;
+	}
+	
+	@RequestMapping("/purchase/calPrice.do")
+	public @ResponseBody int calPrice(@RequestParam(value="price") int price,
+			@RequestParam(value="stNum") int stNum) {
+		int result = price*stNum;
+		return result;
+	}
+	
 	
 //	@RequestMapping("/purchase/enrollPurInfoEnd.do")
 //	public ModelAndView enrollPurInfoEnd(@RequestParam Map<String,String> param) {

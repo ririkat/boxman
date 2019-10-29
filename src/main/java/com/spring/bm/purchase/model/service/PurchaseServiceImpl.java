@@ -33,4 +33,9 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return dao.selectConnList(session);
 	}
 
+	@Override
+	public Map<String, String> addStuffToTemp(String stuffNo) {
+		return dao.addStuffToTemp(session,stuffNo);
+	}
+
 }

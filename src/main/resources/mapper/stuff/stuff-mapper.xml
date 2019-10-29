@@ -100,8 +100,19 @@
    	  SELECT * FROM CONNECTION WHERE CONCODE = #{conCode}
    </select>
 
-   <select id = "searchStuffName" parameterType="string" resultType="stuff">
-   	  SELECT A1.*, B1.SCNAME FROM STUFF A1, STUFF_SUBCATEGORY B1 WHERE A1.SCNO = B1.SCNO AND STUFFNAME LIKE '%'||#{stuffName}||'%'
+   <select id = "searchStuffName" parameterType="map" resultType="stuff">
+   	  SELECT A1.*, B1.SCNAME
+   	  FROM STUFF A1, STUFF_SUBCATEGORY B1
+   	  WHERE A1.SCNO=B1.SCNO
+   	  <choose>
+   	  	<when test="stuffName eq ''">
+   	  		AND CONCODE=(SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매입')
+   	  	</when>
+   	  	<otherwise>
+	   	  AND STUFFNAME LIKE '%'||#{stuffName}||'%'
+	   	  AND CONCODE=(SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매입')
+   	  	</otherwise>
+   	  </choose>
    </select>
 </mapper>
 

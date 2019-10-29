@@ -175,8 +175,8 @@ public class ConnectionController {
 	
 	//구매 정보 등록에서 거래처 이름 검색
 	@RequestMapping("/connection/searchConnection2.do")
-	public ModelAndView searchConnection2(@RequestParam(value="cPage", 
-	         required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
+	public ModelAndView searchConnection2(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam(value="type") String type, @RequestParam(value="data") String data) {
 		
 	    int numPerPage = 10;   
 	    Map<String, Object> m = new HashMap();

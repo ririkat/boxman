@@ -147,6 +147,30 @@
 				</div>
 				<br/>
 				
+				<div class="inputSuperTax form-group">
+					<label>부가세율</label>
+					<input type="text" class="form-control" id="purSuperTax" name="purSuperTax" placeholder="0.0"/>
+				</div>
+				<br/>
+				
+				<div class="form-group">
+					<label>거래 유형</label>
+					<div class="col-sm-4">
+						<div class="form-radio">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="purTranType" id="purTranType1" value="Y" checked=""> 부가세율 적용 <i class="input-helper"></i>
+							</label>
+						</div>
+					
+						<div class="form-radio">
+							<label class="form-check-label">
+								<input type="radio" class="form-check-input" name="purTranType" id="purTranType2" value="N"> 부가세율 미적용 <i class="input-helper"></i>
+							</label>
+						</div>
+					</div>
+				</div>
+				<br/>
+				
 				<div class="inputTotAmt form-group">
 					<label>구매 총액</label>
 					<input type="text" class="form-control" id="purTotAmt" name="purTotAmt" placeholder=" 원" style="text-align:right;" readonly/>

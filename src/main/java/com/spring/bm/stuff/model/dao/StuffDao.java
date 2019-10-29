@@ -52,7 +52,7 @@ public interface StuffDao {
 
 	Connection connectionName(SqlSessionTemplate sqlSession, int conCode);
 
-	List<Stuff> searchStuffName(SqlSessionTemplate sqlSession, String stuffName);
+	List<Stuff> searchStuffName(SqlSessionTemplate sqlSession, Map<String,String> map);
 
 
 
