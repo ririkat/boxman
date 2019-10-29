@@ -135,9 +135,8 @@
 	
 	<!-- 근태리스트출력 -->
 	<select id="selectAttenList" parameterType="map" resultType="map">
-		SELECT A.EMPNO, B.*, C.*, TO_CHAR(A.ATTENSTART,'YYYY-MM-DD') AS DAY, TO_CHAR(A.ATTENSTART,'HH24:MI:SS') AS STARTTIME,
-			TO_CHAR(A.ATTENEND,'HH24:MI:SS') AS ENDTIME,
-		 	TO_CHAR(ATTENSTART,'DY') AS DY, A.ATTENCATE 
+		SELECT A.*, B.*, C.*,
+		 	TO_CHAR(ATTENSTART,'DY') AS DY
 		 FROM ATTENDANCE A 
 		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
 		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
@@ -145,23 +144,27 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
+				ORDER BY A.ATTENSTART DESC
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
 				AND TO_CHAR(A.ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND A.EMPNO=#{empNo}
+				ORDER BY A.ATTENSTART DESC
 			</when>
 			<when test="temp eq 'all'"><!-- 인사관리 -->
-				AND TO_CHAR(A.ATTENSTART,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
-				ORDER BY B.DEPTNO
+				AND TO_CHAR(A.ATTENSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				ORDER BY B.DEPTNO, A.ATTENSTART DESC
 			</when>
 			<when test="temp eq 'searchAll'"><!-- 인사관리에서 검색 -->
 				AND TO_CHAR(A.ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				<if test="type != null and type != ''">
 					<if test="type eq 'empNo'">
 						AND A.${type} like '%'||#{data}||'%'
+						ORDER BY B.DEPTNO, A.ATTENSTART DESC
 					</if>
 					<if test="type neq 'empNo'">
 						AND ${type} like '%'||#{data}||'%'
+						ORDER BY B.DEPTNO, A.ATTENSTART DESC
 					</if>
 				</if>
 			</when>
@@ -176,6 +179,107 @@
 			</when>
 			<when test="temp eq 'searchAll'">
 				AND TO_CHAR(ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND EMPNO=#{empNo}
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 휴가리스트출력 -->
+	<select id="selectDayOffList" parameterType="map" resultType="map">
+		SELECT A.*, B.*, C.*
+		 FROM DAYOFF A 
+		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
+		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
+		 WHERE 1=1
+		<choose>
+			<when test="temp eq 'my'"><!-- 마이페이지 -->
+				AND	A.EMPNO=#{empNo}
+				AND TO_CHAR(A.DOSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				ORDER BY A.DOSTART DESC
+			</when>
+			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
+				AND TO_CHAR(A.DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND A.EMPNO=#{empNo}
+			</when>
+			<when test="temp eq 'all'"><!-- 인사관리 -->
+				AND TO_CHAR(A.DOSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				ORDER BY B.DEPTNO, A.DOSTART DESC
+			</when>
+			<when test="temp eq 'searchAll'"><!-- 인사관리에서 검색 -->
+				AND TO_CHAR(A.DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				<if test="type != null and type != ''">
+					<if test="type eq 'empNo'">
+						AND A.${type} like '%'||#{data}||'%'
+						ORDER BY A.DOSTART DESC
+					</if>
+					<if test="type neq 'empNo'">
+						AND ${type} like '%'||#{data}||'%'
+						ORDER BY A.DOSTART DESC
+					</if>
+				</if>
+			</when>
+		</choose>
+	</select>
+	<select id="selectDayOffCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM DAYOFF WHERE 1=1
+		<choose>
+			<when test="temp eq 'search'">
+				AND TO_CHAR(DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND EMPNO=#{empNo}
+			</when>
+			<when test="temp eq 'searchAll'">
+				AND TO_CHAR(DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND EMPNO=#{empNo}
+			</when>
+		</choose>
+	</select>
+	
+	<!-- 출장리스트출력 -->
+	<select id="selectBTList" parameterType="map" resultType="map">
+		SELECT A.*, B.*, C.*
+		 FROM BUSINESSTRIP A 
+		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
+		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
+		 WHERE 1=1
+		<choose>
+			<when test="temp eq 'my'"><!-- 마이페이지 -->
+				AND	A.EMPNO=#{empNo}
+				AND TO_CHAR(A.BTSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				ORDER BY A.BTSTART DESC
+			</when>
+			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
+				AND TO_CHAR(A.BTSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND A.EMPNO=#{empNo}
+				ORDER BY A.BTSTART DESC
+			</when>
+			<when test="temp eq 'all'"><!-- 인사관리 -->
+				AND TO_CHAR(A.BTSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				ORDER BY B.DEPTNO, A.BTSTART DESC
+			</when>
+			<when test="temp eq 'searchAll'"><!-- 인사관리에서 검색 -->
+				AND TO_CHAR(A.BTSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				<if test="type != null and type != ''">
+					<if test="type eq 'empNo'">
+						AND A.${type} like '%'||#{data}||'%'
+						ORDER BY B.DEPTNO, A.BTSTART DESC
+					</if>
+					<if test="type neq 'empNo'">
+						AND ${type} like '%'||#{data}||'%'
+						ORDER BY B.DEPTNO, A.BTSTART DESC
+					</if>
+				</if>
+			</when>
+		</choose>
+	</select>
+	<select id="selectBTCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM BUSINESSTRIP WHERE 1=1
+		<choose>
+			<when test="temp eq 'search'">
+				AND TO_CHAR(BTSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND EMPNO=#{empNo}
+			</when>
+			<when test="temp eq 'searchAll'">
+				AND TO_CHAR(BTSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND EMPNO=#{empNo}
 			</when>
 		</choose>

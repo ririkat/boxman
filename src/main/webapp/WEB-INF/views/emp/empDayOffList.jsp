@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">휴가관리</h6>
+			<h6 class="m-0 font-weight-bold text-primary">휴가현황</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -25,7 +25,7 @@
 							<form id="searchFrm">
 								<div class="dataTables_length" id="dataTable_length">
 								<c:choose>
-									<c:when test="${temp eq 'my'}">
+									<c:when test="${temp eq 'my' or temp eq 'search'}">
 										<input type="hidden" value="search" name="temp"/>
 									</c:when>
 									<c:when test="${temp eq 'all' or temp eq 'searchAll'}">
@@ -95,6 +95,8 @@
 										<th>일수</th>
 										<th>구분</th>
 										<th>승인여부</th>
+										<th>승인날짜</th>
+										<th>반려사유</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -105,11 +107,13 @@
 												<td><c:out value='${e["EMPNAME"]}' /></td>
 												<td><c:out value='${e["DEPTNAME"]}' /></td>
 											</c:if>
-											<td><c:out value='${e["DAY"]}' /></td>
-											<td><c:out value='${e["DY"]}' /></td>
-											<td><c:out value='${e["STARTTIME"] }' /></td>
-											<td><c:out value='${e["ENDTIME"]}' /></td>
-											<td><c:out value='${e["ATTENCATE"] }' /></td>
+											<td><fmt:formatDate value='${e["DOSTART"]}' pattern="yyyy-MM-dd"/></td>
+											<td><fmt:formatDate value='${e["DOEND"]}' pattern="yyyy-MM-dd" /></td>
+											<td><c:out value='${e["DOREMAININGDAYS"] }' /></td>
+											<td><c:out value='${e["DOCNAME"]}' /></td>
+											<td><c:out value='${e["DOCHECK"]}' /></td>
+											<td><c:out value='${e["DOCHECKDATE"]}' /></td>
+											<td><c:out value='${e["DOREASON"] }' /></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -156,7 +160,7 @@
 	});
 	//검색
 	function fn_search() {
-		$("#searchFrm").attr("action","${path}/emp/selectAttenList.do");
+		$("#searchFrm").attr("action","${path}/emp/selectDayOffList.do");
 		$("#searchFrm").submit();
 	}
 </script>

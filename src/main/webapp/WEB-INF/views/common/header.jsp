@@ -112,7 +112,8 @@
 		            <h6 class="collapse-header">Custom Components:</h6>
 		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}">내정보확인</a>
 		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태현황</a>
-		            <a class="collapse-item" href="${path }/emp/selectDayOffList.doempNo=${loginEmp.EMPNO}&temp=my">휴가관리</a>
+		            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?empNo=${loginEmp.EMPNO}&temp=my">휴가현황</a>
+		            <a class="collapse-item" href="${path }/emp/selectBTList.do?empNo=${loginEmp.EMPNO}&temp=my">출장현황</a>
 		          </div>
 		        </div>
 		      </li>
@@ -142,9 +143,11 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
             <a class="collapse-item" href="${path }/emp/empList.do">사원관리</a>
-            <a class="collapse-item" href="${path }/dept/deptList.do">부서관리</a>
-            <a class="collapse-item" href="${path }/empJob/empJobList.do">직급관리</a>
+            <a class="collapse-item" href="${path }/dept/deptList.do?t=N">부서관리</a>
+            <a class="collapse-item" href="${path }/empJob/empJobList.do?t=N">직급관리</a>
             <a class="collapse-item" href="${path }/emp/selectAttenList.do?temp=all">근태현황</a>
+            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?temp=all">휴가현황</a>
+            <a class="collapse-item" href="${path }/emp/selectBTList.do?temp=all">출장현황</a>
           </div>
         </div>
       </li>

@@ -52,6 +52,10 @@ public interface EmployeeDao {
 	List<Map<String, String>> selectDayOffList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
 			int numPerPage);
 	int selectDayOffCount(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출장리스트 출력 */
+	List<Map<String, String>> selectBTList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage);
+	int selectBTCount(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
 

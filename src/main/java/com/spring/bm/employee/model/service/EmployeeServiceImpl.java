@@ -177,6 +177,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	/* 휴가리스트출력 끝 */
 	
+	/* 출장리스트출력 */
+	@Override
+	public List<Map<String, String>> selectBTList(Map<String, Object> param, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectBTList(session, param, cPage, numPerPage);
+	}
+	@Override
+	public int selectBTCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectBTCount(session, param);
+	}
+	
+	
 	
 	
 	

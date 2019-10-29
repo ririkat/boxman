@@ -43,6 +43,9 @@ public interface EmployeeService {
 	/* 휴가리스트출력 */
 	List<Map<String, String>> selectDayOffList(Map<String, Object> param, int cPage, int numPerPage);
 	int selectDayOffCount(Map<String, Object> param);
+	/* 출장리스트출력 */
+	List<Map<String, String>> selectBTList(Map<String, Object> param, int cPage, int numPerPage);
+	int selectBTCount(Map<String, Object> param);
 	
 }
 

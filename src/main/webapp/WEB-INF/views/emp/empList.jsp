@@ -45,7 +45,7 @@
 						<div class="col-sm-12 col-md-6">
 							<div id="dataTable_filter" class="dataTables_filter">
 								<div style="float: right;">
-									<button type="button" onclick="location.href='${path}/emp/insertEmp.do'" class="btn btn-primary mr-2">
+									<button type="button" onclick="location.href='${path}/emp/insertEmp.do?t=Y'" class="btn btn-primary mr-2">
 			               				사원등록
 			                 		</button>
 								</div>

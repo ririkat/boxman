@@ -15,7 +15,7 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">근태현황</h6>
+			<h6 class="m-0 font-weight-bold text-primary">출장현황</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -65,6 +65,18 @@
 								</div>
 							</form>
 						</div>
+						<c:if test="${temp eq 'my' or temp eq 'search'}"> 
+							<div class="col-sm-12 col-md-6">
+								<div id="dataTable_filter" class="dataTables_filter">
+									<div style="float: right;">
+										<!-- 출장신청 결재로 이동하기 -->
+										<button type="button" onclick="location.href='${path}/emp/insertDayOff.do'" class="btn btn-primary mr-2">
+				               				출장신청
+				                 		</button>
+									</div>
+								</div>
+							</div>
+						</c:if>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
@@ -78,12 +90,9 @@
 											<th>이름</th>
 											<th>부서</th>
 										</c:if>
-										<th>일자</th>
-										<th>요일</th>
-										<th>출근시간</th>
-										<th>퇴근시간</th>
-										<th>구분</th>
-										<th>수정요청</th>
+										<th>출발일자</th>
+										<th>종료일자</th>
+										<th>출장사유</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -94,12 +103,10 @@
 												<td><c:out value='${e["EMPNAME"]}' /></td>
 												<td><c:out value='${e["DEPTNAME"]}' /></td>
 											</c:if>
-											<td><fmt:formatDate value='${e["ATTENSTART"]}' pattern="yyyy-MM-dd"/></td>
-											<td><c:out value='${e["DY"]}' /></td>
-											<td><fmt:formatDate value='${e["ATTENSTART"]}' pattern="HH:mm:ss"/></td>
-											<td><fmt:formatDate value='${e["ATTENEND"]}' pattern="HH:mm:ss"/></td>
-											<td><c:out value='${e["ATTENCATE"] }' /></td>
-											<td><button type="button"  class="btn btn-primary mr-2" onclick="location.href='${path}/emp/'">수정요청</button></td>
+											<td><fmt:formatDate value='${e["BTSTART"]}' pattern="yyyy-MM-dd" /></td>
+											<td><fmt:formatDate value='${e["BTEND"]}' pattern="yyyy-MM-dd" /></td>
+											<td><c:out value='${e["BTREASON"] }' /></td>
+											<td><button type="button" onclick="location.href='${path}/emp/insertBTPay.do?btNo=${e.BTNO}'" class="btn btn-primary mr-2"></button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -109,6 +116,7 @@
 				</div>
 				${pageBar }
 </section>
+
 <script>
 	$(function(){
 		var d = new Date();
@@ -145,7 +153,7 @@
 	});
 	//검색
 	function fn_search() {
-		$("#searchFrm").attr("action","${path}/emp/selectAttenList.do");
+		$("#searchFrm").attr("action","${path}/emp/selectBTList.do");
 		$("#searchFrm").submit();
 	}
 </script>

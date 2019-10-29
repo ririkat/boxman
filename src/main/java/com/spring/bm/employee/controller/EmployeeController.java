@@ -270,16 +270,13 @@ public class EmployeeController {
 	public int responsBody(String empId, Model model) throws JsonProcessingException {
 
 		return service.checkId(empId);
-
 	}
 
 	/* 사원수정 */
 	@RequestMapping("/emp/updateEmpEnd.do")
 	public ModelAndView updateEmpEnd(@RequestParam Map<String, Object> param,
-			//			@RequestParam(value="upFile", required=false) MultipartFile[] upFile,
 			@RequestParam(value="proImg", required=false) MultipartFile proImg,
 			@RequestParam(value="stampImg", required=false) MultipartFile stampImg,
-			//			@RequestParam(value="licenReName", required=false) String[] licenReName,
 			HttpServletRequest request
 			) {
 
@@ -384,7 +381,6 @@ public class EmployeeController {
 	@RequestMapping("/emp/updatePassword.do")
 	public ModelAndView updatePassword(String empNo) {
 		ModelAndView mv = new ModelAndView();
-		logger.debug(String.valueOf(empNo));
 		mv.addObject("empNo", empNo);
 		mv.setViewName("emp/empUpPassword");
 		return mv;
@@ -438,7 +434,6 @@ public class EmployeeController {
 				e.printStackTrace();
 			}
 		}
-		logger.debug(""+result);
 		return result;
 	}
 	
@@ -514,5 +509,40 @@ public class EmployeeController {
 		return mv;
 	}
 	
+	/* 출장리스트출력 */
+	@RequestMapping("/emp/selectBTList.do")
+	public ModelAndView selectBTList(@RequestParam Map<String, Object> param,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,String>> list = new ArrayList();
+
+		list = service.selectBTList(param, cPage, numPerPage);		
+		int totalCount = service.selectBTCount(param);
+		
+		String startStr = String.valueOf(param.get("startDay")).trim();
+		String endStr = String.valueOf(param.get("endDay")).trim();
+		Date startDay = null;
+		Date endDay = null;
+		ModelAndView mv=new ModelAndView();
+		if(!startStr.equals("null") && !endStr.equals("null")) {
+			startDay = Date.valueOf(startStr);
+			endDay = Date.valueOf(endStr);
+			mv.addObject("startDay",startDay);
+			mv.addObject("endDay",endDay);
+		}
+		
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("temp", String.valueOf(param.get("temp")));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empBusinessTripList");
+		return mv;
+	}
+	
+	/*출장비용 청구*/
+//	@RequestMapping("/emp/insertBTPay.do")
+//	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
+//		
+//	}
 }
 
