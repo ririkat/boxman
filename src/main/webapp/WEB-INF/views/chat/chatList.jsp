@@ -19,10 +19,11 @@ form:active {
 
 <div></div>
 <br/><br/><br/>
+
 	<c:forEach items="${list }" var="list">
 	<c:if test="${list['EMPNO'] != loginEmp['EMPNO']}">
 	<div id="chat-container" class="container-fluid ">
-		<a href="${path }/chat/chatRoom.do?empNo=${list['EMPNO']}">
+		<a href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }">
 			<div class="d-flex mt-3 py-2 border-bottom">
 			<i class="fas fa-comments" style="font-size: xx-large;"></i>
 				<div class="wrapper ml-2">

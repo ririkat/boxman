@@ -6,7 +6,9 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.spring.bm.chat.model.vo.Chat;
+import com.spring.bm.chat.model.vo.ChatRoom;
 import com.spring.bm.chatting.RTCMessage;
+import com.spring.bm.employee.model.vo.Employee;
 
 public interface ChatDao {
 
@@ -14,8 +16,16 @@ public interface ChatDao {
 
 	List<Map<String, String>> selectChatListEmp(SqlSessionTemplate sqlSession, int empNo);
 
-	Chat selectChatOneEmp(SqlSessionTemplate sqlSession, int empNo);
+	Employee selectChatOneEmp(SqlSessionTemplate sqlSession, int empNo);
 
 	int insertChat(SqlSessionTemplate sqlSession, RTCMessage msg);
+
+	int createChatRoom(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
+	ChatRoom chatRoom(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
+	ChatRoom selectChatRoom(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
+	List<Chat> selectChat(SqlSessionTemplate sqlSession, int roomNo);
 
 }

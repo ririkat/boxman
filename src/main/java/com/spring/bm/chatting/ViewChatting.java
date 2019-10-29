@@ -34,9 +34,9 @@ public class ViewChatting extends BinaryWebSocketHandler{
 		ObjectMapper mapper = new ObjectMapper();
 		RTCMessage msg = getMessageObject(message); // 메세지 파싱용 메소드
 		
-		session.getAttributes().put(String.valueOf(msg.getEmpNo()), msg); // session 객체에 보낸 메세지를 저장
+		session.getAttributes().put(String.valueOf(msg.getReceiver()), msg); // session 객체에 보낸 메세지를 저장
 		// session 관리를 위해 clients 객체에 세션을 추가
-		clients.put(String.valueOf(msg.getEmpNo()), session);
+		clients.put(String.valueOf(msg.getReceiver()), session);
 		sessionChecking(); // 접속이 종료된 session 을 client 에서 삭제함.
 		
 		//접속한 회원을 보내기
@@ -45,7 +45,7 @@ public class ViewChatting extends BinaryWebSocketHandler{
 		// 화면 연결하는 로직 구성
 		for(Map.Entry<String, WebSocketSession> client: clients.entrySet()) {
 			WebSocketSession s = client.getValue();
-			if(!client.getKey().equals(msg.getEmpNo())) {
+			if(!client.getKey().equals(msg.getReceiver())) {
 				try {
 					s.sendMessage(new TextMessage(mapper.writeValueAsString(msg)));
 				} catch (Exception e) {
@@ -54,7 +54,7 @@ public class ViewChatting extends BinaryWebSocketHandler{
 			}
 		}
 
-		int result = service.insertChat(msg);		
+		int result = service.insertChat(msg);
 		
 	}
 	

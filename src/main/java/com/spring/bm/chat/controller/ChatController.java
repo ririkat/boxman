@@ -1,5 +1,6 @@
 package com.spring.bm.chat.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.chat.model.service.ChatService;
 import com.spring.bm.chat.model.vo.Chat;
+import com.spring.bm.chat.model.vo.ChatRoom;
 
 @Controller
 public class ChatController {
@@ -33,16 +35,38 @@ public class ChatController {
 	}
 	//선택한 사원과의 채팅방
 	@RequestMapping("/chat/chatRoom.do")
-	public String chatRoom(@RequestParam(name="empNo") int empNo, Model model) {
+	public String chatRoom(@RequestParam(name="receiver") int receiver, @RequestParam(name="sender") int sender, Model model) {
 
-		  List<Map<String,String>> list = service.selectChatListEmp(empNo);
-		  Chat chat = service.selectChatOneEmp(empNo);
-		  System.out.println("list찍어봅시다 ==>"+list);
-		  System.out.println("쳇!!!!!!!!!!!!!!!!!!!!!!!"+chat);
-		  model.addAttribute("chat",chat);
+		  Map<String,Object> m = new HashMap();
+		  m.put("receiver", receiver);
+		  m.put("sender", sender);
+		  System.out.println("리시버 =======>"+receiver);
+		  System.out.println("샌더 =======>"+sender);
+		  int result = 0;
+		  ChatRoom chatroom = service.chatRoom(m);
+		  List<Chat> list = null;
+		  ChatRoom cr = null;
+		  
+		  String loc="";
+		  
+		  if(chatroom  != null ) {
+			  
+			  System.out.println("방 있음");
+			  
+			  loc="chat/chatRoom";
+			  cr = service.selectChatRoom(m);
+			  list = service.seletChat(cr.getRoomNo());
+		  }else {
+			  result = service.createChatRoom(m);
+			  
+			  loc = "stuff/stuffList";
+
+		  }
+		  
 	      model.addAttribute("list",list);
+	      model.addAttribute("cr",cr);
 
-	      return "chat/chatRoom";
+	      return loc;
 
 	}
 

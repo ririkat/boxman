@@ -15,7 +15,9 @@
 		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffSubcategory" alias = "subcategory"/>
 		<typeAlias type = "com.spring.bm.stuff.model.vo.StuffUpload" alias = "stuffupload"/>	
 		<typeAlias type = "com.spring.bm.employee.model.vo.EmpFile" alias = "empFile"/>	
-		<typeAlias type = "com.spring.bm.chat.model.vo.Chat" alias = "chat"/>	
+		<typeAlias type = "com.spring.bm.chat.model.vo.Chat" alias = "chat"/>
+		<typeAlias type = "com.spring.bm.employee.model.vo.Employee" alias = "employee"/>
+		<typeAlias type = "com.spring.bm.chat.model.vo.ChatRoom" alias = "chatRoom"/>
 		
 	</typeAliases>
 

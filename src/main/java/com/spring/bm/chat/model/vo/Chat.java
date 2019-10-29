@@ -8,16 +8,18 @@ import lombok.Data;
 public class Chat {
 	
 	private int chatNo;
-	private int empNo;
-	private String sender;
+	private int roomNo;
+	private int receiver;
+	private int sender;
 	private String chatText;
 	private Date sendDate;
 		
 	
-	public Chat(int chatNo, int empNo, String sender, String chatText, Date sendDate) {
+	public Chat(int chatNo, int roomNo, int receiver, int sender, String chatText, Date sendDate) {
 		super();
 		this.chatNo = chatNo;
-		this.empNo = empNo;
+		this.roomNo = roomNo;
+		this.receiver = receiver;
 		this.sender = sender;
 		this.chatText = chatText;
 		this.sendDate = sendDate;

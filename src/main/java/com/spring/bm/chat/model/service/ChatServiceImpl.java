@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.spring.bm.chat.model.dao.ChatDao;
 import com.spring.bm.chat.model.vo.Chat;
+import com.spring.bm.chat.model.vo.ChatRoom;
 import com.spring.bm.chatting.RTCMessage;
+import com.spring.bm.employee.model.vo.Employee;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -30,7 +32,7 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public Chat selectChatOneEmp(int empNo) {
+	public Employee selectChatOneEmp(int empNo) {
 		return dao.selectChatOneEmp(sqlSession, empNo);
 	}
 
@@ -38,12 +40,25 @@ public class ChatServiceImpl implements ChatService {
 	public int insertChat(RTCMessage msg) {
 		return dao.insertChat(sqlSession, msg);
 	}
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public int createChatRoom(Map<String,Object> m) {
+		return dao.createChatRoom(sqlSession, m);
+	}
+
+	@Override
+	public ChatRoom chatRoom(Map<String, Object> m) {
+		return dao.chatRoom(sqlSession, m);
+	}
+
+	@Override
+	public ChatRoom selectChatRoom(Map<String, Object> m) {
+		return dao.selectChatRoom(sqlSession,m);
+	}
+
+	@Override
+	public List<Chat> seletChat(int roomNo) {
+		return dao.selectChat(sqlSession,roomNo);
+	}
 	
 }

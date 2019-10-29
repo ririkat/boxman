@@ -69,23 +69,26 @@
 <div></div>
 <br/><br/><br/>
      <div class="text-history" name="text-history"    id="text-history">
+      <input type="hidden" name="sender" id = "sender" value="${loginEmp['EMPNO']}">
+      <input type="hidden" name="roomNo" value="${cr.roomNo}">
+      <input type = "hidden" id = "crSender" value = "${cr.sender }"/>
      	<c:forEach items="${list }" var="list">
-		     	  <c:if test="${list['EMPNO'] == list['EMPNO'] }">
+		     	  <c:if test="${list['SENDER'] != loginEmp['EMPNO']}">
 			          <div class="message-feed feed" id="msg" name="msg">
 			              <div class="pull-left">
 			                   <img src="${path }/resources/b4/img/avatar.png" alt="" class="mr-2 img-avatar">
 			              </div>
 			              <div class="media-body">
-			                   <div class="mf-content bg-secondary    text-dark">${list['CHATTEXT'] }</div> <!-- 텍스트내용 -->
-			                   <small class="mf-date"><i class="far    fa-clock">${list['SENDDATE'] }</i></small> <!-- 날짜 -->
+			                   <div class="mf-content bg-secondary    text-dark">${list['CHATTEXT']}</div> <!-- 텍스트내용 -->
+			                   <small class="mf-date"><i class="far    fa-clock">${list['SENDDATE']}</i></small> <!-- 날짜 -->
 			              </div>
 			          </div>
 		          </c:if>
 		          <c:if test="${list['SENDER'] == loginEmp['EMPNO']}">
 			          <div class="message-feed right" id="msg" name="msg">
 			              <div class="media-body">
-			                   <div class="mf-content bg-primary    text-white">${list['CHATTEXT'] }</div> <!-- 텍스트내용 -->
-			                   <small class="mf-date"><i class="far fa-clock">${list['SENDDATE'] }</i></small> <!-- 날짜 -->
+			                   <div class="mf-content bg-primary    text-white">${list['CHATTEXT']}</div> <!-- 텍스트내용 -->
+			                   <small class="mf-date"><i class="far fa-clock">${list['SENDDATE']}</i></small> <!-- 날짜 -->
 			              </div>
 			          </div>
 			      </c:if>
@@ -93,8 +96,8 @@
 		</div>
         <br/><br/><br/> 
                <div class="fixed-bottom msb-reply">
-          <Input type="hidden" id="userId" value="user01">
-          <textarea name="text" id="text" class="text" placeholder="Message..."></textarea>
+          <Input type="hidden" name="receiver" value="${cr.receiver }"> 
+          <textarea name="chatText" id="text" class="text" placeholder="Message..."></textarea>
           <button type="button" onclick="send();" id="enter">
               <i class="far fa-paper-plane"></i>
           </button>
@@ -104,7 +107,8 @@
 </section>
 <!-- 메세지 보낼때 -->
 <script>
-
+var crSender = $('#crSender').val();
+var sender = $('#sender').val();
 
 // method to scroll down
 	function scrollDown(){
@@ -129,14 +133,16 @@ window.onload = function(){
      function receive(d){
      
           var msg = {
-        		  "empNo" : d["empNo"],
+        		  "receiver" : d["receiver"],
                   "sender" : d["sender"],
-                  "chatText" : d["chatText"]
+                  "chatText" : d["chatText"],
+                  "roomNo" : d["roomNo"]
           };
 
           var date =  document.createTextNode(formatAMPM(new Date()));
-			
-          <c:if test="${chat.empNo == loginEmp['EMPNO']}">
+		
+          
+          if(crSender != sender) {
         	  
         	  /* inputting image */
         	  var imgDiv = $("<div>").attr({
@@ -168,8 +174,7 @@ window.onload = function(){
 	          $("#text-history").append(wrap);
 	          $("#text").val("");
 	          scrollDown();
-        </c:if>
-        <c:if test="${chat.sender == loginEmp['EMPNO']}">
+          } else {
 		
 	          var div = $("<div>").attr({
 	              "class" : "mf-content bg-primary  text-white"
@@ -186,16 +191,16 @@ window.onload = function(){
 	          $("#text-history").append(wrap);
 	          $("#text").val("");
 	          scrollDown();
-          </c:if>
+          }
      	
      }
      
      function send() {
           // creating a JSON and Sending it to Java
-          console.log('asfsadfsdf');
           var msg = {
-              "empNo" : "${chat.empNo}",
+              "receiver" : "${cr.receiver}",
               "sender" : "${loginEmp['EMPNO']}",
+              "roomNo" : "${cr.roomNo}",
               "chatText" : $('#text').val()
           };
 

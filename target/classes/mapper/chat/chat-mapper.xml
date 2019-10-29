@@ -2,19 +2,33 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chat">
 
+	
+
+	<select id="chatRoom" parameterType="map" resultType="chatRoom">
+		select distinct(roomNo) from chatRoom where (receiver=#{receiver} and sender=#{sender}) or receiver=#{sender} and sender=#{receiver}
+	</select>
 	<select id="selectChatList" resultType="map">
-		select employee.empno, empjob.jobname, employee.empname, department.deptname 
-    	from employee 
-        join empjob on employee.jobno=empjob.jobno 
+		select employee.empno, empjob.jobname, employee.empname, department.deptname
+    	from employee
+        join empjob on employee.jobno=empjob.jobno
         join department on employee.DEPTNO = department.DEPTNO
 	</select>
-	<select id="selectChatListEmp" resultType="map">
+	<!-- <select id="selectChatListEmp" resultType="map">
 		select * from chat where empNo=#{empNo}
 	</select>
-	<select id="selectChatOneEmp" resultType="chat">
-		select * from chat where empNo=#{empNo} and chatNo='11'
+	<select id="selectChatOneEmp" resultType="employee">
+		select empNo from employee where empNo=#{empNo}
+	</select> -->
+	<select id="selectChatRoom" parameterType="map" resultType="chatRoom">
+		select * from chatRoom where (receiver=#{receiver} and sender=#{sender}) or receiver=#{sender} and sender=#{receiver}
 	</select>
-	<insert id="insertchatting" parameterType="chat">
-		insert into chat values(seq_chat.nextval, empNo=#{empNo}, sender=${loginEmp['EMPNO']}, chatText=#{chatTest}, sysdate)
+	<select id="selectChat" resultType="map">
+		select * from chat where roomNo=#{roomNo}
+	</select>
+	<insert id="insertchatting" parameterType="map">
+		insert into chat values(seq_chat.nextval, #{roomNo}, #{receiver}, #{sender}, #{chatText}, sysdate)
+	</insert>
+	<insert id="createChatRoom" parameterType="map">
+		insert into chatRoom values(seq_chatRoom.nextval, #{receiver}, #{sender})
 	</insert>
 </mapper>
