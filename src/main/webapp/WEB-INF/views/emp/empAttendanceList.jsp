@@ -83,7 +83,7 @@
 										<th>출근시간</th>
 										<th>퇴근시간</th>
 										<th>구분</th>
-										<th>수정요청</th>
+										<th>수정</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -99,7 +99,32 @@
 											<td><fmt:formatDate value='${e["ATTENSTART"]}' pattern="HH:mm:ss"/></td>
 											<td><fmt:formatDate value='${e["ATTENEND"]}' pattern="HH:mm:ss"/></td>
 											<td><c:out value='${e["ATTENCATE"] }' /></td>
-											<td><button type="button"  class="btn btn-primary mr-2" onclick="location.href='${path}/emp/'">수정요청</button></td>
+											<!-- 그 달에만 수정요청 가능 -->
+											<jsp:useBean id="now" class="java.util.Date" />
+											<fmt:formatDate value="${now}" pattern="yyyyMM" var="nowDate" />   	
+											<fmt:formatDate value='${e["ATTENSTART"]}' pattern="yyyyMM" var="openDate"/>       <%-- 시작날짜 --%>
+											<c:if test="${temp eq 'my' or temp eq 'search'}">
+												<c:choose>
+													<c:when test="${nowDate eq openDate}">
+														<td><button type="button" class="btn btn-primary mr-2" 
+															onclick='location.href="${path}/emp/updateAtten.do?attenNo=${e.ATTENNO }"'>수정요청</button>
+														</td>
+													</c:when>
+													<c:otherwise>
+														<td>마감</td>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+											<c:if test="${temp eq 'all' or temp eq 'searchAll'}">
+												<c:choose>
+													<c:when test="${nowDate eq openDate}">
+														<td><button type="button"  class="btn btn-primary mr-2" onclick="location.href='${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}'">수정</button></td>
+													</c:when>
+													<c:otherwise>
+														<td>마감</td>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -115,7 +140,6 @@
 		var day = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 		$('#startDay').val(day);
 		$('#endDay').val(day);
-		
 		$('.pic').datepicker({
 		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
 		    startDate: '-1y',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
@@ -148,5 +172,9 @@
 		$("#searchFrm").attr("action","${path}/emp/selectAttenList.do");
 		$("#searchFrm").submit();
 	}
+	
+	//수정요청
+	
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

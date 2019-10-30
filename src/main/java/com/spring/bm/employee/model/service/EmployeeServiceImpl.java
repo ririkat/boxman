@@ -188,6 +188,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return dao.selectBTCount(session, param);
 	}
+	/* 출장리스트출력 끝 */
+	/* 근태수정용 한개보기 */
+	@Override
+	public Map<String, Object> selectAttenNoOne(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenNoOne(session, param);
+	}
+	/* 남은 휴가일수 보기 */
+	@Override
+	public int selectDayOffCount(int empNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDayOffCount(session, empNo);
+	}
 	
 	
 	

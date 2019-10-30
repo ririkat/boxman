@@ -92,8 +92,8 @@
 										</c:if>
 										<th>시작일자</th>
 										<th>종료일자</th>
-										<th>일수</th>
 										<th>구분</th>
+										<th>남은연차일수</th>
 										<th>승인여부</th>
 										<th>승인날짜</th>
 										<th>반려사유</th>
@@ -109,8 +109,8 @@
 											</c:if>
 											<td><fmt:formatDate value='${e["DOSTART"]}' pattern="yyyy-MM-dd"/></td>
 											<td><fmt:formatDate value='${e["DOEND"]}' pattern="yyyy-MM-dd" /></td>
-											<td><c:out value='${e["DOREMAININGDAYS"] }' /></td>
 											<td><c:out value='${e["DOCNAME"]}' /></td>
+											<td><c:out value='${e["DOREMAININGDAYS"] }' /></td>
 											<td><c:out value='${e["DOCHECK"]}' /></td>
 											<td><c:out value='${e["DOCHECKDATE"]}' /></td>
 											<td><c:out value='${e["DOREASON"] }' /></td>

@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -536,6 +537,31 @@ public class EmployeeController {
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("emp/empBusinessTripList");
+		return mv;
+	}
+	
+	/*근태수정*/
+	@RequestMapping("/emp/updateAtten.do")
+	public ModelAndView updateAtten(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> map = new HashMap();
+		map = service.selectAttenNoOne(param);
+		mv.addObject("att", map);
+		mv.setViewName("emp/empAttendanceOne");
+		return mv;
+	}
+	
+	/* 휴가신청 */
+	@RequestMapping("/emp/insertDayOff.do")
+	public ModelAndView insertDayOff(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> map = new HashMap();
+		int empNo = Integer.parseInt(String.valueOf(param.get("empNo")));
+		
+		map = service.selectEmpOne(empNo);
+		map.put("dayOffCount", (Integer)service.selectDayOffCount(empNo));
+		mv.addObject("e", map);
+		mv.setViewName("emp/empDayOffForm");
 		return mv;
 	}
 	

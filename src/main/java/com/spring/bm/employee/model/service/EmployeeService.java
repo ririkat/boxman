@@ -46,6 +46,10 @@ public interface EmployeeService {
 	/* 출장리스트출력 */
 	List<Map<String, String>> selectBTList(Map<String, Object> param, int cPage, int numPerPage);
 	int selectBTCount(Map<String, Object> param);
+	/* 근태수정용 한개보기 */
+	Map<String, Object> selectAttenNoOne(Map<String, Object> param);
+	/* 남은휴가일수 보기 */
+	int selectDayOffCount(int empNo);
 	
 }
 

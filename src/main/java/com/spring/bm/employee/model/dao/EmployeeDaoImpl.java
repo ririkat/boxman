@@ -181,6 +181,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("emp.selectBTCount", param);
 	}
+
+	/* 근태수정용 한개보기 */
+	@Override
+	public Map<String, Object> selectAttenNoOne(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectAttenNoOne", param);
+	}
+
+	/* 남은휴가일수보기 */
+	@Override
+	public int selectDayOffCount(SqlSessionTemplate session, int empNo) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectDayOffCount", empNo);
+	}
+	
+	
 	
 	
 	
