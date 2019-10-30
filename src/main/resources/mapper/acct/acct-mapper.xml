@@ -3,17 +3,22 @@
 <mapper namespace="acct">
 	<select id="selectIc" resultType="map">
 		select 
-		    (select sum(salrealpay+saltax) from salary) as salaries,
-		    (select sum(saltax) from salary) as saltax,
+		    (select sum(salrealpay+saltax) from salary where salcheck='Y') as salaries,
+		    (select sum(saltax) from salary where salcheck='Y') as saltax,
 		    (select sum(sevpay) from severance) as severance,
 		    (select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from businessTripPay) as biztrip
 		from dual
 	</select>
 	<select id="selectEmpList" resultType="map">
-		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, (select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK from employee
-		    inner join salary on employee.empno=salary.empno
-		    inner join empjob on employee.jobno=empjob.jobno
-		    inner join department on employee.deptno=department.deptno 
-		    	order by saldate desc
+		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
+		(select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK 
+			from employee
+			    inner join salary on employee.empno=salary.empno
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno order by saldate desc
 	</select>
+	<update id="updateWagePayment" parameterType="_int">
+		update salary set salcheck = 'Y' where salno=#{salno}
+	</update>
+	
 </mapper>

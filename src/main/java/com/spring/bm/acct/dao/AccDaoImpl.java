@@ -19,7 +19,9 @@ public class AccDaoImpl implements AcctDao {
 		return session.selectList("acct.selectEmpList");
 	}
 
-	
-	
+	@Override
+	public int updateWagePayment(SqlSessionTemplate session, int salno) {
+		return session.update("acct.updateWagePayment", salno);
+	}
 
 }

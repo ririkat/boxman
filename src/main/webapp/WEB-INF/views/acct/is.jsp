@@ -192,10 +192,9 @@
 				// java -> javascript 로 데이터를 가지고 옴
 				console.log(data);
 				var list = JSON.parse(data);
-				//console.log(list);
-				//console.log(list[0].BIZTRIP);
-				//console.log(list[0].SALTAX);
-				//console.log(list[0].SEVERANCE);
+				for(i=0; i<list[0].length; i++){
+					console.log(list[0][i]);
+				}
 				
 				$("#biztrip").html("(₩"+list[0].BIZTRIP+")");
 				$("#severance").html("(₩"+list[0].SEVERANCE+")");

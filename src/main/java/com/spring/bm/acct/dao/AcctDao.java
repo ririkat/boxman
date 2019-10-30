@@ -11,5 +11,7 @@ public interface AcctDao {
 
 	List<Map<String, String>> selectEmpList(SqlSessionTemplate session);
 
+	int updateWagePayment(SqlSessionTemplate session, int salno);
+
 
 }

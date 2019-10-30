@@ -45,18 +45,7 @@
 								</div>
 							</form>
 						</div>
-						<div class="col-sm-12 col-md-6">
-							<div id="dataTable_filter" class="dataTables_filter">
-								<div style="float: right;">
-									<a href="${path}/emp/insertEmp.do"
-										class="btn btn-light btn-icon-split"> <span
-										class="icon text-gray-600"> <i
-											class="fas fa-arrow-right"></i>
-									</span> <span class="text">사원등록</span>
-									</a>
-								</div>
-							</div>
-						</div>
+						
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
@@ -79,18 +68,36 @@
 								<tbody>
 									<c:forEach var="e" items="${list}">
 										<tr>
-											<td><a
-												href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'><c:out
-														value='${e["EMPNO"]}' /></a></td>
-											<td><a
-												href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'><c:out
-														value='${e["EMPNAME"]}' /></a></td>
-											<td><c:out value='${e["JOBNAME"]}' /></td>
-											<td><c:out value='${e["DEPTNAME"]}' /></td>
-											<td><c:out value='${e["SALARIES"] }' /></td>
-											<td><c:out value='${e["SALCHECK"] }' /></td>
-											<td><c:out value='${e["SALDATE"]}' /></td>
-											<td><c:if test='${e["SALCHECK"] } != "N"'><button type="button" class="btn btn-info">Secondary</button></c:if></td>
+											<td>
+												<a href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'>
+													<c:out value='${e["EMPNO"]}' />
+												</a>
+											</td>
+											<td>
+												<a href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'>
+													<c:out value='${e["EMPNAME"]}' />
+												</a>
+											</td>
+											<td>
+												<c:out value='${e["JOBNAME"]}' />
+											</td>
+											<td>
+												<c:out value='${e["DEPTNAME"]}' />
+											</td>
+											<td>
+												<c:out value='${e["SALARIES"] }' />
+											</td>
+											<td>
+												<c:out value='${e["SALCHECK"] }' />
+											</td>
+											<td>
+												<c:out value='${e["SALDATE"]}' />
+											</td>
+											<td>
+												<c:if test='${fn:trim(e["SALCHECK"]) eq "N" }' var="r">
+													<button type="button" class="btn btn-success" onclick="pay('${e.SALNO}');">지급하기</button>
+												</c:if>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -101,6 +108,30 @@
 				${pageBar }
 
 </section>
+
+
+<script>
+	function pay(data){
+		if (confirm('월급을 지급하시겠습니까?')) {
+		    $.ajax({
+		    	url: "${path}/acct/wagePay.do",
+		    	data: {"data": data},
+		    	type: "post",
+		    	success: function(num){
+		    		var result=JSON.parse(num);
+		    		if(result == 1){
+		    			alert("월급 입금 되었습니다");
+		    		} else{
+		    			alert("문제가 발생했습니다.");
+		    		}
+		    		location.reload();
+		    	}
+		    })
+		} else {
+		    // Do nothing!
+		}
+	}
+</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

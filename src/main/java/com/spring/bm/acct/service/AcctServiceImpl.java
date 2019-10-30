@@ -28,5 +28,10 @@ public class AcctServiceImpl implements AcctService {
 		return dao.selectEmpList(session);
 	}
 
+	@Override
+	public int updateWagePayment(int salno) {
+		return dao.updateWagePayment(session, salno);
+	}
+
 
 }

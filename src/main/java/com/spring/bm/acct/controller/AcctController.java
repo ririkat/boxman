@@ -46,6 +46,17 @@ public class AcctController {
 		return "acct/wage";
 	}
 	
+	@RequestMapping("/acct/wagePay.do")
+	@ResponseBody
+	public String payment(int data) throws JsonProcessingException {
+
+		int num = service.updateWagePayment(data);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		return mapper.writeValueAsString(num);
+	}
+	
 	@RequestMapping("/acct/biztrip.do")
 	public String bizTrip() {
 		
