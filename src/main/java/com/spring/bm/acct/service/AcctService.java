@@ -12,6 +12,8 @@ public interface AcctService {
 
 	int updateWagePayment(int salno);
 
+	List<Map<String, String>> selectSevList();
+
 	
 	
 

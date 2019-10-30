@@ -64,8 +64,9 @@ public class AcctController {
 	}
 	
 	@RequestMapping("/acct/severance.do")
-	public String severance() {
-		
+	public String severance(Model model) {
+		List <Map<String, String>> list = service.selectSevList();
+		model.addAttribute("list", list);
 		return "acct/severance";
 	}
 	

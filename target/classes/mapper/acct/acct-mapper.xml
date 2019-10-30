@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="acct">
-	<select id="selectIc" resultType="map">
+	<select id="selectIcList" resultType="map">
 		select 
 		    (select sum(salrealpay+saltax) from salary where salcheck='Y') as salaries,
 		    (select sum(saltax) from salary where salcheck='Y') as saltax,
@@ -21,4 +21,26 @@
 		update salary set salcheck = 'Y' where salno=#{salno}
 	</update>
 	
+	<select id="selectSevList" resultType="map">
+		select 
+		    employee.empno, employee.empname, department.deptname, empjob.jobname,
+		    employee.empentdate, employee.empentyn, severance.sevno 
+		    from employee 
+		        join severance on employee.empno=severance.empno
+		        join empjob on employee.jobno=empjob.jobno
+		        join department on employee.deptno=department.deptno
+	</select>
+	
 </mapper>
+
+
+<!-- 
+퇴직한 사람들 보여주기
+
+select 
+		    severance.sevno, employee.empno, employee.empname,
+		    to_char(severance.sevdate, 'mm/dd/yyyy')as sevdate, 
+		    severance.sevcheck from employee
+		        inner join severance on employee.empno=severance.empno
+
+ -->

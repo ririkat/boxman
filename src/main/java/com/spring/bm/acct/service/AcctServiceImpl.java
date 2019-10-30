@@ -33,5 +33,10 @@ public class AcctServiceImpl implements AcctService {
 		return dao.updateWagePayment(session, salno);
 	}
 
+	@Override
+	public List<Map<String, String>> selectSevList() {
+		return dao.selectSevList(session);
+	}
+
 
 }
