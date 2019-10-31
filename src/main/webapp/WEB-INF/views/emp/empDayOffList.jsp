@@ -70,7 +70,7 @@
 								<div id="dataTable_filter" class="dataTables_filter">
 									<div style="float: right;">
 										<!-- 휴가신청 결재로 이동하기 -->
-										<button type="button" onclick="location.href='${path}/emp/insertDayOff.do'" class="btn btn-primary mr-2">
+										<button type="button" onclick="location.href='${path}/emp/empDayOffForm.do?empNo=${loginEmp.EMPNO}'" class="btn btn-primary mr-2">
 				               				휴가신청
 				                 		</button>
 									</div>
@@ -90,8 +90,9 @@
 											<th>이름</th>
 											<th>부서</th>
 										</c:if>
-										<th>시작일자</th>
-										<th>종료일자</th>
+										<th>시작일</th>
+										<th>종료일</th>
+										<th>일수</th>
 										<th>구분</th>
 										<th>남은연차일수</th>
 										<th>승인여부</th>
@@ -109,6 +110,7 @@
 											</c:if>
 											<td><fmt:formatDate value='${e["DOSTART"]}' pattern="yyyy-MM-dd"/></td>
 											<td><fmt:formatDate value='${e["DOEND"]}' pattern="yyyy-MM-dd" /></td>
+											<td><c:out value='${e["DODAYS"]}' /></td>
 											<td><c:out value='${e["DOCNAME"]}' /></td>
 											<td><c:out value='${e["DOREMAININGDAYS"] }' /></td>
 											<td><c:out value='${e["DOCHECK"]}' /></td>

@@ -197,9 +197,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	/* 남은 휴가일수 보기 */
 	@Override
-	public int selectDayOffCount(int empNo) {
+	public int selectDoRemaining(Map<String, Object> map) {
 		// TODO Auto-generated method stub
-		return dao.selectDayOffCount(session, empNo);
+		return dao.selectDoRemaining(session, map);
+	}
+	
+	/* 휴가신청 */
+	@Override
+	public int insertDayOff(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertDayOff(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
+	/* 출장신청 */
+	@Override
+	public int insertBT(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertBT(session, param);
+		if(result == 0) throw new Exception();
+		return result;
 	}
 	
 	

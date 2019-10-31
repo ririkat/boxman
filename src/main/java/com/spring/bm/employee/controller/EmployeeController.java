@@ -113,7 +113,6 @@ public class EmployeeController {
 		return mv;
 	}
 
-
 	/* 사원로그인*/
 	@RequestMapping("/bfLogin/loginEmp.do")
 	public ModelAndView empLogin(@RequestParam Map<String,String> map,HttpSession session) {
@@ -552,18 +551,116 @@ public class EmployeeController {
 	}
 	
 	/* 휴가신청 */
-	@RequestMapping("/emp/insertDayOff.do")
+	@RequestMapping("/emp/empDayOffForm.do")
 	public ModelAndView insertDayOff(@RequestParam Map<String, Object> param) {
 		ModelAndView mv = new ModelAndView();
 		Map<String, Object> map = new HashMap();
 		int empNo = Integer.parseInt(String.valueOf(param.get("empNo")));
-		
 		map = service.selectEmpOne(empNo);
-		map.put("dayOffCount", (Integer)service.selectDayOffCount(empNo));
+		// 올해 휴가 신청 내역 있는지 조회
+		map.put("temp", "my");
+		map.put("empNo", empNo);
+		int result = service.selectDayOffCount(param);
+		if(result > 0) {
+			map.replace("temp", "yes");	//해당 년도 휴가 신청 내역이 있을때
+		} else {
+			map.replace("temp", "no");	//해당 년도 휴가 신청 내역이 없을때
+		}
+		int num = service.selectDoRemaining(map);
+		map.put("DOREMAININGDAYS", num);
 		mv.addObject("e", map);
 		mv.setViewName("emp/empDayOffForm");
 		return mv;
 	}
+	
+	/* 휴가신청 */
+	@RequestMapping("/emp/insertDayOffEnd.do")
+	public ModelAndView insertDayOffEnd(@RequestParam Map<String, Object> param) {
+
+		param.put("temp", "my");
+		int empNo = Integer.parseInt((""+param.get("empNo")));
+		param.put("empNo", empNo);
+		
+		int result = service.selectDayOffCount(param);
+		
+		if(result > 0) {
+			param.replace("temp", "yes");	//해당 년도 휴가 신청 내역이 있을때
+		} else {
+			param.replace("temp", "no");	//해당 년도 휴가 신청 내역이 없을때
+		}
+		param.put("empNo", empNo);
+		int num = service.selectDoRemaining(param);
+		param.put("DOREMAININGDAYS", num);
+		
+		String loc = "";
+		String msg = "/emp/empList.do";
+		result = 0;
+		try {
+			result = service.insertDayOff(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		if(result > 0) {
+			msg = "휴가신청이 완료되었습니다.";
+			loc = "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
+		} else {
+			msg = "휴가신청이 실패하였습니다.";
+			loc= "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
+			mv.setViewName("common/msg");
+		}
+
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	/* 출장신청 */
+	@RequestMapping("/emp/insertBT.do")
+	public ModelAndView insertBT(int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> map = new HashMap();
+		map = service.selectEmpOne(empNo);
+		mv.addObject("e", map);
+		mv.setViewName("emp/empBTForm");
+		return mv;
+	}
+	
+	/* 출장신청완료 */
+	@RequestMapping("/emp/insertBTEnd.do")
+	public ModelAndView insertBTEnd(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		int result = 0;
+		try {
+			result = service.insertBT(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int empNo = Integer.parseInt((""+param.get("empNo")));
+		String msg = "";
+		String loc = "";
+		
+		if(result > 0) {
+			msg = "출장신청이 완료되었습니다.";
+			loc = "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
+		} else {
+			msg = "출장신청이 실패하였습니다.";
+			loc= "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
+			mv.setViewName("common/msg");
+		}
+
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	
 	
 	/*출장비용 청구*/
 //	@RequestMapping("/emp/insertBTPay.do")

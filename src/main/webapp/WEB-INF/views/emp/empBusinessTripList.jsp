@@ -70,7 +70,7 @@
 								<div id="dataTable_filter" class="dataTables_filter">
 									<div style="float: right;">
 										<!-- 출장신청 결재로 이동하기 -->
-										<button type="button" onclick="location.href='${path}/emp/insertDayOff.do'" class="btn btn-primary mr-2">
+										<button type="button" onclick="location.href='${path}/emp/insertBT.do?empNo=${loginEmp.EMPNO}'" class="btn btn-primary mr-2">
 				               				출장신청
 				                 		</button>
 									</div>
@@ -90,8 +90,8 @@
 											<th>이름</th>
 											<th>부서</th>
 										</c:if>
-										<th>출발일자</th>
-										<th>종료일자</th>
+										<th>시작일</th>
+										<th>종료일</th>
 										<th>출장사유</th>
 									</tr>
 								</thead>
@@ -106,7 +106,6 @@
 											<td><fmt:formatDate value='${e["BTSTART"]}' pattern="yyyy-MM-dd" /></td>
 											<td><fmt:formatDate value='${e["BTEND"]}' pattern="yyyy-MM-dd" /></td>
 											<td><c:out value='${e["BTREASON"] }' /></td>
-											<td><button type="button" onclick="location.href='${path}/emp/insertBTPay.do?btNo=${e.BTNO}'" class="btn btn-primary mr-2"></button></td>
 										</tr>
 									</c:forEach>
 								</tbody>

@@ -49,7 +49,11 @@ public interface EmployeeService {
 	/* 근태수정용 한개보기 */
 	Map<String, Object> selectAttenNoOne(Map<String, Object> param);
 	/* 남은휴가일수 보기 */
-	int selectDayOffCount(int empNo);
+	int selectDoRemaining(Map<String, Object> map);
+	/* 휴가신청하기 */
+	int insertDayOff(Map<String, Object> param) throws Exception;
+	/* 출장신청 */
+	int insertBT(Map<String, Object> param) throws Exception;
 	
 }
 

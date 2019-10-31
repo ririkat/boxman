@@ -15,14 +15,14 @@
 	<!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">휴가신청</h6>
+			<h6 class="m-0 font-weight-bold text-primary">출장신청</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 					<div class="row">
 						<div class="col-sm-12">
-							<form name="doFrm" id="doFrm" method="post">
+							<form name="btFrm" id="btFrm" method="post">
 								<input type="hidden" name="empNo" value='${e["EMPNO"]}'/>
 								<table class="table table-striped table-hover" id="dataTable"
 									width="100%" cellspacing="0" role="grid"
@@ -34,9 +34,8 @@
 											<th>부서</th>
 											<th>시작일</th>
 											<th>종료일</th>
-											<th>사용일수</th>
-											<th>구분</th>
-											<th>남은연차일수</th>
+											<th>일수</th>
+											<th>사유</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -44,20 +43,10 @@
 											<td><c:out value='${e["EMPNO"]}' /></td>
 											<td><c:out value='${e["EMPNAME"]}' /></td>
 											<td><c:out value='${e["DEPTNAME"]}' /></td>
-											<td><input type="text" class="datePicker pic" class="form-control" id="startDay" name="doStart" style="width:110px;" required></td>
-											<td><input type="text" class="datePicker pic" class="form-control" id="endDay" name="doEnd" style="width:110px;" required></td>
-											<td><input type="number" class="form-control" id="doDays" name="doDays" step="0.5" style="width:100px;" required/></td>
-											<td>
-												<select name="docName" id="dayOffSelect"
-												class="form-control form-control-sm" style="width:100px; display:inline;" required>
-													<option value="연차">연차</option>
-													<option value="반차">반차(오전)</option>
-													<option value="반차">반차(오후)</option>
-													<option value="병가">병가</option>
-													<option value="기타">기타</option>
-												</select> 
-											</td>
-											<td id="doRemainingDays"><c:out value='${e["DOREMAININGDAYS"]}'/></td>
+											<td><input type="text" class="datePicker pic" class="form-control" id="startDay" name="btStart" style="width:110px;" required></td>
+											<td><input type="text" class="datePicker pic" class="form-control" id="endDay" name="btEnd" style="width:110px;" required></td>
+											<td><input type="number" class="form-control" id="doDays" style="width:100px;" readonly/></td>
+											<td><input type="text" class="form-control" name="btReason" required/></td>
 										</tr>
 									</tbody>
 								</table>
@@ -112,14 +101,10 @@
 		});
 		
 	});
-	//검색
+	//신청
 	function validate() {
-		if($('#doRemainingDays')<$('#doDays')) {
-			alert("남은 연차 일수보다 많이 사용할 수 없습니다.");
-			return false;
-		}
-		$('#doFrm').attr("action","${path}/emp/insertDayOffEnd.do");
-		$('#doFrm').submit();
+		$('#btFrm').attr("action","${path}/emp/insertBTEnd.do");
+		$('#btFrm').submit();
 	}
 	
 	

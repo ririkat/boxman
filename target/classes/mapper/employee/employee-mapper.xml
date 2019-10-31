@@ -39,7 +39,10 @@
 	<!-- 사원상세보기 -->
 	<select id="selectEmpOne" resultType="map" parameterType="_int">
 		SELECT
-		* FROM EMPLOYEE WHERE EMPNO=#{empNo}
+		* FROM EMPLOYEE 
+		JOIN DEPARTMENT USING(DEPTNO)
+		JOIN EMPJOB ON (EMPLOYEE.JOBNO=EMPJOB.JOBNO)
+		WHERE EMPLOYEE.EMPNO=#{empNo}
 	</select>
 	<select id="selectEmpFileList" resultType="empFile"
 		parameterType="_int">
@@ -194,7 +197,7 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
-				AND TO_CHAR(A.DOSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				AND EXTRACT(YEAR FROM A.DOSTART)=EXTRACT(YEAR FROM SYSDATE)
 				ORDER BY A.DOSTART DESC
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
@@ -223,13 +226,13 @@
 	<select id="selectDayOffCount" parameterType="map" resultType="_int">
 		SELECT COUNT(*) FROM DAYOFF WHERE 1=1
 		<choose>
-			<when test="temp eq 'search'">
+			<when test="temp eq 'search' or temp eq 'searchAll'">
 				AND TO_CHAR(DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND EMPNO=#{empNo}
 			</when>
-			<when test="temp eq 'searchAll'">
-				AND TO_CHAR(DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
-				AND EMPNO=#{empNo}
+			<when test="temp eq 'my'">
+				AND EMPNO=#{empNo} 
+				AND EXTRACT(YEAR FROM DOSTART) = EXTRACT(YEAR FROM SYSDATE)
 			</when>
 		</choose>
 	</select>
@@ -244,7 +247,7 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
-				AND TO_CHAR(A.BTSTART,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				AND TO_CHAR(A.BTSTART,'YYYY')=TO_CHAR(SYSDATE,'YYYY')
 				ORDER BY A.BTSTART DESC
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
@@ -293,9 +296,29 @@
 	</select>
 	
 	<!-- 남은 휴가일수 보기 -->
-	<select id="selectDayOffCount" parameterType="_int" resultType="_int">
-		SELECT MIN(doRemainingDays) FROM DAYOFF 
-		WHERE EMPNO=${empNo} AND EXTRACT(YEAR FROM DOSTART) = EXTRACT(YEAR FROM SYSDATE)
+	<select id="selectDoRemaining" parameterType="map" resultType="map">
+		<choose>
+			<when test="temp eq 'yes'">
+				SELECT MIN(doRemainingDays) AS DOREMAININGDAYS FROM DAYOFF WHERE
+				EMPNO=#{empNo} AND EXTRACT(YEAR FROM DOSTART) = EXTRACT(YEAR FROM SYSDATE)
+			</when>
+			<when test="temp eq 'no'">
+				SELECT DOCOUNT AS DOREMAININGDAYS FROM DAYOFFCOUNT WHERE
+				EMPNO=#{empNo}
+			</when>
+		</choose>
 	</select> 
+	
+	<!-- 휴가신청 -->
+	<insert id="insertDayOff" parameterType="map">
+		INSERT INTO DAYOFF VALUES(SEQ_DAYOFF.NEXTVAL, #{empNo}, #{docName}, #{doStart}, #{doEnd}, #{doDays}, 
+		(#{DOREMAININGDAYS}-#{doDays}),DEFAULT, DEFAULT, NULL
+		)
+	</insert>
+	
+	<!-- 출장신청 -->
+	<insert id="insertBT" parameterType="map">
+		INSERT INTO BUSINESSTRIP VALUES(SEQ_BUSINESSTRIP.NEXTVAL, #{empNo},#{btStart}, #{btEnd}, #{btReason})
+	</insert>
 </mapper>
 

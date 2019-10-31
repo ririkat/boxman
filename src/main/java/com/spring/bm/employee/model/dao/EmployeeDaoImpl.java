@@ -191,9 +191,29 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	/* 남은휴가일수보기 */
 	@Override
-	public int selectDayOffCount(SqlSessionTemplate session, int empNo) {
+	public int selectDoRemaining(SqlSessionTemplate session, Map<String, Object> map) {
+		Map<String, String> m = session.selectOne("emp.selectDoRemaining", map);
+		int result = 0;
+		if(m.get("DOREMAININGDAYS")==null || m.get("DOREMAININGDAYS")=="null") {
+			result = 0;	//휴가 사용한 적이 없음
+		} else {
+			result = Integer.parseInt(String.valueOf(m.get("DOREMAININGDAYS")));	//휴가 사용한적이 있음
+		}
+		return result;
+	}
+
+	/* 휴가신청 */
+	@Override
+	public int insertDayOff(SqlSessionTemplate session, Map<String, Object> param) {
 		// TODO Auto-generated method stub
-		return session.selectOne("emp.selectDayOffCount", empNo);
+		return session.insert("emp.insertDayOff", param);
+	}
+
+	/* 출장신청 */
+	@Override
+	public int insertBT(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertBT", param);
 	}
 	
 	

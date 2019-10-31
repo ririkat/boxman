@@ -43,6 +43,31 @@
   <link rel="icon" href="${path }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
   <!-- datepicker -->
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
+  
+  <!-- fullCalendar -->
+  <link href='${path }/resources/hb/fullcalendar/core/main.css' rel='stylesheet' />
+  <link href='${path }/resources/hb/fullcalendar/daygrid/main.css' rel='stylesheet' />
+  <link href='${path }/resources/hb/fullcalendar/timegrid/main.css' rel='stylesheet'/>
+
+  <script src='${path }/resources/hb/fullcalendar/core/main.js'></script>
+  <script src='${path }/resources/hb/fullcalendar/daygrid/main.js'></script>
+  <script src='${path }/resources/hb/fullcalendar/timegrid/main.js'></script>
+  <script src='${path }/resources/hb/fullcalendar/interaction/main.js'></script>
+    
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: [ 'dayGrid' ]
+      });
+
+      calendar.render();
+    });
+
+  </script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
 </head>
