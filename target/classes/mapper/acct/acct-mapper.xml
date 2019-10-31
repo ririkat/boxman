@@ -24,7 +24,7 @@
 	<select id="selectSevList" resultType="map">
 		select 
 		    employee.empno, employee.empname, department.deptname, empjob.jobname,
-		    employee.empentdate, employee.empentyn, severance.sevno 
+		    severance.sevcheck, severance.sevdate, severance.sevno 
 		    from employee 
 		        join severance on employee.empno=severance.empno
 		        join empjob on employee.jobno=empjob.jobno

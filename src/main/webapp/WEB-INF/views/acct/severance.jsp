@@ -83,10 +83,10 @@
 												<c:out value='${e["DEPTNAME"]}' />
 											</td>
 											<td>
-												<c:out value='${e["EMPENTYN"] }' />
+												<c:out value='${e["SEVCHECK"] }' />
 											</td>
 											<td>
-												<c:out value='${e["EMPENTDATE"] }' />
+												<c:out value='${e["SEVDATE"] }' />
 											</td>
 											<td>
 												<c:if test='${fn:trim(e["EMPENTYN"]) eq "N" }' var="r">
