@@ -41,4 +41,17 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		return session.insert("purchase.enrollPurItem", paramMap);
 	}
 
+	@Override
+	public List<Map<String, String>> selectPurSearchList(SqlSessionTemplate session, Map<String, Object> m) {
+		int cPage = (Integer)m.get("cPage");
+		int numPerPage = (Integer)m.get("numPerPage");
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("purchase.selectPurSearchList",m,rows);
+	}
+
+	@Override
+	public int selectPurSearchCount(SqlSessionTemplate session, Map<String, Object> m) {
+		return session.selectOne("purchase.selectPurSearchCount",m);
+	}
+
 }

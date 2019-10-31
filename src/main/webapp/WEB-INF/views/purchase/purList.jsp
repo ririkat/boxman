@@ -25,9 +25,14 @@
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
                        		<select name="type" id="searchKeyword" class="form-control form-control-sm">
-								<option value="#">구매코드</option>
+								<option value="purCode">구매코드</option>
+								<option value="conCode">거래처명</option>
+								<option value="empNo">담당자명</option>
+								<option value="purCk">구매확정여부</option>
+								<option value="deposCk">입금확정여부</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
+							<input type="hidden" name="empId" value="${loginEmp['EMPID'] }">
 						</label>
 						<button onclick = "searchPurInfo();" class="btn btn-light btn-icon-split">
 	                   		<span class="icon text-gray-600">
@@ -96,11 +101,6 @@
 <script>
 function searchPurInfo(){
 	$("#searchFrm").attr("action","${path}/purchase/searchPurInfo.do");
-	$("#searchFrm").submit();
-}
-
-function searchConnection(){
-	$("#searchFrm").attr("action","${path}/stuff/searchConnection.do");
 	$("#searchFrm").submit();
 }
 </script>

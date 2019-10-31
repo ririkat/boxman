@@ -1,5 +1,6 @@
 package com.spring.bm.purchase.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,6 +84,31 @@ public class PurchaseController {
 		mv.addObject("loc",loc);
 		
 		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	@RequestMapping("/purchase/searchPurInfo.do")
+	public ModelAndView searchPurInfo(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam(value="type") String type, @RequestParam(value="data") String data, @RequestParam(value="empId") String empId) {
+
+		int numPerPage = 10;
+		Map<String, Object> m = new HashMap();
+		m.put("cPage", cPage);
+		m.put("numPerPage", numPerPage);
+		m.put("type", type);
+		m.put("data", data);
+		m.put("empId", empId);
+		
+		List<Map<String,String>> list = service.selectPurSearchList(m);
+		int totalCount = service.selectPurSearchCount(m);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/purchase/searchPurInfo.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("purchase/purList");
+		
 		return mv;
 	}
 

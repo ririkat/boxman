@@ -17,4 +17,7 @@ public interface PurchaseDao {
 	int enrollPurInfo(SqlSessionTemplate session, Map<String, String> param);
 	int enrollPurItem(SqlSessionTemplate session, Map<String,Object> paramMap);
 	
+	List<Map<String, String>> selectPurSearchList(SqlSessionTemplate session, Map<String, Object> m);
+	int selectPurSearchCount(SqlSessionTemplate session, Map<String, Object> m);
+	
 }

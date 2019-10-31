@@ -60,13 +60,13 @@
 	<select id="selectConnSearchList" parameterType="map" resultType="map">
 		SELECT * FROM CONNECTION
 		WHERE ${type} LIKE '%'||#{data}||'%'
-		ORDER BY CONCODE
+		ORDER BY CONCODE DESC
 	</select>
 	
 	<select id="selectConnSearchCount" parameterType="map" resultType="_int">
 		SELECT COUNT(*) FROM CONNECTION
 		WHERE ${type} LIKE '%'||#{data}||'%'
-		ORDER BY CONCODE
+		ORDER BY CONCODE DESC
 	</select>
 	
 	<select id = "searchConnection" parameterType="map" resultType="connection">

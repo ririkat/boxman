@@ -59,5 +59,40 @@
 			) A
 		</if>
 	</insert>
-
+	
+	<select id="selectPurSearchList" parameterType="map" resultType="map">
+		SELECT DISTINCT a.*, b.CONNAME, c.EMPNAME
+		FROM PURCHASETAB a, CONNECTION b, EMPLOYEE c
+		WHERE a.CONCODE=b.CONCODE(+)
+		AND a.EMPNO=c.EMPNO(+)
+		<choose>
+			<when test="type eq 'conCode'">
+				AND a.CONCODE=(SELECT CONCODE FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매입')
+			</when>
+			<when test="type eq 'empNo'">
+				AND a.EMPNO=(SELECT EMPNO FROM EMPLOYEE WHERE EMPNAME LIKE '%'||#{data}||'%' AND EMPID=#{empId})
+			</when>
+			<otherwise>
+				AND ${type} LIKE '%'||#{data}||'%'
+			</otherwise>
+		</choose>
+		ORDER BY PURCODE DESC
+	</select>
+	
+	<select id="selectPurSearchCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM purchaseTab
+		<choose>
+			<when test="type eq 'conCode'">
+				WHERE CONCODE=(SELECT CONCODE FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매입')
+			</when>
+			<when test="type eq 'empNo'">
+				WHERE EMPNO=(SELECT EMPNO FROM EMPLOYEE WHERE EMPNAME LIKE '%'||#{data}||'%' AND EMPID=#{empId})
+			</when>
+			<otherwise>
+				WHERE ${type} LIKE '%'||#{data}||'%'
+			</otherwise>
+		</choose>
+		ORDER BY PURCODE DESC
+	</select>
+	
 </mapper>

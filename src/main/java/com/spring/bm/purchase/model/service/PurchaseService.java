@@ -13,5 +13,8 @@ public interface PurchaseService {
 	Map<String,String> addStuffToTemp(String stuffNo);
 	
 	int enrollPurInfo(Map<String,String> param) throws Exception;
+	
+	List<Map<String,String>> selectPurSearchList(Map<String, Object> m);
+	int selectPurSearchCount(Map<String, Object> m);
 
 }
