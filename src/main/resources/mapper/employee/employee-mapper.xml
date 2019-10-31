@@ -321,4 +321,3 @@
 		INSERT INTO BUSINESSTRIP VALUES(SEQ_BUSINESSTRIP.NEXTVAL, #{empNo},#{btStart}, #{btEnd}, #{btReason})
 	</insert>
 </mapper>
-

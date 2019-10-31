@@ -1,4 +1,3 @@
-
 package com.spring.bm.employee.model.dao;
 
 import java.util.List;
@@ -216,20 +215,4 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.insert("emp.insertBT", param);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
 }
-

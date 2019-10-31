@@ -1,4 +1,3 @@
-
 package com.spring.bm.employee.controller;
 
 import java.io.File;
@@ -32,8 +31,6 @@ import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.employee.model.vo.EmpFile;
-
-
 
 @Controller
 public class EmployeeController {
@@ -668,4 +665,3 @@ public class EmployeeController {
 //		
 //	}
 }
-

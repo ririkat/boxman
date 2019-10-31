@@ -56,4 +56,3 @@ public interface EmployeeService {
 	int insertBT(Map<String, Object> param) throws Exception;
 	
 }
-

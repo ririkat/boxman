@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<c:set var="path" value="${pageContext.request.contextPath}" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -289,7 +289,7 @@
                     <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                   </div>
                 </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
+                <a class="dropdown-item d-flex align-items-center" href="">
                   <div class="dropdown-list-image mr-3">
                     <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
                     <div class="status-indicator bg-success"></div>
@@ -299,7 +299,7 @@
                     <div class="small text-gray-500">Chicken the Dog · 2w</div>
                   </div>
                 </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                <a class="dropdown-item text-center small text-gray-500" href="${path }/chat/chatList.do">Read More Messages</a>
               </div>
             </li>
 

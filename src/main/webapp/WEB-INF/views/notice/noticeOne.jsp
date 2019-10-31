@@ -15,13 +15,13 @@
                     <form class="forms-sample" id="devFrm" enctype="multipart/form-data" method="post">
                    <c:forEach items="${list2 }" var="list2" varStatus="v">
                   	 <c:choose>							 
-						<c:when test="${list2['NCHECK'] == null}">
+						<c:when test="${list2['NCHECK'] == '필수아님'}">
 	                      <div class="col-md-6 grid-margin stretch-card form-check">
 	                        <label class="form-check-label">
 	                         <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>
                    		  </div>
                    		</c:when>
-                   		<c:when test="${list2['NCHECK'] != null}">
+                   		<c:when test="${list2['NCHECK'] != '필수아님'}">
 	                      <div class="col-md-6 grid-margin stretch-card form-check">
 	                        <label class="form-check-label">
 	                         <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크" checked>필독체크 <i class="input-helper"></i></label>

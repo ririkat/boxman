@@ -1,4 +1,3 @@
-
 package com.spring.bm.employee.model.dao;
 
 import java.util.List;
@@ -66,4 +65,3 @@ public interface EmployeeDao {
 	int insertBT(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
-
