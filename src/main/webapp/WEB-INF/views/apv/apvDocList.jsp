@@ -23,6 +23,10 @@
 				<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
 				<div style="float: right;">
 					<input type="button" class="btn btn-primary mr-2 pull-right"
+						onclick="docHead_enroll()" value="결재폼등록" />
+					<input type="button" class="btn btn-primary mr-2 pull-right"
+						onclick="docContent_enroll()" value="본문양식등록" />
+					<input type="button" class="btn btn-primary mr-2 pull-right"
 						onclick="doc_enroll()" value="양식등록" />
 				</div>
 			</div>
@@ -80,7 +84,21 @@
       	}
       	
       	function deleteContents(dfno){
-      		location.href="${path}/apv/apvDocDelete.do?dfNo="+dfno;
+      		if(confirm("삭제하시겠습니까?")){
+      			location.href="${path}/apv/apvDocDelete.do?dfNo="+dfno;
+      		}
+      	}
+      	
+      	function docHead_enroll(){
+      		var url="${path}/apv/apvDocHeadEnroll.do";
+      		var name="결재폼등록"
+            window.open(url,name,"width=1000,height=800,left=600");
+      	}
+      	
+      	function docContent_enroll(){
+      		var url="${path}/apv/apvDocContentEnroll.do";
+      		var name="결재본문양식등록"
+            window.open(url,name,"width=1000,height=800,left=600");
       	}
       </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

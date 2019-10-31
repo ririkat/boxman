@@ -29,6 +29,8 @@ public interface EmployeeService {
 	int updateEmp(Map<String, Object> param, List<EmpFile> fileList) throws Exception;
 	/* 비밀번호변경 */
 	int updatePassword(Map<String, Object> param) throws Exception;
+	int selectEmpIdYN(String empId);
+	Map<String, Object> selectEmpSchEmpId(String empId);
 	
 }
 

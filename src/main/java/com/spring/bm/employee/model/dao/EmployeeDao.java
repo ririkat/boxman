@@ -36,6 +36,7 @@ public interface EmployeeDao {
 	int updateEmp(SqlSessionTemplate session, Map<String, Object> param);
 	/* 비밀번호변경 */
 	int updatePassword(SqlSessionTemplate session, Map<String, Object> param);
+	Map<String, Object> selectEmpIdYN(SqlSessionTemplate session, String empId);
 	
 }
 

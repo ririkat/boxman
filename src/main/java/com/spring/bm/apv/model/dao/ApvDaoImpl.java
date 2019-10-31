@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ApvDaoImpl implements ApvDao {
-	
+	/*결재양식*/
 	@Override
 	public int insertApvDoc(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.insert("apv.insertApvDoc", param);
@@ -18,6 +18,16 @@ public class ApvDaoImpl implements ApvDao {
 	@Override
 	public List<Map<String, Object>> selectDocCate(SqlSessionTemplate session) {
 		return session.selectList("apv.selectDocCate");
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectDocCCate(SqlSessionTemplate session) {
+		return session.selectList("apv.selectDocCCate");
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectDocHCate(SqlSessionTemplate session) {
+		return session.selectList("apv.selectDocHCate");
 	}
 	
 	@Override
@@ -45,5 +55,50 @@ public class ApvDaoImpl implements ApvDao {
 	public int deleteApvDoc(SqlSessionTemplate session, int dfNo) {
 		return session.delete("apv.deleteApvDoc",dfNo);
 	}
+	
+	@Override
+	public int insertApvDocHead(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.insert("apv.insertApvDocHead",param);
+	}
+	
+	@Override
+	public int insertApvDocContent(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.insert("apv.insertApvDocContent",param);
+	}
+	
+	@Override
+	public String selectDfhContent(SqlSessionTemplate session, int no) {
+		Map<String,String> map=session.selectOne("apv.selectDfhContent",no);
+		String result=map.get("DFHCONTENT");
+		return result;
+	}
 
+	@Override
+	public String selectDfcContent(SqlSessionTemplate session, int no) {
+		Map<String,String> map=session.selectOne("apv.selectDfcContent",no);
+		String result=map.get("DFCCONTENT");
+		return result;
+	}
+	
+	/*결재라인*/
+	@Override
+	public List<Map<String, Object>> selectDeptList(SqlSessionTemplate session) {
+		return session.selectList("apv.selectDeptList");
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectMyApvLineList(SqlSessionTemplate session, int cPage, int numPerPage,int loginNo) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectMyApvLineList",loginNo, rows);
+	}
+	
+	@Override
+	public int selectMyALCount(SqlSessionTemplate session, int loginNo) {
+		return session.selectOne("apv.selectMyALCount",loginNo);
+	}
+	
+	@Override
+	public List<Map<String, Object>> selectDeptToEmp(SqlSessionTemplate session, int deptNo) {
+		return session.selectList("apv.selectDeptToEmp",deptNo);
+	}
 }

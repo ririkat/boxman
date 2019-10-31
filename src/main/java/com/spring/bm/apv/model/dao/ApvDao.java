@@ -21,4 +21,24 @@ public interface ApvDao {
 
 	int deleteApvDoc(SqlSessionTemplate session, int dfNo);
 
+	int insertApvDocHead(SqlSessionTemplate session, Map<String, Object> param);
+
+	int insertApvDocContent(SqlSessionTemplate session, Map<String, Object> param);
+
+	List<Map<String, Object>> selectDocCCate(SqlSessionTemplate session);
+
+	List<Map<String, Object>> selectDocHCate(SqlSessionTemplate session);
+
+	String selectDfhContent(SqlSessionTemplate session, int no);
+
+	String selectDfcContent(SqlSessionTemplate session, int no);
+
+	List<Map<String, Object>> selectDeptList(SqlSessionTemplate session);
+
+	List<Map<String, Object>> selectMyApvLineList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectMyALCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectDeptToEmp(SqlSessionTemplate session, int deptNo);
+
 }

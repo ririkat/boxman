@@ -117,6 +117,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(result == 0) throw new Exception();
 		return result;
 	}
+	
+	@Override
+	public int selectEmpIdYN(String empId) {
+		int result=0;
+		Map<String,Object> resultMap=dao.selectEmpIdYN(session,empId);
+		if(resultMap!=null) {
+			result=1;
+		}
+		return result;
+	}
+	
+	@Override
+	public Map<String, Object> selectEmpSchEmpId(String empId) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpIdYN(session,empId);
+	}
 
 }
 

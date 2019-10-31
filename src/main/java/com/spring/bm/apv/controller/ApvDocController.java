@@ -17,13 +17,13 @@ import com.spring.bm.common.PageBarFactory;
 
 
 @Controller
-public class ApvController {
-	private Logger logger=LoggerFactory.getLogger(ApvController.class);
+public class ApvDocController {
+	private Logger logger=LoggerFactory.getLogger(ApvDocController.class);
 
 	@Autowired
 	ApvService service;
 	
-	/* 결재 양식 관리 */
+	/* 결재 양식 관리 리스트 뷰 호출 */
 	@RequestMapping("/apv/apvDoc.do")
 	public ModelAndView apvDoc(@RequestParam(value="cPage", 
 			required=false, defaultValue="0") int cPage) {
@@ -38,11 +38,7 @@ public class ApvController {
 		mv.setViewName("apv/apvDocList");
 		return mv;
 	}
-	/* 결재 라인 관리 */
-	@RequestMapping("/apv/apvLine.do")
-	public String apvLine() {
-		return "apv/apvLine";
-	}
+	
 	/* 상신결재함 관리 */
 	@RequestMapping("/apv/receiveApv.do")
 	public String receiveApv() {
@@ -61,7 +57,11 @@ public class ApvController {
 	public ModelAndView apvDocEnroll() {
 		ModelAndView mv = new ModelAndView();
 		List<Map<String,Object>> docCate=service.selectDocCate();
+		List<Map<String,Object>> docHCate=service.selectDocHCate();
+		List<Map<String,Object>> docCCate=service.selectDocCCate();
 		mv.addObject("docCate",docCate);
+		mv.addObject("docHCate",docHCate);
+		mv.addObject("docCCate",docCCate);
 		mv.setViewName("apv/apvDocEnroll");
 		return mv;
 	}
@@ -135,5 +135,64 @@ public class ApvController {
 		mv.addObject("loc",loc);
 		mv.setViewName("common/msg");
 		return mv;
+	}
+	
+	
+	/* 결재폼 양식 등록 팝업창 */
+	@RequestMapping("/apv/apvDocHeadEnroll.do")
+	public String apvDocHeadEnroll() {
+		return "apv/apvDocHeadEnroll";
+	}
+	
+	/* 결재폼 양식 등록 로직*/
+	@RequestMapping("/apv/apvDocHeadEnrollEnd.do")
+	@ResponseBody
+	public int apvDocHeadEnrollEnd(@RequestParam Map<String,Object> param){
+		int result=0;
+		try {
+			result=service.insertApvDocHead(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/* 결재 본문 양식 등록 팝업창 */
+	@RequestMapping("/apv/apvDocContentEnroll.do")
+	public String apvDocContentEnroll() {
+		return "apv/apvDocContentEnroll";
+	}
+	
+	/* 결재본문 양식 등록 로직*/
+	@RequestMapping("/apv/apvDocContentEnrollEnd.do")
+	@ResponseBody
+	public int apvDocContentEnrollEnd(@RequestParam Map<String,Object> param){
+		int result=0;
+		try {
+			result=service.insertApvDocContent(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/* 결재양식 등록->결재폼옵션 변경 로직  */
+	@RequestMapping(value="/apv/apvDocHChange.do",produces ="application/text; charset=utf8")
+	@ResponseBody
+	public String apvDocHChange(@RequestParam Map<String,Object> param){
+		int no=Integer.parseInt((String) param.get("no"));
+		String code=service.selectDfhContent(no);
+		return code;
+	}
+	
+	/* 결재양식 등록->본문 양식 변경 로직  */
+	@RequestMapping(value="/apv/apvDocCChange.do",produces ="application/text; charset=utf8")
+	@ResponseBody
+	public String apvDocCChange(@RequestParam Map<String,Object> param){
+		int no=Integer.parseInt((String) param.get("no"));
+		String code=service.selectDfcContent(no);
+		return code;
 	}
 }

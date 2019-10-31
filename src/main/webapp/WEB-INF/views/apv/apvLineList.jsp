@@ -1,7 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="결재양식등록" name="tabTitle"/> 
    <jsp:param value="결재라인관리" name="pageTitle"/>
 </jsp:include>
 
@@ -18,7 +21,7 @@
             
               <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
               <div style="float: right;">
-              	<input type="button" class="btn btn-primary mr-2 pull-right" onclick="doc_enroll()" value="양식등록"/>
+              	<input type="button" class="btn btn-primary mr-2 pull-right" onclick="apvLine_enroll()" value="결재라인 등록"/>
               </div>
             </div>
             <div class="card-body">
@@ -26,11 +29,9 @@
                 <table class="table table-stripped" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>문서번호</th>
-                      <th>문서분류</th>
-                      <th>양식명</th>
-                      <th>등록일</th>
-                      <th>조회수</th>
+                      <th>결재라인번호</th>
+                      <th>결재라인명</th>
+                      <th>설명</th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -45,6 +46,7 @@
           </div>
 
         </div>
+        ${pageBar }
         <!-- /.container-fluid -->
 
       <!-- End of Main Content -->
@@ -53,10 +55,10 @@
 
 </section>
       <script>
-      	function doc_enroll(){
-      		var url="${path}/bm/apv/apvDocEnroll.do";
+      	function apvLine_enroll(){
+      		var url="${path}/apv/apvLineEnroll.do";
       		var name="양식등록"
-            window.open(url,name,"width=1000,height=1000,left=600");
+            window.open(url,name,"width=1000,height=900,left=600");
       	}
       </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -101,16 +101,13 @@
 						<div class="table-responsive">
 				<table class="table table-borded">
 					<tr>
-						<th>양식불러오기</th>
+						<th>결재폼양식불러오기</th>
 						<td>
 							<select name = "docFormHeader" id = "docFormHeader" class="form-control">
-					                        <option value = "0">결재폼양식선택</option>
-					                        <option value = "1">기획서</option>
-					                        <option value = "2">품의서</option>
-					                        <option value = "3">근태</option>
-					                        <%-- <c:forEach items="${dept}" var="dept"> --%>
-					                          <%--  <option value = "<c:out value='${dept["DEPTNO"]}'/>"><c:out value='${dept["DEPTNAME"]}'/></option> --%>
-					                        <%-- </c:forEach> --%>
+											<option value = "0">결재폼양식선택</option>
+					                        <c:forEach items="${docHCate}" var="dfh">
+					                          <option value = "<c:out value='${dfh["DFHNO"]}'/>"><c:out value='${dfh["DFHTITLE"]}'/></option>
+					                        </c:forEach>
 					                     </select>
 						</td>
 					</tr>
@@ -130,16 +127,13 @@
 						<div class="table-responsive">
 				<table class="table table-borded">
 					<tr>
-						<th>양식불러오기</th>
+						<th>본문양식불러오기</th>
 						<td>
 							<select name = "docFormContent" id = "docFormContent" class="form-control">
-					                        <option value = "0">본문양식선택</option>
-					                        <option value = "1">기획서</option>
-					                        <option value = "2">품의서</option>
-					                        <option value = "3">근태</option>
-					                        <%-- <c:forEach items="${dept}" var="dept"> --%>
-					                          <%--  <option value = "<c:out value='${dept["DEPTNO"]}'/>"><c:out value='${dept["DEPTNAME"]}'/></option> --%>
-					                        <%-- </c:forEach> --%>
+											<option value = "0">결재본문양식선택</option>
+					                        <c:forEach items="${docCCate}" var="dfc">
+					                          <option value = "<c:out value='${dfc["DFCNO"]}'/>"><c:out value='${dfc["DFCTITLE"]}'/></option>
+					                        </c:forEach>
 					                     </select>
 						</td>
 					</tr>
@@ -159,6 +153,7 @@
 
 		<script type="text/javascript">
 				var oEditors = [];
+
 				$(function() {
 
 					nhn.husky.EZCreator
@@ -175,8 +170,62 @@
 								sSkinURI : "${path }/resources/se2/SmartEditor2Skin.html",
 								fCreator : "createSEditor2"
 							});
-
+					/* 결재폼 불러오기 selectbox 변경 이벤트 */
+					$('#docFormHeader').on('change',function(){
+						var no=$(this).val();
+						$.ajax({
+							url:"${path}/apv/apvDocHChange.do",
+							type : "post",
+							data : {"no":no},
+							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+							success : function(data) {
+								$('#dfHeadForm').val(data);
+								$('#dfHeadForm').html(data);
+								editAdd();
+								
+							}
+						});
+					});
+					/* 본문 양식 불러오기 selectbox 변경 이벤트 */
+					$('#docFormContent').on('change',function(){
+						var no=$(this).val();
+						$.ajax({
+							url:"${path}/apv/apvDocCChange.do",
+							type : "post",
+							data : {"no":no},
+							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+							success : function(data) {
+								$('#dfContentForm').val(data);
+								$('#dfContentForm').html(data);
+								editAdd2();
+								
+							}
+						});
+					});
 				});
+				
+				/* ajax로 불러온 데이터 에디터에 그려주기 이벤트 */
+				function editAdd(){
+					$("#dfHeadForm").next().remove();
+					nhn.husky.EZCreator
+					.createInIFrame({
+						oAppRef : oEditors,
+						elPlaceHolder : "dfHeadForm",
+						sSkinURI : "${path }/resources/se2/SmartEditor2Skin.html",
+						fCreator : "createSEditor2"
+					});
+				}
+				function editAdd2(){
+					$("#dfContentForm").next().remove();
+					nhn.husky.EZCreator
+					.createInIFrame({
+						oAppRef : oEditors,
+						elPlaceHolder : "dfContentForm",
+						sSkinURI : "${path }/resources/se2/SmartEditor2Skin.html",
+						fCreator : "createSEditor2"
+					});
+				}
+				
 				function submitContents() {
 					var content = oEditors.getById["dfHeadForm"].exec(
 							"UPDATE_CONTENTS_FIELD", []);
@@ -191,17 +240,14 @@
 						type : "post",
 						data : $('#apvDocEnrollForm').serialize(),
 						success : function(data) {
-							//그 형제 태그 안에 ajax 결과값을 출력해줌
 							if(data>0){
+								self.close();
 								window.opener.location.reload();
-								window.close();
 							}else{
 								alert("등록실패");
 							}
 						}
 					});
-					
-					
 				}
 			</script>
 	</section>

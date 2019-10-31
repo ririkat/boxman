@@ -104,5 +104,9 @@
 	<update id="updatePassword" parameterType="map">
 		UPDATE EMPLOYEE SET EMPPASSWORD=#{empPassword} WHERE EMPNO=#{empNo}
 	</update>
+	
+	<select id="selectEmpIdYN" parameterType="string" resultType="map">
+		SELECT * FROM EMPLOYEE WHERE EMPID=#{empId}
+	</select>
 </mapper>
 

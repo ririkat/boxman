@@ -112,6 +112,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.update("emp.updatePassword", param);
 	}
 	
+	@Override
+	public Map<String, Object> selectEmpIdYN(SqlSessionTemplate session, String empId) {
+		return session.selectOne("emp.selectEmpIdYN",empId);
+	}
+	
 	
 	
 	
