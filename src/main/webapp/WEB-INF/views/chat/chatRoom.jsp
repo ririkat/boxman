@@ -121,7 +121,7 @@ window.onload = function(){
 	
 //creating web socket
      /* var socket = new  WebSocket("ws://192.168.120.171:9090/bm/chatRoom"); */
-var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
+	var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
      
      // This method is triggered when it's received
      socket.onmessage = function(e) {
@@ -223,4 +223,5 @@ var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
               send();
           }
      });
+
 </script>
