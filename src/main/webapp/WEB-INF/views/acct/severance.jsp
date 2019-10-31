@@ -89,19 +89,44 @@
 												<c:out value='${e["SEVDATE"] }' />
 											</td>
 											<td>
-												<c:if test='${fn:trim(e["EMPENTYN"]) eq "N" }' var="r">
-													<button type="button" class="btn btn-success" onclick="pay('${e.SALNO}');">퇴사 시키기</button>
+												<c:if test='${fn:trim(e["SEVCHECK"]) eq "N" }' var="r">
+													<button type="button" class="btn btn-success" onclick="quit('${e.EMPNO}');" data-toggle="modal" data-target="#exampleModal">퇴사 시키기</button>
 												</c:if>
 											</td>
 										</tr>
-									</c:forEach>
+									
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-				${pageBar }
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><c:out value='${e["EMPNAME"] }'/> 님이 받는 퇴직금액</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <input type="text" class=" col-xs-2" name="boardWriter" value="22333" readonly required>원 지급하기
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+				</c:forEach>
+<script>
+	function quit(data){
+		console.log(data);
+	}
+</script>
 
 </section>
 
