@@ -60,7 +60,6 @@
 							<th>등록일자</th>
 							<th>거래처</th>
 							<th>담당자</th>
-							<th>거래유형</th>
 							<th>구매총액</th>
 							<th>구매확정</th>
 							<th>구매일자</th>
@@ -75,7 +74,6 @@
 									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
 									<td><c:out value='${p["CONNAME"] }' /></td>
 									<td><c:out value='${p["EMPNAME"] }' /></td>
-									<td><c:out value='${p["PURTRANTYPE"] }' /></td>
 									<td><c:out value='${p["PURTOTAMT"] }'/></td>
 									<td><c:out value='${p["PURCK"] }'/></td>
 									<td><c:out value='${p["PURDATE"] }' /></td>

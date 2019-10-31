@@ -11,5 +11,7 @@ public interface PurchaseService {
 	List<Map<String,String>> selectConnList();
 	
 	Map<String,String> addStuffToTemp(String stuffNo);
+	
+	int enrollPurInfo(Map<String,String> param) throws Exception;
 
 }

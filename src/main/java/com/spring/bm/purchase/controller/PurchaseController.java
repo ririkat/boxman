@@ -61,29 +61,29 @@ public class PurchaseController {
 	}
 	
 	
-//	@RequestMapping("/purchase/enrollPurInfoEnd.do")
-//	public ModelAndView enrollPurInfoEnd(@RequestParam Map<String,String> param) {
-//		int result = 0;
-//		try {
-//			result = service.enrollPurInfo(param);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//
-//		String msg="";
-//		String loc="/purchase/purList.do";
-//		if(result>0) {
-//			msg="구매정보 등록 성공";
-//		}else {
-//			msg="구매정보 등록 실패";
-//		}
-//		ModelAndView mv= new ModelAndView();
-//				
-//		mv.addObject("msg",msg);
-//		mv.addObject("loc",loc);
-//		
-//		mv.setViewName("common/msg");
-//		return mv;
-//	}
+	@RequestMapping("/purchase/enrollPurInfoEnd.do")
+	public ModelAndView enrollPurInfoEnd(@RequestParam Map<String,String> param) {
+		int result = 0;
+		try {
+			result = service.enrollPurInfo(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String msg="";
+		String loc="/purchase/purList.do";
+		if(result>0) {
+			msg="구매정보 등록 성공";
+		}else {
+			msg="구매정보 등록 실패";
+		}
+		ModelAndView mv= new ModelAndView();
+				
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		
+		mv.setViewName("common/msg");
+		return mv;
+	}
 
 }

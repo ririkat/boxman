@@ -31,4 +31,14 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		return session.selectOne("purchase.addStuffToTemp", stuffNo);
 	}
 
+	@Override
+	public int enrollPurInfo(SqlSessionTemplate session, Map<String, String> param) {
+		return session.insert("purchase.enrollPurInfo", param);
+	}
+
+	@Override
+	public int enrollPurItem(SqlSessionTemplate session, Map<String,Object> paramMap) {
+		return session.insert("purchase.enrollPurItem", paramMap);
+	}
+
 }

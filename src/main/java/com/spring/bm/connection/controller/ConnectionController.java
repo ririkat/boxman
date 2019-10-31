@@ -176,14 +176,14 @@ public class ConnectionController {
 	//구매 정보 등록에서 거래처 이름 검색
 	@RequestMapping("/connection/searchConnection2.do")
 	public ModelAndView searchConnection2(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
-			@RequestParam(value="type") String type, @RequestParam(value="data") String data) {
+			@RequestParam Map<String,String> param) {
 		
 	    int numPerPage = 10;   
 	    Map<String, Object> m = new HashMap();
 	    m.put("cPage", cPage);
 	    m.put("numPerPage", numPerPage);
-	    m.put("data", data); // 빈칸에 입력한 값
-	    m.put("type", type); // select에서 가져온 값 
+	    m.put("data", param.get("data_")); // 빈칸에 입력한 값
+	    m.put("type", param.get("type_")); // select에서 가져온 값 
 	    
 	    List<Connection> list = service.searchConnection(m);
 	    int totalCount = service.searchConnectionCount(m);

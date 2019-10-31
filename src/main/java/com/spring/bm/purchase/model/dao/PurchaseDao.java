@@ -14,4 +14,7 @@ public interface PurchaseDao {
 
 	Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo);
 	
+	int enrollPurInfo(SqlSessionTemplate session, Map<String, String> param);
+	int enrollPurItem(SqlSessionTemplate session, Map<String,Object> paramMap);
+	
 }

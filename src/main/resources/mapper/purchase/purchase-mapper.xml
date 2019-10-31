@@ -3,10 +3,11 @@
 <mapper namespace="purchase">
 
 	<select id="selectPurList" resultType="map">
-		SELECT DISTINCT a.*, b.CONNAME, c.*, d.EMPNAME
-		FROM PURCHASETAB a, CONNECTION b, PURITEMLIST c, EMPLOYEE d
-		WHERE a.CONCODE=b.CONCODE(+) and a.PITEMS=c.PITEMS(+) and a.EMPNO=d.EMPNO(+)
-		ORDER BY PURCODE
+		SELECT DISTINCT a.*, b.CONNAME, c.EMPNAME
+		FROM PURCHASETAB a, CONNECTION b, EMPLOYEE c
+		WHERE a.CONCODE=b.CONCODE(+)
+		AND a.EMPNO=c.EMPNO(+)
+		ORDER BY PURCODE DESC
 	</select>
 	
 	<select id="selectPurCount" resultType="_int">
@@ -20,5 +21,43 @@
 	<select id="addStuffToTemp" parameterType="string" resultType="map">
 		SELECT * FROM STUFF WHERE STUFFNO=#{stuffNo}
 	</select>
+	
+	<insert id="enrollPurInfo" parameterType="map">
+		INSERT INTO purchaseTab
+		VALUES (seq_purchase.NEXTVAL, SYSDATE, (SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매입'),
+				#{chargeNo}, #{purTotAmt}, default, null, default, null)
+	</insert>
+	
+	<!-- <insert id="enrollPurItem" parameterType="map">
+		<if test="stList.size != 0">
+			<foreach collection="stList" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+				INTO purItemList (
+					pItems,
+					purCode,
+					stuffNo,
+					pItemQuan
+				) VALUES (
+					seq_purItemList.NEXTVAL,
+					seq_purchase.CURRVAL,
+					#{item.stNo},
+					#{item.stNum}
+				)
+			</foreach>
+		</if>
+	</insert> -->
+	
+	<insert id="enrollPurItem" parameterType="map">
+		<if test="stList.size != 0">
+			INSERT INTO purItemList(pItems,purCode,stuffNo,pItemQuan)
+			SELECT seq_purItemList.NEXTVAL, seq_purchase.CURRVAL, A.* FROM (
+				<foreach collection="stList" item="item" separator="UNION ALL ">
+					SELECT
+						#{item.stNo} AS stNo,
+						#{item.stNum} AS stNum
+					FROM DUAL
+				</foreach>
+			) A
+		</if>
+	</insert>
 
 </mapper>
