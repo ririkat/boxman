@@ -90,11 +90,14 @@
 											</td>
 											<td>
 												<c:if test='${fn:trim(e["SEVCHECK"]) eq "N" }' var="r">
-													<button type="button" class="btn btn-success" onclick="quit('${e.EMPNO}');" data-toggle="modal" data-target="#exampleModal">퇴사 시키기</button>
+													<c:set var="hiredate" value='${e["HIREDATE"]}'/>
+													<c:set var="salary" value='${e["EMPSAL"]}'/>
+													${e["HIREDATE"]}
+													<button type="button" class="btn btn-success" onclick="quit('${e.EMPNO}', '${hiredate }', '${salary }');" data-toggle="modal" data-target="#exampleModal">퇴사 시키기</button>
 												</c:if>
 											</td>
 										</tr>
-									
+										</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -121,10 +124,23 @@
     </div>
   </div>
 </div>
-				</c:forEach>
+
 <script>
-	function quit(data){
-		console.log(data);
+	function quit(empno, hiredate, salary){
+		
+		var sd = new Date(hiredate);
+		var today = new Date();
+		var ed = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
+		var salary = salary;
+		var days = (today.getTime()-sd.getTime())/(1000*60*60*24);
+		
+		console.log((sd.getMonth()+1)+'/'+sd.getDate()+'/'+sd.getFullYear() + " ------ "+ ed);
+		
+		var total = (salary/2)*(days);
+		
+		console.log("salary : " + salary);
+		console.log("days : "+ days);
+		
 	}
 </script>
 
