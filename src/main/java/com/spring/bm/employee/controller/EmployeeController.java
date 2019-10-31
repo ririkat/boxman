@@ -2,8 +2,11 @@
 package com.spring.bm.employee.controller;
 
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -109,7 +112,6 @@ public class EmployeeController {
 
 		return mv;
 	}
-
 
 	/* 사원로그인*/
 	@RequestMapping("/bfLogin/loginEmp.do")
@@ -268,16 +270,13 @@ public class EmployeeController {
 	public int responsBody(String empId, Model model) throws JsonProcessingException {
 
 		return service.checkId(empId);
-
 	}
 
 	/* 사원수정 */
 	@RequestMapping("/emp/updateEmpEnd.do")
 	public ModelAndView updateEmpEnd(@RequestParam Map<String, Object> param,
-			//			@RequestParam(value="upFile", required=false) MultipartFile[] upFile,
 			@RequestParam(value="proImg", required=false) MultipartFile proImg,
 			@RequestParam(value="stampImg", required=false) MultipartFile stampImg,
-			//			@RequestParam(value="licenReName", required=false) String[] licenReName,
 			HttpServletRequest request
 			) {
 
@@ -382,7 +381,6 @@ public class EmployeeController {
 	@RequestMapping("/emp/updatePassword.do")
 	public ModelAndView updatePassword(String empNo) {
 		ModelAndView mv = new ModelAndView();
-		logger.debug(String.valueOf(empNo));
 		mv.addObject("empNo", empNo);
 		mv.setViewName("emp/empUpPassword");
 		return mv;
@@ -436,7 +434,6 @@ public class EmployeeController {
 				e.printStackTrace();
 			}
 		}
-		logger.debug(""+result);
 		return result;
 	}
 	
@@ -461,14 +458,214 @@ public class EmployeeController {
 
 		list = service.selectAttenList(param, cPage, numPerPage);		
 		int totalCount = service.selectAttenCount(param);
-
+		
+		String startStr = String.valueOf(param.get("startDay")).trim();
+		String endStr = String.valueOf(param.get("endDay")).trim();
+		Date startDay = null;
+		Date endDay = null;
 		ModelAndView mv=new ModelAndView();
+		if(!startStr.equals("null") && !endStr.equals("null")) {
+			startDay = Date.valueOf(startStr);
+			endDay = Date.valueOf(endStr);
+			mv.addObject("startDay",startDay);
+			mv.addObject("endDay",endDay);
+		}
+		
 		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("emp/empAttendanceList");
 		return mv;
 	}
 	
+	/* 휴가리스트출력 */
+	@RequestMapping("/emp/selectDayOffList.do")
+	public ModelAndView selectDayOffList(@RequestParam Map<String, Object> param,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,String>> list = new ArrayList();
+
+		list = service.selectDayOffList(param, cPage, numPerPage);		
+		int totalCount = service.selectDayOffCount(param);
+		
+		String startStr = String.valueOf(param.get("startDay")).trim();
+		String endStr = String.valueOf(param.get("endDay")).trim();
+		Date startDay = null;
+		Date endDay = null;
+		ModelAndView mv=new ModelAndView();
+		if(!startStr.equals("null") && !endStr.equals("null")) {
+			startDay = Date.valueOf(startStr);
+			endDay = Date.valueOf(endStr);
+			mv.addObject("startDay",startDay);
+			mv.addObject("endDay",endDay);
+		}
+		
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("temp", String.valueOf(param.get("temp")));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empDayOffList");
+		return mv;
+	}
+	
+	/* 출장리스트출력 */
+	@RequestMapping("/emp/selectBTList.do")
+	public ModelAndView selectBTList(@RequestParam Map<String, Object> param,
+			@RequestParam(value="cPage", required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,String>> list = new ArrayList();
+
+		list = service.selectBTList(param, cPage, numPerPage);		
+		int totalCount = service.selectBTCount(param);
+		
+		String startStr = String.valueOf(param.get("startDay")).trim();
+		String endStr = String.valueOf(param.get("endDay")).trim();
+		Date startDay = null;
+		Date endDay = null;
+		ModelAndView mv=new ModelAndView();
+		if(!startStr.equals("null") && !endStr.equals("null")) {
+			startDay = Date.valueOf(startStr);
+			endDay = Date.valueOf(endStr);
+			mv.addObject("startDay",startDay);
+			mv.addObject("endDay",endDay);
+		}
+		
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("temp", String.valueOf(param.get("temp")));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("emp/empBusinessTripList");
+		return mv;
+	}
+	
+	/*근태수정*/
+	@RequestMapping("/emp/updateAtten.do")
+	public ModelAndView updateAtten(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> map = new HashMap();
+		map = service.selectAttenNoOne(param);
+		mv.addObject("att", map);
+		mv.setViewName("emp/empAttendanceOne");
+		return mv;
+	}
+	
+	/* 휴가신청 */
+	@RequestMapping("/emp/empDayOffForm.do")
+	public ModelAndView insertDayOff(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> map = new HashMap();
+		int empNo = Integer.parseInt(String.valueOf(param.get("empNo")));
+		map = service.selectEmpOne(empNo);
+		// 올해 휴가 신청 내역 있는지 조회
+		map.put("temp", "my");
+		map.put("empNo", empNo);
+		int result = service.selectDayOffCount(param);
+		if(result > 0) {
+			map.replace("temp", "yes");	//해당 년도 휴가 신청 내역이 있을때
+		} else {
+			map.replace("temp", "no");	//해당 년도 휴가 신청 내역이 없을때
+		}
+		int num = service.selectDoRemaining(map);
+		map.put("DOREMAININGDAYS", num);
+		mv.addObject("e", map);
+		mv.setViewName("emp/empDayOffForm");
+		return mv;
+	}
+	
+	/* 휴가신청 */
+	@RequestMapping("/emp/insertDayOffEnd.do")
+	public ModelAndView insertDayOffEnd(@RequestParam Map<String, Object> param) {
+
+		param.put("temp", "my");
+		int empNo = Integer.parseInt((""+param.get("empNo")));
+		param.put("empNo", empNo);
+		
+		int result = service.selectDayOffCount(param);
+		
+		if(result > 0) {
+			param.replace("temp", "yes");	//해당 년도 휴가 신청 내역이 있을때
+		} else {
+			param.replace("temp", "no");	//해당 년도 휴가 신청 내역이 없을때
+		}
+		param.put("empNo", empNo);
+		int num = service.selectDoRemaining(param);
+		param.put("DOREMAININGDAYS", num);
+		
+		String loc = "";
+		String msg = "/emp/empList.do";
+		result = 0;
+		try {
+			result = service.insertDayOff(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		if(result > 0) {
+			msg = "휴가신청이 완료되었습니다.";
+			loc = "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
+		} else {
+			msg = "휴가신청이 실패하였습니다.";
+			loc= "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
+			mv.setViewName("common/msg");
+		}
+
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	/* 출장신청 */
+	@RequestMapping("/emp/insertBT.do")
+	public ModelAndView insertBT(int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String, Object> map = new HashMap();
+		map = service.selectEmpOne(empNo);
+		mv.addObject("e", map);
+		mv.setViewName("emp/empBTForm");
+		return mv;
+	}
+	
+	/* 출장신청완료 */
+	@RequestMapping("/emp/insertBTEnd.do")
+	public ModelAndView insertBTEnd(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		int result = 0;
+		try {
+			result = service.insertBT(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int empNo = Integer.parseInt((""+param.get("empNo")));
+		String msg = "";
+		String loc = "";
+		
+		if(result > 0) {
+			msg = "출장신청이 완료되었습니다.";
+			loc = "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
+		} else {
+			msg = "출장신청이 실패하였습니다.";
+			loc= "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
+			mv.setViewName("common/msg");
+		}
+
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	
+	
+	/*출장비용 청구*/
+//	@RequestMapping("/emp/insertBTPay.do")
+//	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
+//		
+//	}
 }
 
