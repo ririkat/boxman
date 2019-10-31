@@ -23,7 +23,7 @@ public interface EmployeeDao {
 	Map<String, Object> selectEmpOne(SqlSessionTemplate session, int empNo);
 	List<EmpFile> selectEmpFileList(SqlSessionTemplate session, int empNo);
 	/* 사원로그인*/
-	Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map);
+	Map<String, Object> selectLoginEmp(SqlSessionTemplate session, Map<String, Object> map);
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param);
 	int selectEmpSearchCount(SqlSessionTemplate session, Map<String, Object> param);

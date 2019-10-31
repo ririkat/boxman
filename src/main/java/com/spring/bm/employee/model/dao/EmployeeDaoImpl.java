@@ -60,7 +60,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	/* 사원로그인*/
 	@Override
-	public Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map) {
+	public Map<String, Object> selectLoginEmp(SqlSessionTemplate session, Map<String, Object> map) {
 		return session.selectOne("emp.selectLoginEmp",map);
 	}
 	
