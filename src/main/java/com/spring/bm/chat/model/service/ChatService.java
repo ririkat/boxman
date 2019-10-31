@@ -26,5 +26,12 @@ public interface ChatService {
 	ChatRoom selectChatRoom(Map<String, Object> m);
 	//채팅방 번호를 이용한 채팅내역 조회
 	List<Chat> seletChat(int roomNo);
-
+	//send할때 보내는 상대방 no
+	int selectEmpno(int receiver);
+	//사원명으로 조회(채팅방에서)
+	List<Map<String, String>> searchEmp(String data);
+	//안읽은메세지 
+	int noReadCount(int userId);
+	//readcount +1 (메세지읽음처리)
+	int updateReadCount(Map<String, Object> m);
 }

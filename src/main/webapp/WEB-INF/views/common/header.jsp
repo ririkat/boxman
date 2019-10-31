@@ -1,5 +1,4 @@
-  
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -287,7 +286,7 @@
 							class="nav-link" href="${path }/chat/chatList.do" id="messagesDropdown"
 							role="button"  aria-haspopup="true"	aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
 								<!-- Counter - Messages -->
-						<span class="badge badge-danger badge-counter">7</span>
+						<span id = "unread" class="badge badge-danger badge-counter"></span>
 						</a> 
 						<!-- Nav Item - User Information 로그인정보-->
 						<li class="nav-item dropdown no-arrow">
@@ -355,3 +354,36 @@
 
 					<!-- Page Heading -->
 					<h1 class="h3 mb-4 text-gray-800">${param.pageTitle }</h1>
+					
+			<form name="openMessageFrm" method="post">
+				<input type="hidden" id="userId" name="userId" value="${loginEmp['EMPNO']}">
+			</form>
+					
+<script>
+		var userId = $("#userId").val();
+
+		//안읽은메세지수 출력
+		$(function(){
+					timer = setInterval(function(){
+						$.ajax({
+							type:"post",
+							url: "${path }/chat/readCount.do",
+							data: {
+								userId: encodeURIComponent(userId)
+							},
+							success: function(result) {
+								if(result>=1) {
+									showUnread(result);
+								} else {
+									showUnread('0');
+								}
+							}
+						});
+					},10000);
+				
+			}); 
+			
+ 			function showUnread(result){
+				$('#unread').html(result);
+			}
+</script>

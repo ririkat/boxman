@@ -28,4 +28,12 @@ public interface ChatDao {
 
 	List<Chat> selectChat(SqlSessionTemplate sqlSession, int roomNo);
 
+	int selectEmpno(SqlSessionTemplate sqlSession, int receiver);
+
+	List<Map<String, String>> searchEmp(SqlSessionTemplate sqlSession, String data);
+
+	int noReadCount(SqlSessionTemplate sqlSession, int userId);
+
+	int updateReadCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
+
 }

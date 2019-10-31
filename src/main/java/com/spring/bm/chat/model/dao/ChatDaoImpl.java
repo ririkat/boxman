@@ -15,6 +15,12 @@ import com.spring.bm.employee.model.vo.Employee;
 public class ChatDaoImpl implements ChatDao {
 
 	@Override
+	public int selectEmpno(SqlSessionTemplate sqlSession, int receiver) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("chat.selectEmpno", receiver);
+	}
+
+	@Override
 	public List<Map<String, String>> selectChatList(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("chat.selectChatList");
 	}
@@ -53,6 +59,20 @@ public class ChatDaoImpl implements ChatDao {
 	public List<Chat> selectChat(SqlSessionTemplate sqlSession, int roomNo) {
 		return sqlSession.selectList("chat.selectChat",roomNo);
 	}
-	
 
+	@Override
+	public List<Map<String, String>> searchEmp(SqlSessionTemplate sqlSession, String data) {
+		return sqlSession.selectList("chat.searchEmp",data);
+	}
+
+	@Override
+	public int noReadCount(SqlSessionTemplate sqlSession, int userId) {
+		return sqlSession.selectOne("chat.noReadCount",userId);
+	}
+
+	@Override
+	public int updateReadCount(SqlSessionTemplate sqlSession, Map<String, Object> m) {
+		return sqlSession.update("chat.updateReadCount",m);
+	}
+	
 }

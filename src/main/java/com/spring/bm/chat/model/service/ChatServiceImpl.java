@@ -60,5 +60,27 @@ public class ChatServiceImpl implements ChatService {
 	public List<Chat> seletChat(int roomNo) {
 		return dao.selectChat(sqlSession,roomNo);
 	}
+
+	@Override
+	public int selectEmpno(int receiver) {
+		// TODO Auto-generated method stub
+		return dao.selectEmpno(sqlSession, receiver);
+	}
+
+	@Override
+	public List<Map<String, String>> searchEmp(String data) {
+		return dao.searchEmp(sqlSession, data);
+	}
+
+	@Override
+	public int noReadCount(int userId) {
+		return dao.noReadCount(sqlSession, userId);
+	}
+
+	@Override
+	public int updateReadCount(Map<String, Object> m) {
+		return dao.updateReadCount(sqlSession, m);
+	}
+
 	
 }
