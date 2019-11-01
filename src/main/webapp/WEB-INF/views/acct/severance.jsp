@@ -112,14 +112,14 @@
         <h5 class="modal-title" id="exampleModalLabel"><c:out value='${e["EMPNAME"] }'/> 님이 받는 퇴직금액</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-        </button>
+        </buttn>
       </div>
       <div class="modal-body">
        <input type="text" class=" col-xs-2" name="boardWriter" value="22333" readonly required>원 지급하기
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary">확인</button>
+        <button type="button" class="btn btn-primary" onclick="severance();">확인</button>
       </div>
     </div>
   </div>
@@ -128,18 +128,22 @@
 <script>
 	function quit(empno, hiredate, salary){
 		
+		var salary = salary;
+		
+		
 		var sd = new Date(hiredate);
 		var today = new Date();
-		var ed = (today.getMonth()+1)+'/'+today.getDate()+'/'+today.getFullYear();
-		var salary = salary;
 		var days = (today.getTime()-sd.getTime())/(1000*60*60*24);
 		
-		console.log((sd.getMonth()+1)+'/'+sd.getDate()+'/'+sd.getFullYear() + " ------ "+ ed);
 		
-		var total = (salary/2)*(days);
+		var x = salary/24;
+		var y = days/365;
 		
-		console.log("salary : " + salary);
-		console.log("days : "+ days);
+		//console.log((sd.getMonth()+1)+'/'+sd.getDate()+'/'+sd.getFullYear() + " ------ "+ ed);
+		
+		var result = Math.ceil(x*y/100)*100;
+		$(".modal-body>[name=boardWriter]").val(result);
+		$(".modal-title").html(empno);
 		
 	}
 </script>
