@@ -60,8 +60,8 @@
 			<h2 class="title font-weight-bold text-primary">결재 라인 등록</h2>
 			<div class="card shadow mb-4">
 				<div class="card-body">
-					<div class="row">
-						<div class="col-sm-4" style="height: 530px; border: thin solid gray;">
+					<div class="row" style="padding:1px;">
+						<div class="col-sm-3" style="height: 600px; border: thin solid gray;">
 							<p>조직도</p>
 							<hr />
 							<a href="#">전체</a><br />
@@ -73,45 +73,67 @@
 								</c:forEach>
 							</ul>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-sm-9">
 							<div class="row"
 								style="height: 250px;overflow-y: scroll; border: thin solid gray;">
+								<div class="col-sm-12 text-center">
 								<table id="empListTbl" class="table table-borded">
 									<thead>
 									<tr>
 										<th>선택</th>
 										<th>사원번호</th>
-										<th>부서번호</th>
-										<th>직급번호</th>
+										<th>부서</th>
+										<th>직급</th>
 										<th>사원명</th>
 									</tr>
 									</thead>
 									<tbody id="body">
 									</tbody>
 								</table>
+								</div>
 							</div>
 							<div class="row" id="addButton">
 							<div class="col-sm-12 text-center">
-								<button class="btn btn-primary">(+)추가</button>
-								<button class="btn btn-primary">(-)빼기</button>
+								<button class="btn btn-primary" id="addBtn" onclick="addBtn()" >(+)추가</button>
+								<button class="btn btn-primary" id="removeAll" onclick="removeAll()" >비우기</button>
 							</div>	
 							</div>
-								<div class="row" style="height: 250px; overflow: hidden; border: thin solid gray; padding:5px;">
-									<div class="col-sm-12"
-										style="overflow-y: scroll; ">
-										<p>결재자</p>
-										<hr/>
-										<ul>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-											<li></li>
-										</ul>
+								<div class="row" style="height:300px; overflow: hidden;  padding:5px; border: thin solid gray;">
+									<div class="col-sm-12" >
+									<form id="apvLineForm" class="form-controll" style="width:100%">
+									<table class="table table-stripped">
+										<tr>
+											<th>
+											결재라인명
+											</th>
+											<td>
+											<input type="text" name="apvLineTitle" style="width:600px;" />
+											</td>
+										</tr>
+										<tr>
+											<th>
+											결재자
+											</th>
+											<td>
+												<button class="btn" id="upBtn" onclick="upBtn()">▲</button>
+												<button class="btn" id="downBtn" onclick="downBtn()">▼</button>
+												<button class="btn" id="removeBtn" onclick="removeBtn()">X</button>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<select name="apvL" id="apvL" class="form-controll" size="6" style="width:100%">
+												</select>
+											</td>
+										</tr>
+									</table>
+									</form>
 									</div>
 							</div>
 						</div>
+					</div>
+					<div class="row">
+						<button class="btn btn-primary" id="enrollBtn" onclick="enrollBtn()" style="width:100%">결재라인 등록</button>
 					</div>
 				</div>
 			</div>
@@ -119,13 +141,9 @@
 		<script>
 			$(function() {
 				$('.empLoad')
-						.on(
-								'click',
-								function() {
+						.on('click',function() {
 									var deptNo = $(this).attr('id');
-
-									$
-											.ajax({
+									$.ajax({
 												url : "${path }/apv/selectDeptToEmp.do",
 												type : "post",
 												data : {
@@ -137,12 +155,7 @@
 													var result = data;
 													var tbody = $('#empListTbl').children('#body');
 													tbody.html("");
-													$
-															.each(
-																	result,
-																	function(
-																			idx,
-																			val) {
+													$.each(result,function(idx,val) {
 																		//체크박스
 																		//사원번호
 																		//부서
@@ -158,40 +171,105 @@
 																							"value" : val.EMPNO
 																						});
 																		var td1 = $('<td>');
-																		td1
-																				.append(ckbox);
+																		td1.append(ckbox);
 																		var td2 = $('<td>');
-																		td2
-																				.html(val.EMPNO);
+																		td2.html(val.EMPNO);
 																		var td3 = $('<td>');
-																		td3
-																				.html(val.DEPTNO);
+																		td3.html(val.DEPTNAME);
 																		var td4 = $('<td>');
-																		td4
-																				.html(val.JOBNO);
+																		td4.html(val.JOBNAME);
 																		var td5 = $('<td>');
-																		td5
-																				.html(val.EMPNAME);
+																		td5.html(val.EMPNAME);
 
-																		tr
-																				.append(
-																						td1)
-																				.append(
-																						td2)
-																				.append(
-																						td3)
-																				.append(
-																						td4)
-																				.append(
-																						td5);
-																		tbody
-																				.append(tr);
+																		tr.append(td1).append(td2).append(td3).append(td4).append(td5);
+																		tbody.append(tr);
 
 																	});
 												}
 											});
 								});
+				
+				
+				
 			});
+			
+			function addBtn(){
+				var checked=$("input:checkbox[name='emp']:checked");
+				$.each(checked,function(idx,val) {
+					var empNo=val.value;
+					var deptName=val.parentNode.nextSibling.nextSibling.innerHTML;
+					var jobName=val.parentNode.nextSibling.nextSibling.nextSibling.innerHTML;
+					var empName=val.parentNode.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML;
+					var option=$('<option>');
+					option.val(empNo);
+					option.html("["+deptName+"]"+empName+"("+jobName+")");
+					
+					var selectBox=$('#apvL');
+					selectBox.append(option);
+				});
+				$("input:checkbox[name='emp']").prop("checked",false);
+			}
+			
+			function upBtn(){
+				var selectOpt=$("#apvL option:selected");
+				var selectVal=$("#apvL option:selected").val();
+				var selectText=$("#apvL option:selected").text();
+				var selectIdx=$("#apvL option").index($("#apvL option:selected"));
+				var idx=selectIdx-1;
+				
+				if(idx!=-1){
+					var option=$('<option>');
+					option.val(selectVal);
+					option.html(selectText);
+					
+					$("#apvL option:eq("+idx+")").before(option);
+					selectOpt.remove();
+				}		
+			}
+			
+			function downBtn(){
+				var selectOpt=$("#apvL option:selected");
+				var selectVal=$("#apvL option:selected").val();
+				var selectText=$("#apvL option:selected").text();
+				var selectIdx=$("#apvL option").index($("#apvL option:selected"));
+				var idx=selectIdx+1;
+				
+				var lastIdx=$("#apvL option:last").index();
+				if(selectIdx!=lastIdx){
+					var option=$('<option>');
+					option.val(selectVal);
+					option.html(selectText);
+					
+					$("#apvL option:eq("+idx+")").after(option);
+					selectOpt.remove();
+				}
+			}
+			
+			function removeBtn(){
+				var selectOpt=$("#apvL option:selected");
+				selectOpt.remove();
+			}
+
+			function removeAll(){
+				var selectbox=$("#apvL");
+				selectbox.html("");
+			}
+			
+			function enrollBtn(){
+				$.ajax({
+					url:"${path}/apv/apvLineEnrollEnd.do",
+					type : "post",
+					data : $('#apvLineForm').serialize(),
+					success : function(data) {
+						if(data>0){
+							self.close();
+							window.opener.location.reload();
+						}else{
+							alert("등록실패");
+						}
+					}
+				});
+			}
 		</script>
 
 	</section>

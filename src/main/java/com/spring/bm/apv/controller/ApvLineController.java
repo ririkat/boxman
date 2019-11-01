@@ -61,5 +61,13 @@ public class ApvLineController {
 		List<Map<String,Object>> list=service.selectDeptToEmp(deptNo);
 		return list;
 	}
+	
+	/* 결재라인 등록 처리  */
+	@RequestMapping(value="/apv/apvLineEnrollEnd.do",produces ="application/json; charset=utf8")
+	@ResponseBody
+	public int apvLineEnrollEnd(@RequestParam Map<String,Object> param){
+//		int result=service.apvLineEnrollEnd(param);
+		return 0;
+	}
 
 }
