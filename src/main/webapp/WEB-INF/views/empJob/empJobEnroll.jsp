@@ -7,8 +7,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-	<jsp:param value="직급등록/수정" name="tabTitle"/> 
-	<jsp:param value="직급등록/수정" name="pageTitle"/>
+	<jsp:param value="BOXMAN" name="tabTitle"/> 
+	<jsp:param value="" name="pageTitle"/>
 </jsp:include>
 
 <section>
@@ -82,5 +82,4 @@
 	});
 
 </script>
-
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

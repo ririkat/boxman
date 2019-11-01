@@ -7,8 +7,8 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-	<jsp:param value="부서목록" name="tabTitle"/> 
-	<jsp:param value="부서목록" name="pageTitle"/>
+	<jsp:param value="BOXMAN" name="tabTitle"/> 
+	<jsp:param value="" name="pageTitle"/>
 </jsp:include>
 
 <section>
@@ -26,24 +26,19 @@
 	        				<label>Search:
 	         					<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
 	          			</label>
-	          			<a href="#" class="btn btn-light btn-icon-split">
-	                 <span class="icon text-gray-600">
-	                   <i class="fas fa-arrow-right"></i>
-	                 </span>
-	                 <span class="text">검색</span>
-	               </a>
+						<button onclick="fn_search();"
+							class="btn btn-primary mr-2">
+							<span class="text">검색</span>
+						</button>
 	        			</div>
 	        		</div>
 	        		<div class="col-sm-12 col-md-6">
 	         		<div id="dataTable_filter" class="dataTables_filter">
 	         			<div style="float:right;">
-	          			<a href="${path}/dept/insertDept.do" class="btn btn-light btn-icon-split">
-	                 <span class="icon text-gray-600">
-	                   <i class="fas fa-arrow-right"></i>
-	                 </span>
-	                 <span class="text">부서등록</span>
-	               </a>
-	              </div>
+		         			<button type="button" onclick="location.href='${path}/dept/insertDept.do'" class="btn btn-primary mr-2">
+		               			부서등록
+		                 	</button>
+	              		</div>
 	         		</div>
 	        		</div>
 	        	</div>

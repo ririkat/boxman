@@ -10,7 +10,16 @@
    <jsp:param value="선덕별리현빈" name="tabTitle"/> 
    <jsp:param value="기호기오무관" name="pageTitle"/>
 </jsp:include>
+<style>
+.form-control , .input-group , .form-group{
+	width : 700px;
+}
 
+#stuffMain , #stuffSub , .custom-file , #conName{
+	width : 690px;
+}
+
+</style>
 <section>
 <div class = "card shadow mb-4">
 <form id = "stuffFrm" enctype="multipart/form-data" method="post" action="${path}/stuff/stuffUpdateEnd.do" onsubmit="return checkValue();">
@@ -25,6 +34,16 @@
 				<img class="img-fluid rounded" src="${path}/resources/upload/stuff/${stuffUpload.imgRename}" style = "width : 500px; height : 500px; border: 0.5px solid #d1d3e2;"/>
 			</div>
 			<div>
+				<label for="exampleInputName1">위치 보기</label>
+			</div>
+			<div class="form-group">
+            <button type="button" 
+                    class="btn btn-outline-success btn-block"
+                    onclick="seeMap()">
+                                        위치 보기
+            </button>
+			</div>
+			<div>
 				<label for="exampleInputName1">첨부파일</label>
 			</div>
 			<div class="form-group">
@@ -33,7 +52,6 @@
                     onclick="fileDownload('${stuffUpload.imgOriname}','${stuffUpload.imgRename }');">
                     ${stuffUpload.imgOriname}
             </button>
-
 			</div>
 			<div class="form-group">
 				<label for="exampleInputName1">물품 이름</label> <input type="text"
@@ -79,11 +97,6 @@
 					placeholder="높이(H)" name="size3" value = "${stuff.size3 }">
 			</div>
 			<div class="form-group">
-				<label for="exampleInputName1">제조사</label> <input type="text"
-					class="form-control" id="exampleInputName1" placeholder="제조사"
-					name="manufacturer" value = "${stuff.manufacturer }">
-			</div>
-			<div class="form-group">
 				<label for="exampleInputName1">제조일자</label> <input type="date"
 					class="form-control" id="exampleInputName1"
 					name="manufacturingDate" value = "${stuff.manufacturingDate }">
@@ -105,8 +118,10 @@
 			</div>
 			
 			<div class = "form-group row">
-				<label class = "col-sm-2 col-form-labe">물품 카테고리</label>
+				<label class = "col-sm-2 col-form-labe">카테고리</label>
+			</div>
 				<div class = "col-sm-10">
+				<input type = "hidden" id = "mainName" value = "${stuffMaincategory.mcNo }"/>
 					<select name = "stuffMain" id = "stuffMain" class = "form-control" required="required">
 						<option value = "${stuffMaincategory.mcNo }">${stuffMaincategory.mcName }</option>
 						<c:forEach var = "mc" items = "${list }">
@@ -118,37 +133,18 @@
 						<option value = "${stuff.scName}">${stuff.scName }</option>
 					</select>
 				</div>
-			</div>
-
-			<div class="card">
-				<div class="card-body">
-				<div class = "form-group row">
+			<br>
+			 <div class = "form-group row">
+				<label class = "col-sm-2 col-form-labe">거래처</label>
+			 </div>
 				<div class = "col-sm-10">
-				<div class="card-title">결함 유무</div>
-				<c:if test='${fn:trim(stuff.stuffStatus) eq "Y"}'>
-					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus0" value = "Y" required="required" checked/>
-						<label class = "from-check-label" for = "stuffStatus0">결함 있음</label>
-					</div>
-					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus1" value = "N" required="required"/>
-						<label class = "from-check-label" for = "stuffStatus1">결함 없음</label>
-					</div>
-				</c:if>
-				<c:if test='${fn:trim(stuff.stuffStatus) eq "N"}'>
-					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus0" value = "Y" required="required"/>
-						<label class = "from-check-label" for = "stuffStatus0">결함 있음</label>
-					</div>
-					<div class = "form-check from-check-inline">
-						<input class = "form-check-input" type = "radio" name = "stuffStatus" id = "stuffStatus1" value = "N" required="required" checked/>
-						<label class = "from-check-label" for = "stuffStatus1">결함 없음</label>
-					</div>
-				</c:if>
-				</div>
+					<select name = "conName" id = "conName" class = "form-control" required="required">
+						<option value = "${sutffConnection.conName }">${sutffConnection.conName }</option>
+						<c:forEach var = "con" items = "${list2 }">
+							<option value = "${con.conName }">${con.conName }</option>
+						</c:forEach>
+					</select>
 			</div>
-					</div>
-				</div>
 			<br><br>
 			<div class="form-group">
                         <label for="exampleTextarea1">기타 사항</label>
@@ -157,13 +153,16 @@
 
 			<div class = "form-group row">
 				<label class = "col-sm-2 col-form-labe">물품 이미지</label>
+			</div>
 				<div class = "col-sm-10">
 					<div class="custom-file">
                     <input type="file" class="custom-file-input" name="upFile" id="upFile">
                     <label class="custom-file-label" for="upFile">${stuffUpload.imgOriname }</label>
                 	</div>
 				</div>
-			</div>
+			<br><br>
+
+			
 
 
 			<input type = "submit" class = "btn btn-success mr-2" value="수정" id = "btn">
@@ -225,6 +224,28 @@ function deleteStuff(){
 function fileDownload(oName, rName){
    oName=encodeURIComponent(oName);
    location.href="${path}/stuff/filedownLoad.do?oName="+oName+"&rName="+rName;
+}
+
+function seeMap(){
+	
+	var a = $('#stuffMain').val();
+	console.log(a);
+	
+	if(a == 1) {
+		window.open("${path}/resources/upload/warehouseMap/A.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 2) {
+		window.open("${path}/resources/upload/warehouseMap/B.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 3) {
+		window.open("${path}/resources/upload/warehouseMap/C.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 4) {
+		window.open("${path}/resources/upload/warehouseMap/D.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 5) {
+		window.open("${path}/resources/upload/warehouseMap/E.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else if(a == 6) {
+		window.open("${path}/resources/upload/warehouseMap/F.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	} else {
+		window.open("${path}/resources/upload/warehouseMap/update.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+	}
 }
 </script>
 

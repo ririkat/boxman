@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.bm.connection.model.vo.Connection;
 import com.spring.bm.stuff.model.dao.StuffDao;
 import com.spring.bm.stuff.model.vo.Stuff;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
@@ -136,6 +137,22 @@ public class StuffServiceImpl implements StuffService {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<Connection> stuffConnectionList() {
+		return dao.stuffConnectionList(sqlSession);
+	}
+
+	@Override
+	public Connection connectionName(int conCode) {
+		return dao.connectionName(sqlSession, conCode);
+	}
+
+	@Override
+	public List<Stuff> searchStuffName(String stuffName) {
+		// TODO Auto-generated method stub
+		return dao.searchStuffName(sqlSession, stuffName);
 	}
 
 

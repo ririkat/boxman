@@ -1,4 +1,3 @@
-
 package com.spring.bm.employee.model.service;
 
 import java.util.List;
@@ -118,21 +117,107 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	/* 출퇴근위치정보 확인 */
 	@Override
-	public int selectEmpIdYN(String empId) {
-		int result=0;
-		Map<String,Object> resultMap=dao.selectEmpIdYN(session,empId);
-		if(resultMap!=null) {
-			result=1;
-		}
+	public int checkLocation(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.checkLocation(session, param);
+	}
+	
+	/* 출근등록 */
+	@Override
+	public int insertGotoWork(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertGotoWork(session, param);
+		if(result == 0) throw new Exception();
 		return result;
 	}
 	
+	/* 퇴근등록 */
 	@Override
-	public Map<String, Object> selectEmpSchEmpId(String empId) {
-		// TODO Auto-generated method stub
-		return dao.selectEmpIdYN(session,empId);
+	public int updateOffWork(Map<String, Object> param) throws Exception{
+		int result = 0;
+		result = dao.updateOffWork(session, param);
+		if(result == 0) throw new Exception();
+		return result;
 	}
+	
+	/* 근태하나보기 */
+	@Override
+	public Map<String, Object> selectAttenOne(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenOne(session, param);
+	}
+	
+	/* 근태현황보기 */
+	@Override
+	public List<Map<String, String>> selectAttenList(Map<String, Object> param, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenList(session, param, cPage, numPerPage);
+	}
+	
+	@Override
+	public int selectAttenCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenCount(session, param);
+	}
+	/* 근태현황보기끝 */
+	
+	/* 휴가리스트출력 */
+	@Override
+	public List<Map<String, String>> selectDayOffList(Map<String, Object> param, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectDayOffList(session, param, cPage, numPerPage);
+	}
+	@Override
+	public int selectDayOffCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectDayOffCount(session, param);
+	}
+	/* 휴가리스트출력 끝 */
+	
+	/* 출장리스트출력 */
+	@Override
+	public List<Map<String, String>> selectBTList(Map<String, Object> param, int cPage, int numPerPage) {
+		// TODO Auto-generated method stub
+		return dao.selectBTList(session, param, cPage, numPerPage);
+	}
+	@Override
+	public int selectBTCount(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectBTCount(session, param);
+	}
+	/* 출장리스트출력 끝 */
+	/* 근태수정용 한개보기 */
+	@Override
+	public Map<String, Object> selectAttenNoOne(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectAttenNoOne(session, param);
+	}
+	/* 남은 휴가일수 보기 */
+	@Override
+	public int selectDoRemaining(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectDoRemaining(session, map);
+	}
+	
+	/* 휴가신청 */
+	@Override
+	public int insertDayOff(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertDayOff(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
+	/* 출장신청 */
+	@Override
+	public int insertBT(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertBT(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
 
 }
-

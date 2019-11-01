@@ -67,10 +67,10 @@
 </script>
 
 <section>
-
+	
      <nav class="navbar navbar-expand-lg ">
             <form class="form-inline ml-auto">
-                <a class="btn btn-outline-success pull-right" href="#" role="button" onclick="doExport()"><i class="fas fa-file-excel"></i> &nbsp Excel</a>
+                <a id = "excelBtn" class="btn btn-outline-success pull-right" href="#" role="button" onclick="doExport()"><i class="fas fa-file-excel"></i> &nbsp Excel</a>
 					&nbsp
 					<a class="btn btn-outline-danger pull-right" href="#" role="button" onclick="pdfExport()"><i class="fas fa-file-pdf"></i> &nbsp PDF</a>
             </form>
@@ -85,8 +85,8 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
+              	<c:forEach items="${list }" var="list">
                 <table class="table table-bordered pdfstyles"   id="excelstyles" width="100%" cellspacing="0">
-                </tbody>
                   <tbody>
                     <tr>
                       <td style="background-color">매출</td>
@@ -115,12 +115,12 @@
                     </tr>
                     <tr>
                       <td>임금</td>
-                      <td>(₩100,000,000)</td>
+                      <td id='salaries'></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>임금세</td>
-                      <td>(₩10,000,000)</td>
+                      <td id="saltax"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -144,13 +144,13 @@
                       <td></td>
                     </tr>
                     <tr>
-                      <td>지급 퇴직금</td>
-                      <td>(₩6,000,000)</td>
+                      <td>퇴직금</td>
+                      <td id="severance"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>출장비</td>
-                      <td>(₩1,500,000)</td>
+                      <td id="biztrip"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -160,8 +160,8 @@
                     </tr>
                     <tr>
                       <td>총 경영비</td>
-                      <td></td>
-                      <td><strong>(₩152,500,000)</strong></td>
+                      <td id="netIncome"></td>
+                      <!-- <td><strong id="totalExpense">${list['SEVERANCE']+list['BIZTRIP'] }</strong></td> -->
                     </tr>
                     <tr>
                       <td>순 이익</td>
@@ -170,10 +170,41 @@
                     </tr>
                   </tbody>
                 </table>
+                </c:forEach>
               </div>
             </div>
           </div>
 
 </section>
+
+<script>
+	
+	/* $(function calc(){
+		console.log($("#biztrip").val());
+	})
+	
+	var obj = JSON.parse(data); */
+	
+	$(function(){
+		$.ajax({
+			url: "${path}/acct/result.do",
+			success: function(data){
+				// java -> javascript 로 데이터를 가지고 옴
+				console.log(data);
+				var list = JSON.parse(data);
+				for(i=0; i<list[0].length; i++){
+					console.log(list[0][i]);
+				}
+				
+				$("#biztrip").html("(₩"+list[0].BIZTRIP+")");
+				$("#severance").html("(₩"+list[0].SEVERANCE+")");
+				$("#saltax").html("(₩"+list[0].SALTAX+")");
+				$("#salaries").html("(₩"+list[0].SALARIES+")");
+			} 
+		})
+		
+	})
+	
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -171,7 +171,7 @@ ul.social-links li a i {
 }
 
 span.alternate {
-  color: #ff6600;
+  color: #4e73df;
   font-style: italic;
   font-weight: 400;
 }
@@ -475,7 +475,7 @@ select.form-control:not([size]):not([multiple]) {
 .btn-main-md {
   padding: 15px 40px;
   border-radius: 0;
-  background: #ff6600;
+  background: #4e73df;
   color: #fff;
   outline: none;
   font-size: 0.9375rem;
@@ -1259,7 +1259,7 @@ select.form-control:not([size]):not([multiple]) {
   font-family: "Montserrat", sans-serif;
   text-transform: uppercase;
   font-size: 1.5rem;
-  color: #ff6600;
+  color: #4e73df;
   font-weight: 500;
   display: block;
   border-radius: 0;
@@ -1275,9 +1275,8 @@ select.form-control:not([size]):not([multiple]) {
   color: #848484;
   font-weight: 400;
 }
-
 .schedule .schedule-tab ul li.nav-item a.active {
-  background: #ff6600;
+  background: #4e73df;
   color: #fff;
   position: relative;
 }
@@ -1295,7 +1294,7 @@ select.form-control:not([size]):not([multiple]) {
   height: 0;
   border-style: solid;
   border-width: 0 20px 20px 0;
-  border-color: transparent #ff6600 transparent transparent;
+  border-color: transparent #4e73df transparent transparent;
 }
 
 @media (max-width: 767px) {
@@ -1339,7 +1338,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .schedule .schedule-contents .schedule-item ul li .speaker {
-  width: 30%;
+  width: 20%;
 }
 
 @media (max-width: 991px) {
@@ -1367,7 +1366,11 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .schedule .schedule-contents .schedule-item ul li .subject {
-  width: 30%;
+  width: 20%;
+}
+
+.schedule .schedule-contents .schedule-item ul li .depart {
+  width: 20%;
 }
 
 @media (max-width: 991px) {
@@ -1384,7 +1387,7 @@ select.form-control:not([size]):not([multiple]) {
 
 .schedule .schedule-contents .schedule-item li.headings {
   padding: 22px 40px;
-  background: #ff6600;
+  background: #4e73df;
 }
 
 .schedule .schedule-contents .schedule-item li.headings div {
@@ -1426,7 +1429,6 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .schedule .schedule-contents .schedule-item li.schedule-details .block div span.name {
-  margin-left: 20px;
   transition: .2s ease-in;
 }
 
@@ -1443,7 +1445,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .schedule .schedule-contents .schedule-item li.schedule-details .block:hover span.name {
-  color: #ff6600;
+  color: #4e73df;
 }
 
 .schedule .download-button {
@@ -1501,7 +1503,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .schedule.two .schedule-tab ul li.nav-item a.active {
-  background: #ff6600;
+  background: #4e73df;
   color: #fff;
   position: relative;
 }
@@ -1523,7 +1525,7 @@ select.form-control:not([size]):not([multiple]) {
   height: 0;
   border-style: solid;
   border-width: 10px 0 10px 10px;
-  border-color: transparent transparent transparent #ff6600;
+  border-color: transparent transparent transparent #4e73df;
 }
 
 @media (max-width: 991px) {
@@ -1610,7 +1612,7 @@ select.form-control:not([size]):not([multiple]) {
 
 .schedule.two .schedule-contents .schedule-item li.headings {
   padding: 25px 0;
-  background: #ff6600;
+  background: #4e73df;
 }
 
 .schedule.two .schedule-contents .schedule-item li.headings div {
@@ -1677,7 +1679,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .schedule.two .schedule-contents .schedule-item li.schedule-details .block:hover span.name {
-  color: #ff6600;
+  color: #4e73df;
 }
 
 .ticket-feature {
@@ -1754,7 +1756,7 @@ select.form-control:not([size]):not([multiple]) {
   position: relative;
   padding: 150px 10%;
   height: 100%;
-  background: #ff6600;
+  background: #4e73df;
 }
 
 .ticket-feature .block-2 [class*=col-]:first-child {
@@ -1800,7 +1802,7 @@ select.form-control:not([size]):not([multiple]) {
   height: 0;
   border-style: solid;
   border-width: 0 0 1000px 300px;
-  border-color: transparent transparent #ff6600 transparent;
+  border-color: transparent transparent #4e73df transparent;
 }
 
 @media (max-width: 767px) {
@@ -1927,7 +1929,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .pricing .pricing-item .pricing-body ul.feature-list li p span.available {
-  color: #ff6600;
+  color: #4e73df;
 }
 
 .pricing .pricing-item .pricing-body ul.feature-list li p span.unavailable {
@@ -1948,8 +1950,8 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .pricing .pricing-item.featured .pricing-heading {
-  background: #ff6600;
-  border-bottom: 1px solid #ff6600;
+  background: #4e73df;
+  border-bottom: 1px solid #4e73df;
 }
 
 .pricing .pricing-item.featured .pricing-heading .title h6 {
@@ -2016,11 +2018,11 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .pricing.two .pricing-item .pricing-body ul.feature-list li p span.available {
-  color: #ff6600;
+  color: #4e73df;
 }
 
 .pricing.two .pricing-item.featured .pricing-heading:before {
-  border-color: #ff6600 transparent transparent transparent;
+  border-color: #4e73df transparent transparent transparent;
 }
 
 .sponsors {
@@ -2033,7 +2035,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .sponsors .sponsor-title h5 {
-  color: #ff6600;
+  color: #4e73df;
 }
 
 .sponsors .block {
@@ -2059,7 +2061,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .sponsors .block .image-block:hover {
-  border: 1px solid #ff6600;
+  border: 1px solid #4e73df;
 }
 
 .sponsors .sponsor-btn {
@@ -2081,7 +2083,7 @@ select.form-control:not([size]):not([multiple]) {
   padding: 45px 50px 50px 50px;
   top: 80px;
   left: 10%;
-  background: #ff6600;
+  background: #4e73df;
 }
 
 @media (max-width: 480px) {
@@ -2280,7 +2282,7 @@ select.form-control:not([size]):not([multiple]) {
 .video-promo .content-block a i.video {
   height: 125px;
   width: 125px;
-  background: #ff6600;
+  background: #4e73df;
   display: inline-block;
   font-size: 40px;
   color: #fff;
@@ -2343,11 +2345,11 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .testimonial .testimonial-slider .owl-dots .owl-dot:hover span {
-  background: #ff6600;
+  background: #4e73df;
 }
 
 .testimonial .testimonial-slider .owl-dots .owl-dot.active span {
-  background: #ff6600;
+  background: #4e73df;
 }
 
 .single-speaker .block {
@@ -2376,7 +2378,7 @@ select.form-control:not([size]):not([multiple]) {
 }
 
 .single-speaker .block .content-block .profession p {
-  color: #ff6600;
+  color: #4e73df;
   font-size: 0.9375rem;
 }
 

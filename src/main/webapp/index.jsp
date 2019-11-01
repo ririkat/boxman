@@ -75,15 +75,12 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
-
 	</div>
 	</div>
-
 
 	<!-- Bootstrap core JavaScript-->
-	<script src="${path }/resources/b4/vendor/jquery/jquery.min.js"></script>
+	<script src="${path }/resources/b4/vendor/jquery/jquery.mitn.js"></script>
 	<script
 		src="${path }/resources/b4/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 

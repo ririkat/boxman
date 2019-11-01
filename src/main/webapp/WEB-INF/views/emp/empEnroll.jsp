@@ -7,7 +7,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="사원등록" name="tabTitle"/> 
+   <jsp:param value="BOXMAN" name="tabTitle"/> 
    <jsp:param value="" name="pageTitle"/>
 </jsp:include>
 <style>
