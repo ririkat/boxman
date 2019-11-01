@@ -61,20 +61,23 @@
 			<div class="card shadow mb-4">
 				<div class="card-body">
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-sm-4" style="height: 530px; border: thin solid gray;">
 							<p>조직도</p>
 							<hr />
 							<a href="#">전체</a><br />
 							<ul>
 								<c:forEach items="${deptList }" var="dl">
 									<a href="#" id="${dl['DEPTNO'] }" class="empLoad">
-									<li> &nbsp;${dl['DEPTNAME'] }</li></a>
+										<li>&nbsp;${dl['DEPTNAME'] }</li>
+									</a>
 								</c:forEach>
 							</ul>
 						</div>
 						<div class="col-sm-8">
-							<div class="row">
-								<table id="empListTbl">
+							<div class="row"
+								style="height: 250px;overflow-y: scroll; border: thin solid gray;">
+								<table id="empListTbl" class="table table-borded">
+									<thead>
 									<tr>
 										<th>선택</th>
 										<th>사원번호</th>
@@ -82,52 +85,31 @@
 										<th>직급번호</th>
 										<th>사원명</th>
 									</tr>
+									</thead>
+									<tbody id="body">
+									</tbody>
 								</table>
 							</div>
-							<div class="row">
-
-								<div class="col-sm-6">
-									<ul>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-									</ul>
-								</div>
-								<div class="col-sm-6">
-									<ul>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-									</ul>
-								</div>
+							<div class="row" id="addButton">
+							<div class="col-sm-12 text-center">
+								<button class="btn btn-primary">(+)추가</button>
+								<button class="btn btn-primary">(-)빼기</button>
+							</div>	
 							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<ul>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-									</ul>
-								</div>
-								<div class="col-sm-6">
-									<ul>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-										<li></li>
-									</ul>
-								</div>
+								<div class="row" style="height: 250px; overflow: hidden; border: thin solid gray; padding:5px;">
+									<div class="col-sm-12"
+										style="overflow-y: scroll; ">
+										<p>결재자</p>
+										<hr/>
+										<ul>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+											<li></li>
+										</ul>
+									</div>
 							</div>
 						</div>
 					</div>
@@ -153,7 +135,8 @@
 												contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 												success : function(data) {
 													var result = data;
-													var table = $('#empListTbl');
+													var tbody = $('#empListTbl').children('#body');
+													tbody.html("");
 													$
 															.each(
 																	result,
@@ -201,7 +184,7 @@
 																						td4)
 																				.append(
 																						td5);
-																		table
+																		tbody
 																				.append(tr);
 
 																	});
