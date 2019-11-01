@@ -68,6 +68,7 @@
                                                                                 <a href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'>
                                                                                       <c:out value='${e["EMPNO"]}' />
                                                                                 </a>
+                                                                                
                                                                          </td>
                                                                          <td>
                                                                                 <a href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'>
@@ -81,17 +82,17 @@
                                                                                 <c:out value='${e["DEPTNAME"]}' />
                                                                          </td>
                                                                          <td>
-                                                                                <c:out value='${e["SEVCHECK"] }' />
+                                                                                <c:out value='${e["EMPENTYN"] }' />
                                                                          </td>
                                                                          <td>
                                                                                 <c:out value='${e["SEVDATE"] }' />
                                                                          </td>
                                                                          <td>
-                                                                                <c:if test='${fn:trim(e["SEVCHECK"]) eq "N" }' var="r">
+                                                                                <c:if test='${fn:trim(e["EMPENTYN"]) eq "N" }' var="r">
+                                                                                	<c:set var="empname" value='${ e["EMPNAME"]}'/>
                                                                                       <c:set var="hiredate" value='${e["HIREDATE"]}'/>
                                                                                       <c:set var="salary" value='${e["EMPSAL"]}'/>
-                                                                                      ${e["HIREDATE"]}
-                                                                                      <button type="button" class="btn btn-success"  onclick="quit('${e.EMPNO}', '${hiredate }', '${salary }');" data-toggle="modal"  data-target="#exampleModal">퇴사 시키기</button>
+                                                                                      <button type="button" class="btn btn-success"  onclick="quit('${e.EMPNO}', '${hiredate }', '${salary }', '${empname }');" data-toggle="modal"  data-target="#exampleModal">퇴사 시키기</button>
                                                                                 </c:if>
                                                                          </td>
                                                                    </tr>
@@ -102,44 +103,44 @@
                                  </div>
                            </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"><c:out  value='${e["EMPNAME"] }'/> 님이 받는 퇴직금액</h5>
-        <button type="button" class="close" data-dismiss="modal"  aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </buttn>
-      </div>
-      <div class="modal-body">
-       <input type="text" class=" col-xs-2" name="boardWriter" value="22333"  readonly required>원 지급하기
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"  data-dismiss="modal">취소</button>
-        <button type="button" class="btn btn-primary"  onclick="severance();">확인</button>
-      </div>
-    </div>
-  </div>
-</div>
+<form action="${path }/acct/quitJob.do" method="post">
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel" name="empname"></h5>
+	        
+	      </div>
+	      <div class="modal-body">
+	       <input type="text" class=" col-xs-2" name="amt" readonly required>원 
+	       <input type="hidden" id="empname" name="empname">
+	       <input type="hidden" id="empno" name="empno">
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary"  data-dismiss="modal">취소</button>
+	        <input type="submit" class="btn btn-primary" value="결재 올리기" />
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</form>
 <script>
-       function quit(empno, hiredate, salary){
+       function quit(empno, hiredate, salary, empname){
              
              var salary = salary;
-             
              
              var sd = new Date(hiredate);
              var today = new Date();
              var days = (today.getTime()-sd.getTime())/(1000*60*60*24);
              
-             
              var x = salary/24;
              var y = days/365;
              
-              //console.log((sd.getMonth()+1)+'/'+sd.getDate()+'/'+sd.getFullYear() + "  ------ "+ ed);
-             
              var result = Math.ceil(x*y/100)*100;
-             $(".modal-body>[name=boardWriter]").val(result);
-             $(".modal-title").html(empno);
+             $(".modal-body>[name=amt]").val(result);
+             $(".modal-title").html(empname + "님의 퇴직금");
+             $("#empname").val(empname);
+             $('#empno').val(empno);
              
        }
 </script>

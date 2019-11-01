@@ -48,7 +48,7 @@
 			<property name = "dataSource" ref="dataSource"/>
 		</bean>
 		<!-- 어노테이션 방식으로 처리하기 -->
-		<!-- <tx:annotation-driven transaction-manager = "transactionManager"/> -->
+		<tx:annotation-driven transaction-manager = "transactionManager"/>
 		
 		
 		
