@@ -67,10 +67,10 @@
 </script>
 
 <section>
-
+	
      <nav class="navbar navbar-expand-lg ">
             <form class="form-inline ml-auto">
-                <a class="btn btn-outline-success pull-right" href="#" role="button" onclick="doExport()"><i class="fas fa-file-excel"></i> &nbsp Excel</a>
+                <a id = "excelBtn" class="btn btn-outline-success pull-right" href="#" role="button" onclick="doExport()"><i class="fas fa-file-excel"></i> &nbsp Excel</a>
 					&nbsp
 					<a class="btn btn-outline-danger pull-right" href="#" role="button" onclick="pdfExport()"><i class="fas fa-file-pdf"></i> &nbsp PDF</a>
             </form>
@@ -115,12 +115,12 @@
                     </tr>
                     <tr>
                       <td>임금</td>
-                      <td id='salaries'>₩(<c:out value='${list["SALARIES"] }'/>)</td>
+                      <td id='salaries'></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>임금세</td>
-                      <td id="saltax">₩(<c:out value="${list ['SALTAX']}"/>)</td>
+                      <td id="saltax"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -145,12 +145,12 @@
                     </tr>
                     <tr>
                       <td>퇴직금</td>
-                      <td id="severance">₩(<c:out value="${list['SEVERANCE'] }"/>)</td>
+                      <td id="severance"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>출장비</td>
-                      <td id="biztrip" val="ee">₩(<c:out value="${list['BIZTRIP'] }"/>)</td>
+                      <td id="biztrip"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -160,7 +160,7 @@
                     </tr>
                     <tr>
                       <td>총 경영비</td>
-                      <td></td>
+                      <td id="netIncome"></td>
                       <!-- <td><strong id="totalExpense">${list['SEVERANCE']+list['BIZTRIP'] }</strong></td> -->
                     </tr>
                     <tr>
@@ -179,11 +179,32 @@
 
 <script>
 	
-	$(function calc(){
+	/* $(function calc(){
 		console.log($("#biztrip").val());
 	})
 	
-	var obj = JSON.parse(data);
+	var obj = JSON.parse(data); */
+	
+	$(function(){
+		$.ajax({
+			url: "${path}/acct/result.do",
+			success: function(data){
+				// java -> javascript 로 데이터를 가지고 옴
+				console.log(data);
+				var list = JSON.parse(data);
+				for(i=0; i<list[0].length; i++){
+					console.log(list[0][i]);
+				}
+				
+				$("#biztrip").html("(₩"+list[0].BIZTRIP+")");
+				$("#severance").html("(₩"+list[0].SEVERANCE+")");
+				$("#saltax").html("(₩"+list[0].SALTAX+")");
+				$("#salaries").html("(₩"+list[0].SALARIES+")");
+			} 
+		})
+		
+	})
+	
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -138,6 +138,7 @@ public class StuffController {
       
       int numPerPage = 10;
       List<Stuff> list=service.selectStuffList(cPage,numPerPage);
+      System.out.println(list);
       int totalCount = service.selectStuffCount();
       
       mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/stuffAllList.do"));
@@ -375,6 +376,17 @@ public class StuffController {
 		}
 		
 	}
+   
+   //이름으로만 물품조회
+   @RequestMapping("/stuff/searchStuffName.do")
+   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value = "stuffName") String stuffName) {
+	   
+	   System.out.println(stuffName);
+	   
+	   List<Stuff> list = service.searchStuffName(stuffName);
+	    
+	   return list;
+   }
    
 
    

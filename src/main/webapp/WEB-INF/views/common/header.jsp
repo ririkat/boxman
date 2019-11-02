@@ -1,4 +1,3 @@
-  
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -43,6 +42,31 @@
   <link rel="icon" href="${path }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
   <!-- datepicker -->
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
+  
+  <!-- fullCalendar -->
+  <link href='${path }/resources/hb/fullcalendar/core/main.css' rel='stylesheet' />
+  <link href='${path }/resources/hb/fullcalendar/daygrid/main.css' rel='stylesheet' />
+  <link href='${path }/resources/hb/fullcalendar/timegrid/main.css' rel='stylesheet'/>
+
+  <script src='${path }/resources/hb/fullcalendar/core/main.js'></script>
+  <script src='${path }/resources/hb/fullcalendar/daygrid/main.js'></script>
+  <script src='${path }/resources/hb/fullcalendar/timegrid/main.js'></script>
+  <script src='${path }/resources/hb/fullcalendar/interaction/main.js'></script>
+    
+
+  <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
+
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        plugins: [ 'dayGrid' ]
+      });
+
+      calendar.render();
+    });
+
+  </script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
 </head>
@@ -111,8 +135,9 @@
 		          <div class="bg-white py-2 collapse-inner rounded">
 		            <h6 class="collapse-header">Custom Components:</h6>
 		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}">내정보확인</a>
-		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태관리</a>
-		            <a class="collapse-item" href="${path }/empJob/empJobList.do">연차확인</a>
+		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태현황</a>
+		            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?empNo=${loginEmp.EMPNO}&temp=my">휴가현황</a>
+		            <a class="collapse-item" href="${path }/emp/selectBTList.do?empNo=${loginEmp.EMPNO}&temp=my">출장현황</a>
 		          </div>
 		        </div>
 		      </li>
@@ -124,9 +149,10 @@
 				</a>
 				<div id="collapseApv" class="collapse" aria-labelledby="headingApv" data-parent="#accordionSidebar">
 		          <div class="bg-white py-2 collapse-inner rounded">
+		          	<a class="collapse-item" href="${path }/apv/requestApv.do">기안하기</a>
 		            <a class="collapse-item" href="${path }/apv/sendApv.do">상신결재함</a>
 		            <a class="collapse-item" href="${path }/apv/receiveApv.do">수신결재함</a>
-		            <a class="collapse-item" href="${path }/apv/apvLine.do">결재라인관리</a>
+		            <a class="collapse-item" href="${path }/apv/apvLineList.do?loginNo=${loginEmp['EMPNO'] }">결재라인관리</a>
 		            <a class="collapse-item" href="${path }/apv/apvDoc.do">결재양식관리</a>
 		          </div>
         		</div>
@@ -142,8 +168,11 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Custom Components:</h6>
             <a class="collapse-item" href="${path }/emp/empList.do">사원관리</a>
-            <a class="collapse-item" href="${path }/dept/deptList.do">부서관리</a>
-            <a class="collapse-item" href="${path }/empJob/empJobList.do">직급관리</a>
+            <a class="collapse-item" href="${path }/dept/deptList.do?t=N">부서관리</a>
+            <a class="collapse-item" href="${path }/empJob/empJobList.do?t=N">직급관리</a>
+            <a class="collapse-item" href="${path }/emp/selectAttenList.do?temp=all">근태현황</a>
+            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?temp=all">휴가현황</a>
+            <a class="collapse-item" href="${path }/emp/selectBTList.do?temp=all">출장현황</a>
           </div>
         </div>
       </li>
@@ -170,16 +199,17 @@
 			<!-- 회계 관리 -->
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
-				aria-expanded="true" aria-controls="collapseUtilities"> <i
-					class="fas fa-fw fa-wrench"></i> <span>회계 관리</span>
+				aria-expanded="true" aria-controls="collapseUtilities"> 
+				<i class="fas fa-calculator"></i> <span>회계 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
 						<h6 class="collapse-header">Accounting</h6>
-						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a> <a
-							class="collapse-item" href="${path }/acct/bs.do">대차대조표</a> <a
-							class="collapse-item" href="${path }/acct/cf.do">현금흐름표</a>
+						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a>
+						<a class="collapse-item" href="${path }/acct/wage.do">월급 관리</a> 
+						<a class="collapse-item" href="${path }/acct/biztrip.do">출장비 관리</a>
+						<a class="collapse-item" href="${path }/acct/severance.do">퇴직금 관리</a>
 					</div>
 				</div></li>
 
@@ -188,14 +218,13 @@
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 
-
-
 			<!-- 게시판 관리 -->
 			<li class="nav-item">
 	        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseNotice" aria-expanded="true" aria-controls="collapseNotice">
 	          <i class="fas fa-fw fa-cog"></i>
 	          <span>게시판 관리</span>
 	        </a>
+	        
 	        <div id="collapseNotice" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 	          <div class="bg-white py-2 collapse-inner rounded">
 	            <h6 class="collapse-header">Custom Components:</h6>
@@ -229,8 +258,8 @@
 				<!-- Topbar -->
 				<nav
 					class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-						<input type="button" id="goToWork" class="btn btn-success mr-2" value="출근체크" style="width: 100px;display:none;">
-						<input type="button" id="offWork" class="btn btn-success mr-2" value="퇴근체크" style="width: 100px;display:none;" >
+						<input type="button" id="goToWork" class="btn btn-primary mr-2" value="출근체크" style="width: 100px;display:none;">
+						<input type="button" id="offWork" class="btn btn-primary mr-2" value="퇴근체크" style="width: 100px;display:none;" >
 					<!-- 각 날자에 출퇴근이 있는지 확인, 없으면 출근체크 버튼 나타남 -->
 					<script>
 					$(function(){
@@ -405,69 +434,12 @@
 							</div></li>
 
 						<!-- Nav Item - Messages -->
-						<li class="nav-item dropdown no-arrow mx-1"><a
-							class="nav-link dropdown-toggle" href="#" id="messagesDropdown"
-							role="button" data-toggle="dropdown" aria-haspopup="true"
-							aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
-								<!-- Counter - Messages --> <span
-								class="badge badge-danger badge-counter">7</span>
-						</a> <!-- Dropdown - Messages -->
-							<div
-								class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-								aria-labelledby="messagesDropdown">
-								<h6 class="dropdown-header">Message Center</h6>
-								<a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-										<div class="status-indicator bg-success"></div>
-									</div>
-									<div class="font-weight-bold">
-										<div class="text-truncate">Hi there! I am wondering if
-											you can help me with a problem I've been having.</div>
-										<div class="small text-gray-500">Emily Fowler · 58m</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-										<div class="status-indicator"></div>
-									</div>
-									<div>
-										<div class="text-truncate">I have the photos that you
-											ordered last month, how would you like them sent to you?</div>
-										<div class="small text-gray-500">Jae Chun · 1d</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/CS2uCrpNzJY/60x60" alt="">
-										<div class="status-indicator bg-warning"></div>
-									</div>
-									<div>
-										<div class="text-truncate">Last month's report looks
-											great, I am very happy with the progress so far, keep up the
-											good work!</div>
-										<div class="small text-gray-500">Morgan Alvarez · 2d</div>
-									</div>
-								</a> <a class="dropdown-item d-flex align-items-center" href="#">
-									<div class="dropdown-list-image mr-3">
-										<img class="rounded-circle"
-											src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="">
-										<div class="status-indicator bg-success"></div>
-									</div>
-									<div>
-										<div class="text-truncate">Am I a good boy? The reason I
-											ask is because someone told me that people say this to all
-											dogs, even if they aren't good...</div>
-										<div class="small text-gray-500">Chicken the Dog · 2w</div>
-									</div>
-								</a> <a class="dropdown-item text-center small text-gray-500"
-									href="#">Read More Messages</a>
-							</div></li>
-
-						<div class="topbar-divider d-none d-sm-block"></div>
-
+						<li class="nav-item no-arrow mx-1"><a
+							class="nav-link" href="${path }/chat/chatList.do" id="messagesDropdown"
+							role="button"  aria-haspopup="true"	aria-expanded="false"> <i class="fas fa-envelope fa-fw"></i>
+								<!-- Counter - Messages -->
+						<span id = "unread" class="badge badge-danger badge-counter"></span>
+						</a> 
 						<!-- Nav Item - User Information 로그인정보-->
 						<li class="nav-item dropdown no-arrow">
 							<!-- 로그인 세션 있을 때, --> <c:if test="${not empty loginEmp }">
@@ -529,8 +501,41 @@
 					</div>
 				</div>
 
-				<!-- Begin Page Content -->
-				<div class="container-fluid">
+			<!-- Begin Page Content -->
+			<div class="container-fluid">
 
-					<!-- Page Heading -->
-					<h1 class="h3 mb-4 text-gray-800">${param.pageTitle }</h1>
+			<!-- Page Heading -->
+			<h1 class="h3 mb-4 text-gray-800">${param.pageTitle }</h1>
+					
+			<form name="openMessageFrm" method="post">
+				<input type="hidden" id="userId" name="userId" value="${loginEmp['EMPNO']}">
+			</form>
+					
+<script>
+		var userId = $("#userId").val();
+
+		//안읽은메세지수 출력
+		$(function(){
+					timer = setInterval(function(){
+						$.ajax({
+							type:"post",
+							url: "${path }/chat/readCount.do",
+							data: {
+								userId: encodeURIComponent(userId)
+							},
+							success: function(result) {
+								if(result>=1) {
+									showUnread(result);
+								} else {
+									showUnread('0');
+								}
+							}
+						});
+					},10000);
+				
+			}); 
+			
+ 			function showUnread(result){
+				$('#unread').html(result);
+			}
+</script>

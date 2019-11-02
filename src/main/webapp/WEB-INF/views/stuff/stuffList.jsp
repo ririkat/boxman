@@ -25,7 +25,7 @@
 										<option value = "conName">거래처 이름</option>
 										<option value = "scName">카테고리</option>
 							</select>
-                           <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data">
+                           <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data" id = "data">
                       </label>
 				  		<button onclick = "searchStuff();" class="btn btn-light btn-icon-split">
                    		 <span class="icon text-gray-600">
@@ -67,9 +67,15 @@
                        <tbody>
                           <c:forEach items="${list}" var="stuff" varStatus = "v">
       						<tr>
-         						<td>				
-         						<c:if test="${param.cPage!=1 }">
-									<c:out value="${v.count }"/>
+        						<td>
+         						<c:if test="${param.cPage eq null }">
+         								<c:out value="${v.count }"/>
+         						</c:if>
+             					<c:if test="${param.cPage == 1 }">
+										<c:out value="${v.count }"/>
+								</c:if>			
+         						<c:if test="${param.cPage > 1 }">
+										<c:out value="${v.count+(10*(param.cPage-1)) }"/>
 								</c:if>
 								</td>
          						<td>${stuff.stuffName}</td>
@@ -98,8 +104,13 @@
 
 <script>
 function searchStuff(){
-	$("#searchFrm").attr("action","${path}/stuff/searchStuff.do");
-	$("#searchFrm").submit();
+	
+	if($('#data').val() != "") {
+		$("#searchFrm").attr("action","${path}/stuff/searchStuff.do");
+		$("#searchFrm").submit();
+	} else {
+		alert("검색하실 내용을 입력해주세요.");
+	}
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

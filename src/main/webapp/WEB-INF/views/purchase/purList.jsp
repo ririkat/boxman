@@ -100,4 +100,9 @@ function searchPurInfo(){
 	$("#searchFrm").attr("action","${path}/purchase/searchPurInfo.do");
 	$("#searchFrm").submit();
 }
+
+function searchConnection(){
+	$("#searchFrm").attr("action","${path}/stuff/searchConnection.do");
+	$("#searchFrm").submit();
+}
 </script>

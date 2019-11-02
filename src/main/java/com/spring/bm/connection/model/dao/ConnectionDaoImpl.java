@@ -7,6 +7,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bm.connection.model.vo.Connection;
+
 @Repository
 public class ConnectionDaoImpl implements ConnectionDao {
 
@@ -87,6 +89,20 @@ public class ConnectionDaoImpl implements ConnectionDao {
 	@Override
 	public int selectConnSearchCount(SqlSessionTemplate session, Map<String, Object> m) {
 		return session.selectOne("connection.selectConnSearchCount",m);
+	}
+
+	//구매정보 등록 거래처 검색
+	@Override
+	public List<Connection> searchConnection(SqlSessionTemplate session, Map<String, Object> m) {
+		int cPage = (Integer)m.get("cPage");
+		int numPerPage = (Integer)m.get("numPerPage");
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("connection.searchConnection", m, rows);
+	}
+
+	@Override
+	public int serchConnectionCount(SqlSessionTemplate session, Map<String, Object> m) {
+		return session.selectOne("connection.serchConnectionCount",m);
 	}
 
 }

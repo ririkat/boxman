@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.connection.model.service.ConnectionService;
-import com.spring.bm.stuff.model.vo.Stuff;
+import com.spring.bm.connection.model.vo.Connection;
 
 @Controller
 public class ConnectionController {
@@ -170,6 +170,30 @@ public class ConnectionController {
 		mv.addObject("list", list);
 		mv.setViewName("connection/connList");
 
+		return mv;
+	}
+	
+	//구매 정보 등록에서 거래처 이름 검색
+	@RequestMapping("/connection/searchConnection2.do")
+	public ModelAndView searchConnection2(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
+		
+	    int numPerPage = 10;   
+	    Map<String, Object> m = new HashMap();
+	    m.put("cPage", cPage);
+	    m.put("numPerPage", numPerPage);
+	    m.put("data", data); // 빈칸에 입력한 값
+	    m.put("type", type); // select에서 가져온 값 
+	    
+	    List<Connection> list = service.searchConnection(m);
+	    int totalCount = service.searchConnectionCount(m);
+	    System.out.println("list : " + list + "/" + "count : " + totalCount);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection2.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("connection/connSearchPopUp");
 		return mv;
 	}
 	

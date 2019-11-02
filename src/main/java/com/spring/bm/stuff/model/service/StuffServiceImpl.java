@@ -149,6 +149,12 @@ public class StuffServiceImpl implements StuffService {
 		return dao.connectionName(sqlSession, conCode);
 	}
 
+	@Override
+	public List<Stuff> searchStuffName(String stuffName) {
+		// TODO Auto-generated method stub
+		return dao.searchStuffName(sqlSession, stuffName);
+	}
+
 
 
 

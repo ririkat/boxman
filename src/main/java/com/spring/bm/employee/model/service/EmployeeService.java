@@ -17,7 +17,7 @@ public interface EmployeeService {
 	Map<String, Object> selectEmpOne(int empNo);
 	List<EmpFile> selectEmpFileList(int empNo);
 	/* 사원로그인*/
-	Map<String, String> selectLoginEmp(Map<String, String> map);
+	Map<String, Object> selectLoginEmp(Map<String, Object> map);
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(Map<String, Object> param);
 	int selectEmpSearchCount(Map<String, Object> param);
@@ -40,6 +40,19 @@ public interface EmployeeService {
 	/* 근태현황보기 */
 	List<Map<String, String>> selectAttenList(Map<String, Object> param, int cPage, int numPerPage);
 	int selectAttenCount(Map<String, Object> param);
+	/* 휴가리스트출력 */
+	List<Map<String, String>> selectDayOffList(Map<String, Object> param, int cPage, int numPerPage);
+	int selectDayOffCount(Map<String, Object> param);
+	/* 출장리스트출력 */
+	List<Map<String, String>> selectBTList(Map<String, Object> param, int cPage, int numPerPage);
+	int selectBTCount(Map<String, Object> param);
+	/* 근태수정용 한개보기 */
+	Map<String, Object> selectAttenNoOne(Map<String, Object> param);
+	/* 남은휴가일수 보기 */
+	int selectDoRemaining(Map<String, Object> map);
+	/* 휴가신청하기 */
+	int insertDayOff(Map<String, Object> param) throws Exception;
+	/* 출장신청 */
+	int insertBT(Map<String, Object> param) throws Exception;
 	
 }
-

@@ -125,6 +125,11 @@ public class StuffDaoImpl implements StuffDao {
 		return sqlSession.selectOne("stuff.connectionName", conCode);
 	}
 
+	@Override
+	public List<Stuff> searchStuffName(SqlSessionTemplate sqlSession, String stuffName) {
+		return sqlSession.selectList("stuff.searchStuffName", stuffName);
+	}
+
 
 
 

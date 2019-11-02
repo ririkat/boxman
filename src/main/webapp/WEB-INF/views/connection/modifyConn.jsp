@@ -15,23 +15,6 @@
     display: block;
     width: 500px;
     height: calc(1.5em + .75rem + 2px);
-    padding: .375rem .75rem;<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
-<c:set var="path" value="${pageContext.request.contextPath}"/>
-
-<jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="거래처 수정" name="tabTitle"/> 
-</jsp:include>
-
-<style>
-.form-control {
-    display: block;
-    width: 500px;
-    height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
