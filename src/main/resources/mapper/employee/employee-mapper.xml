@@ -113,7 +113,7 @@
 	</select>
 	<!-- 출근등록 -->
 	<insert id="insertGotoWork" parameterType="map">
-		INSERT INTO ATTENDANCE VALUES(SEQ_ATTENDANCE.NEXTVAL, #{empNo}, DEFAULT, NULL, 
+		INSERT INTO ATTENDANCE VALUES(SEQ_ATTENDANCE.NEXTVAL, #{empNo}, DEFAULT, DEFAULT, NULL, 
 		CASE
 			WHEN
 				(TO_DATE(SYSDATE, 'hh24:mi:ss') - to_date('09:01:00','hh24:mi:ss')) * 24 * 60 * 60 > 0 THEN '지각'
@@ -129,17 +129,17 @@
 	
 	<!-- 퇴근등록 -->
 	<update id="updateOffWork" parameterType="map">
-		UPDATE ATTENDANCE SET attenEnd = DEFAULT WHERE EMPNO=#{empNo} and TO_CHAR(SYSDATE,'YYYY-MM-DD')=TO_CHAR(ATTENSTART,'YYYY-MM-DD')
+		UPDATE ATTENDANCE SET attenEnd = DEFAULT WHERE EMPNO=#{empNo} and TO_CHAR(SYSDATE,'YYYY-MM-DD')=TO_CHAR(ATTENDAY,'YYYY-MM-DD')
 	</update>
 	<!-- 출/퇴근 체크용 한개 보기 -->
 	<select id="selectAttenOne" parameterType="map" resultType="map">
-		SELECT * FROM ATTENDANCE WHERE EMPNO=#{empNo} AND TO_CHAR(SYSDATE,'YYYY-MM-DD')=TO_CHAR(ATTENSTART,'YYYY-MM-DD')
+		SELECT * FROM ATTENDANCE WHERE EMPNO=#{empNo} AND TO_CHAR(SYSDATE,'YYYY-MM-DD')=TO_CHAR(ATTENDAY,'YYYY-MM-DD')
 	</select>
 	
 	<!-- 근태리스트출력 -->
 	<select id="selectAttenList" parameterType="map" resultType="map">
 		SELECT A.*, B.*, C.*,
-		 	TO_CHAR(ATTENSTART,'DY') AS DY
+		 	TO_CHAR(ATTENDAY,'DY') AS DY
 		 FROM ATTENDANCE A 
 		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
 		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
@@ -147,27 +147,27 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
-				ORDER BY A.ATTENSTART DESC
+				ORDER BY A.ATTENDAY 
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
-				AND TO_CHAR(A.ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND A.EMPNO=#{empNo}
-				ORDER BY A.ATTENSTART DESC
+				ORDER BY A.ATTENDAY
 			</when>
 			<when test="temp eq 'all'"><!-- 인사관리 -->
-				AND TO_CHAR(A.ATTENSTART,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
-				ORDER BY B.DEPTNO, A.ATTENSTART DESC
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
+				ORDER BY B.DEPTNO, A.ATTENDAY DESC
 			</when>
 			<when test="temp eq 'searchAll'"><!-- 인사관리에서 검색 -->
-				AND TO_CHAR(A.ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				<if test="type != null and type != ''">
 					<if test="type eq 'empNo'">
 						AND A.${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENSTART DESC
+						ORDER BY B.DEPTNO, A.ATTENDAY
 					</if>
 					<if test="type neq 'empNo'">
 						AND ${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENSTART DESC
+						ORDER BY B.DEPTNO, A.ATTENDAY
 					</if>
 				</if>
 			</when>
@@ -177,11 +177,11 @@
 		SELECT COUNT(*) FROM ATTENDANCE WHERE 1=1
 		<choose>
 			<when test="temp eq 'search'">
-				AND TO_CHAR(ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND TO_CHAR(ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND EMPNO=#{empNo}
 			</when>
 			<when test="temp eq 'searchAll'">
-				AND TO_CHAR(ATTENSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND TO_CHAR(ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND EMPNO=#{empNo}
 			</when>
 		</choose>
@@ -290,10 +290,17 @@
 
 	<!-- 근태수정용한개보기 -->
 	<select id="selectAttenNoOne" parameterType="map" resultType="map">
-		SELECT *,TO_CHAR(ATTENSTART,'DY') AS DY FROM ATTENDANCE A JOIN EMPLOYEE E ON (A.EMPNO=E.EMPNO)
+		SELECT  A.*,E.*,D.DEPTNAME,TO_CHAR(ATTENDAY,'DY') AS DY FROM ATTENDANCE A JOIN EMPLOYEE E ON (A.EMPNO=E.EMPNO)
 		JOIN DEPARTMENT D ON (E.DEPTNO=D.DEPTNO)
 		WHERE ATTENNO=#{attenNo}
 	</select>
+	
+	<!-- 근태수정신청 -->
+	<insert id = "insertUpAttendance" parameterType="map">
+		INSERT INTO UPATTENDANCE VALUES(
+			SEQ_UPATTENDANCE.NEXTVAL, #{attenNo}, #{uaStart}, #{uaEnd}, default, default, #{uaReason}
+		)
+	</insert>
 	
 	<!-- 남은 휴가일수 보기 -->
 	<select id="selectDoRemaining" parameterType="map" resultType="map">
