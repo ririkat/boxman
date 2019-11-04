@@ -99,8 +99,6 @@
 				$('#attUpFrm').attr("action","${path}/emp/updateAttenEnd.do");
 				$('#attUpFrm').submit();
 			} 
-			console.log($('#upStart').val());
-			console.log($('#upEnd').val());
 		});
 	});
 
