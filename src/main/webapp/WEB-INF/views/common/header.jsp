@@ -535,7 +535,8 @@
 				
 			}); 
 			
- 			function showUnread(result){
-				$('#unread').html(result);
-			}
+		function showUnread(result){
+			$('#unread').html(result);
+		}
 </script>
+
