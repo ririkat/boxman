@@ -28,6 +28,8 @@ public class RSAEncrypto implements MyEncrypt{
 
 	public RSAEncrypto() {
 		String path = this.getClass().getResource("/").getPath();
+//		path = path.substring(0,path.lastIndexOf("/classes"));
+//		File f = new File(path + "/keys.hb");
 		path = path.substring(0,path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
 		if(f.exists()) {
