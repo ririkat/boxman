@@ -102,6 +102,7 @@ public class AcctController {
 		mv.addObject("loc", loc);
 		mv.setViewName("common/msg");
 		return mv;
+		
 	}
 	
 }
