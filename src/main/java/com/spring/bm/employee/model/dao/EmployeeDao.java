@@ -23,7 +23,7 @@ public interface EmployeeDao {
 	Map<String, Object> selectEmpOne(SqlSessionTemplate session, int empNo);
 	List<EmpFile> selectEmpFileList(SqlSessionTemplate session, int empNo);
 	/* 사원로그인*/
-	Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map);
+	Map<String, Object> selectLoginEmp(SqlSessionTemplate session, Map<String, Object> map);
 	/* 사원검색 */
 	List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param);
 	int selectEmpSearchCount(SqlSessionTemplate session, Map<String, Object> param);
@@ -57,11 +57,14 @@ public interface EmployeeDao {
 	int selectBTCount(SqlSessionTemplate session, Map<String, Object> param);
 	/* 근태수정용 한개보기 */
 	Map<String, Object> selectAttenNoOne(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태수정신청 */
+	int insertUpAttendance(SqlSessionTemplate session, Map<String, Object> param);
 	/* 남은휴가일수 보기 */
 	int selectDoRemaining(SqlSessionTemplate session, Map<String, Object> map);
 	/* 휴가신청 */
 	int insertDayOff(SqlSessionTemplate session, Map<String, Object> param);
 	/* 출장신청 */
 	int insertBT(SqlSessionTemplate session, Map<String, Object> param);
+	
 	
 }

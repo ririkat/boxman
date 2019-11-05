@@ -60,7 +60,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	/* 사원로그인*/
 	@Override
-	public Map<String, String> selectLoginEmp(SqlSessionTemplate session, Map<String, String> map) {
+	public Map<String, Object> selectLoginEmp(SqlSessionTemplate session, Map<String, Object> map) {
 		return session.selectOne("emp.selectLoginEmp",map);
 	}
 	
@@ -187,6 +187,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("emp.selectAttenNoOne", param);
 	}
+	
+	/* 근태수정신청 */
+	@Override
+	public int insertUpAttendance(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertUpAttendance", param);
+	}
 
 	/* 남은휴가일수보기 */
 	@Override
@@ -214,5 +221,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.insert("emp.insertBT", param);
 	}
+
+
+	
+	
 	
 }
