@@ -3,10 +3,11 @@
 <mapper namespace="purchase">
 
 	<select id="selectPurList" resultType="map">
-		SELECT DISTINCT a.*, b.CONNAME, c.*, d.EMPNAME
-		FROM PURCHASETAB a, CONNECTION b, PURITEMLIST c, EMPLOYEE d
-		WHERE a.CONCODE=b.CONCODE(+) and a.PITEMS=c.PITEMS(+) and a.EMPNO=d.EMPNO(+)
-		ORDER BY PURCODE
+		SELECT DISTINCT a.*, b.CONNAME, c.EMPNAME
+		FROM PURCHASETAB a, CONNECTION b, EMPLOYEE c
+		WHERE a.CONCODE=b.CONCODE(+)
+		AND a.EMPNO=c.EMPNO(+)
+		ORDER BY PURCODE DESC
 	</select>
 	
 	<select id="selectPurCount" resultType="_int">
@@ -16,5 +17,90 @@
 	<select id="selectConnList" resultType="map">
 		SELECT * FROM CONNECTION WHERE CONCATEG='매입'
 	</select>
-
+	
+	<select id="addStuffToTemp" parameterType="string" resultType="map">
+		SELECT * FROM STUFF WHERE STUFFNO=#{stuffNo}
+	</select>
+	
+	<insert id="enrollPurInfo" parameterType="map">
+		INSERT INTO purchaseTab
+		VALUES (seq_purchase.NEXTVAL, SYSDATE, (SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매입'),
+				#{chargeNo}, #{purTotAmt}, default, null, default, null)
+	</insert>
+	
+	<!-- <insert id="enrollPurItem" parameterType="map">
+		<if test="stList.size != 0">
+			<foreach collection="stList" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+				INTO purItemList (
+					pItems,
+					purCode,
+					stuffNo,
+					pItemQuan
+				) VALUES (
+					seq_purItemList.NEXTVAL,
+					seq_purchase.CURRVAL,
+					#{item.stNo},
+					#{item.stNum}
+				)
+			</foreach>
+		</if>
+	</insert> -->
+	
+	<insert id="enrollPurItem" parameterType="map">
+		<if test="stList.size != 0">
+			INSERT INTO purItemList(pItems,purCode,stuffNo,pItemQuan)
+			SELECT seq_purItemList.NEXTVAL, seq_purchase.CURRVAL, A.* FROM (
+				<foreach collection="stList" item="item" separator="UNION ALL ">
+					SELECT
+						#{item.stNo} AS stNo,
+						#{item.stNum} AS stNum
+					FROM DUAL
+				</foreach>
+			) A
+		</if>
+	</insert>
+	
+	<select id="selectPurSearchList" parameterType="map" resultType="map">
+		SELECT DISTINCT a.*, b.CONNAME, c.EMPNAME
+		FROM PURCHASETAB a, CONNECTION b, EMPLOYEE c
+		WHERE a.CONCODE=b.CONCODE(+)
+		AND a.EMPNO=c.EMPNO(+)
+		<choose>
+			<when test="type eq 'conCode'">
+				AND a.CONCODE=(SELECT CONCODE FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매입')
+			</when>
+			<when test="type eq 'empNo'">
+				AND a.EMPNO=(SELECT EMPNO FROM EMPLOYEE WHERE EMPNAME LIKE '%'||#{data}||'%' AND EMPID=#{empId})
+			</when>
+			<otherwise>
+				AND ${type} LIKE '%'||#{data}||'%'
+			</otherwise>
+		</choose>
+		ORDER BY PURCODE DESC
+	</select>
+	
+	<select id="selectPurSearchCount" parameterType="map" resultType="_int">
+		SELECT COUNT(*) FROM purchaseTab
+		<choose>
+			<when test="type eq 'conCode'">
+				WHERE CONCODE=(SELECT CONCODE FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매입')
+			</when>
+			<when test="type eq 'empNo'">
+				WHERE EMPNO=(SELECT EMPNO FROM EMPLOYEE WHERE EMPNAME LIKE '%'||#{data}||'%' AND EMPID=#{empId})
+			</when>
+			<otherwise>
+				WHERE ${type} LIKE '%'||#{data}||'%'
+			</otherwise>
+		</choose>
+		ORDER BY PURCODE DESC
+	</select>
+	
+	<select id="selectPurInfo" parameterType="_int" resultType="map">
+		SELECT * FROM purchaseTab WHERE PURCODE=#{purCode}
+	</select>
+	
+	<select id="selectPurItemList" parameterType="_int" resultType="map">
+		SELECT * FROM purItemList WHERE PURCODE=#{purCode}
+	</select>
+	
 </mapper>

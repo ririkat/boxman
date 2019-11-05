@@ -50,9 +50,9 @@ public interface StuffService {
 
 	Connection connectionName(int conCode);
 
-	List<Stuff> searchStuffName(String stuffName);
+	List<Stuff> searchStuffName(Map<String,String> map);
 
-
+	List<Stuff> searchStuffName2(Map<String,String> map);
 
 
 

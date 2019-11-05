@@ -7,14 +7,14 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="구매 관리" name="tabTitle"/> 
+   <jsp:param value="판매 관리" name="tabTitle"/> 
 </jsp:include>
 
 <section>
 
 	<div class="card shadow mb-4">
        <div class="card-header py-3">
-         <h6 class="m-0 font-weight-bold text-primary">구매 목록</h6>
+         <h6 class="m-0 font-weight-bold text-primary">판매 목록</h6>
        </div>
        <div class="card-body">
          <div class="table-responsive">
@@ -25,16 +25,16 @@
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
                        		<select name="type" id="searchKeyword" class="form-control form-control-sm">
-								<option value="purCode">구매코드</option>
+								<option value="salCode">판매코드</option>
 								<option value="conCode">거래처명</option>
 								<option value="empNo">담당자명</option>
-								<option value="purCk">구매확정여부</option>
-								<option value="deposCk">입금확정여부</option>
+								<option value="salCk">판매확정여부</option>
+								<option value="remitCk">입금확정여부</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
 							<input type="hidden" name="empId" value="${loginEmp['EMPID'] }">
 						</label>
-						<button onclick = "searchPurInfo();" class="btn btn-light btn-icon-split">
+						<button onclick = "searchSaleInfo();" class="btn btn-light btn-icon-split">
 	                   		<span class="icon text-gray-600">
 	                    		<i class="fas fa-arrow-right"></i>
 	                   		</span>
@@ -46,11 +46,11 @@
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
                      <div style="float:right;">
-	                      <a href="${path }/purchase/enrollPurInfo.do" class="btn btn-light btn-icon-split">
+	                      <a href="${path }/sale/enrollSaleInfo.do" class="btn btn-light btn-icon-split">
 		                      <span class="icon text-gray-600">
 		                      	<i class="fas fa-arrow-right"></i>
 		                      </span>
-		                      <span class="text">구매정보 등록</span>
+		                      <span class="text">판매정보 등록</span>
 	                  	  </a>
 	                 </div>
                   </div>
@@ -61,29 +61,31 @@
                     <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
                          <tr>
-                            <th>구매코드</th>
+                            <th>판매코드</th>
 							<th>등록일자</th>
 							<th>거래처</th>
 							<th>담당자</th>
-							<th>구매총액</th>
-							<th>구매확정</th>
-							<th>구매일자</th>
+							<th>거래유형</th>
+							<th>판매총액</th>
+							<th>판매확정</th>
+							<th>판매일자</th>
 							<th>입금여부</th>
 							<th>입금일자</th>
                          </tr>
                        </thead>
                        <tbody>
-                          <c:forEach items="${list }" var="p">
+                          <c:forEach items="${list }" var="s">
 								<tr>
-									<td><a href='${path }/purchase/verificationPurInfo.do?purCode=${p["PURCODE"]}'><c:out value='${p["PURCODE"] }'/></a></td>
-									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
+									<td><a href='#'><c:out value='${p["SALCODE"] }'/></a></td>
+									<td><c:out value='${p["SALENROLLDATE"] }' /></td>
 									<td><c:out value='${p["CONNAME"] }' /></td>
 									<td><c:out value='${p["EMPNAME"] }' /></td>
-									<td><c:out value='${p["PURTOTAMT"] }'/></td>
-									<td><c:out value='${p["PURCK"] }'/></td>
-									<td><c:out value='${p["PURDATE"] }' /></td>
-									<td><c:out value='${p["DEPOSCK"] }' /></td>
-									<td><c:out value='${p["DEPOSDATE"] }' /></td>
+									<td><c:out value='${p["SALTRANTYPE"] }' /></td>
+									<td><c:out value='${p["SALTOTAMT"] }'/></td>
+									<td><c:out value='${p["SALCK"] }'/></td>
+									<td><c:out value='${p["SALDATE"] }' /></td>
+									<td><c:out value='${p["REMITCK"] }' /></td>
+									<td><c:out value='${p["REMITDATE"] }' /></td>
 								</tr>
 							</c:forEach>
                        </tbody>
@@ -99,8 +101,8 @@
 </section>
 
 <script>
-function searchPurInfo(){
-	$("#searchFrm").attr("action","${path}/purchase/searchPurInfo.do");
+function searchSaleInfo(){
+	$("#searchFrm").attr("action","${path}/sale/searchSaleInfo.do");
 	$("#searchFrm").submit();
 }
 </script>
