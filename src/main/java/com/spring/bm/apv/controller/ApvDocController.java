@@ -109,7 +109,7 @@ public class ApvDocController {
 		return result;
 	}
 	
-	/* 결재 양식 수정 로직*/
+	/* 결재 양식 삭제 로직*/
 	@RequestMapping("/apv/apvDocDelete.do")
 	public ModelAndView apvDocDelete(@RequestParam(value="dfNo", 
 			required=false, defaultValue="0") int dfNo){
@@ -194,5 +194,36 @@ public class ApvDocController {
 		int no=Integer.parseInt((String) param.get("no"));
 		String code=service.selectDfcContent(no);
 		return code;
+	}
+	
+//	기안하기------------
+	/* 기안하기 리스트 뷰 */
+	@RequestMapping("/apv/requestApv.do")
+	public ModelAndView requestApvMain(@RequestParam(value="cPage", 
+			required=false, defaultValue="0") int cPage) {
+		int numPerPage = 10;
+		List<Map<String,Object>> list=service.selectDocForm(cPage,numPerPage);
+		int totalCount = service.selectDfCount();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/apv/requestApv.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/requestApvMain");
+		return mv;
+	}
+	
+	/* 기안 등록 뷰 */
+	@RequestMapping("/apv/requestApvEnroll.do")
+	public ModelAndView requestApvEnroll(@RequestParam(value="dfNo", 
+			required=false, defaultValue="0") int dfNo) {
+		ModelAndView mv = new ModelAndView();
+		/* List<Map<String,Object>> docCate=service.selectDocCate(); */
+		Map<String,Object> dfOne=service.selectDfModi(dfNo);
+		
+		mv.addObject("dfOne",dfOne);
+		/* mv.addObject("docCate",docCate); */
+		mv.setViewName("apv/requestApvEnroll");
+		return mv;
 	}
 }

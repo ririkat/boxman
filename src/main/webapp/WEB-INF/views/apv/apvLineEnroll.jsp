@@ -4,10 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
-<%-- <jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="BoxMan" name="tabTitle"/> 
-   <jsp:param value="양식" name="pageTitle"/>
-</jsp:include> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,7 +90,7 @@
 							</div>
 							<div class="row" id="addButton">
 							<div class="col-sm-12 text-center">
-								<button class="btn btn-primary" id="addBtn" onclick="addBtn()" >(+)추가</button>
+								<button class="btn btn-primary" id="addBtn1" onclick="addBtn1()" >(+)추가</button>
 								<button class="btn btn-primary" id="removeAll" onclick="removeAll()" >비우기</button>
 							</div>	
 							</div>
@@ -115,9 +111,9 @@
 											결재자
 											</th>
 											<td>
-												<button class="btn" id="upBtn" onclick="upBtn()">▲</button>
-												<button class="btn" id="downBtn" onclick="downBtn()">▼</button>
-												<button class="btn" id="removeBtn" onclick="removeBtn()">X</button>
+												<button class="btn" id="up" onclick="up();">▲</button>
+												<button class="btn" id="down" onclick="down();">▼</button>
+												<button class="btn" id="removeOne" onclick="removeOne();">X</button>
 											</td>
 										</tr>
 										<tr>
@@ -133,22 +129,19 @@
 						</div>
 					</div>
 					<div class="row">
-						<button class="btn btn-primary" id="enrollBtn" onclick="enrollBtn()" style="width:100%">결재라인 등록</button>
+						<button class="btn btn-primary" id="enrollBtn1" onclick="enrollBtn1()" style="width:100%">결재라인 등록</button>
 					</div>
 				</div>
 			</div>
 		</div>
 		<script>
 			$(function() {
-				$('.empLoad')
-						.on('click',function() {
+				$('.empLoad').on('click',function() {
 									var deptNo = $(this).attr('id');
 									$.ajax({
 												url : "${path }/apv/selectDeptToEmp.do",
 												type : "post",
-												data : {
-													"deptNo" : deptNo
-												},
+												data : {"deptNo" : deptNo},
 												dataType : "json",
 												contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 												success : function(data) {
@@ -162,10 +155,7 @@
 																		//직급
 																		//사원명
 																		var tr = $('<tr>');
-																		var ckbox = $(
-																				'<input>')
-																				.attr(
-																						{
+																		var ckbox = $('<input>').attr({
 																							"type" : "checkbox",
 																							"name" : "emp",
 																							"value" : val.EMPNO
@@ -193,7 +183,7 @@
 				
 			});
 			
-			function addBtn(){
+			function addBtn1(){
 				var checked=$("input:checkbox[name='emp']:checked");
 				$.each(checked,function(idx,val) {
 					var empNo=val.value;
@@ -210,42 +200,45 @@
 				$("input:checkbox[name='emp']").prop("checked",false);
 			}
 			
-			function upBtn(){
+			function up(){
 				var selectOpt=$("#apvL option:selected");
 				var selectVal=$("#apvL option:selected").val();
 				var selectText=$("#apvL option:selected").text();
 				var selectIdx=$("#apvL option").index($("#apvL option:selected"));
 				var idx=selectIdx-1;
 				
-				if(idx!=-1){
+				var firstIdx=$("#apvL option:first").index();
+				alert(selectIdx);
+				alert(firstIdx);
+				if(selectIdx<firstIdx){
 					var option=$('<option>');
 					option.val(selectVal);
 					option.html(selectText);
-					
+					console.log(option);
 					$("#apvL option:eq("+idx+")").before(option);
 					selectOpt.remove();
 				}		
 			}
 			
-			function downBtn(){
-				var selectOpt=$("#apvL option:selected");
-				var selectVal=$("#apvL option:selected").val();
-				var selectText=$("#apvL option:selected").text();
-				var selectIdx=$("#apvL option").index($("#apvL option:selected"));
-				var idx=selectIdx+1;
+			function down(){
+				var selectOpt1=$("#apvL option:selected");
+				var selectVal1=$("#apvL option:selected").val();
+				var selectText1=$("#apvL option:selected").text();
+				var selectIdx1=$("#apvL option").index($("#apvL option:selected"));
+				var idx1=selectIdx+1;
 				
 				var lastIdx=$("#apvL option:last").index();
-				if(selectIdx!=lastIdx){
-					var option=$('<option>');
-					option.val(selectVal);
-					option.html(selectText);
+				if(selectIdx1>lastIdx){
+					var option1=$('<option>');
+					option1.val(selectVal);
+					option1.html(selectText);
 					
-					$("#apvL option:eq("+idx+")").after(option);
-					selectOpt.remove();
+					$("#apvL option:eq("+idx1+")").after(option1);
+					selectOpt1.remove();
 				}
 			}
 			
-			function removeBtn(){
+			function removeOne(){
 				var selectOpt=$("#apvL option:selected");
 				selectOpt.remove();
 			}
@@ -255,18 +248,24 @@
 				selectbox.html("");
 			}
 			
-			function enrollBtn(){
+			function enrollBtn1(){
+				var selectBox=$('#apvL');
+				selectBox.attr("multiple","multiple");
+				var options=$('#apvL option');
+				console.log(options);
+				$('#apvL option').attr("selected","selected");
 				$.ajax({
 					url:"${path}/apv/apvLineEnrollEnd.do",
 					type : "post",
 					data : $('#apvLineForm').serialize(),
 					success : function(data) {
-						if(data>0){
+						console.log(data);
+						/* if(data>0){
 							self.close();
 							window.opener.location.reload();
 						}else{
 							alert("등록실패");
-						}
+						} */
 					}
 				});
 			}
@@ -277,4 +276,3 @@
 </body>
 </html>
 
-<%-- <jsp:include page="/WEB-INF/views/common/footer.jsp"/> --%>

@@ -63,10 +63,12 @@ public class ApvLineController {
 	}
 	
 	/* 결재라인 등록 처리  */
-	@RequestMapping(value="/apv/apvLineEnrollEnd.do",produces ="application/json; charset=utf8")
+	@RequestMapping(value="/apv/apvLineEnrollEnd.do")
 	@ResponseBody
 	public int apvLineEnrollEnd(@RequestParam Map<String,Object> param){
-//		int result=service.apvLineEnrollEnd(param);
+		System.out.println(param);
+		
+		/* int result=service.insertApvLine(param); */
 		return 0;
 	}
 

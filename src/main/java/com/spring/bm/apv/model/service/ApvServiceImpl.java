@@ -120,4 +120,12 @@ public class ApvServiceImpl implements ApvService {
 		return dao.selectDeptToEmp(session,deptNo);
 	}
 	
+	@Override
+	public int insertApvLine(Map<String, Object> param) throws Exception {
+		int result=0;
+		result=dao.insertApvLine(session,param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
 }
