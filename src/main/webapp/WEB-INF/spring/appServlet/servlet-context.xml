@@ -41,7 +41,7 @@
 		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
 	
-			<!--  웹소켓설정  -->
+	<!--  웹소켓설정  -->
 	<beans:bean id="chatting" class="com.spring.bm.chatting.ViewChatting"/>
 	<websocket:handlers>
 		<websocket:mapping handler="chatting" path="/chatRoom"/>
