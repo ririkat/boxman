@@ -109,7 +109,7 @@
 	</update>
 	<!-- 출퇴근위치정보 확인 -->
 	<select id="checkLocation" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM WORKLOCATION WHERE WOX=TRUNC(#{la}) AND WOY=TRUNC(#{lo})
+		SELECT COUNT(*) FROM WORKLOCATION WHERE WOX=TO_CHAR(#{la},'fm999.00') AND WOY=TO_CHAR(#{lo},'fm999.00')
 	</select>
 	<!-- 출근등록 -->
 	<insert id="insertGotoWork" parameterType="map">

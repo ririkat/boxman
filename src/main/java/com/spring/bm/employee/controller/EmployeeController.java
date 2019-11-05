@@ -534,7 +534,7 @@ public class EmployeeController {
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
-		mv.setViewName("emp/empBusinessTripList");
+		mv.setViewName("emp/empBTList");
 		return mv;
 	}
 	
@@ -686,8 +686,10 @@ public class EmployeeController {
 		return mv;
 	}
 	/*출장비용 청구*/
-//	@RequestMapping("/emp/insertBTPay.do")
-//	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
-//		
-//	}
+	@RequestMapping("/emp/insertBTP.do")
+	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
+		
+		
+		
+	}
 }

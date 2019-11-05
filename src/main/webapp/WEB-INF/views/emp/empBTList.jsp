@@ -93,6 +93,9 @@
 										<th>시작일</th>
 										<th>종료일</th>
 										<th>출장사유</th>
+										<c:if test="${temp eq 'my' or temp eq 'search'}">
+											<th>출장비신청</th>
+										</c:if>
 									</tr>
 								</thead>
 								<tbody>
@@ -106,6 +109,7 @@
 											<td><fmt:formatDate value='${e["BTSTART"]}' pattern="yyyy-MM-dd" /></td>
 											<td><fmt:formatDate value='${e["BTEND"]}' pattern="yyyy-MM-dd" /></td>
 											<td><c:out value='${e["BTREASON"] }' /></td>
+											<td><button type="button" class="btn btn-primary mr-2" onclick="location.href='${path}/emp/insertBTP.do?btNo=${e.BTNO}'">출장비신청</button></td>
 										</tr>
 									</c:forEach>
 								</tbody>
