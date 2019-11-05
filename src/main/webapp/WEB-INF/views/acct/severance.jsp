@@ -89,19 +89,64 @@
 												<c:out value='${e["SEVDATE"] }' />
 											</td>
 											<td>
-												<c:if test='${fn:trim(e["EMPENTYN"]) eq "N" }' var="r">
-													<button type="button" class="btn btn-success" onclick="pay('${e.SALNO}');">퇴사 시키기</button>
+												<c:if test='${fn:trim(e["SEVCHECK"]) eq "N" }' var="r">
+													<c:set var="hiredate" value='${e["HIREDATE"]}'/>
+													<c:set var="salary" value='${e["EMPSAL"]}'/>
+													${e["HIREDATE"]}
+													<button type="button" class="btn btn-success" onclick="quit('${e.EMPNO}', '${hiredate }', '${salary }');" data-toggle="modal" data-target="#exampleModal">퇴사 시키기</button>
 												</c:if>
 											</td>
 										</tr>
-									</c:forEach>
+										</c:forEach>
 								</tbody>
 							</table>
 						</div>
 					</div>
 				</div>
-				${pageBar }
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><c:out value='${e["EMPNAME"] }'/> 님이 받는 퇴직금액</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </buttn>
+      </div>
+      <div class="modal-body">
+       <input type="text" class=" col-xs-2" name="boardWriter" value="22333" readonly required>원 지급하기
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" onclick="severance();">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+	function quit(empno, hiredate, salary){
+		
+		var salary = salary;
+		
+		
+		var sd = new Date(hiredate);
+		var today = new Date();
+		var days = (today.getTime()-sd.getTime())/(1000*60*60*24);
+		
+		
+		var x = salary/24;
+		var y = days/365;
+		
+		//console.log((sd.getMonth()+1)+'/'+sd.getDate()+'/'+sd.getFullYear() + " ------ "+ ed);
+		
+		var result = Math.ceil(x*y/100)*100;
+		$(".modal-body>[name=boardWriter]").val(result);
+		$(".modal-title").html(empno);
+		
+	}
+</script>
 
 </section>
 

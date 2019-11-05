@@ -149,9 +149,10 @@
 				</a>
 				<div id="collapseApv" class="collapse" aria-labelledby="headingApv" data-parent="#accordionSidebar">
 		          <div class="bg-white py-2 collapse-inner rounded">
+		          	<a class="collapse-item" href="${path }/apv/requestApv.do">기안하기</a>
 		            <a class="collapse-item" href="${path }/apv/sendApv.do">상신결재함</a>
 		            <a class="collapse-item" href="${path }/apv/receiveApv.do">수신결재함</a>
-		            <a class="collapse-item" href="${path }/apv/apvLine.do">결재라인관리</a>
+		            <a class="collapse-item" href="${path }/apv/apvLineList.do?loginNo=${loginEmp['EMPNO'] }">결재라인관리</a>
 		            <a class="collapse-item" href="${path }/apv/apvDoc.do">결재양식관리</a>
 		          </div>
         		</div>
@@ -534,7 +535,8 @@
 				
 			}); 
 			
- 			function showUnread(result){
-				$('#unread').html(result);
-			}
+		function showUnread(result){
+			$('#unread').html(result);
+		}
 </script>
+
