@@ -67,6 +67,8 @@ public class RSAEncrypto implements MyEncrypt{
 		Map<String, Object> keys = new HashMap();
 		keys.put("public", publicKey);
 		keys.put("private", privateKey);
+//		path = path.substring(0,path.lastIndexOf("/classes"));
+//		File f = new File(path + "/keys.hb");
 		String path = this.getClass().getResource("/").getPath();
 		path = path.substring(0,path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
