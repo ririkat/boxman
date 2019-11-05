@@ -104,5 +104,19 @@ public class ConnectionDaoImpl implements ConnectionDao {
 	public int serchConnectionCount(SqlSessionTemplate session, Map<String, Object> m) {
 		return session.selectOne("connection.serchConnectionCount",m);
 	}
+	
+	//판매정보 등록 거래처 검색
+	@Override
+	public List<Connection> searchConnection2(SqlSessionTemplate session, Map<String, Object> m) {
+		int cPage = (Integer)m.get("cPage");
+		int numPerPage = (Integer)m.get("numPerPage");
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("connection.searchConnection2", m, rows);
+	}
+
+	@Override
+	public int serchConnectionCount2(SqlSessionTemplate session, Map<String, Object> m) {
+		return session.selectOne("connection.serchConnectionCount2",m);
+	}
 
 }

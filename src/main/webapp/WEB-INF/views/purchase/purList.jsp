@@ -25,9 +25,14 @@
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
                        		<select name="type" id="searchKeyword" class="form-control form-control-sm">
-								<option value="#">구매코드</option>
+								<option value="purCode">구매코드</option>
+								<option value="conCode">거래처명</option>
+								<option value="empNo">담당자명</option>
+								<option value="purCk">구매확정여부</option>
+								<option value="deposCk">입금확정여부</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
+							<input type="hidden" name="empId" value="${loginEmp['EMPID'] }">
 						</label>
 						<button onclick = "searchPurInfo();" class="btn btn-light btn-icon-split">
 	                   		<span class="icon text-gray-600">
@@ -60,7 +65,6 @@
 							<th>등록일자</th>
 							<th>거래처</th>
 							<th>담당자</th>
-							<th>거래유형</th>
 							<th>구매총액</th>
 							<th>구매확정</th>
 							<th>구매일자</th>
@@ -71,11 +75,10 @@
                        <tbody>
                           <c:forEach items="${list }" var="p">
 								<tr>
-									<td><a href='#'><c:out value='${p["PURCODE"] }'/></a></td>
+									<td><a href='${path }/purchase/verificationPurInfo.do?purCode=${p["PURCODE"]}'><c:out value='${p["PURCODE"] }'/></a></td>
 									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
 									<td><c:out value='${p["CONNAME"] }' /></td>
 									<td><c:out value='${p["EMPNAME"] }' /></td>
-									<td><c:out value='${p["PURTRANTYPE"] }' /></td>
 									<td><c:out value='${p["PURTOTAMT"] }'/></td>
 									<td><c:out value='${p["PURCK"] }'/></td>
 									<td><c:out value='${p["PURDATE"] }' /></td>
@@ -98,11 +101,6 @@
 <script>
 function searchPurInfo(){
 	$("#searchFrm").attr("action","${path}/purchase/searchPurInfo.do");
-	$("#searchFrm").submit();
-}
-
-function searchConnection(){
-	$("#searchFrm").attr("action","${path}/stuff/searchConnection.do");
 	$("#searchFrm").submit();
 }
 </script>

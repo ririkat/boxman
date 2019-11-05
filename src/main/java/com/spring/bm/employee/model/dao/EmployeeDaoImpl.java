@@ -187,6 +187,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("emp.selectAttenNoOne", param);
 	}
+	
+	/* 근태수정신청 */
+	@Override
+	public int insertUpAttendance(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertUpAttendance", param);
+	}
 
 	/* 남은휴가일수보기 */
 	@Override
@@ -214,5 +221,9 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.insert("emp.insertBT", param);
 	}
+
+
+	
+	
 	
 }

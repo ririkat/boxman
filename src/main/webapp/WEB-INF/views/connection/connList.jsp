@@ -24,16 +24,16 @@
                  <form id="searchFrm">
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
-                             <select name="type" id="searchKeyword" class="form-control form-control-sm">
-                        <option value="conCode">거래처코드</option>
-                        <option value="conName">거래처명</option>
-                        <option value="conRepName">대표자명</option>
-                        <option value="conCateg">구분</option>
-                        <option value="conUseCk">사용구분</option>
-                     </select>
-                     <input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
-                  </label>
-                  <button onclick = "searchConnection();" class="btn btn-light btn-icon-split">
+							<select name="type" id="searchKeyword" class="form-control form-control-sm">
+		                        <option value="conCode">거래처코드</option>
+		                        <option value="conName">거래처명</option>
+		                        <option value="conRepName">대표자명</option>
+		                        <option value="conCateg">구분</option>
+		                        <option value="conUseCk">사용구분</option>
+		                     </select>
+		                     <input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
+						</label>
+                  		<button type="button" onclick = "searchConnection();" class="btn btn-light btn-icon-split">
                             <span class="icon text-gray-600">
                              <i class="fas fa-arrow-right"></i>
                             </span>

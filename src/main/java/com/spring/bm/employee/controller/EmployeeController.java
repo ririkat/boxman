@@ -2,20 +2,15 @@ package com.spring.bm.employee.controller;
 
 import java.io.File;
 import java.sql.Date;
-import java.text.ParseException;
-import java.net.PasswordAuthentication;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.aspectj.bridge.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -549,6 +544,30 @@ public class EmployeeController {
 		return mv;
 	}
 	
+	/* 근태수정완료 */
+	@RequestMapping("/emp/updateAttenEnd.do")
+	public ModelAndView updateAttenEnd(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		
+		int result = 0;
+		if((""+param.get("temp")).equals("my")) {
+			try {
+				result = service.insertUpAttendance(param);
+				if(result > 0) {
+					//근태수정요청 결재로 이동
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		return mv;
+	}
+	
+	
 	/* 휴가신청 */
 	@RequestMapping("/emp/empDayOffForm.do")
 	public ModelAndView insertDayOff(@RequestParam Map<String, Object> param) {
@@ -658,6 +677,7 @@ public class EmployeeController {
 		
 		return mv;
 	}
+	
 	
 	
 	

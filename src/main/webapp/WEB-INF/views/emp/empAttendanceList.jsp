@@ -110,18 +110,16 @@
 												<td><c:out value='${e["EMPNAME"]}' /></td>
 												<td><c:out value='${e["DEPTNAME"]}' /></td>
 											</c:if>
-											<td><fmt:formatDate value='${e["ATTENSTART"]}'
+											<td><fmt:formatDate value='${e["ATTENDAY"]}'
 													pattern="yyyy-MM-dd" /></td>
 											<td><c:out value='${e["DY"]}' /></td>
-											<td><fmt:formatDate value='${e["ATTENSTART"]}'
-													pattern="HH:mm:ss" /></td>
-											<td><fmt:formatDate value='${e["ATTENEND"]}'
-													pattern="HH:mm:ss" /></td>
+											<td><c:out value='${e["ATTENSTART"]}'/></td>
+											<td><c:out value='${e["ATTENEND"]}'/></td>
 											<td><c:out value='${e["ATTENCATE"] }' /></td>
 											<!-- 그 달에만 수정요청 가능 -->
 											<jsp:useBean id="now" class="java.util.Date" />
 											<fmt:formatDate value="${now}" pattern="yyyyMM" var="nowDate" />
-											<fmt:formatDate value='${e["ATTENSTART"]}' pattern="yyyyMM"
+											<fmt:formatDate value='${e["ATTENDAY"]}' pattern="yyyyMM"
 												var="openDate" />
 											<%-- 시작날짜 --%>
 											<c:if test="${temp eq 'my' or temp eq 'search'}">
@@ -129,7 +127,7 @@
 													<c:when test="${nowDate eq openDate}">
 														<td><button type="button"
 																class="btn btn-primary mr-2"
-																onclick='location.href="${path}/emp/updateAtten.do?attenNo=${e.ATTENNO }"'>수정요청</button>
+																onclick='location.href="${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}&temp=my"'>수정요청</button>
 														</td>
 													</c:when>
 													<c:otherwise>
@@ -142,7 +140,7 @@
 													<c:when test="${nowDate eq openDate}">
 														<td><button type="button"
 																class="btn btn-primary mr-2"
-																onclick="location.href='${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}'">수정</button></td>
+																onclick="location.href='${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}&temp=all'">수정</button></td>
 													</c:when>
 													<c:otherwise>
 														<td>마감</td>
