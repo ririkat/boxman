@@ -377,18 +377,29 @@ public class StuffController {
 		
 	}
    
-   //이름으로만 물품조회
+   //이름으로만 물품조회(구매)
    @RequestMapping("/stuff/searchStuffName.do")
-   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value = "stuffName") String stuffName) {
+   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value="stuffName") String stuffName,
+		   @RequestParam(value="conName") String conName) {
+	   Map<String,String> map = new HashMap();
+	   map.put("stuffName",stuffName);
+	   map.put("conName",conName);
 	   
-	   System.out.println(stuffName);
+	   List<Stuff> list = service.searchStuffName(map);
 	   
-	   List<Stuff> list = service.searchStuffName(stuffName);
-	    
 	   return list;
    }
    
-
+   //이름으로만 물품조회(전체)
+   @RequestMapping("/stuff/searchStuffName2.do")
+   public @ResponseBody List<Stuff> searchStuffName2(@RequestParam(value="stuffName") String stuffName) {
+	   Map<String,String> map = new HashMap();
+	   map.put("stuffName",stuffName);
+	   
+	   List<Stuff> list = service.searchStuffName2(map);
+	   
+	   return list;
+   }
    
 
 

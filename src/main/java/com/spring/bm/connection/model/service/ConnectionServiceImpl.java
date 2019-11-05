@@ -115,4 +115,15 @@ public class ConnectionServiceImpl implements ConnectionService {
 		return dao.serchConnectionCount(session, m);
 	}
 	
+	//판매정보 등록 거래처 검색
+	@Override
+	public List<Connection> searchConnection2(Map<String, Object> m) {
+		return dao.searchConnection2(session, m);
+	}
+
+	@Override
+	public int searchConnectionCount2(Map<String, Object> m) {
+		return dao.serchConnectionCount2(session, m);
+	}
+	
 }

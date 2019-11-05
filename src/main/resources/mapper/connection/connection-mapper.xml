@@ -60,22 +60,22 @@
 	<select id="selectConnSearchList" parameterType="map" resultType="map">
 		SELECT * FROM CONNECTION
 		WHERE ${type} LIKE '%'||#{data}||'%'
-		ORDER BY CONCODE
+		ORDER BY CONCODE DESC
 	</select>
 	
 	<select id="selectConnSearchCount" parameterType="map" resultType="_int">
 		SELECT COUNT(*) FROM CONNECTION
 		WHERE ${type} LIKE '%'||#{data}||'%'
-		ORDER BY CONCODE
+		ORDER BY CONCODE DESC
 	</select>
 	
 	<select id = "searchConnection" parameterType="map" resultType="connection">
 		 <choose>
    			<when test = "type eq 'conCode'">
-   				SELECT * FROM CONNECTION WHERE CONCODE LIKE '%'||#{data}||'%'
+   				SELECT * FROM CONNECTION WHERE CONCODE LIKE '%'||#{data}||'%' AND CONCATEG='매입'
    			</when>
    			<when test = "type eq 'conName'">
-   				SELECT * FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%'
+   				SELECT * FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매입'
    			</when>	
    		</choose>
 	</select>
@@ -83,13 +83,36 @@
 	<select id = "serchConnectionCount" parameterType="map" resultType="_int">
 		 <choose>
    			<when test = "type eq 'conCode'">
-   				SELECT COUNT(*) FROM CONNECTION WHERE CONCODE LIKE '%'||#{data}||'%'
+   				SELECT COUNT(*) FROM CONNECTION WHERE CONCODE LIKE '%'||#{data}||'%' AND CONCATEG='매입'
    			</when>
    			<when test = "type eq 'conName'">
-   				SELECT COUNT(*) FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%'
+   				SELECT COUNT(*) FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매입'
    			</when>	
    		</choose>	
 	</select>
+	
+	<select id = "searchConnection2" parameterType="map" resultType="connection">
+		 <choose>
+   			<when test = "type eq 'conCode'">
+   				SELECT * FROM CONNECTION WHERE CONCODE LIKE '%'||#{data}||'%' AND CONCATEG='매출'
+   			</when>
+   			<when test = "type eq 'conName'">
+   				SELECT * FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매출'
+   			</when>	
+   		</choose>
+	</select>
+	
+	<select id = "serchConnectionCount2" parameterType="map" resultType="_int">
+		 <choose>
+   			<when test = "type eq 'conCode'">
+   				SELECT COUNT(*) FROM CONNECTION WHERE CONCODE LIKE '%'||#{data}||'%' AND CONCATEG='매출'
+   			</when>
+   			<when test = "type eq 'conName'">
+   				SELECT COUNT(*) FROM CONNECTION WHERE CONNAME LIKE '%'||#{data}||'%' AND CONCATEG='매출'
+   			</when>	
+   		</choose>	
+	</select>
+	
 </mapper>
 
 

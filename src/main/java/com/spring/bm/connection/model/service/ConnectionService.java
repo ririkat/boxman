@@ -31,5 +31,9 @@ public interface ConnectionService {
 	//구매정보 등록 거래처 검색
 	List<Connection> searchConnection(Map<String, Object> m);
 	int searchConnectionCount(Map<String, Object> m);
+	
+	//판매정보 등록 거래처 검색
+	List<Connection> searchConnection2(Map<String, Object> m);
+	int searchConnectionCount2(Map<String, Object> m);
 
 }

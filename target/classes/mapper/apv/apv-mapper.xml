@@ -74,14 +74,27 @@
 	</select>
 	
 	<select id="selectMyApvLineList" parameterType="_int" resultType="map">
-		SELECT * FROM APVLINE WHERE EMPNO=#{loginNo} AND APVLCATE='개인' ORDER BY APVLNO
+		SELECT * FROM APVLINE WHERE APVLCATENO=#{loginNo} AND APVLCATE='개인' ORDER BY APVLNO
 	</select>
 	
 	<select id="selectMyALCount" parameterType="_int" resultType="_int">
-		SELECT COUNT(*) FROM APVLINE WHERE EMPNO=#{loginNo} AND APVLCATE='개인'
+		SELECT COUNT(*) FROM APVLINE WHERE APVLCATENO=#{loginNo} AND APVLCATE='개인'
 	</select>
 	
 	<select id="selectDeptToEmp" parameterType="_int" resultType="map">
-		SELECT * FROM EMPLOYEE WHERE DEPTNO=#{deptNo}
+		SELECT * FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPTNO=D.DEPTNO JOIN EMPJOB J ON E.JOBNO=J.JOBNO WHERE E.DEPTNO=#{deptNo}
 	</select>
+	
+	<!-- 결재라인 양식 등록 로직 -->
+	
+<!-- 	<insert id="insertApvLine" parameterType="map">
+		INSERT INTO APVLINE VALUES(SEQ_APVLINE.NEXTVAL,#{apvLineTitle},DEFAULT,DEFAULT,'개인',#{cateNo})
+		<selectKey keyProperty="APVLNO" resultType="Integer"
+			order="AFTER">
+			SELECT SEQ_APVLINE.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
+	<insert id="insertApvlApplicant" parameterType="map">
+		INSERT INTO APVLAPPLICANT VALUES(SEQ_APVLAPPLICANT.NEXTVAL,#{priorNo},#{empNo},#{apvlNo})
+	</insert> -->
 </mapper>

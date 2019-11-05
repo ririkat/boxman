@@ -9,5 +9,15 @@ public interface PurchaseService {
 	int selectPurCount();
 	
 	List<Map<String,String>> selectConnList();
+	
+	Map<String,String> addStuffToTemp(String stuffNo);
+	
+	int enrollPurInfo(Map<String,String> param) throws Exception;
+	
+	List<Map<String,String>> selectPurSearchList(Map<String, Object> m);
+	int selectPurSearchCount(Map<String, Object> m);
+	
+	Map<String,String> selectPurInfo(int purCode);
+	List<Map<String,String>> selectPurItemList(int purCode);
 
 }
