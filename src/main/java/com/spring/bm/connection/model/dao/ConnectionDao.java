@@ -35,4 +35,9 @@ public interface ConnectionDao {
 	//구매정보 등록 거래처 검색
 	public List<Connection> searchConnection(SqlSessionTemplate session, Map<String, Object> m);
 	public int serchConnectionCount(SqlSessionTemplate session, Map<String, Object> m);
+	
+	//판매정보 등록 거래처 검색
+	public List<Connection> searchConnection2(SqlSessionTemplate session, Map<String, Object> m);
+	public int serchConnectionCount2(SqlSessionTemplate session, Map<String, Object> m);
+	
 }

@@ -41,4 +41,6 @@ public interface ApvDao {
 
 	List<Map<String, Object>> selectDeptToEmp(SqlSessionTemplate session, int deptNo);
 
+	int insertApvLine(SqlSessionTemplate session, Map<String, Object> param);
+
 }

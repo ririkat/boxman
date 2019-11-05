@@ -101,4 +101,9 @@ public class ApvDaoImpl implements ApvDao {
 	public List<Map<String, Object>> selectDeptToEmp(SqlSessionTemplate session, int deptNo) {
 		return session.selectList("apv.selectDeptToEmp",deptNo);
 	}
+	
+	@Override
+	public int insertApvLine(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.insert("apv.insertApvLine",param);
+	}
 }

@@ -14,6 +14,10 @@ public interface AcctService {
 
 	List<Map<String, String>> selectSevList();
 
+	int updateSeveranceStatus(Map<String, String> m);
+
+	List<Map<String, String>> selectBizTripList();
+
 	
 	
 

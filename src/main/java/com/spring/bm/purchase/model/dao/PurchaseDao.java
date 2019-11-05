@@ -12,4 +12,15 @@ public interface PurchaseDao {
 	
 	List<Map<String, String>> selectConnList(SqlSessionTemplate session);
 
+	Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo);
+	
+	int enrollPurInfo(SqlSessionTemplate session, Map<String, String> param);
+	int enrollPurItem(SqlSessionTemplate session, Map<String,Object> paramMap);
+	
+	List<Map<String, String>> selectPurSearchList(SqlSessionTemplate session, Map<String, Object> m);
+	int selectPurSearchCount(SqlSessionTemplate session, Map<String, Object> m);
+	
+	Map<String, String> selectPurInfo(SqlSessionTemplate session, int purCode);
+	List<Map<String, String>> selectPurItemList(SqlSessionTemplate session, int purCode);
+	
 }
