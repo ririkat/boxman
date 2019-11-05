@@ -80,7 +80,7 @@ public class ChatController {
 	      return loc;
 
 	}
-	
+	//사원검색
 	@RequestMapping("/chat/searchEmp.do")
 	public ModelAndView searchEmp(@RequestParam(value="data") String data) {
 		
@@ -95,7 +95,7 @@ public class ChatController {
 		return mv;
 		
 	}
-	
+	//안읽은메세지갯수
 	@RequestMapping("/chat/readCount.do")
 	@ResponseBody
 	public int chatReadCount(@RequestParam(value="userId") int userId) {
