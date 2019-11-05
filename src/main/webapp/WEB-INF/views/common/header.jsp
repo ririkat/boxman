@@ -162,7 +162,7 @@
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
             <a class="collapse-item"  href="${path}/connection/connList.do">거래처관리</a>
             <a class="collapse-item" href="${path}/purchase/purList.do">구매관리</a>
-            <a class="collapse-item" href="#">판매관리</a>
+            <a class="collapse-item" href="${path}/sale/saleList.do">판매관리</a>
           </div>
         </div>
       </li>   

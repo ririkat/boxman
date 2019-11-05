@@ -16,5 +16,8 @@ public interface PurchaseService {
 	
 	List<Map<String,String>> selectPurSearchList(Map<String, Object> m);
 	int selectPurSearchCount(Map<String, Object> m);
+	
+	Map<String,String> selectPurInfo(int purCode);
+	List<Map<String,String>> selectPurItemList(int purCode);
 
 }

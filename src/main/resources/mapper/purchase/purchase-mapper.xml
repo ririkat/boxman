@@ -95,4 +95,12 @@
 		ORDER BY PURCODE DESC
 	</select>
 	
+	<select id="selectPurInfo" parameterType="_int" resultType="map">
+		SELECT * FROM purchaseTab WHERE PURCODE=#{purCode}
+	</select>
+	
+	<select id="selectPurItemList" parameterType="_int" resultType="map">
+		SELECT * FROM purItemList WHERE PURCODE=#{purCode}
+	</select>
+	
 </mapper>

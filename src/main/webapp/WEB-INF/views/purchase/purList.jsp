@@ -75,7 +75,7 @@
                        <tbody>
                           <c:forEach items="${list }" var="p">
 								<tr>
-									<td><a href='#'><c:out value='${p["PURCODE"] }'/></a></td>
+									<td><a href='${path }/purchase/verificationPurInfo.do?purCode=${p["PURCODE"]}'><c:out value='${p["PURCODE"] }'/></a></td>
 									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
 									<td><c:out value='${p["CONNAME"] }' /></td>
 									<td><c:out value='${p["EMPNAME"] }' /></td>

@@ -54,7 +54,7 @@ public interface StuffDao {
 
 	List<Stuff> searchStuffName(SqlSessionTemplate sqlSession, Map<String,String> map);
 
-
+	List<Stuff> searchStuffName2(SqlSessionTemplate sqlSession, Map<String,String> map);
 
 
 

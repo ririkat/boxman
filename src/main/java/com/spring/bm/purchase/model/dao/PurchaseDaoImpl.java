@@ -54,4 +54,14 @@ public class PurchaseDaoImpl implements PurchaseDao {
 		return session.selectOne("purchase.selectPurSearchCount",m);
 	}
 
+	@Override
+	public Map<String, String> selectPurInfo(SqlSessionTemplate session, int purCode) {
+		return session.selectOne("purchase.selectPurInfo", purCode);
+	}
+
+	@Override
+	public List<Map<String, String>> selectPurItemList(SqlSessionTemplate session, int purCode) {
+		return session.selectList("purchase.selectPurItemList", purCode);
+	}
+
 }

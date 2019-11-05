@@ -73,4 +73,14 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return dao.selectPurSearchCount(session,m);
 	}
 
+	@Override
+	public Map<String, String> selectPurInfo(int purCode) {
+		return dao.selectPurInfo(session,purCode);
+	}
+
+	@Override
+	public List<Map<String, String>> selectPurItemList(int purCode) {
+		return dao.selectPurItemList(session,purCode);
+	}
+
 }

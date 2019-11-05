@@ -197,6 +197,29 @@ public class ConnectionController {
 		return mv;
 	}
 	
+	@RequestMapping("/connection/searchConnection3.do")
+	public ModelAndView searchConnection3(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage,
+			@RequestParam Map<String,String> param) {
+		
+	    int numPerPage = 10;   
+	    Map<String, Object> m = new HashMap();
+	    m.put("cPage", cPage);
+	    m.put("numPerPage", numPerPage);
+	    m.put("data", param.get("data_")); // 빈칸에 입력한 값
+	    m.put("type", param.get("type_")); // select에서 가져온 값 
+	    
+	    List<Connection> list = service.searchConnection2(m);
+	    int totalCount = service.searchConnectionCount2(m);
+	    System.out.println("list : " + list + "/" + "count : " + totalCount);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection3.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("connection/connSearchPopUp");
+		return mv;
+	}
+	
 }
 
 

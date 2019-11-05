@@ -130,6 +130,11 @@ public class StuffDaoImpl implements StuffDao {
 		return sqlSession.selectList("stuff.searchStuffName", map);
 	}
 
+	@Override
+	public List<Stuff> searchStuffName2(SqlSessionTemplate sqlSession, Map<String,String> map) {
+		return sqlSession.selectList("stuff.searchStuffName2", map);
+	}
+
 
 
 

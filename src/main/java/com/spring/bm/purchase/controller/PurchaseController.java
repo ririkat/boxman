@@ -111,5 +111,19 @@ public class PurchaseController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("/purchase/verificationPurInfo.do")
+	public ModelAndView veriPurInfo(@RequestParam Map<String,String> param) {
+		int purCode = Integer.parseInt(param.get("purCode"));
+		
+		Map<String,String> purInfo = service.selectPurInfo(purCode);
+		List<Map<String,String>> purItemList = service.selectPurItemList(purCode);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("purInfo",purInfo);
+		mv.addObject("purItemList",purItemList);
+		mv.setViewName("purchase/veriPurInfo");
+		return mv;
+	}
 
 }

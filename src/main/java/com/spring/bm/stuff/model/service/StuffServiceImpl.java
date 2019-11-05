@@ -151,8 +151,12 @@ public class StuffServiceImpl implements StuffService {
 
 	@Override
 	public List<Stuff> searchStuffName(Map<String,String> map) {
-		// TODO Auto-generated method stub
 		return dao.searchStuffName(sqlSession, map);
+	}
+
+	@Override
+	public List<Stuff> searchStuffName2(Map<String,String> map) {
+		return dao.searchStuffName2(sqlSession, map);
 	}
 
 

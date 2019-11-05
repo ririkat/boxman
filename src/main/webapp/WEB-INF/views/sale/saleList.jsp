@@ -25,9 +25,14 @@
                     <div class="dataTables_length" id="dataTable_length">
                        <label>Search:
                        		<select name="type" id="searchKeyword" class="form-control form-control-sm">
-								<option value="#">판매코드</option>
+								<option value="salCode">판매코드</option>
+								<option value="conCode">거래처명</option>
+								<option value="empNo">담당자명</option>
+								<option value="salCk">판매확정여부</option>
+								<option value="remitCk">입금확정여부</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
+							<input type="hidden" name="empId" value="${loginEmp['EMPID'] }">
 						</label>
 						<button onclick = "searchSaleInfo();" class="btn btn-light btn-icon-split">
 	                   		<span class="icon text-gray-600">
@@ -69,7 +74,7 @@
                          </tr>
                        </thead>
                        <tbody>
-                          <c:forEach items="${list }" var="p">
+                          <c:forEach items="${list }" var="s">
 								<tr>
 									<td><a href='#'><c:out value='${p["SALCODE"] }'/></a></td>
 									<td><c:out value='${p["SALENROLLDATE"] }' /></td>
@@ -98,11 +103,6 @@
 <script>
 function searchSaleInfo(){
 	$("#searchFrm").attr("action","${path}/sale/searchSaleInfo.do");
-	$("#searchFrm").submit();
-}
-
-function searchConnection(){
-	$("#searchFrm").attr("action","${path}/stuff/searchConnection.do");
 	$("#searchFrm").submit();
 }
 </script>

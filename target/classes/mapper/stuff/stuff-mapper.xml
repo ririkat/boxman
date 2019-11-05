@@ -115,5 +115,15 @@
    	  </choose>
    </select>
    
+   <select id = "searchStuffName2" parameterType="map" resultType="stuff">
+   	  SELECT A1.*, B1.SCNAME
+   	  FROM STUFF A1, STUFF_SUBCATEGORY B1
+   	  WHERE A1.SCNO=B1.SCNO
+   	  <if test="stuffName != ''">
+	   	  AND STUFFNAME LIKE '%'||#{stuffName}||'%'
+   	  </if>
+   	  ORDER BY STUFFNO DESC
+   </select>
+   
 </mapper>
 

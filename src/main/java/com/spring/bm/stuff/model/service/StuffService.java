@@ -52,7 +52,7 @@ public interface StuffService {
 
 	List<Stuff> searchStuffName(Map<String,String> map);
 
-
+	List<Stuff> searchStuffName2(Map<String,String> map);
 
 
 

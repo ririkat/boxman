@@ -20,4 +20,7 @@ public interface PurchaseDao {
 	List<Map<String, String>> selectPurSearchList(SqlSessionTemplate session, Map<String, Object> m);
 	int selectPurSearchCount(SqlSessionTemplate session, Map<String, Object> m);
 	
+	Map<String, String> selectPurInfo(SqlSessionTemplate session, int purCode);
+	List<Map<String, String>> selectPurItemList(SqlSessionTemplate session, int purCode);
+	
 }
