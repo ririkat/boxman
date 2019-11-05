@@ -232,12 +232,12 @@
                data : $('#apvLineForm').serialize(),
                success : function(data) {
                   console.log(data);
-                  /* if(data>0){
+                  if(data>0){
                      self.close();
                      window.opener.location.reload();
                   }else{
                      alert("등록실패");
-                  } */
+                  }
                }
             });
          }

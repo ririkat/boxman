@@ -122,9 +122,18 @@ public class ApvServiceImpl implements ApvService {
 	
 	@Override
 	public int insertApvLine(Map<String, Object> param) throws Exception {
+		
 		int result=0;
-		result=dao.insertApvLine(session,param);
-		if(result == 0) throw new Exception();
+		result=dao.insertApvLine(session,param);//board테이블에 데이터 입력!
+		if(result==0) throw new Exception(); //트랜잭션 처리하기
+		/*
+		 * if(attachList.size()>0) { for(Attachment a : attachList) {
+		 * a.setBoardNo((Integer)param.get("boardNo"));
+		 * result=dao.insertAttachment(session,a); if(result==0) throw new Exception();
+		 * //트랜잭션 처리하기 } }
+		 */
+		System.out.println(param.get("apvL"));
+		
 		return result;
 	}
 	

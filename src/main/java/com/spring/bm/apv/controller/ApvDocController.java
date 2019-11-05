@@ -220,6 +220,8 @@ public class ApvDocController {
 		ModelAndView mv = new ModelAndView();
 		/* List<Map<String,Object>> docCate=service.selectDocCate(); */
 		Map<String,Object> dfOne=service.selectDfModi(dfNo);
+		String title=(String)dfOne.get("DFTITLE");
+		String form=((String)dfOne.get("DFHEADFORM")).replace("<c:out value='${dfOne[\"DFTITLE\"]}' ​escapeXml=\"false\"/>", title);
 		
 		mv.addObject("dfOne",dfOne);
 		/* mv.addObject("docCate",docCate); */

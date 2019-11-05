@@ -107,7 +107,7 @@
 
 				});
 				
-				var myObject = {"loginEmp.empName" : "류별리", "dfTitle" : "테스트1","inputText":"<input type='text'/>","inputNumber":"<input type='number'/>"};
+				var myObject = {"loginEmp.empName" : "류별리", "dfTitle" : "테스트1","inputText1":"<input type='text'/>","inputNumber1":"<input type='number'/>"};
 				w3.displayObject("id01", myObject);
 				</script>
 	</section>
