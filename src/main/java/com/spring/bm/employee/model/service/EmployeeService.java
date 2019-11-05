@@ -54,5 +54,6 @@ public interface EmployeeService {
 	int insertDayOff(Map<String, Object> param) throws Exception;
 	/* 출장신청 */
 	int insertBT(Map<String, Object> param) throws Exception;
-	
+	/* 근태수정신청 */
+	int insertUpAttendance(Map<String, Object> param) throws Exception;
 }

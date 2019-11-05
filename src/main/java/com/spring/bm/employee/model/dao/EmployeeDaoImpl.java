@@ -193,7 +193,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int selectDoRemaining(SqlSessionTemplate session, Map<String, Object> map) {
 		Map<String, String> m = session.selectOne("emp.selectDoRemaining", map);
 		int result = 0;
-		if(m.get("DOREMAININGDAYS")==null || m.get("DOREMAININGDAYS")=="null") {
+		if(m == null || m.get("DOREMAININGDAYS")==null || m.get("DOREMAININGDAYS")=="null") {
 			result = 0;	//휴가 사용한 적이 없음
 		} else {
 			result = Integer.parseInt(String.valueOf(m.get("DOREMAININGDAYS")));	//휴가 사용한적이 있음
@@ -214,5 +214,10 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.insert("emp.insertBT", param);
 	}
-	
+	/* 근태수정신청 */
+	@Override
+	public int insertUpAttendance(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertUpAttendance", param);
+	}
 }

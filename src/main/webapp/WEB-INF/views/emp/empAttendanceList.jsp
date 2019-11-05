@@ -99,7 +99,9 @@
 										<th>출근시간</th>
 										<th>퇴근시간</th>
 										<th>구분</th>
-										<th>수정</th>
+										<c:if test="${temp eq 'my' or temp eq 'search'}">
+											<th>수정</th>
+										</c:if>
 									</tr>
 								</thead>
 								<tbody>
@@ -110,18 +112,16 @@
 												<td><c:out value='${e["EMPNAME"]}' /></td>
 												<td><c:out value='${e["DEPTNAME"]}' /></td>
 											</c:if>
-											<td><fmt:formatDate value='${e["ATTENSTART"]}'
+											<td><fmt:formatDate value='${e["ATTENDAY"]}'
 													pattern="yyyy-MM-dd" /></td>
 											<td><c:out value='${e["DY"]}' /></td>
-											<td><fmt:formatDate value='${e["ATTENSTART"]}'
-													pattern="HH:mm:ss" /></td>
-											<td><fmt:formatDate value='${e["ATTENEND"]}'
-													pattern="HH:mm:ss" /></td>
+											<td><c:out value='${e["ATTENSTART"]}'/></td>
+											<td><c:out value='${e["ATTENEND"]}'/></td>
 											<td><c:out value='${e["ATTENCATE"] }' /></td>
 											<!-- 그 달에만 수정요청 가능 -->
 											<jsp:useBean id="now" class="java.util.Date" />
 											<fmt:formatDate value="${now}" pattern="yyyyMM" var="nowDate" />
-											<fmt:formatDate value='${e["ATTENSTART"]}' pattern="yyyyMM"
+											<fmt:formatDate value='${e["ATTENDAY"]}' pattern="yyyyMM"
 												var="openDate" />
 											<%-- 시작날짜 --%>
 											<c:if test="${temp eq 'my' or temp eq 'search'}">
@@ -129,7 +129,7 @@
 													<c:when test="${nowDate eq openDate}">
 														<td><button type="button"
 																class="btn btn-primary mr-2"
-																onclick='location.href="${path}/emp/updateAtten.do?attenNo=${e.ATTENNO }"'>수정요청</button>
+																onclick='location.href="${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}&temp=my"'>수정요청</button>
 														</td>
 													</c:when>
 													<c:otherwise>
@@ -137,18 +137,18 @@
 													</c:otherwise>
 												</c:choose>
 											</c:if>
-											<c:if test="${temp eq 'all' or temp eq 'searchAll'}">
+											<%-- <c:if test="${temp eq 'all' or temp eq 'searchAll'}">
 												<c:choose>
 													<c:when test="${nowDate eq openDate}">
 														<td><button type="button"
 																class="btn btn-primary mr-2"
-																onclick="location.href='${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}'">수정</button></td>
+																onclick="location.href='${path}/emp/updateAtten.do?attenNo=${e.ATTENNO}&temp=all'">수정</button></td>
 													</c:when>
 													<c:otherwise>
 														<td>마감</td>
 													</c:otherwise>
 												</c:choose>
-											</c:if>
+											</c:if> --%>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -190,7 +190,6 @@
 			weekStart : 0,//달력 시작 요일 선택하는 것 기본값은 0인 일요일 
 			language : "ko" //달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
 		});//datepicker end
-
 	});
 	
 	//검색
@@ -198,11 +197,9 @@
 		$("#searchFrm").attr("action", "${path}/emp/selectAttenList.do");
 		$("#searchFrm").submit();
 	}
-
 	//calendar
 /* 	document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar1');
-
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
 		    defaultView: 'dayGridMonth',
@@ -261,7 +258,6 @@
 		      }
 		    ] */
 /* 		  });
-
 		  calendar.render();
 		});
 	
@@ -293,6 +289,5 @@
 	        events: dataset
 	    });
 	}); */
-
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

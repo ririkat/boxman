@@ -543,6 +543,33 @@ public class EmployeeController {
 		Map<String, Object> map = new HashMap();
 		map = service.selectAttenNoOne(param);
 		mv.addObject("att", map);
+		mv.addObject("temp", ""+param.get("temp"));
+		mv.setViewName("emp/empAttendanceOne");
+		return mv;
+	}
+	
+	/* 근태수정완료 */
+	@RequestMapping("/emp/updateAttenEnd.do")
+	public ModelAndView updateAttenEnd(@RequestParam Map<String, Object> param) {
+		ModelAndView mv = new ModelAndView();
+		
+		int result = 0;
+		if((""+param.get("temp")).equals("my")) {
+			try {
+				logger.debug("야야");
+				result = service.insertUpAttendance(param);
+				if(result > 0) {
+					//근태수정요청 결재로 이동
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		Map<String, Object> map = new HashMap();
+		map = service.selectAttenNoOne(param);
+		mv.addObject("att", map);
 		mv.setViewName("emp/empAttendanceOne");
 		return mv;
 	}
@@ -656,9 +683,7 @@ public class EmployeeController {
 		
 		return mv;
 	}
-	
-	
-	
+
 	/*출장비용 청구*/
 //	@RequestMapping("/emp/insertBTPay.do")
 //	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
