@@ -55,13 +55,9 @@
 								<thead>
 									<tr>
 										<th>사원번호</th>
-										<th>이름</th>
-										<th>직급</th>
-										<th>부서</th>
-										<th>월급</th>
-										<th>지급 여부</th>
-										<th>날짜</th>
-										<th>관리</th>
+										<th>출장 시작</th>
+										<th>출장 끝</th>
+										<th>사유</th>
 									</tr>
 								</thead>
 								
@@ -75,29 +71,20 @@
 											</td>
 											<td>
 												<a href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'>
-													<c:out value='${e["EMPNAME"]}' />
+													<c:out value='${e["BTSTART"]}' />
 												</a>
 											</td>
 											<td>
-												<c:out value='${e["JOBNAME"]}' />
+												<c:out value='${e["BTEND"]}' />
 											</td>
 											<td>
-												<c:out value='${e["DEPTNAME"]}' />
+												<c:out value='${e["BTREASON"]}' />
 											</td>
-											<td>
-												<c:out value='${e["SALARIES"] }' />
-											</td>
-											<td>
-												<c:out value='${e["SALCHECK"] }' />
-											</td>
-											<td>
-												<c:out value='${e["SALDATE"]}' />
-											</td>
-											<td>
+											<%-- <td>
 												<c:if test='${fn:trim(e["SALCHECK"]) eq "N" }' var="r">
 													<button type="button" class="btn btn-success" onclick="pay('${e.SALNO}');">지급하기</button>
 												</c:if>
-											</td>
+											</td> --%>
 										</tr>
 									</c:forEach>
 								</tbody>
