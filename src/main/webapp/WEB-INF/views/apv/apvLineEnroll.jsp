@@ -226,6 +226,8 @@
             var options=$('#apvL option');
             console.log(options);
             $('#apvL option').attr("selected","selected");
+            console.log($('#apvLineForm').serialize());
+
             $.ajax({
                url:"${path}/apv/apvLineEnrollEnd.do",
                type : "post",
