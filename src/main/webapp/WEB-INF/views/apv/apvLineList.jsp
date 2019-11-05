@@ -58,7 +58,7 @@
       	function apvLine_enroll(){
       		var url="${path}/apv/apvLineEnroll.do";
       		var name="양식등록"
-            window.open(url,name,"width=1000,height=900,left=600");
+            window.open(url,name,"width=1200,height=900,left=600");
       	}
       </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

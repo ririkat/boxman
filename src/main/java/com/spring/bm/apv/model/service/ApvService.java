@@ -43,5 +43,7 @@ public interface ApvService {
 
 	List<Map<String, Object>> selectDeptToEmp(int deptNo);
 
+	int insertApvLine(Map<String, Object> param) throws Exception;
+
 
 }
