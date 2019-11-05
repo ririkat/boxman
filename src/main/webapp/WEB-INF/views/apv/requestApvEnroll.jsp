@@ -47,6 +47,8 @@
 
 <script type="text/javascript"
 	src="${path }/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+	
+	<script src="https://www.w3schools.com/lib/w3.js"></script>
 
 <style>
 .title {
@@ -55,24 +57,31 @@
 	text-align: center;
 }
 </style>
+
 </head>
 <body id="page-top">
 	<section>
 		<div class="container">
 			<h2 class="title font-weight-bold text-primary">${dfOne["DFTITLE"]}</h2>
 
-			<form id="apvDocModiForm" class="form-sample" method="post">
+			<form id="apvDocModiForm" class="form-sample" method="post" action="">
 				<div class="card shadow mb-4">
-					<div class="card-header py-3">
-					<%-- 	<h6 class="m-0 font-weight-bold">${dfOne["DFTITLE"]}</h6> --%>
-					</div>
 					<div class="card-body">
 						<div class="table-responsive">
-
-							<c:out value='${dfOne["DFHEADFORM"]}' escapeXml="false"/>
+							결재폼
+							<hr/>
+							<div id="id01" class="text-center">
+								${dfOne["DFHEADFORM"]}
+							</div>
+							
 							<table class="table table-borded">
 								<tr>
-									<td colspan="2"><textarea id="dfContentForm"
+									<td>
+									본문내용
+									</td>
+								</tr>
+								<tr>
+									<td><textarea id="dfContentForm"
 											name="dfContentForm" rows="10" cols="100">${dfOne['DFCONTENTFORM']}</textarea></td>
 								</tr>
 							</table>
@@ -80,10 +89,11 @@
 						</div>
 					</div>
 				</div>
+				<input type="submit" />
 				</form>
 				</div>
 				
-				<script>
+				<script>{{}}
 				var oEditors = [];
 				$(function() {
 
@@ -96,6 +106,9 @@
 							});
 
 				});
+				
+				var myObject = {"loginEmp.empName" : "류별리", "dfTitle" : "테스트1","inputText":"<input type='text'/>","inputNumber":"<input type='number'/>"};
+				w3.displayObject("id01", myObject);
 				</script>
 	</section>
 

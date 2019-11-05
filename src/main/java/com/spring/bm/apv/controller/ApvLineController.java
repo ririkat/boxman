@@ -68,7 +68,12 @@ public class ApvLineController {
 	public int apvLineEnrollEnd(@RequestParam Map<String,Object> param){
 		System.out.println(param);
 		
-		/* int result=service.insertApvLine(param); */
+		try {
+			int result=service.insertApvLine(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return 0;
 	}
 
