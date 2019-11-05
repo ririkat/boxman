@@ -15,5 +15,11 @@ public interface AcctDao {
 
 	List<Map<String, String>> selectSevList(SqlSessionTemplate session);
 
+	int updateSeveranceStatus(SqlSessionTemplate session, Map<String, String> m);
+
+	int updateEmployeeStatus(SqlSessionTemplate session, Map<String, String> m);
+
+	List<Map<String, String>> selectBizTripList(SqlSessionTemplate session);
+
 
 }

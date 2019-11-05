@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.bm.acct.dao.AcctDao;
 
@@ -36,6 +37,24 @@ public class AcctServiceImpl implements AcctService {
 	@Override
 	public List<Map<String, String>> selectSevList() {
 		return dao.selectSevList(session);
+	}
+
+	@Override
+	@Transactional
+	public int updateSeveranceStatus(Map<String, String> m) throws RuntimeException{
+		int result =0;
+		
+		result = dao.updateSeveranceStatus(session, m);
+		if(result==0) throw new RuntimeException();
+		result= dao.updateEmployeeStatus(session, m);
+		if(result==0) throw new RuntimeException();
+		
+		return result;
+	}
+
+	@Override
+	public List<Map<String, String>> selectBizTripList() {
+		return dao.selectBizTripList(session);
 	}
 
 

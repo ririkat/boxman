@@ -29,4 +29,19 @@ public class AccDaoImpl implements AcctDao {
 		return session.selectList("acct.selectSevList");
 	}
 
+	@Override
+	public int updateSeveranceStatus(SqlSessionTemplate session, Map<String, String> m) {
+		return session.update("acct.updateSeveranceStatus", m);
+	}
+
+	@Override
+	public int updateEmployeeStatus(SqlSessionTemplate session, Map<String, String> m) {
+		return session.update("acct.updateEmployeeStatus", m);
+	}
+
+	@Override
+	public List<Map<String, String>> selectBizTripList(SqlSessionTemplate session) {
+		return session.selectList("acct.selectBizTripList");
+	}
+
 }
