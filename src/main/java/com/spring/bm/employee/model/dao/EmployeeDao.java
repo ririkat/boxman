@@ -65,5 +65,11 @@ public interface EmployeeDao {
 	int insertDayOff(SqlSessionTemplate session, Map<String, Object> param);
 	/* 출장신청 */
 	int insertBT(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출장비리스트 */
+	List<Map<String, Object>> selectBTPList(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출장하나 */
+	Map<String, Object> selectBTOne(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출장비신청 */
+	int insertBTP(SqlSessionTemplate session, Map<String, Object> param);
 
 }

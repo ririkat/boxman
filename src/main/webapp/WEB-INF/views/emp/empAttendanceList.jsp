@@ -20,14 +20,6 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<!-- calendar -->
-					<!-- <div class="row">
-						<div class="col-sm-12 col-md-6"
-							style="margin: 0 auto; width: fit-content;">
-							<div id="calendar1" style="max-width:900px; margin: 0 auto;"></div>
-						</div>
-					</div> 
-					<br><br>-->
 					<div class="row">
 						<div class="col-sm-12 col-md-6">
 							<form id="searchFrm">

@@ -222,4 +222,27 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.insert("emp.insertBT", param);
 	}
 
+	/* 출장비리스트 */
+	@Override
+	public List<Map<String, Object>> selectBTPList(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.selectBTPList", param);
+	}
+
+	/* 출장하나 */
+	@Override
+	public Map<String, Object> selectBTOne(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectBTOne", param);
+	}
+
+	/* 출장비신청 */
+	@Override
+	public int insertBTP(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertBTP", param);
+	}
+
+	
+
 }

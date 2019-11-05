@@ -227,5 +227,29 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(result == 0) throw new Exception();
 		return result;
 	}
+	
+	/* 출장비 리스트 */
+	@Override
+	public List<Map<String, Object>> selectBTPList(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectBTPList(session, param);
+	}
+	
+	/* 출장 하나 */
+	@Override
+	public Map<String, Object> selectBTOne(Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return dao.selectBTOne(session, param);
+	}
+	@Override
+	public int insertBTP(Map<String, Object> param) throws Exception {
+		int result = 0;
+		result = dao.insertBTP(session, param);
+		if(result == 0) throw new Exception();
+		return result;
+	}
+	
+	
 
+	
 }

@@ -56,5 +56,11 @@ public interface EmployeeService {
 	int insertBT(Map<String, Object> param) throws Exception;
 	/* 근태수정신청 */
 	int insertUpAttendance(Map<String, Object> param) throws Exception;
+	/* 출장비 리스트 */
+	List<Map<String, Object>> selectBTPList(Map<String, Object> param);
+	/* 출장 하나 */
+	Map<String, Object> selectBTOne(Map<String, Object> param);
+	/* 출장비용신청 */
+	int insertBTP(Map<String, Object> param) throws Exception;
 
 }

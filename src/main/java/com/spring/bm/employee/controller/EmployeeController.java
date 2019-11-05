@@ -687,9 +687,38 @@ public class EmployeeController {
 	}
 	/*출장비용 청구*/
 	@RequestMapping("/emp/insertBTP.do")
-	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
+	public ModelAndView insertBTP(@RequestParam Map<String, Object> param) {
+		//최근 출장 리스트(현재 달)
+		List<Map<String, Object>> list = service.selectBTPList(param);
+		
+		//출장 한개
+		Map<String, Object> e = service.selectBTOne(param);
 		
 		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("e", e);
+		mv.setViewName("emp/empBTPForm");
 		
+		return mv;
 	}
+	
+	/* 출장비용신청 */
+	@RequestMapping("/emp/insertBTPEnd.do")
+	public ModelAndView insertBTPEnd(@RequestParam Map<String, Object> param) {
+		
+		int result = 0;
+		try {
+			result = service.insertBTP(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("emp/empBTPForm");
+		
+		return mv;
+	}
+	
 }
