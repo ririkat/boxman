@@ -101,7 +101,6 @@ public class ChatController {
 	public int chatReadCount(@RequestParam(value="userId") int userId) {
 		
 		int nrc = service.noReadCount(userId);
-		System.out.println(nrc);
 		
 	     return nrc;
 	}
