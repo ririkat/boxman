@@ -1,0 +1,36 @@
+servlet / url 관계 : 1대1 mapping
+1. web.xml : 서블릿 등록 , url 패턴 등록
+2. 어노테이션 : @WebServlet(url)
+
+Client 데이터 전송하는 객체
+HTTP Request(프로토콜) -> Container (WAS)
+		           HttpServletRequest(객체)
+		           HttpServletResponse(객체)
+
+HttpServletRequest : 주로 데이터를 관리하는 부분
+request객체가 가지고 있는 메소드를 이용하여 이용
+Client가 보낸값 확인 / 출력
+
+getParameter("key값"); //단일값
+getParameterValues("key값"); //다중값
+
+추가적인 값을 request객체에 넣을때
+setAttribute("key" , value); //value 모든 객체 가능
+getAtrribute("key");//value값이 Object 자료형이기 때문에 형변환 반드시 해줘야함.
+
+request를 이용해서 Session객체를 생성 / 불러올수 있다.
+request.getSession();
+
+HttpServlet getContext(); -> context객체 생성 / 불러올수 있음
+
+Session / Context 객체 데이터 보관 및 데이터 생존 주기
+
+Session : getSession() 생성 후 객체가 지워질때까지 보관 (session.invalidate()로 소멸)
+Context : server 가 올라가면 생성, 꺼지면 삭제
+Request : Client 서버에대한 요청이 있을때 생성, 서버가 클라이언트한테 응답하면 소멸
+
+추가데이터 삽입
+setAttrbute(키,값) / getAtrribute(키,값)
+
+HttpServletResponse : Client에게 응답해 줄 내용
+

@@ -74,7 +74,17 @@
                        <tbody>
                           <c:forEach items="${list2}" var="stuffSubcategory" varStatus = "v">
       					<tr>
-         						<td><c:out value="${v.count }"/></td>
+        						<td>
+         						<c:if test="${param.cPage eq null }">
+         								<c:out value="${v.count }"/>
+         						</c:if>
+             					<c:if test="${param.cPage == 1 }">
+										<c:out value="${v.count }"/>
+								</c:if>			
+         						<c:if test="${param.cPage > 1 }">
+										<c:out value="${v.count+(10*(param.cPage-1)) }"/>
+								</c:if>
+								</td>
          						<td>${stuffSubcategory.scName}</td>
          						<td>${stuffSubcategory.mcName}</td>
          						<td>
@@ -97,14 +107,23 @@
 
 <script>
 function maincategoryEnroll(){
-	$("#enrollFrm").attr("action","${path}/category/subcategoryEnrollEnd.do");
-	$("#enrollFrm").submit();
+	
+	if($('#stuffMain').val() != "0" && $('#scName').val() != "") {
+		$("#enrollFrm").attr("action","${path}/category/subcategoryEnrollEnd.do");
+		$("#enrollFrm").submit();
+	} else if($('#stuffMain').val() == "0"){
+		alert("메인 카테고리를 선택해주세요.");
+	} else if($('#scName').val() == ""){
+		alert("등록하실 서브카테고리의 이름을 입력해주세요.");
+	} else {
+		alert("입력하신 내용을 확인해주세요.");		
+	}
 }
 
 //서브 카테고리 이름 중복검사
 $(function(){
  	var nameCheck = $('#scName');
-	$('#scName').blur(function(){
+	$('#scName').keyup(function(){
 		var scName = $('#scName').val();
 		$.ajax({
 			url:"<%=request.getContextPath()%>/category/subcategoryNameDupliCheck.do?scName="+ scName,

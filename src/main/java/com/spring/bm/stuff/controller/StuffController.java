@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.connection.model.vo.Connection;
 import com.spring.bm.stuff.model.service.StuffService;
 import com.spring.bm.stuff.model.vo.Stuff;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
@@ -43,7 +44,10 @@ public class StuffController {
    public String stuffEnroll(Model model) {
       
       List<StuffMaincategory> list = service.stuffMaincategoryList();
+      List<Connection> list2 = service.stuffConnectionList();
+      
       model.addAttribute("list", list);
+      model.addAttribute("list2", list2);
       
       return "stuff/stuffEnroll";
    }
@@ -134,6 +138,7 @@ public class StuffController {
       
       int numPerPage = 10;
       List<Stuff> list=service.selectStuffList(cPage,numPerPage);
+      System.out.println(list);
       int totalCount = service.selectStuffCount();
       
       mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/stuffAllList.do"));
@@ -143,19 +148,6 @@ public class StuffController {
       return mv;
    }
    
-   //물품 자세히 보기
-   @RequestMapping("/stuff/stuffSeeMore.do")
-   public String stuffSeeMore(Model model, @RequestParam("stuffNo") int stuffNo) {
-      
-      Stuff s = service.stuffSeeMore(stuffNo);
-      StuffSubcategory sc = service.stuffScName(s.getScNo());
-      String scName = sc.getScName();
-      
-      model.addAttribute("stuff", s);
-      model.addAttribute("scName", scName);
-      
-      return "stuff/stuffSeeMore";
-   }
    //물품 검색
    @RequestMapping("/stuff/searchStuff.do")
    public ModelAndView searchStuff(@RequestParam(value="cPage", 
@@ -216,13 +208,17 @@ public class StuffController {
       Stuff stuff = service.stuffOne(stuffNo);
       StuffUpload stuffUpload = service.stuffUploadOne(stuffNo);
       List<StuffMaincategory> list = service.stuffMaincategoryList();
+      List<Connection> list2 = service.stuffConnectionList();
       StuffMaincategory stuffMaincategory = service.selectMaincategory(stuff.getScNo());
+      Connection stuffConnection = service.connectionName(stuff.getConCode());
       
       ModelAndView mv = new ModelAndView();
       mv.addObject("stuff", stuff);
       mv.addObject("stuffUpload", stuffUpload);
       mv.addObject("list", list);
+      mv.addObject("list2", list2);
       mv.addObject("stuffMaincategory", stuffMaincategory);
+      mv.addObject("sutffConnection", stuffConnection);
       mv.setViewName("stuff/stuffOne");
       
       
@@ -380,6 +376,17 @@ public class StuffController {
 		}
 		
 	}
+   
+   //이름으로만 물품조회
+   @RequestMapping("/stuff/searchStuffName.do")
+   public @ResponseBody List<Stuff> searchStuffName(@RequestParam(value = "stuffName") String stuffName) {
+	   
+	   System.out.println(stuffName);
+	   
+	   List<Stuff> list = service.searchStuffName(stuffName);
+	    
+	   return list;
+   }
    
 
    

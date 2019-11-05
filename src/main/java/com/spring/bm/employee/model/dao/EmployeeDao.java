@@ -1,4 +1,3 @@
-
 package com.spring.bm.employee.model.dao;
 
 import java.util.List;
@@ -36,6 +35,33 @@ public interface EmployeeDao {
 	int updateEmp(SqlSessionTemplate session, Map<String, Object> param);
 	/* 비밀번호변경 */
 	int updatePassword(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출퇴근 위치정보 확인 */
+	int checkLocation(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출근등록 */
+	int insertGotoWork(SqlSessionTemplate session, Map<String, Object> param);
+	/* 퇴근등록 */
+	int updateOffWork(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태하나보기 */
+	Map<String, Object> selectAttenOne(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태현황보기 */
+	List<Map<String, String>> selectAttenList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage);
+	int selectAttenCount(SqlSessionTemplate session, Map<String, Object> param);
+	/* 휴가리스트 출력 */
+	List<Map<String, String>> selectDayOffList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage);
+	int selectDayOffCount(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출장리스트 출력 */
+	List<Map<String, String>> selectBTList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage);
+	int selectBTCount(SqlSessionTemplate session, Map<String, Object> param);
+	/* 근태수정용 한개보기 */
+	Map<String, Object> selectAttenNoOne(SqlSessionTemplate session, Map<String, Object> param);
+	/* 남은휴가일수 보기 */
+	int selectDoRemaining(SqlSessionTemplate session, Map<String, Object> map);
+	/* 휴가신청 */
+	int insertDayOff(SqlSessionTemplate session, Map<String, Object> param);
+	/* 출장신청 */
+	int insertBT(SqlSessionTemplate session, Map<String, Object> param);
 	
 }
-

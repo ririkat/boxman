@@ -1,4 +1,3 @@
-
 package com.spring.bm.employee.model.dao;
 
 import java.util.List;
@@ -111,16 +110,109 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		// TODO Auto-generated method stub
 		return session.update("emp.updatePassword", param);
 	}
-	
-	
-	
-	
-	
-	
-	
 
+	/* 출퇴근 위치정보 확인 */
+	@Override
+	public int checkLocation(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.checkLocation", param);
+	}
 
+	/* 출근등록 */
+	@Override
+	public int insertGotoWork(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.insert("emp.insertGotoWork", param);
+	}
 
+	/* 퇴근등록 */
+	@Override
+	public int updateOffWork(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.update("emp.updateOffWork", param);
+	}
+	
+	/* 근태하나보기 */
+	@Override
+	public Map<String, Object> selectAttenOne(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectAttenOne", param);
+	}
 
+	/* 근태현황보기 */
+	@Override
+	public List<Map<String, String>> selectAttenList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("emp.selectAttenList", param, rows);
+	}
+
+	@Override
+	public int selectAttenCount(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectAttenCount", param);
+	}
+	/* 근태현황보기 끝 */
+
+	/* 휴가리스트출력 */
+	@Override
+	public List<Map<String, String>> selectDayOffList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("emp.selectDayOffList", param, rows);
+	}
+
+	@Override
+	public int selectDayOffCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("emp.selectDayOffCount", param);
+	}
+	/* 휴가리스트출력 끝 */
+
+	/* 출장리스트출력 */
+	@Override
+	public List<Map<String, String>> selectBTList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("emp.selectBTList", param, rows);
+	}
+
+	@Override
+	public int selectBTCount(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectBTCount", param);
+	}
+
+	/* 근태수정용 한개보기 */
+	@Override
+	public Map<String, Object> selectAttenNoOne(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectAttenNoOne", param);
+	}
+
+	/* 남은휴가일수보기 */
+	@Override
+	public int selectDoRemaining(SqlSessionTemplate session, Map<String, Object> map) {
+		Map<String, String> m = session.selectOne("emp.selectDoRemaining", map);
+		int result = 0;
+		if(m.get("DOREMAININGDAYS")==null || m.get("DOREMAININGDAYS")=="null") {
+			result = 0;	//휴가 사용한 적이 없음
+		} else {
+			result = Integer.parseInt(String.valueOf(m.get("DOREMAININGDAYS")));	//휴가 사용한적이 있음
+		}
+		return result;
+	}
+
+	/* 휴가신청 */
+	@Override
+	public int insertDayOff(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertDayOff", param);
+	}
+
+	/* 출장신청 */
+	@Override
+	public int insertBT(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertBT", param);
+	}
+	
 }
-

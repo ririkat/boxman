@@ -9,7 +9,6 @@
 <html lang="en">
 
 <head>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
@@ -118,18 +117,20 @@
 				alert("비밀번호는 4자 이상으로 입력해주세요.");
 				return false;
 			}
-			$.ajax({
-				url:"${path}/emp/updatePasswordEnd.do?empNo="+empNo,
-				data:{"empPassword":empPassword},
-				success:function(data) {
-					if(data==1) {
-						alert("비밀번호가 변경되었습니다.");
-						self.close();
-					} else {
-						alert("비밀번호 변경이 실패하였습니다.");
+			if(confirm('비밀번호를 수정하시겠습니까?')) {
+				$.ajax({
+					url:"${path}/emp/updatePasswordEnd.do?empNo="+empNo,
+					data:{"empPassword":empPassword},
+					success:function(data) {
+						if(data==1) {
+							alert("비밀번호가 변경되었습니다.");
+							self.close();
+						} else {
+							alert("비밀번호 변경이 실패하였습니다.");
+						}
 					}
-				}
-			})
+				})
+			}
 		}
 		
 	</script>

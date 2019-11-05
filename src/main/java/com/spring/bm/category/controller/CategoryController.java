@@ -17,6 +17,7 @@ import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
 import com.spring.bm.stuff.model.vo.StuffSubcategory;
 
+
 @Controller
 public class CategoryController {
 	

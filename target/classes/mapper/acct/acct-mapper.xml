@@ -1,7 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="acct">
-	<select id="selectEmployee" resultType="map">
-		SELECT * FROM employee
+	<select id="selectIcList" resultType="map">
+		select 
+		    (select sum(salrealpay+saltax) from salary where salcheck='Y') as salaries,
+		    (select sum(saltax) from salary where salcheck='Y') as saltax,
+		    (select sum(sevpay) from severance) as severance,
+		    (select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from businessTripPay) as biztrip
+		from dual
 	</select>
+	<select id="selectEmpList" resultType="map">
+		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
+		(select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK 
+			from employee
+			    inner join salary on employee.empno=salary.empno
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno order by saldate desc
+	</select>
+	<update id="updateWagePayment" parameterType="_int">
+		update salary set salcheck = 'Y' where salno=#{salno}
+	</update>
+	
+	<select id="selectSevList" resultType="map">
+		select 
+		    employee.empno, employee.empname, department.deptname, empjob.jobname,
+		    severance.sevcheck, severance.sevdate, severance.sevno 
+		    from employee 
+		        join severance on employee.empno=severance.empno
+		        join empjob on employee.jobno=empjob.jobno
+		        join department on employee.deptno=department.deptno
+	</select>
+	
 </mapper>
+
+
+<!-- 
+퇴직한 사람들 보여주기
+
+select 
+		    severance.sevno, employee.empno, employee.empname,
+		    to_char(severance.sevdate, 'mm/dd/yyyy')as sevdate, 
+		    severance.sevcheck from employee
+		        inner join severance on employee.empno=severance.empno
+
+ -->

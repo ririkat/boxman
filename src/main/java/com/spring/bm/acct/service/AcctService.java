@@ -8,6 +8,13 @@ public interface AcctService {
 
 	List<Map<String, String>> selectICList();
 
+	List<Map<String, String>> selectEmpList();
+
+	int updateWagePayment(int salno);
+
+	List<Map<String, String>> selectSevList();
+
+	
 	
 
 }

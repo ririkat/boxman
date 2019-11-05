@@ -22,9 +22,10 @@
                        <label>Search:
                        	    <select name = "type" id = "stuffMain" class = "form-control form-control-sm">
 										<option value = "stuffName">물품 이름</option>
-										<option value = "manufacturer">제조사</option>
+										<option value = "conName">거래처 이름</option>
+										<option value = "scName">카테고리</option>
 							</select>
-                           <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data">
+                           <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data" id = "data">
                       </label>
 				  		<button onclick = "searchStuff();" class="btn btn-light btn-icon-split">
                    		 <span class="icon text-gray-600">
@@ -58,7 +59,7 @@
 							<th scope="col">가격</th>
 							<th scope="col">수량</th>							
 							<th scope="col">등록날짜</th>
-							<th scope="col">제조사</th>
+							<th scope="col">거래처</th>
 							<th scope="col">비고</th>
 							<th scope="col"></th>
 						</tr>
@@ -66,16 +67,22 @@
                        <tbody>
                           <c:forEach items="${list}" var="stuff" varStatus = "v">
       						<tr>
-         						<td>				
-         						<c:if test="${param.cPage!=1 }">
-									<c:out value="${v.count }"/>
+        						<td>
+         						<c:if test="${param.cPage eq null }">
+         								<c:out value="${v.count }"/>
+         						</c:if>
+             					<c:if test="${param.cPage == 1 }">
+										<c:out value="${v.count }"/>
+								</c:if>			
+         						<c:if test="${param.cPage > 1 }">
+										<c:out value="${v.count+(10*(param.cPage-1)) }"/>
 								</c:if>
 								</td>
          						<td>${stuff.stuffName}</td>
          						<td>${stuff.price}</td>
          						<td>${stuff.stuffCount}</td>         						
          						<td>${stuff.enrollDate}</td>
-         						<td>${stuff.manufacturer}</td>
+         						<td>${stuff.conName}</td>
          						<td>${stuff.scName }</td>
          						<td>
 									<button type="button" class="btn btn-success mr-2"
@@ -97,8 +104,13 @@
 
 <script>
 function searchStuff(){
-	$("#searchFrm").attr("action","${path}/stuff/searchStuff.do");
-	$("#searchFrm").submit();
+	
+	if($('#data').val() != "") {
+		$("#searchFrm").attr("action","${path}/stuff/searchStuff.do");
+		$("#searchFrm").submit();
+	} else {
+		alert("검색하실 내용을 입력해주세요.");
+	}
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
