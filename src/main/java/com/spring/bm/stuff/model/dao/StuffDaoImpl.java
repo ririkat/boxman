@@ -67,9 +67,9 @@ public class StuffDaoImpl implements StuffDao {
 	@Override
 	public List<Stuff> selectStuffSearchList(SqlSessionTemplate sqlSession, Map<String, Object> m) {
 		
-		int cPage = (Integer) m.get("cPage");
-		int numPerPage = (Integer) m.get("numPerPage");
-		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		int cPage = (Integer)(m.get("cPage"));
+		int numPerPage = (Integer)(m.get("numPerPage"));
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
 			
 		return sqlSession.selectList("stuff.selectStuffSearchList", m, rows);
 	}
