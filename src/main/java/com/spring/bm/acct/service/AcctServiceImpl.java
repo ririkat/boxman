@@ -25,11 +25,6 @@ public class AcctServiceImpl implements AcctService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectEmpList() {
-		return dao.selectEmpList(session);
-	}
-
-	@Override
 	public int updateWagePayment(int salno) {
 		return dao.updateWagePayment(session, salno);
 	}
@@ -55,6 +50,16 @@ public class AcctServiceImpl implements AcctService {
 	@Override
 	public List<Map<String, String>> selectBizTripList() {
 		return dao.selectBizTripList(session);
+	}
+
+	@Override
+	public List<Map<String, String>> selectEmpList(int cPage, int numPerPage) {
+		return dao.selectEmpList(cPage, numPerPage, session);
+	}
+
+	@Override
+	public int selectEmpCount() {
+		return dao.selectEmpCount(session);
 	}
 
 

@@ -111,6 +111,7 @@
 
 
 <script>
+	// 월급 지급하기 기능
 	function pay(data){
 		if (confirm('월급을 지급하시겠습니까?')) {
 		    $.ajax({
@@ -130,6 +131,12 @@
 		} else {
 		    // Do nothing!
 		}
+	}
+	
+	// 검색
+	function fn_search(){
+		$("#searchFrm").attr("action", "${path}/acct/search.do");
+		$("#searchFrm").submit();
 	}
 </script>
 

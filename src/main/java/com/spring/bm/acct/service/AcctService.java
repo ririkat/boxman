@@ -8,7 +8,7 @@ public interface AcctService {
 
 	List<Map<String, String>> selectICList();
 
-	List<Map<String, String>> selectEmpList();
+	List<Map<String, String>> selectEmpList(int cPage, int numPerPage);
 
 	int updateWagePayment(int salno);
 
@@ -18,7 +18,6 @@ public interface AcctService {
 
 	List<Map<String, String>> selectBizTripList();
 
-	
-	
+	int selectEmpCount();
 
 }

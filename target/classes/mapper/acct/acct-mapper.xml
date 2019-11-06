@@ -9,6 +9,7 @@
 		    (select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from businessTripPay) as biztrip
 		from dual
 	</select>
+	<!-- 월급 리스트 가져오기 -->
 	<select id="selectEmpList" resultType="map">
 		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
 		(select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK 
@@ -17,6 +18,10 @@
 			    inner join empjob on employee.jobno=empjob.jobno
 			    inner join department on employee.deptno=department.deptno order by saldate desc
 	</select>
+	<select id="selectEmpCount" resultType="_int">
+		select count(*) from salary
+	</select>
+	<!-- 월급 리스트 가져오기 끝-->
 	<update id="updateWagePayment" parameterType="_int">
 		update salary set salcheck = 'Y' where salno=#{salno}
 	</update>

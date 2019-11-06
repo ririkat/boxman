@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.bm.acct.service.AcctService;
+import com.spring.bm.common.PageBarFactory;
 
 @Controller
 public class AcctController {
@@ -41,11 +43,19 @@ public class AcctController {
 		
 	}
 	
+//	월급 지급하기
 	@RequestMapping("/acct/wage.do")
-	public String wage(Model model) {
-		List <Map<String, String>> list = service.selectEmpList();
-		model.addAttribute("list", list);
-		return "acct/wage";
+	public ModelAndView wage(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
+		int numPerPage = 5;
+		List <Map<String, String>> list = service.selectEmpList(cPage, numPerPage);
+		int totalCount = service.selectEmpCount();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/acct/wage.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/wage");
+		return mv;
 	}
 	
 	@RequestMapping("/acct/wagePay.do")
