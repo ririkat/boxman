@@ -43,15 +43,19 @@
   <!-- datepicker -->
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
   
-  <!-- fullCalendar -->
-  <link href='${path }/resources/hb/fullcalendar/core/main.css' rel='stylesheet' />
-  <link href='${path }/resources/hb/fullcalendar/daygrid/main.css' rel='stylesheet' />
-  <link href='${path }/resources/hb/fullcalendar/timegrid/main.css' rel='stylesheet'/>
+	<!-- 달력 -->
+	<link rel=" shortcut icon" href="image/favicon.ico">
 
-  <script src='${path }/resources/hb/fullcalendar/core/main.js'></script>
-  <script src='${path }/resources/hb/fullcalendar/daygrid/main.js'></script>
-  <script src='${path }/resources/hb/fullcalendar/timegrid/main.js'></script>
-  <script src='${path }/resources/hb/fullcalendar/interaction/main.js'></script>
+    <link rel="stylesheet" href="${path }/resources/full/vendor/css/fullcalendar.min.css" />
+    <link rel="stylesheet" href="${path }/resources/full/vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href='${path }/resources/full/vendor/css/select2.min.css' />
+    <link rel="stylesheet" href='${path }/resources/full/vendor/css/bootstrap-datetimepicker.min.css' />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
+
+    <link rel="stylesheet" href="${path }/resources/full/css/main.css">
+    
+	<!-- 달력 -->
   
   <!-- tableSorter -->
   <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>
@@ -59,15 +63,6 @@
 
   <script>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      var calendarEl = document.getElementById('calendar');
-
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        plugins: [ 'dayGrid' ]
-      });
-
-      calendar.render();
-    });
 
   </script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>

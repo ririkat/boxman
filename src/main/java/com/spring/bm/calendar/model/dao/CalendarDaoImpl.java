@@ -6,6 +6,8 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bm.calendar.model.vo.Calendar;
+
 @Repository
 public class CalendarDaoImpl implements CalendarDao {
 
@@ -22,6 +24,11 @@ public class CalendarDaoImpl implements CalendarDao {
 	@Override
 	public List<Map<String, Object>> selectScheCategory(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("calendar.selectScheCategory");
+	}
+
+	@Override
+	public List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectList("calendar.selectCalendarEmpNo",empNo);
 	}
 	
 	
