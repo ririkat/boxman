@@ -43,15 +43,15 @@ public class AcctController {
 		
 	}
 	
-//	월급 지급하기
+	/* 월급 지급하기 */
 	@RequestMapping("/acct/wage.do")
-	public ModelAndView wage(@RequestParam(value="cPage", required=false, defaultValue="0") int cPage, Model model) {
-		int numPerPage = 5;
+	public ModelAndView wage(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage = 10;
 		List <Map<String, String>> list = service.selectEmpList(cPage, numPerPage);
 		int totalCount = service.selectEmpCount();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/acct/wage.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/wage.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/wage");
@@ -69,18 +69,30 @@ public class AcctController {
 		return mapper.writeValueAsString(num);
 	}
 	
+	/* 출장비용 */
 	@RequestMapping("/acct/biztrip.do")
-	public String bizTrip(Model model) {
-		List <Map<String, String>> list = service.selectBizTripList();
-		model.addAttribute("list", list);
-		return "acct/biztrip";
+	public ModelAndView bizTrip(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage=5;
+		List <Map<String, String>> list = service.selectBizTripList(cPage, numPerPage);
+		int totalCount = service.selectBizTripCount();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/biztrip.do"));
+		mv.addObject("list", list);
+		mv.setViewName("acct/biztrip");
+		return mv;
 	}
 	
+	/* severance */
 	@RequestMapping("/acct/severance.do")
-	public String severance(Model model) {
-		List <Map<String, String>> list = service.selectSevList();
-		model.addAttribute("list", list);
-		return "acct/severance";
+	public ModelAndView severance(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage) {
+		int numPerPage = 5;
+		List <Map<String, String>> list = service.selectSevList(cPage, numPerPage);
+		int totalCount = service.selectSevCount();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/severance.do"));
+		mv.addObject("list", list);
+		mv.setViewName("acct/severance");
+		return mv;
 	}
 	
 	@RequestMapping("/acct/quitJob.do")

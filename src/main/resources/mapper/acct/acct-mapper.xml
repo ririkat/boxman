@@ -26,6 +26,8 @@
 		update salary set salcheck = 'Y' where salno=#{salno}
 	</update>
 	
+	
+	<!-- severance -->
 	<select id="selectSevList" resultType="map">
 		select 
 		    employee.empno, employee.empname, employee.empsal,
@@ -38,6 +40,10 @@
 		        join empjob on employee.jobno=empjob.jobno
 		        join department on employee.deptno=department.deptno
 	</select>
+	<select id="selectSevCount" resultType="_int">
+		select count(*) from severance
+	</select>
+	
 	<update id="updateSeveranceStatus" parameterType="map">
 		update severance
 		    set
@@ -54,10 +60,13 @@
 					where empno=#{empno}
 	</update>
 	
+	<!-- biztrip -->
 	<select id="selectBizTripList" resultType="map">
 		select * from businessTrip
 	</select>
-	
+	<select id="selectBizTripCount" resultType="_int">
+		select count(*) from businessTrip
+	</select>
 </mapper>
 
 

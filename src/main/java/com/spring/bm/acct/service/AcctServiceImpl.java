@@ -30,11 +30,6 @@ public class AcctServiceImpl implements AcctService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectSevList() {
-		return dao.selectSevList(session);
-	}
-
-	@Override
 	@Transactional
 	public int updateSeveranceStatus(Map<String, String> m) throws RuntimeException{
 		int result =0;
@@ -47,11 +42,17 @@ public class AcctServiceImpl implements AcctService {
 		return result;
 	}
 
+	/* biztrip */
 	@Override
-	public List<Map<String, String>> selectBizTripList() {
-		return dao.selectBizTripList(session);
+	public List<Map<String, String>> selectBizTripList(int cPage, int numPerPage) {
+		return dao.selectBizTripList(cPage, numPerPage, session);
 	}
-
+	@Override
+	public int selectBizTripCount() {
+		return dao.selecBizTripCount(session);
+	}
+	/* biztrip end */
+	
 	@Override
 	public List<Map<String, String>> selectEmpList(int cPage, int numPerPage) {
 		return dao.selectEmpList(cPage, numPerPage, session);
@@ -61,6 +62,19 @@ public class AcctServiceImpl implements AcctService {
 	public int selectEmpCount() {
 		return dao.selectEmpCount(session);
 	}
+
+	/* severance */
+	@Override
+	public List<Map<String, String>> selectSevList(int cPage, int numPerPage) {
+		return dao.selectSevList(session, cPage, numPerPage);
+	}
+
+	@Override
+	public int selectSevCount() {
+		return dao.selectSevCount(session);
+	}
+
+
 
 
 }

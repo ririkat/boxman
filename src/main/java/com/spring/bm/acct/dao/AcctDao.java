@@ -15,14 +15,18 @@ public interface AcctDao {
 	
 	int updateWagePayment(SqlSessionTemplate session, int salno);
 
-	List<Map<String, String>> selectSevList(SqlSessionTemplate session);
+	/* severace */
+	List<Map<String, String>> selectSevList(SqlSessionTemplate session, int cPage, int numPerPage);
 
 	int updateSeveranceStatus(SqlSessionTemplate session, Map<String, String> m);
 
 	int updateEmployeeStatus(SqlSessionTemplate session, Map<String, String> m);
 
-	List<Map<String, String>> selectBizTripList(SqlSessionTemplate session);
+	/* biztrip */
+	List<Map<String, String>> selectBizTripList(int cPage, int numPerPage, SqlSessionTemplate session);
+	int selecBizTripCount(SqlSessionTemplate session);
 
-
+	int selectSevCount(SqlSessionTemplate session);
+	
 
 }
