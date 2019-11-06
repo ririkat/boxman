@@ -103,7 +103,7 @@
                                  결재라인명
                                  </th>
                                  <td>
-                                 <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" />
+                                 <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" value="${apvl['APVLTITLE']} }"/>
                                  </td>
                               </tr>
                               <tr>
