@@ -1,4 +1,4 @@
-package com.spring.bm.calendar.dao;
+package com.spring.bm.calendar.model.dao;
 
 import java.util.List;
 import java.util.Map;

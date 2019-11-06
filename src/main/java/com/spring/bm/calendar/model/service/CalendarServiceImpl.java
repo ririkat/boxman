@@ -7,7 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.spring.bm.calendar.dao.CalendarDao;
+import com.spring.bm.calendar.model.dao.CalendarDao;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {

@@ -41,6 +41,7 @@ public class CalendarController {
 		
 		return mv;
 	}
+	
 	//스케줄 등록
 	@RequestMapping("/calendar/insertCalendarEnd.do")
 	public ModelAndView insertCalendar(@RequestParam Map<String,Object> param) {
