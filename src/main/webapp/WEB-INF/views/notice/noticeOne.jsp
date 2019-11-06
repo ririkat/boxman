@@ -40,11 +40,11 @@
                       </div>                     
                       <div class="form-group">
                         <label for="exampleInputPassword4">작성자</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="${loginEmp['EMPNAME'] }" readonly>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.empName }" readonly>
                       </div>
                       <div class="form-group">
                         <label for="exampleInputPassword4">전화번호</label>
-                        <input type="text" class="form-control" id="exampleInputPassword4" value="${loginEmp['EMPPHONE'] }" readonly>
+                        <input type="text" class="form-control" id="exampleInputPassword4" value="${nt.empPhone }" readonly>
                       </div>
                       <div class="form-group">
                         <label for="exampleTextarea1">내용</label>
@@ -88,8 +88,11 @@
 									</td>
 								</tr>
 							</table>
+							<div style="margin:0 auto; width:fit-content;">
+                           
                       <button type="button" class="btn btn-success mr-2" onclick="updateNotice();">수정</button>
                       <button type="button" class="btn btn-light" onclick="deleteNotice();">삭제</button>
+                        </div>
                     </form>
                   </div>
                 </div>

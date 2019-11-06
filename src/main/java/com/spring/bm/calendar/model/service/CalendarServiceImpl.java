@@ -1,5 +1,6 @@
 package com.spring.bm.calendar.model.service;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,6 +25,11 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public int updateCalendar(Map<String, Object> param) {
 		return dao.updateCalendar(sqlSession, param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectScheCategory() {
+		return dao.selectScheCategory(sqlSession);
 	}
 
 	

@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.employee.model.service.EmployeeService;
+import com.spring.bm.employee.model.vo.Employee;
 import com.spring.bm.notice.model.service.NoticeService;
 import com.spring.bm.notice.model.vo.Notice;
 import com.spring.bm.notice.model.vo.UploadNotice;
@@ -277,7 +278,8 @@ public class NoticeController {
       int numPerPage = 5;
       List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
       List<Notice> list2 = noticeService.selectNoticeList2();
-      System.out.println("list2 ==============>>> "+list2);
+     
+
       int totalCount = noticeService.selectNoticeCount();
 
       mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));

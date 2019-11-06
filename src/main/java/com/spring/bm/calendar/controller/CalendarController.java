@@ -1,5 +1,6 @@
 package com.spring.bm.calendar.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -25,10 +26,23 @@ public class CalendarController {
 	/* 일정관리첫페이지로 이동 */
 	@RequestMapping("/calendar/allView.do")	//사원등록 폼으로 전환
 	public String allView() {
-		return "/calendar/calendarAll";
+		return "calendar/calendarAll";
+	}
+	//등록페이지로 이동
+	@RequestMapping("/calendar/insertCalendar.do")
+	public ModelAndView insertView() {
+		
+		List<Map<String, Object>> list = service.selectScheCategory();
+		System.out.println("찍어봐야겠녜"+list);
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("list",list);
+		mv.setViewName("calendar/calendarEnroll");
+		
+		return mv;
 	}
 	//스케줄 등록
-	@RequestMapping("/calendar/insertCalendar.do")
+	@RequestMapping("/calendar/insertCalendarEnd.do")
 	public ModelAndView insertCalendar(@RequestParam Map<String,Object> param) {
 		
 		int result = service.insertCalender(param);

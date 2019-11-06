@@ -1,5 +1,6 @@
 package com.spring.bm.calendar.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,6 +17,11 @@ public class CalendarDaoImpl implements CalendarDao {
 	@Override
 	public int updateCalendar(SqlSessionTemplate sqlSession, Map<String, Object> param) {
 		return sqlSession.update("calendar.updateCalendar", param);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectScheCategory(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("calendar.selectScheCategory");
 	}
 	
 	

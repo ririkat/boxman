@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.spring.bm.employee.model.vo.Employee;
 import com.spring.bm.notice.model.dao.NoticeDao;
 import com.spring.bm.notice.model.vo.Notice;
 import com.spring.bm.notice.model.vo.UploadNotice;
@@ -165,6 +166,12 @@ public class NoticeServiceImpl implements NoticeService {
 	public int deleteSite(String param) {
 		return dao.deleteSite(sqlSession, param);
 	}
+
+	@Override
+	public Employee selectNoticeEmp(int empNo) {
+		return dao.selectNoticeEmp(sqlSession, empNo);
+	}
+	
 	
 
 	

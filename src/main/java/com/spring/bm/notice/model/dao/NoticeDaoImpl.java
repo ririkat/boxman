@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bm.employee.model.vo.Employee;
 import com.spring.bm.notice.model.vo.Notice;
 import com.spring.bm.notice.model.vo.UploadNotice;
 
@@ -116,6 +117,11 @@ public class NoticeDaoImpl implements NoticeDao {
 	@Override
 	public int deleteSite(SqlSessionTemplate sqlSession, String param) {
 		return sqlSession.delete("notice.deleteSite", param);
+	}
+
+	@Override
+	public Employee selectNoticeEmp(SqlSessionTemplate sqlSession, int empNo) {
+		return sqlSession.selectOne("notice.selectNoticeEmp", empNo);
 	}
 	
 

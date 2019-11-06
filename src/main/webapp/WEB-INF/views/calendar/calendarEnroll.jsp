@@ -17,7 +17,7 @@ div#demo-container {
 }
 </style>
 <section id="content">
-	<form id="calendar" method="post">
+	<form id="calendar1" method="post">
 		<div class="col-md-6 grid-margin stretch-card">
 			<div class="card">
 				<div class="card-body">
@@ -34,9 +34,9 @@ div#demo-container {
 							<label for="exampleInputName1">제목</label> <input type="text"
 								class="form-control" id="exampleInputName1" name="schTitle">
 						</div>
-						<div class="form-group">
+						<div class="form-group" >
 							<label>스케줄 접근 범위</label>
-							<div class="col-sm-4">
+							<div class="col-sm-4" style="padding:20px;">
 								<div class="form-radio">
 									<label class="form-check-label"> <input type="radio"
 										class="form-check-input" name="schLevel" id="schCategory1"
@@ -44,7 +44,7 @@ div#demo-container {
 									</label>
 								</div>
 
-								<div class="form-radio">
+								<div class="form-radio" style="display:inline-block;">
 									<label class="form-check-label"> <input type="radio"
 										class="form-check-input" name="schLevel" id="schCategory2"
 										value="부서"> 부서 <i class="input-helper"></i>
@@ -60,6 +60,10 @@ div#demo-container {
 							</div>
 						</div>
 						<div class="form-group">
+							<label class="col-sm-2 col-form-labe">이벤트 날짜</label>
+							<input type="date" class="form-control" name="schEventDate">
+						</div>
+						<div class="form-group">
 							<label for="exampleTextarea1">내용</label>
 							<textarea class="form-control" id="exampleTextarea1"
 								name="schContent" rows="10"></textarea>
@@ -72,11 +76,11 @@ div#demo-container {
 								required="required">
 								<option value="0">스케줄 유형선택</option>
 								<c:forEach var="sch" items="${list }">
-									<option value="${sch.schCateName }">${sch.schCateName }</option>
+									<option value="${sch['SCHCATENAME'] }">${sch['SCHCATENAME'] }</option>
 								</c:forEach>
 							</select>
 						</div>
-
+						<br><br>
 						<button type="button" onclick="insertCalendar();"
 							class="btn btn-success mr-2">등록</button>
 						<button class="btn btn-light">취소</button>
@@ -90,8 +94,8 @@ div#demo-container {
 <script>
 	//등록 버튼 클릭시 리스트화면으로
 	function insertCalendar(){
-		$("#calendar").attr("action","${path }/calendar/insertCalendar.do");
-		$("#calendar").submit();
+		$("#calendar1").attr("action","${path }/calendar/insertCalendarEnd.do");
+		$("#calendar1").submit();
 	}
 	
 </script>
