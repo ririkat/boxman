@@ -43,4 +43,10 @@ public interface ApvDao {
 
 	int insertApvLine(SqlSessionTemplate session, Map<String, Object> param);
 
+	int insertApvlApplicant(SqlSessionTemplate session, Map<String, Object> param2);
+
+	int deleteApvLine(SqlSessionTemplate session, int alNo);
+
+	int deleteApvlApplicant(SqlSessionTemplate session, int alNo);
+
 }

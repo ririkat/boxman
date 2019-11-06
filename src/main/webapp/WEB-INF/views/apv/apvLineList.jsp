@@ -32,13 +32,19 @@
                       <th>결재라인번호</th>
                       <th>결재라인명</th>
                       <th>설명</th>
+                      <th>관리</th>
                     </tr>
                   </thead>
-                  <tfoot>
-
-                  </tfoot>
                   <tbody>
-
+						<c:forEach var="al" items="${myList}">
+								<tr>
+									<td><c:out value='${al["APVLNO"]}' /></td>
+									<td><c:out value='${al["APVLTITLE"]}' /></td>
+									<td><c:out value='${al["APVLDESCRYPT"]}' /></td>
+									<td><button class="btn btn-primary" onclick="modifyContents(${al['APVLNO']})" >수정</button>
+									<button class="btn btn-primary" onclick="deleteContents(${al['APVLNO']},${loginEmp['EMPNO'] })" >삭제</button></td>
+								</tr>
+							</c:forEach>
                   </tbody>
                 </table>
               </div>
@@ -59,6 +65,18 @@
       		var url="${path}/apv/apvLineEnroll.do";
       		var name="양식등록"
             window.open(url,name,"width=1200,height=900,left=600");
+      	}
+      	
+    	function modifyContents(alno){
+      		var url="${path}/apv/apvLineModify.do?alNo="+alno;
+      		var name="결재라인수정"
+            window.open(url,name,"width=1000,height=800,left=600");
+      	}
+      	
+      	function deleteContents(alno,loginNo){
+      		if(confirm("삭제하시겠습니까?")){
+      			location.href="${path}/apv/apvLineDelete.do?alNo="+alno+"&loginNo="+loginNo;
+      		}
       	}
       </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

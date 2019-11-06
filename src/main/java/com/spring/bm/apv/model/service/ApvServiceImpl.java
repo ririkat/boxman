@@ -1,5 +1,8 @@
 package com.spring.bm.apv.model.service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -124,16 +127,30 @@ public class ApvServiceImpl implements ApvService {
 	public int insertApvLine(Map<String, Object> param) throws Exception {
 		
 		int result=0;
-		result=dao.insertApvLine(session,param);//board테이블에 데이터 입력!
+		result=dao.insertApvLine(session,param);
 		if(result==0) throw new Exception(); //트랜잭션 처리하기
-		/*
-		 * if(attachList.size()>0) { for(Attachment a : attachList) {
-		 * a.setBoardNo((Integer)param.get("boardNo"));
-		 * result=dao.insertAttachment(session,a); if(result==0) throw new Exception();
-		 * //트랜잭션 처리하기 } }
-		 */
-		System.out.println(param.get("apvL"));
+		ArrayList list=(ArrayList) param.get("selOpts");
+		int pno=1;
+		int curr=Integer.parseInt((String) param.get("apvlNo"));
+		for(int i=0; i<list.size(); i++) {
+			Map<String,Object> param2=new HashMap<String,Object>();
+			param2.put("priorNo",pno);
+			param2.put("empNo",Integer.parseInt(list.get(i).toString()));
+			param2.put("apvlNo",curr);
+			result=dao.insertApvlApplicant(session,param2);
+			pno++;
+			if(result==0) throw new Exception();
+		}
 		
+		return result;
+	}
+	
+	@Override
+	public int deleteApvLine(int alNo) throws Exception{
+		
+		int result=dao.deleteApvlApplicant(session,alNo);
+		if(result==0) throw new Exception();
+		result=dao.deleteApvLine(session,alNo);
 		return result;
 	}
 	

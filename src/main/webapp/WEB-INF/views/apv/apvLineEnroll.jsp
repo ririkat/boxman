@@ -103,7 +103,7 @@
                                  결재라인명
                                  </th>
                                  <td>
-                                 <input type="text" name="apvLineTitle" style="width:600px;" />
+                                 <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" />
                                  </td>
                               </tr>
                               <tr>
@@ -113,7 +113,7 @@
                                  <td>
                                     <button type="button" class="btn" id="up" onclick="upButton();">▲</button>
                                     <button type="button" class="btn" id="down" onclick="downButton();">▼</button>
-                                    <button class="btn" id="removeOne" onclick="removeOne();">X</button>
+                                    <button type="button" class="btn" id="removeSel" onclick="selRemove();">X</button>
                                  </td>
                               </tr>
                               <tr>
@@ -129,7 +129,7 @@
                   </div>
                </div>
                <div class="row">
-                  <button type="button" class="btn btn-primary" id="enrollBtn1" onclick="enrollBtn1()" style="width:100%">결재라인 등록</button>
+                  <button type="button" class="btn btn-primary" id="enroll" onclick="enrollButton()" style="width:100%">결재라인 등록</button>
                </div>
             </div>
          </div>
@@ -210,28 +210,33 @@
             selectOpt1.next().after(selectOpt1);
          }
          
-         function removeOne(){
-            var selectOpt=$("#apvL option:selected");
-            selectOpt.remove();
+         function selRemove(){
+            $("#apvL option:selected").remove();
          }
 
          function removeAll(){
-            var selectbox=$("#apvL");
-            selectbox.html("");
+            $("#apvL option").remove();
          }
          
-         function enrollBtn1(){
-            var selectBox=$('#apvL');
-            selectBox.attr("multiple","multiple");
-            var options=$('#apvL option');
-            console.log(options);
-            $('#apvL option').attr("selected","selected");
-            console.log($('#apvLineForm').serialize());
+         
+         function enrollButton(){
+        	/* $('#apvL').attr("multiple",true);
+            $('#apvL option').attr("selected",true); */
+            
+            var myObject=new Object();
+            var apvLTitle=$('#apvLTitle').val();
+            var selOpts=new Array();
+            $('#apvL option').each(function(){
+            	selOpts.push($(this).val());
+            })
+            myObject["apvLTitle"]=apvLTitle;
+            myObject["selOpts"]=selOpts;
 
             $.ajax({
                url:"${path}/apv/apvLineEnrollEnd.do",
                type : "post",
-               data : $('#apvLineForm').serialize(),
+               data : JSON.stringify(myObject),
+               contentType: "application/json",
                success : function(data) {
                   console.log(data);
                   if(data>0){

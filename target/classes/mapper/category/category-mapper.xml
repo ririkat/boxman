@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace = "category">
+	<select id = "maincategoryList" resultType = "maincategory">
+		SELECT * FROM STUFF_MAINCATEGORY ORDER BY MCNO ASC
+	</select>
+	
+	<select id = "selectMaincategoryList" resultType="maincategory">
+		SELECT * FROM STUFF_MAINCATEGORY ORDER BY MCNO ASC
+	</select>
+	
+	<select id = "selectMaincategoryCount" resultType="_int">
+		SELECT COUNT(*) FROM STUFF_MAINCATEGORY
+	</select>
+	
+	<insert id = "maincategoryEnroll" parameterType="string">
+		INSERT INTO STUFF_MAINCATEGORY VALUES(SEQ_STUFF_MAIN.NEXTVAL, #{mcName})
+	</insert>
+	
+	<select id = "subcategoryList" resultType = "subcategory">
+		SELECT * FROM STUFF_SUBCATEGORY INNER JOIN STUFF_MAINCATEGORY ON STUFF_SUBCATEGORY.MCNO = STUFF_MAINCATEGORY.MCNO ORDER BY STUFF_SUBCATEGORY.SCNO ASC
+	</select>
+	
+	<select id = "selectSubcategoryCount" resultType="_int">
+		SELECT COUNT(*) FROM STUFF_SUBCATEGORY
+	</select>
+	
+	<insert id = "subcategoryEnroll" parameterType="map">
+		INSERT INTO STUFF_SUBCATEGORY VALUES (SEQ_STUFF_SUB.NEXTVAL, #{scName}, (SELECT MCNO FROM STUFF_MAINCATEGORY WHERE MCNAME = #{mcName}))
+	</insert>
+	
+	<delete id = "maincategoryDelete" parameterType="string">
+		DELETE FROM STUFF_MAINCATEGORY WHERE MCNAME = #{mcName}
+	</delete>
+	
+	<delete id = "subcategoryDelete" parameterType="string">
+		DELETE FROM STUFF_SUBCATEGORY WHERE SCNAME = #{scName}
+	</delete>
+	
+	<select id = "maincategoryNameDupliCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM STUFF_MAINCATEGORY WHERE MCNAME = #{mcName}
+	</select>
+	
+	<select id = "subcategoryNameDupliCheck" parameterType="string" resultType="_int">
+		SELECT COUNT(*) FROM STUFF_SUBCATEGORY WHERE SCNAME = #{scName}	
+	</select>
+	
+	<select id = "selectMaincategory" parameterType="_int" resultType="maincategory">
+		SELECT * FROM STUFF_MAINCATEGORY WHERE MCNO = (SELECT MCNO FROM STUFF_SUBCATEGORY WHERE SCNO = #{scNo})
+	</select>
+</mapper>
+
+

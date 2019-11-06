@@ -45,5 +45,7 @@ public interface ApvService {
 
 	int insertApvLine(Map<String, Object> param) throws Exception;
 
+	int deleteApvLine(int alNo) throws Exception;
+
 
 }
