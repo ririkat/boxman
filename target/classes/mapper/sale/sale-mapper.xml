@@ -28,7 +28,7 @@
 	<insert id="enrollSaleInfo" parameterType="map">
 		INSERT INTO saleTab
 		VALUES (seq_sale.NEXTVAL, SYSDATE, (SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매출'),
-				#{chargeNo}, #{saleTotAmt}, default, null, default, null)
+				#{chargeNo}, #{saleSuperTax}, #{salTranType}, #{salTotAmt}, default, null, default, null)
 	</insert>
 	
 	<insert id="enrollSaleItem" parameterType="map">
