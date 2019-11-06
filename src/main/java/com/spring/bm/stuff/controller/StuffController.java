@@ -149,18 +149,15 @@ public class StuffController {
    
    //물품 검색
    @RequestMapping("/stuff/searchStuff.do")
-   public ModelAndView searchStuff(@RequestParam(value="cPage", 
-         required=false, defaultValue="0") int cPage, @RequestParam(value = "type") String type, @RequestParam(value = "data") String data) {
+   public ModelAndView searchStuff(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+			@RequestParam Map<String, Object> param) {
       
-      int numPerPage = 10;   
-      Map<String, Object> m = new HashMap();
-      m.put("cPage", cPage);
-      m.put("numPerPage", numPerPage);
-      m.put("data", data); // 빈칸에 입력한 값
-      m.put("type", type); // select에서 가져온 값 
+	  int numPerPage = 10;
+	  param.put("cPage", cPage);
+	  param.put("numPerPage", numPerPage);
             
-      List<Stuff> list=service.selectStuffSearchList(m);
-      int totalCount = service.selectStuffSearchCount(m);
+      List<Stuff> list=service.selectStuffSearchList(param);
+      int totalCount = service.selectStuffSearchCount(param);
       
       System.out.println("list : " + list);
       System.out.println("totalCount : " + totalCount);
