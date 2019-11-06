@@ -154,4 +154,40 @@ public class ApvServiceImpl implements ApvService {
 		return result;
 	}
 	
+	@Override
+	public Map<String, Object> selectALModi(int alno) {
+		return dao.selectALModi(session,alno);
+	}
+	
+	@Override
+	public List selectALApplicants(int alno) {
+		return dao.selectALApplicants(session,alno);
+	}
+	
+	@Override
+	public int updateApvLine(Map<String, Object> param) throws Exception {
+		int result=0;
+		/*결재라인 자체테이블 수정*/
+		result=dao.updateApvLine(session,param);
+		if(result==0) throw new Exception(); //트랜잭션 처리하기
+		/*기존 결재자들 삭제*/
+		result=dao.deleteApvlApplicants(session,param);
+		if(result==0) throw new Exception();
+		/*새로 입력된 결재라인으로 등록*/
+		ArrayList list=(ArrayList) param.get("selOpts");
+		int pno=1;
+		int curr=Integer.parseInt((String) param.get("apvlNo"));
+		for(int i=0; i<list.size(); i++) {
+			Map<String,Object> param2=new HashMap<String,Object>();
+			param2.put("priorNo",pno);
+			param2.put("empNo",Integer.parseInt(list.get(i).toString()));
+			param2.put("apvlNo",curr);
+			result=dao.insertApvlApplicant(session,param2);
+			pno++;
+			if(result==0) throw new Exception();
+		}
+		
+		return result;
+	}
+	
 }

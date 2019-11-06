@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="apv">
 	<!--  -->
-	<!-- 결재양식 -->
+	<!-- 결재양식 등록-->
 	<insert id="insertApvDoc" parameterType="map">
 		INSERT INTO DOCFORM VALUES(seq_docForm.NEXTVAL, #{dfTitle},#{dfHeadForm},#{dfContentForm},#{dfExp},#{dcNo})
 	</insert>
@@ -12,7 +12,7 @@
 		SELECT * FROM DOCCATE
 	</select>
 	<select id="selectDocForm" resultType="map">
-		SELECT * FROM DOCFORM JOIN DOCCATE USING (DCNO)
+		SELECT * FROM DOCFORM JOIN DOCCATE USING (DCNO) ORDER BY DFNO DESC
 	</select>
 	<select id="selectDocCCate" resultType="map">
 		SELECT * FROM DOCFORMCONTENT
@@ -96,6 +96,7 @@
 		</selectKey>
 		INSERT INTO APVLINE VALUES(SEQ_APVLINE.NEXTVAL,#{apvLTitle},null,'개인',null)
 	</insert>
+			<!-- 이건 수정할때도 재사용됨-->
 	<insert id="insertApvlApplicant" parameterType="hashmap">
 		INSERT INTO APVLAPPLICANT VALUES(SEQ_APVLAPPLICANT.NEXTVAL,#{priorNo},#{empNo},#{apvlNo})
 	</insert>
@@ -107,4 +108,21 @@
 	<delete id="deleteApvLine" parameterType="_int">
 		DELETE FROM APVLINE WHERE APVLNO=#{alNo}
 	</delete>
+	
+	<!-- 결재라인 수정 뷰 호출-->
+	<select id="selectALModi" parameterType="_int" resultType="map">
+		SELECT * FROM APVLINE WHERE APVLNO=#{alNo}
+	</select>
+	<select id="selectALApplicants" parameterType="_int" resultType="map">
+		SELECT A.*,E.EMPNO,E.EMPNAME,D.DEPTNO,D.DEPTNAME,J.JOBNO,J.JOBNAME FROM APVLAPPLICANT A JOIN EMPLOYEE E ON A.EMPNO=E.EMPNO JOIN DEPARTMENT D ON E.DEPTNO=D.DEPTNO JOIN EMPJOB J ON E.JOBNO=J.JOBNO WHERE A.APVLNO=#{alNo} ORDER BY APVAPRIOR ASC
+	</select>
+	
+	<!-- 결재라인 수정 로직-->
+	<update id="updateApvLine" parameterType="map">
+		UPDATE APVLINE SET APVLTITLE=#{apvLTitle} WHERE APVLNO=#{apvlNo} 
+	</update>
+	<delete id="deleteApvlApplicants" parameterType="map">
+		DELETE FROM APVLAPPLICANT WHERE APVLNO=#{apvlNo}
+	</delete>
+	
 </mapper>

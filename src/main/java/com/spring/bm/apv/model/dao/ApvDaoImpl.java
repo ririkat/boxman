@@ -121,4 +121,24 @@ public class ApvDaoImpl implements ApvDao {
 	public int deleteApvLine(SqlSessionTemplate session, int alNo) {
 		return session.delete("apv.deleteApvLine",alNo);
 	}
+	
+	@Override
+	public Map<String, Object> selectALModi(SqlSessionTemplate session, int alno) {
+		return session.selectOne("apv.selectALModi",alno);
+	}
+	
+	@Override
+	public List selectALApplicants(SqlSessionTemplate session, int alno) {
+		return session.selectList("apv.selectALApplicants",alno);
+	}
+	
+	@Override
+	public int updateApvLine(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvLine",param);
+	}
+	
+	@Override
+	public int deleteApvlApplicants(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.delete("apv.deleteApvlApplicants",param);
+	}
 }

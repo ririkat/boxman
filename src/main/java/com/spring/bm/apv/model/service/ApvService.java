@@ -47,5 +47,11 @@ public interface ApvService {
 
 	int deleteApvLine(int alNo) throws Exception;
 
+	Map<String, Object> selectALModi(int alno);
+
+	List selectALApplicants(int alno);
+
+	int updateApvLine(Map<String, Object> param) throws Exception;
+
 
 }

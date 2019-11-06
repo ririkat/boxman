@@ -82,7 +82,7 @@ public class ApvLineController {
 		return result;
 	}
 	
-	/* 결재 양식 삭제 로직*/
+	/* 결재 라인 삭제 로직*/
 	@RequestMapping("/apv/apvLineDelete.do")
 	public ModelAndView apvLineDelete(@RequestParam(value="alNo", 
 			required=false, defaultValue="0") int alNo,int loginNo){
@@ -109,5 +109,35 @@ public class ApvLineController {
 		mv.setViewName("common/msg");
 		return mv;
 	}
+	
+	
+	/* 결재 양식 수정 팝업창 */
+	@RequestMapping("/apv/apvLineModify.do")
+	public ModelAndView apvDocModify(@RequestParam(value="alNo", 
+			required=false, defaultValue="0") int alno) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> apvl=service.selectALModi(alno);
+		List applicants=new ArrayList();
+		applicants=service.selectALApplicants(alno);
+		
+		mv.addObject("apvl",apvl);
+		mv.addObject("applicants",applicants);
+		mv.setViewName("apv/apvLineModi");
+		return mv;
+	}
+	
+	/* 결재라인 수정 처리  */
+	@RequestMapping(value="/apv/apvLineModiEnd.do",method=RequestMethod.POST)
+	@ResponseBody
+	public int apvLineModiEnd(@RequestBody Map<String,Object> param){
+		int result=0;
+		try { 
+			result=service.updateApvLine(param); 
+		}
+		catch (Exception e) {
+			e.printStackTrace(); 
+		}
 
+		return result;
+	}
 }

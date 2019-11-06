@@ -238,7 +238,6 @@
                data : JSON.stringify(myObject),
                contentType: "application/json",
                success : function(data) {
-                  console.log(data);
                   if(data>0){
                      self.close();
                      window.opener.location.reload();
