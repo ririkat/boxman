@@ -26,7 +26,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-stripped" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>결재라인번호</th>
@@ -64,13 +64,13 @@
       	function apvLine_enroll(){
       		var url="${path}/apv/apvLineEnroll.do";
       		var name="양식등록"
-            window.open(url,name,"width=1200,height=900,left=600");
+            window.open(url,name,"width=1200,height=800,left=600");
       	}
       	
     	function modifyContents(alno){
       		var url="${path}/apv/apvLineModify.do?alNo="+alno;
       		var name="결재라인수정"
-            window.open(url,name,"width=1000,height=800,left=600");
+            window.open(url,name,"width=1200,height=800,left=600");
       	}
       	
       	function deleteContents(alno,loginNo){

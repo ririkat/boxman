@@ -49,4 +49,12 @@ public interface ApvDao {
 
 	int deleteApvlApplicant(SqlSessionTemplate session, int alNo);
 
+	Map<String, Object> selectALModi(SqlSessionTemplate session, int alno);
+
+	List selectALApplicants(SqlSessionTemplate session, int alno);
+
+	int updateApvLine(SqlSessionTemplate session, Map<String, Object> param);
+
+	int deleteApvlApplicants(SqlSessionTemplate session, Map<String, Object> param);
+
 }

@@ -53,7 +53,7 @@
 <body id="page-top">
    <section>
       <div class="container">
-         <h2 class="title font-weight-bold text-primary">결재 라인 등록</h2>
+         <h2 class="title font-weight-bold text-primary">결재 라인 수정</h2>
          <div class="card shadow mb-4">
             <div class="card-body">
                <div class="row" style="padding:1px;">
@@ -103,7 +103,8 @@
                                  결재라인명
                                  </th>
                                  <td>
-                                 <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" value="${apvl['APVLTITLE']} }"/>
+                                 <input type="hidden" name="apvLineNo" id="apvLNo" value="${apvl['APVLNO']}"/>
+                                 <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" value="${apvl['APVLTITLE']}"/>
                                  </td>
                               </tr>
                               <tr>
@@ -119,7 +120,10 @@
                               <tr>
                                  <td colspan="2">
                                     <select name="apvL" id="apvL" class="form-controll" size="6" style="width:100%">
-                                    </select>
+										<c:forEach items="${applicants }" var="ap">
+											<option value="${ap['EMPNO']}">[${ap['DEPTNAME']}]${ap['EMPNAME']}(${ap['JOBNAME']})</option>
+										</c:forEach>
+									</select>
                                  </td>
                               </tr>
                            </table>
@@ -129,7 +133,8 @@
                   </div>
                </div>
                <div class="row">
-                  <button type="button" class="btn btn-primary" id="enroll" onclick="enrollButton()" style="width:100%">결재라인 등록</button>
+                  <button type="button" class="btn btn-primary" id="update" onclick="updateButton()" style="width:50%">저장</button>
+                  <button type="button" class="btn btn-primary" id="close" onclick="javascript:self.close();window.opener.location.reload();" style="width:50%">취소</button>
                </div>
             </div>
          </div>
@@ -219,10 +224,7 @@
          }
          
          
-         function enrollButton(){
-        	/* $('#apvL').attr("multiple",true);
-            $('#apvL option').attr("selected",true); */
-            
+         function updateButton(){
             var myObject=new Object();
             var apvLTitle=$('#apvLTitle').val();
             var selOpts=new Array();
@@ -231,9 +233,12 @@
             })
             myObject["apvLTitle"]=apvLTitle;
             myObject["selOpts"]=selOpts;
+            
+            var apvlNo=$('#apvLNo').val();
+            myObject["apvlNo"]=apvlNo;
 
             $.ajax({
-               url:"${path}/apv/apvLineEnrollEnd.do",
+               url:"${path}/apv/apvLineModiEnd.do",
                type : "post",
                data : JSON.stringify(myObject),
                contentType: "application/json",
