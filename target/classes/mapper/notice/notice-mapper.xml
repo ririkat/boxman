@@ -37,6 +37,9 @@
    <delete id="deleteUpNotice">
       delete from UPNOTICE where nNo=#{nNo}
    </delete>
+   <delete id="deleteSite" parameterType="string">
+   	  delete from rsite where stName=#{stname}
+   </delete>
 <!--    게시글 상세페이지 -->
    <select id="selectNoticeOne" resultType="notice">
       select * from notice where  nName=#{nName}

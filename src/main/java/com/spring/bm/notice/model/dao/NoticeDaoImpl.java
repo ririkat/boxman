@@ -112,6 +112,11 @@ public class NoticeDaoImpl implements NoticeDao {
 	public List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectList("notice.selectSiteList2");
 	}
+
+	@Override
+	public int deleteSite(SqlSessionTemplate sqlSession, String param) {
+		return sqlSession.delete("notice.deleteSite", param);
+	}
 	
 
 }

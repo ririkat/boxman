@@ -45,4 +45,6 @@ public interface NoticeService {
 	int selectNoticeCount();
 	int selectNoticeCount2();
 	int selectNoticeCount3();
+	//관련사이트 삭제
+	int deleteSite(String param);
 }

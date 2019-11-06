@@ -33,6 +33,11 @@
     background-image: linear-gradient(180deg,#4e73df 10%,#224abe 100%);
     background-size: cover;
 }
+.btn-outline-success2 {
+    background-color: #e73b66d6;
+    border-color: #e73b66d6;
+    color: white;
+}
 </style>
 
   
@@ -48,6 +53,7 @@
 		</div>
 		<div class="row">
 			<div class="col-12">
+			<form id="site" class="forms-sample">
 				<div class="schedule-tab">
 					<ul class="nav nav-pills text-center">
 					  <li class="nav-item">
@@ -70,8 +76,10 @@
 					  		<li class="headings">
 					  			<div class="time">번호</div>
 					  			<div class="speaker">형식</div>
-					  			<div class="subject">업체명</div>
-					  			<div class="venue">링크</div>
+					  			<div class="depart">업체명</div>
+					  			<div class="subject">링크</div>
+					  			<div class="venue"></div>
+					  			
 					  		</li>
 					  		<!-- Schedule Details -->
 					  		<c:forEach items="${list }" var ="list" varStatus="v">
@@ -86,10 +94,14 @@
 							  		<div class="speaker">
 										<span class="name"><c:out value='${list["STCHECK"]}'/></span>
 							  		</div>
+							  		<!-- Depart -->
+							  		<div class="depart" name="stName"><c:out value='${list["STNAME"]}'/></div>
 							  		<!-- Subject -->
-							  		<div class="subject"><c:out value='${list["STNAME"]}'/></div>
-							  		<!-- Venue -->
-							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list['STLINK']}" target="_blank"><span>사이트연결</span></a></label></div>
+							  		<div class="subject"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list['STLINK']}" target="_blank"><span>사이트연결</span></a></label></div>
+					  				<!-- Venue -->
+					  				<div class="venue">
+					  					<button type="button" class="b-related btn btn-outline-success2 my-2 my-sm-0" onclick="location.href='${path }/notice/deleteSite.do?stname=${list['STNAME']}'" >삭제</button>
+							  		</div>
 					  			</div>
 					  		</li>
 					  		 </c:forEach>			  
@@ -101,8 +113,9 @@
 					  		<li class="headings">
 					  			<div class="time">번호</div>
 					  			<div class="speaker">형식</div>
-					  			<div class="subject">업체명</div>
-					  			<div class="venue">링크</div>
+					  			<div class="depart">업체명</div>
+					  			<div class="subject">링크</div>
+					  			<div class="venue"></div>
 					  		</li>
 					  		<!-- Schedule Details -->
 					  		<c:forEach items="${list2 }" var ="list2" varStatus="v">
@@ -117,10 +130,14 @@
 							  		<div class="speaker">
 										<span class="name"><c:out value='${list2["STCHECK"]}'/></span>
 							  		</div>
+							  		<!-- Depart -->
+							  		<div class="depart"><c:out value='${list2["STNAME"]}'/></div>
 							  		<!-- Subject -->
-							  		<div class="subject"><c:out value='${list2["STNAME"]}'/></div>
-							  		<!-- Venue -->
-							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list2['STLINK']}" target="_blank"><span>사이트연결</span></a></label></div>
+							  		<div class="subject"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list2['STLINK']}" target="_blank"><span>사이트연결</span></a></label></div>
+					  				<!-- Venue -->
+					  				<div class="venue">
+					  					<button type="button" class="b-related btn btn-outline-success2 my-2 my-sm-0" onclick="location.href='${path }/notice/deleteSite.do?stname=${list2['STNAME']}'" >삭제</button>
+							  		</div>
 					  			</div>
 					  		</li>
 					  		 </c:forEach>			  
@@ -128,7 +145,7 @@
 					  </div>
 					</div>
 				</div>
-				
+		</form>
 					<div class="download-button text-center">
 						<a href="${path}/notice/insertSite.do" class="btn btn-light btn-icon-split btn btn-main-md">사이트등록</a>
 					</div>

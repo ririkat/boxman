@@ -252,7 +252,7 @@ public class NoticeController {
 
       String msg="";
       String loc="/notice/selectNoticeList.do";
-
+      
       if(result>0) {
          msg="게시글 삭제 완료!";
       }else {
@@ -405,6 +405,31 @@ public class NoticeController {
       return mv;
    }
 
+   //사이트삭제
+   @RequestMapping("/notice/deleteSite.do")
+   public ModelAndView deleteSite(@RequestParam (value = "stname") String param) {
+	
+	   
+	   System.out.println("넘어왔냐");
+	   int result = noticeService.deleteSite(param);
+	   System.out.println("넘어온 결과 : " + result);
+	   
+	   String msg="";
+	   String loc="/notice/site.do";
+	   if(result>0) {
+		   msg="삭제완료!";
+	   }else {
+		   msg="삭제실패!";
+	   }
+	   
+	   ModelAndView mv = new ModelAndView();
+	   
+	   mv.addObject("msg", msg);
+	   mv.addObject("loc", loc);
+	   mv.setViewName("common/msg");
+	   
+	   return mv;
+   }
    //관련사이트 목록
    @RequestMapping("/notice/site.do")
    public ModelAndView siteList() {
@@ -412,6 +437,7 @@ public class NoticeController {
       //반환될 modelAndView객체 생성
       ModelAndView mv = new ModelAndView();
 
+      
       List<Map<String,Object>> list = noticeService.selectSiteList(); //내부
       System.out.println("내부 ---->"+list);
       List<Map<String,Object>> list2 = noticeService.selectSiteList2(); //외부

@@ -48,4 +48,6 @@ public interface NoticeDao {
 	
 	List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession);
 
+	int deleteSite(SqlSessionTemplate sqlSession, String param);
+
 }

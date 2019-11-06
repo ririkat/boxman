@@ -1,13 +1,5 @@
-<<<<<<< HEAD
 Manifest-Version: 1.0
 Built-By: ParkKiOh
 Build-Jdk: 12.0.2
 Created-By: Maven Integration for Eclipse
 
-=======
-Manifest-Version: 1.0
-Built-By: MOOG
-Build-Jdk: 1.8.0_144
-Created-By: Maven Integration for Eclipse
-
->>>>>>> master

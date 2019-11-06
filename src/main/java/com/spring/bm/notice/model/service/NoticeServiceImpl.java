@@ -160,6 +160,11 @@ public class NoticeServiceImpl implements NoticeService {
 	public int updateNotice(Map<String, Object> param) {
 		return dao.updateNotice(sqlSession, param);
 	}
+
+	@Override
+	public int deleteSite(String param) {
+		return dao.deleteSite(sqlSession, param);
+	}
 	
 
 	

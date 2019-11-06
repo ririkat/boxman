@@ -1,10 +1,14 @@
 package com.spring.bm.calendar.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.calendar.model.service.CalendarService;
 
@@ -22,6 +26,50 @@ public class CalendarController {
 	@RequestMapping("/calendar/allView.do")	//사원등록 폼으로 전환
 	public String allView() {
 		return "/calendar/calendarAll";
+	}
+	//스케줄 등록
+	@RequestMapping("/calendar/insertCalendar.do")
+	public ModelAndView insertCalendar(@RequestParam Map<String,Object> param) {
+		
+		int result = service.insertCalender(param);
+		
+		String msg="";
+		String loc="/calendar/allView.do";
+		if(result>0) {
+			msg="스케줄이 등록 되었습니다.";
+		}else {
+			msg="스케줄이 등록되지 않았습니다.";
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	//스케줄 수정
+	@RequestMapping("/calendar/updateCalendar.do")
+	public ModelAndView updateCalendar(@RequestParam Map<String,Object> param) {
+		
+		int result = service.updateCalendar(param);
+		
+		String msg="";
+		String loc="/calendar/allView.do";
+		if(result>0) {
+			msg="스케줄 수정이 완료되었습니다.";
+		}else {
+			msg="스케줄 수정에 실패하였습니다.";
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
 	}
 
 }
