@@ -21,7 +21,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Map<String, String>> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
-		return session.selectList("emp.selectEmpList", rows);
+		return session.selectList("emp.selectEmpList",null, rows);
 	}
 
 	@Override
@@ -67,8 +67,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	/* 사원검색 */
 	@Override
 	public List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param) {
-		logger.debug((String)param.get("type"));
-		logger.debug((String)param.get("data"));
 		int cPage = (Integer)(param.get("cPage"));
 		int numPerPage = (Integer)(param.get("numPerPage"));
 		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
@@ -78,8 +76,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int selectEmpSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
 		// TODO Auto-generated method stub
-		logger.debug((String)param.get("type"));
-		logger.debug((String)param.get("data"));
 		return session.selectOne("emp.selectEmpSearchCount", param);
 	}
 
@@ -200,7 +196,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	public int selectDoRemaining(SqlSessionTemplate session, Map<String, Object> map) {
 		Map<String, String> m = session.selectOne("emp.selectDoRemaining", map);
 		int result = 0;
-		if(m.get("DOREMAININGDAYS")==null || m.get("DOREMAININGDAYS")=="null") {
+		if(m == null || m.get("DOREMAININGDAYS")==null || m.get("DOREMAININGDAYS")=="null") {
 			result = 0;	//휴가 사용한 적이 없음
 		} else {
 			result = Integer.parseInt(String.valueOf(m.get("DOREMAININGDAYS")));	//휴가 사용한적이 있음
@@ -222,8 +218,27 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.insert("emp.insertBT", param);
 	}
 
+	/* 출장비리스트 */
+	@Override
+	public List<Map<String, Object>> selectBTPList(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.selectBTPList", param);
+	}
+
+	/* 출장하나 */
+	@Override
+	public Map<String, Object> selectBTOne(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.selectOne("emp.selectBTOne", param);
+	}
+
+	/* 출장비신청 */
+	@Override
+	public int insertBTP(SqlSessionTemplate session, Map<String, Object> param) {
+		// TODO Auto-generated method stub
+		return session.insert("emp.insertBTP", param);
+	}
 
 	
-	
-	
+
 }

@@ -20,14 +20,6 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
-					<!-- calendar -->
-					<!-- <div class="row">
-						<div class="col-sm-12 col-md-6"
-							style="margin: 0 auto; width: fit-content;">
-							<div id="calendar1" style="max-width:900px; margin: 0 auto;"></div>
-						</div>
-					</div> 
-					<br><br>-->
 					<div class="row">
 						<div class="col-sm-12 col-md-6">
 							<form id="searchFrm">
@@ -99,7 +91,9 @@
 										<th>출근시간</th>
 										<th>퇴근시간</th>
 										<th>구분</th>
-										<th>수정</th>
+										<c:if test="${temp eq 'my' or temp eq 'search'}">
+											<th>수정</th>
+										</c:if>
 									</tr>
 								</thead>
 								<tbody>
@@ -135,7 +129,7 @@
 													</c:otherwise>
 												</c:choose>
 											</c:if>
-											<c:if test="${temp eq 'all' or temp eq 'searchAll'}">
+											<%-- <c:if test="${temp eq 'all' or temp eq 'searchAll'}">
 												<c:choose>
 													<c:when test="${nowDate eq openDate}">
 														<td><button type="button"
@@ -146,7 +140,7 @@
 														<td>마감</td>
 													</c:otherwise>
 												</c:choose>
-											</c:if>
+											</c:if> --%>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -188,7 +182,6 @@
 			weekStart : 0,//달력 시작 요일 선택하는 것 기본값은 0인 일요일 
 			language : "ko" //달력의 언어 선택, 그에 맞는 js로 교체해줘야한다.
 		});//datepicker end
-
 	});
 	
 	//검색
@@ -196,11 +189,9 @@
 		$("#searchFrm").attr("action", "${path}/emp/selectAttenList.do");
 		$("#searchFrm").submit();
 	}
-
 	//calendar
 /* 	document.addEventListener('DOMContentLoaded', function() {
 		  var calendarEl = document.getElementById('calendar1');
-
 		  var calendar = new FullCalendar.Calendar(calendarEl, {
 		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
 		    defaultView: 'dayGridMonth',
@@ -259,7 +250,6 @@
 		      }
 		    ] */
 /* 		  });
-
 		  calendar.render();
 		});
 	
@@ -291,6 +281,6 @@
 	        events: dataset
 	    });
 	}); */
-
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
+

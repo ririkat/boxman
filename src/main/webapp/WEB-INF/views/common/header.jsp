@@ -286,10 +286,10 @@
 						class="btn btn-link d-md-none rounded-circle mr-3">
 						<i class="fa fa-bars"></i>
 					</button>
-					<ul>
+					<!-- <ul>
 				        <li>위도:<span id="latitude"></span></li>
 				        <li>경도:<span id="longitude"></span></li>
-				    </ul>
+				    </ul> -->
 					<!-- 출퇴근 스크립트 -->
 					<input type="hidden" value="${loginEmp.EMPNO}" name="empNo" id="empNo"/>
 					<script>
@@ -531,7 +531,7 @@
 								}
 							}
 						});
-					},10000);
+					},100000000);
 				
 			}); 
 			

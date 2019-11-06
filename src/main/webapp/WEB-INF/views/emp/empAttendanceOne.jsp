@@ -45,6 +45,7 @@
 						</table>
 						<form class="form-sample" id="attUpFrm" method="post">
 							<input type="hidden" value='${att["ATTENNO"]}' name="attenNo" id="attenNo"/>
+							<input type="hidden" value='${temp}' name="temp" id="temp"/>
 							<table class="table table-striped table-hover" id="dataTable"
 							width="100%" cellspacing="0" role="grid"
 							aria-describedby="dataTable_info" style="width: 100%;">
@@ -61,7 +62,7 @@
 										<td><input type="time" name="uaStart" id="upStart"></td>
 										<td><input type="time" name="uaEnd" id="upEnd"/></td>
 										<td>
-											<select name="" id="selectAtten"
+											<select name="uaCate" id="selectAtten"
 											class="form-control form-control-sm"
 											style="width: 100px; display: inline;" required="required">
 											<option value="0">구분</option>
@@ -95,12 +96,11 @@
 				alert("구분을 선택해주세요.");
 				return false;
 			}
-			if(confirm('수정하시겠습니까?')) {
+			if(confirm('수정신청하시겠습니까?')) {
 				$('#attUpFrm').attr("action","${path}/emp/updateAttenEnd.do");
 				$('#attUpFrm').submit();
 			} 
 		});
 	});
-
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

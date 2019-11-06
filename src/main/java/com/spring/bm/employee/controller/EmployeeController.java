@@ -2,15 +2,20 @@ package com.spring.bm.employee.controller;
 
 import java.io.File;
 import java.sql.Date;
+import java.text.ParseException;
+import java.net.PasswordAuthentication;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.bridge.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +72,9 @@ public class EmployeeController {
 
 		int numPerPage = 10;
 		List<Map<String,String>> list = service.selectEmpList(cPage, numPerPage);
+		for(Map<String, String> m : list) {
+			logger.debug(""+m);
+		}
 		int totalCount = service.selectEmpCount();
 
 		ModelAndView mv=new ModelAndView();
@@ -529,7 +537,7 @@ public class EmployeeController {
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
-		mv.setViewName("emp/empBusinessTripList");
+		mv.setViewName("emp/empBTList");
 		return mv;
 	}
 	
@@ -540,6 +548,7 @@ public class EmployeeController {
 		Map<String, Object> map = new HashMap();
 		map = service.selectAttenNoOne(param);
 		mv.addObject("att", map);
+		mv.addObject("temp", ""+param.get("temp"));
 		mv.setViewName("emp/empAttendanceOne");
 		return mv;
 	}
@@ -552,6 +561,7 @@ public class EmployeeController {
 		int result = 0;
 		if((""+param.get("temp")).equals("my")) {
 			try {
+				logger.debug("야야");
 				result = service.insertUpAttendance(param);
 				if(result > 0) {
 					//근태수정요청 결재로 이동
@@ -562,11 +572,12 @@ public class EmployeeController {
 			}
 		}
 		
-		
-		
+		Map<String, Object> map = new HashMap();
+		map = service.selectAttenNoOne(param);
+		mv.addObject("att", map);
+		mv.setViewName("emp/empAttendanceOne");
 		return mv;
 	}
-	
 	
 	/* 휴가신청 */
 	@RequestMapping("/emp/empDayOffForm.do")
@@ -677,13 +688,40 @@ public class EmployeeController {
 		
 		return mv;
 	}
-	
-	
-	
-	
 	/*출장비용 청구*/
-//	@RequestMapping("/emp/insertBTPay.do")
-//	public ModelAndView insertBTPay(@RequestParam Map<String, Object> param) {
-//		
-//	}
+	@RequestMapping("/emp/insertBTP.do")
+	public ModelAndView insertBTP(@RequestParam Map<String, Object> param) {
+		//최근 출장 리스트(현재 달)
+		List<Map<String, Object>> list = service.selectBTPList(param);
+		
+		//출장 한개
+		Map<String, Object> e = service.selectBTOne(param);
+		
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("list", list);
+		mv.addObject("e", e);
+		mv.setViewName("emp/empBTPForm");
+		
+		return mv;
+	}
+	
+	/* 출장비용신청 */
+	@RequestMapping("/emp/insertBTPEnd.do")
+	public ModelAndView insertBTPEnd(@RequestParam Map<String, Object> param) {
+		
+		int result = 0;
+		try {
+			result = service.insertBTP(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("emp/empBTPForm");
+		
+		return mv;
+	}
+	
 }

@@ -138,7 +138,6 @@ public class StuffController {
       
       int numPerPage = 10;
       List<Stuff> list=service.selectStuffList(cPage,numPerPage);
-      System.out.println(list);
       int totalCount = service.selectStuffCount();
       
       mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/stuffAllList.do"));

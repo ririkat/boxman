@@ -109,7 +109,8 @@
 	</update>
 	<!-- 출퇴근위치정보 확인 -->
 	<select id="checkLocation" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM WORKLOCATION WHERE WOX=TRUNC(#{la}) AND WOY=TRUNC(#{lo})
+		SELECT COUNT(*) FROM WORKLOCATION WHERE WOX=TRUNC(#{la},2) AND WOY=TRUNC(#{lo},2)
+		<!-- SELECT COUNT(*) FROM WORKLOCATION WHERE WOX=TO_CHAR(#{la},'fm99.00') AND WOY=TO_CHAR(#{lo},'fm999.00') -->
 	</select>
 	<!-- 출근등록 -->
 	<insert id="insertGotoWork" parameterType="map">
@@ -243,6 +244,7 @@
 		 FROM BUSINESSTRIP A 
 		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
 		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
+		 LEFT JOIN BUSINESSTRIPPAY BT ON A.BTNO = BT.BTNO
 		 WHERE 1=1
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
@@ -298,7 +300,7 @@
 	<!-- 근태수정신청 -->
 	<insert id = "insertUpAttendance" parameterType="map">
 		INSERT INTO UPATTENDANCE VALUES(
-			SEQ_UPATTENDANCE.NEXTVAL, #{attenNo}, #{uaStart}, #{uaEnd}, default, default, #{uaReason}
+			SEQ_UPATTENDANCE.NEXTVAL, #{attenNo}, #{uaStart}, #{uaEnd}, #{uaCate},default, default, #{uaReason}
 		)
 	</insert>
 	
@@ -325,6 +327,36 @@
 	
 	<!-- 출장신청 -->
 	<insert id="insertBT" parameterType="map">
-		INSERT INTO BUSINESSTRIP VALUES(SEQ_BUSINESSTRIP.NEXTVAL, #{empNo},#{btStart}, #{btEnd}, #{btReason})
+		INSERT INTO BUSINESSTRIP VALUES(SEQ_BUSINESSTRIP.NEXTVAL, #{empNo},#{btStart}, #{btEnd}, #{btReason}, DEFAULT)
+	</insert>
+	
+	<!-- 출장비리스트 -->
+	<select id="selectBTPList" parameterType="map" resultType="map">
+		SELECT E.EMPNO, B.*, BT.* FROM EMPLOYEE E 
+		JOIN BUSINESSTRIP B ON (E.EMPNO=B.EMPNO)
+		JOIN BUSINESSTRIPPAY BT ON (B.BTNO=BT.BTNO)
+		WHERE 1=1
+		<choose>
+			<when test="temp eq 'nowMonthBTP'">
+				AND TO_CHAR(BT.BTPAPPRODATE, 'YYYYMM')=TO_CHAR(SYSDATE, 'YYYYMM')
+				AND EMPNO=#{empNo}
+			</when>
+			<otherwise>
+				
+			</otherwise>
+		</choose>
+		ORDER BY BT.BTPAPPRODATE
+	</select> 
+	
+	<!-- 출장하나 -->
+	<select id="selectBTOne" parameterType="map" resultType="map">
+		SELECT E.EMPNO, B.* FROM EMPLOYEE E JOIN BUSINESSTRIP B ON (E.EMPNO=B.EMPNO)
+		WHERE B.BTNO=#{btNo}
+	</select>
+	
+	<!-- 출장비신청 -->
+	<insert id="insertBTP" parameterType="map">
+		INSERT INTO BUSINESSTRIPPAY VALUES(SEQ_BUSINESSTRIPPAY.NEXTVAL,
+		  #{btNo}, #{btpRoom}, #{btpTransportation}, #{btpEntertain}, DEFAULT, NULL, DEFAULT)
 	</insert>
 </mapper>

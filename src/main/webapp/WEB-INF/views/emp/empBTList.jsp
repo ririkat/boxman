@@ -93,6 +93,12 @@
 										<th>시작일</th>
 										<th>종료일</th>
 										<th>출장사유</th>
+										<th>승인여부</th>
+										<c:if test="${temp eq 'my' or temp eq 'search'}">
+											<c:if test="${e['BTCHECK'] 	eq 'Y' }">
+												<th>출장비신청</th>
+											</c:if>
+										</c:if>
 									</tr>
 								</thead>
 								<tbody>
@@ -106,6 +112,24 @@
 											<td><fmt:formatDate value='${e["BTSTART"]}' pattern="yyyy-MM-dd" /></td>
 											<td><fmt:formatDate value='${e["BTEND"]}' pattern="yyyy-MM-dd" /></td>
 											<td><c:out value='${e["BTREASON"] }' /></td>
+											<td><c:out value="${e['BTCHECK']}"/></td>
+											<jsp:useBean id="now" class="java.util.Date" />
+											<fmt:formatDate value="${now}" pattern="yyyyMM" var="nowDate" />
+											<fmt:formatDate value='${e["BTEND"]}' pattern="yyyyMM" var="endDate"/>
+											<c:if test="${temp eq 'my' or temp eq 'search'}">
+												<c:choose>
+													<c:when test="${nowDate eq endDate or nowDate-1 eq endDate}">
+														<!-- 출장종료달, 출장종료-1달 에만 수정요청 가능 -->
+														<!-- 결재 종결 후 기안할 수 없음. -->
+														<c:if test="${e['BTCHECK'] eq 'Y' and e['BTPCHECK'] eq 'N'}">
+															<td><button type="button" class="btn btn-primary mr-2" onclick="location.href='${path}/emp/insertBTP.do?btNo=${e.BTNO}&temp=newMonthBTP&empNo=${e.EMPNO}'">출장비신청</button></td>
+														</c:if>
+													</c:when>
+													<c:otherwise>
+														<td>마감</td>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
 										</tr>
 									</c:forEach>
 								</tbody>
