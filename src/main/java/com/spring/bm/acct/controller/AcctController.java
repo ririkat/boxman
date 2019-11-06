@@ -58,6 +58,21 @@ public class AcctController {
 		return mv;
 	}
 	
+	/* salary search */
+	@RequestMapping("/acct/salarySearch.do")
+	public ModelAndView salarySearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param) {
+		int numPerPage = 10;
+		List <Map<String, String>> list = service.selectsSalarySearchList(cPage, numPerPage, param);
+		int totalCount = service.salarySearchCount(param);
+	
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/wage.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/wage");
+		return mv;
+	}
+	
 	@RequestMapping("/acct/wagePay.do")
 	@ResponseBody
 	public String payment(int data) throws JsonProcessingException {

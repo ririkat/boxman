@@ -11,7 +11,9 @@ public interface AcctService {
 	/* salary */
 	List<Map<String, String>> selectEmpList(int cPage, int numPerPage);
 	int selectEmpCount();
-
+	
+	/* salary payment */
+	int updateWagePayment(int salno);
 
 	int updateSeveranceStatus(Map<String, String> m);
 
@@ -21,9 +23,11 @@ public interface AcctService {
 
 	/* severance */
 	List<Map<String, String>> selectSevList(int cPage, int numPerPage);
-	
-	int updateWagePayment(int salno);
-
 	int selectSevCount();
+	
+	/* salary search */
+	List<Map<String, String>> selectsSalarySearchList(int cPage, int numPerPage, Map<String, Object> param);
+	int salarySearchCount(Map<String, Object> param);
+
 
 }

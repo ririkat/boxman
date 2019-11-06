@@ -22,6 +22,54 @@
 		select count(*) from salary
 	</select>
 	<!-- 월급 리스트 가져오기 끝-->
+	
+	<!-- salary search -->
+	<select id="selectsSalarySearchList" resultType="map">
+		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
+		(select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK 
+			from employee
+			    inner join salary on employee.empno=salary.empno
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno
+                where 1=1
+                	<choose>
+                		<when test="type eq 'empNo'">
+			                and employee.empno like '%'||#{data}||'%' 
+                		</when>
+                		<when test="type eq 'empName'">
+                			and employee.empname like '%'||#{data}||'%'
+                		</when>
+                		<when test="type eq 'deptName'">
+							and department.deptname like '%'||#{data}||'%'
+                		</when>
+                		<when test="type eq 'jobName'">
+                			and empjob.jobname like '%'||#{data}||'%'
+                		</when>
+                	</choose>
+                order by saldate desc
+	</select>
+	<select id="salarySearchCount" parameterType="map" resultType = "_int">
+		select count(*) from employee
+		    inner join salary on employee.empno=salary.empno
+		    inner join empjob on employee.jobno=empjob.jobno
+		    inner join department on employee.deptno=department.deptno
+		    where 1=1
+		    <choose>
+		    	<when test="type eq 'empNo'">
+	                and employee.empno like '%'||#{data}||'%' 
+            	</when>
+              	<when test="type eq 'empName'">
+              		and employee.empname like '%'||#{data}||'%'
+              	</when>
+              	<when test="type eq 'deptName'">
+					and department.deptname like '%'||#{data}||'%'
+              	</when>
+              	<when test="type eq 'jobName'">
+              		and empjob.jobname like '%'||#{data}||'%'
+              	</when>
+		    </choose>
+	</select>
+	
 	<update id="updateWagePayment" parameterType="_int">
 		update salary set salcheck = 'Y' where salno=#{salno}
 	</update>

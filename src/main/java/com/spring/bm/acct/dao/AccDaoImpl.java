@@ -66,6 +66,19 @@ public class AccDaoImpl implements AcctDao {
 	public int selectSevCount(SqlSessionTemplate session) {
 		return session.selectOne("acct.selectSevCount");
 	}
+	
+	/* severance search */
+	@Override
+	public List<Map<String, String>> selectsSalarySearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectsSalarySearchList", param, rows);
+	}
+
+	@Override
+	public int salarySearchCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("acct.salarySearchCount", param);
+	}
 
 
 }

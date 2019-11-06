@@ -135,7 +135,7 @@
 	
 	// 검색
 	function fn_search(){
-		$("#searchFrm").attr("action", "${path}/acct/search.do");
+		$("#searchFrm").attr("action", "${path}/acct/salarySearch.do");
 		$("#searchFrm").submit();
 	}
 </script>

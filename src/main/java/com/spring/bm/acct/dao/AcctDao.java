@@ -27,6 +27,12 @@ public interface AcctDao {
 	int selecBizTripCount(SqlSessionTemplate session);
 
 	int selectSevCount(SqlSessionTemplate session);
+
+	
+	/* salary search */
+	List<Map<String, String>> selectsSalarySearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param);
+	int salarySearchCount(SqlSessionTemplate session, Map<String, Object> param);
 	
 
 }

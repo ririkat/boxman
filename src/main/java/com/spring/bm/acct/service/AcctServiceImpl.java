@@ -74,7 +74,14 @@ public class AcctServiceImpl implements AcctService {
 		return dao.selectSevCount(session);
 	}
 
-
-
+	/* salary search */
+	@Override
+	public List<Map<String, String>> selectsSalarySearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectsSalarySearchList(session,cPage, numPerPage, param);
+	}
+	@Override
+	public int salarySearchCount(Map<String, Object> param) {
+		return dao.salarySearchCount(session, param);
+	}
 
 }
