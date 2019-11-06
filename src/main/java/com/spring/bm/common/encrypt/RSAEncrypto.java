@@ -27,13 +27,14 @@ public class RSAEncrypto implements MyEncrypt{
 	private PrivateKey privateKey;
 
 	public RSAEncrypto() {
-		/* 서버용 */
 		String path = this.getClass().getResource("/").getPath();
-		path = path.substring(0,path.lastIndexOf("/classes"));
-		File f = new File(path + "/keys.hb");
+		/* 서버용 */
+//		path = path.substring(0,path.lastIndexOf("/classes"));
+//		File f = new File(path + "/keys.hb");
+		
 		/* 로컬용 */
-//		path = path.substring(0,path.lastIndexOf("/target"));
-//		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
+		path = path.substring(0,path.lastIndexOf("/target"));
+		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
 		if(f.exists()) {
 			try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream(f))){
 				Map<String, Object> keys=((Map<String, Object>) ois.readObject());
@@ -70,12 +71,14 @@ public class RSAEncrypto implements MyEncrypt{
 		keys.put("public", publicKey);
 		keys.put("private", privateKey);
 		String path = this.getClass().getResource("/").getPath();
+
 		/* 서버용 */
-		path = path.substring(0,path.lastIndexOf("/classes"));
-		File f = new File(path + "/keys.hb");
+//		path = path.substring(0,path.lastIndexOf("/classes"));
+//		File f = new File(path + "/keys.hb");
+		
 		/* 로컬용 */
-//		path = path.substring(0,path.lastIndexOf("/target"));
-//		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
+		path = path.substring(0,path.lastIndexOf("/target"));
+		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
 			oos.writeObject(keys);
 		} catch(IOException e) {

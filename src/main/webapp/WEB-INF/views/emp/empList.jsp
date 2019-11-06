@@ -54,10 +54,10 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<table class="table table-striped table-hover" id="dataTable"
+							<table class="table table-striped table-hover tablesorter" id="myTable"
 								width="100%" cellspacing="0" role="grid"
 								aria-describedby="dataTable_info" style="width: 100%;">
-								<thead>
+								<thead class="sort-alpha">
 									<tr>
 										<th>사원번호</th>
 										<th>이름</th>
@@ -69,18 +69,6 @@
 										<th>퇴사여부</th>
 									</tr>
 								</thead>
-								<tfoot>
-									<tr>
-										<th>사원번호</th>
-										<th>이름</th>
-										<th>직급</th>
-										<th>부서</th>
-										<th>전화번호</th>
-										<th>이메일</th>
-										<th>입사일자</th>
-										<th>퇴사여부</th>
-									</tr>
-								</tfoot>
 								<tbody>
 									<c:forEach var="e" items="${list}">
 										<tr>
@@ -94,7 +82,7 @@
 											<td><c:out value='${e["DEPTNAME"]}' /></td>
 											<td><c:out value='${e["EMPPHONE"] }' /></td>
 											<td><c:out value='${e["EMPEMAIL"] }' /></td>
-											<td><c:out value='${e["EMPHIREDATE"]}' /></td>
+											<td><fmt:formatDate value='${e["EMPHIREDATE"]}' pattern="YYYY-MM-dd"/></td>
 											<td><c:out value='${e["EMPENTYN"]}' /></td>
 										</tr>
 									</c:forEach>
@@ -112,5 +100,11 @@
 		$("#searchFrm").attr("action","${path}/emp/searchEmp.do");
 		$("#searchFrm").submit();
 	}
+	//테이블 정렬
+	$(function() {
+	  $("#myTable").tablesorter();
+	});
+
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

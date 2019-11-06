@@ -162,10 +162,6 @@ public class StuffController {
       List<Stuff> list=service.selectStuffSearchList(m);
       int totalCount = service.selectStuffSearchCount(m);
       
-      System.out.println("list : " + list);
-      System.out.println("totalCount : " + totalCount);
-      
-      
       ModelAndView mv = new ModelAndView();
       
       if(totalCount > 0) {

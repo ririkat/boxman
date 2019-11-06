@@ -2,20 +2,15 @@ package com.spring.bm.employee.controller;
 
 import java.io.File;
 import java.sql.Date;
-import java.text.ParseException;
-import java.net.PasswordAuthentication;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.aspectj.bridge.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.common.encrypt.MyEncrypt;
 import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.empjob.model.service.EmpJobService;
@@ -40,6 +36,7 @@ import com.spring.bm.employee.model.vo.EmpFile;
 public class EmployeeController {
 
 	private Logger logger=LoggerFactory.getLogger(EmployeeController.class);
+	private PageUrlFactory path = new PageUrlFactory();
 
 	@Autowired
 	EmployeeService service;
@@ -70,7 +67,7 @@ public class EmployeeController {
 	public ModelAndView empList(@RequestParam(value="cPage", 
 	required=false, defaultValue="0") int cPage) {
 
-		int numPerPage = 10;
+		int numPerPage = 5;
 		List<Map<String,String>> list = service.selectEmpList(cPage, numPerPage);
 		for(Map<String, String> m : list) {
 			logger.debug(""+m);
@@ -78,7 +75,7 @@ public class EmployeeController {
 		int totalCount = service.selectEmpCount();
 
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/empList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/empList.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("emp/empList");
@@ -166,7 +163,6 @@ public class EmployeeController {
 			@RequestParam(value="stampImg", required=false) MultipartFile stampImg,
 			HttpServletRequest request) {
 
-		logger.debug(param.get("password"));
 		String empPassword = pwEncoder.encode((String)param.get("password"));
 		
 		try {
@@ -254,14 +250,11 @@ public class EmployeeController {
 	public ModelAndView searchEmp(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
 			@RequestParam Map<String, Object> param) {
 
-		int numPerPage = 10;
-		param.put("cPage", cPage);
-		param.put("numPerPage", numPerPage);
-		List<Map<String, String>> list = service.selectEmpSearchList(param);
+		int numPerPage = 5;
+		List<Map<String, String>> list = service.selectEmpSearchList(cPage, numPerPage, param);
 		int totalCount = service.selectEmpSearchCount(param);
-
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/empList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/empList.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("emp/empList");
@@ -473,7 +466,7 @@ public class EmployeeController {
 			mv.addObject("endDay",endDay);
 		}
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do"));
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
@@ -503,7 +496,7 @@ public class EmployeeController {
 			mv.addObject("endDay",endDay);
 		}
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do"));
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
@@ -533,7 +526,7 @@ public class EmployeeController {
 			mv.addObject("endDay",endDay);
 		}
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/emp/selectAttenList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do"));
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);

@@ -65,9 +65,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	/* 사원검색 */
 	@Override
-	public List<Map<String, String>> selectEmpSearchList(Map<String, Object> param) {
+	public List<Map<String, String>> selectEmpSearchList(int cPage, int numPerPage, Map<String, Object> param) {
 		// TODO Auto-generated method stub
-		return dao.selectEmpSearchList(session, param);
+		return dao.selectEmpSearchList(session, cPage, numPerPage, param);
 	}
 	@Override
 	public int selectEmpSearchCount(Map<String, Object> param) {

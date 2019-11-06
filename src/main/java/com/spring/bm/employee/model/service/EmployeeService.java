@@ -19,7 +19,7 @@ public interface EmployeeService {
 	/* 사원로그인*/
 	Map<String, Object> selectLoginEmp(Map<String, Object> map);
 	/* 사원검색 */
-	List<Map<String, String>> selectEmpSearchList(Map<String, Object> param);
+	List<Map<String, String>> selectEmpSearchList(int cPage, int numPerPage, Map<String, Object> param);
 	int selectEmpSearchCount(Map<String, Object> param);
 	/* 아이디중복확인 */
 	int checkId(String empId);

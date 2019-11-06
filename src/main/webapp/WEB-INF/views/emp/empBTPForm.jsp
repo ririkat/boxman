@@ -64,7 +64,7 @@
 							<h3><c:out value="nowDate"/> 달 신청내역</h3>
 								<input type="hidden" name="empNo" value='${e["EMPNO"]}' id="empNo"/>
 								<input type="hidden" name="btNo" value='${e["BTNO"]}'/>								
-								<table class="table table-striped table-hover" id="dataTable"
+								<table class="table table-striped table-hover tablesorter" id="myTable"
 									width="100%" cellspacing="0" role="grid"
 									aria-describedby="dataTable_info" style="width: 100%;">
 									<thead>
@@ -107,6 +107,9 @@
 		$('#btFrm').submit();
 	}
 	
-	
+	//테이블 정렬
+	$(function() {
+	  $("#myTable").tablesorter();
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
