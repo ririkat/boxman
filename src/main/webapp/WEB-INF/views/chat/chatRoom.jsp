@@ -72,7 +72,7 @@
       <input type="hidden" name="sender" id = "sender" value="${loginEmp['EMPNO']}">
       <input type="hidden" name="roomNo" value="${cr.roomNo}">
       <input type = "hidden" id = "crSender" value = "${cr.sender }"/>
-     	<c:forEach items="${list }" var="list">
+     	<c:forEach items="${list2 }" var="list">
 		     	  <c:if test="${list['SENDER'] != loginEmp['EMPNO']}">
 			          <div class="message-feed feed" id="msg" name="msg">
 			              <div class="pull-left">
@@ -121,7 +121,7 @@ window.onload = function(){
 	
 //creating web socket
      /* var socket = new  WebSocket("ws://192.168.120.171:9090/bm/chatRoom"); */
-var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
+	var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
      
      // This method is triggered when it's received
      socket.onmessage = function(e) {
@@ -223,4 +223,5 @@ var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
               send();
           }
      });
+
 </script>

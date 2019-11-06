@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="apv">
 	<!--  -->
-	<!-- 결재양식 -->
+	<!-- 결재양식 등록-->
 	<insert id="insertApvDoc" parameterType="map">
 		INSERT INTO DOCFORM VALUES(seq_docForm.NEXTVAL, #{dfTitle},#{dfHeadForm},#{dfContentForm},#{dfExp},#{dcNo})
 	</insert>
@@ -12,7 +12,7 @@
 		SELECT * FROM DOCCATE
 	</select>
 	<select id="selectDocForm" resultType="map">
-		SELECT * FROM DOCFORM JOIN DOCCATE USING (DCNO)
+		SELECT * FROM DOCFORM JOIN DOCCATE USING (DCNO) ORDER BY DFNO DESC
 	</select>
 	<select id="selectDocCCate" resultType="map">
 		SELECT * FROM DOCFORMCONTENT
@@ -74,11 +74,13 @@
 	</select>
 	
 	<select id="selectMyApvLineList" parameterType="_int" resultType="map">
-		SELECT * FROM APVLINE WHERE APVLCATENO=#{loginNo} AND APVLCATE='개인' ORDER BY APVLNO
+		SELECT * FROM APVLINE ORDER BY APVLNO DESC
+		<!-- WHERE APVLCATENO=#{loginNo} AND APVLCATE='개인' -->
 	</select>
 	
 	<select id="selectMyALCount" parameterType="_int" resultType="_int">
-		SELECT COUNT(*) FROM APVLINE WHERE APVLCATENO=#{loginNo} AND APVLCATE='개인'
+		SELECT COUNT(*) FROM APVLINE
+		 <!-- WHERE APVLCATENO=#{loginNo} AND APVLCATE='개인' -->
 	</select>
 	
 	<select id="selectDeptToEmp" parameterType="_int" resultType="map">
@@ -87,14 +89,40 @@
 	
 	<!-- 결재라인 양식 등록 로직 -->
 	
-<!-- 	<insert id="insertApvLine" parameterType="map">
-		INSERT INTO APVLINE VALUES(SEQ_APVLINE.NEXTVAL,#{apvLineTitle},DEFAULT,DEFAULT,'개인',#{cateNo})
-		<selectKey keyProperty="APVLNO" resultType="Integer"
+	<insert id="insertApvLine" parameterType="map">
+		<selectKey keyProperty="apvlNo" resultType="string"
 			order="AFTER">
 			SELECT SEQ_APVLINE.CURRVAL FROM DUAL
 		</selectKey>
+		INSERT INTO APVLINE VALUES(SEQ_APVLINE.NEXTVAL,#{apvLTitle},null,'개인',null)
 	</insert>
-	<insert id="insertApvlApplicant" parameterType="map">
+			<!-- 이건 수정할때도 재사용됨-->
+	<insert id="insertApvlApplicant" parameterType="hashmap">
 		INSERT INTO APVLAPPLICANT VALUES(SEQ_APVLAPPLICANT.NEXTVAL,#{priorNo},#{empNo},#{apvlNo})
-	</insert> -->
+	</insert>
+	
+	<!-- 결재라인 삭제 -->
+	<delete id="deleteApvlApplicant" parameterType="_int">
+		DELETE FROM APVLAPPLICANT WHERE APVLNO=#{alNo}
+	</delete>
+	<delete id="deleteApvLine" parameterType="_int">
+		DELETE FROM APVLINE WHERE APVLNO=#{alNo}
+	</delete>
+	
+	<!-- 결재라인 수정 뷰 호출-->
+	<select id="selectALModi" parameterType="_int" resultType="map">
+		SELECT * FROM APVLINE WHERE APVLNO=#{alNo}
+	</select>
+	<select id="selectALApplicants" parameterType="_int" resultType="map">
+		SELECT A.*,E.EMPNO,E.EMPNAME,D.DEPTNO,D.DEPTNAME,J.JOBNO,J.JOBNAME FROM APVLAPPLICANT A JOIN EMPLOYEE E ON A.EMPNO=E.EMPNO JOIN DEPARTMENT D ON E.DEPTNO=D.DEPTNO JOIN EMPJOB J ON E.JOBNO=J.JOBNO WHERE A.APVLNO=#{alNo} ORDER BY APVAPRIOR ASC
+	</select>
+	
+	<!-- 결재라인 수정 로직-->
+	<update id="updateApvLine" parameterType="map">
+		UPDATE APVLINE SET APVLTITLE=#{apvLTitle} WHERE APVLNO=#{apvlNo} 
+	</update>
+	<delete id="deleteApvlApplicants" parameterType="map">
+		DELETE FROM APVLAPPLICANT WHERE APVLNO=#{apvlNo}
+	</delete>
+	
 </mapper>

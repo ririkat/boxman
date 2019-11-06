@@ -8,7 +8,7 @@
    </insert>
 <!--    게시글 등록 -->
    <insert id="insertNotice" parameterType="map">
-      insert into notice values(seq_notice.nextval, (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{categoryNo}),
+      insert into notice values(seq_notice.nextval, #{empNo}, (select CATEGORYNO from NOTICECATEGORY where CATEGORYNO = #{categoryNo}),
                                   #{nCheck}, #{nName}, #{nText}, default, sysdate)
       <selectKey keyProperty="nNo" resultType="string" order="AFTER">
          SELECT seq_notice.CURRVAL FROM DUAL
@@ -37,9 +37,12 @@
    <delete id="deleteUpNotice">
       delete from UPNOTICE where nNo=#{nNo}
    </delete>
+   <delete id="deleteSite" parameterType="string">
+   	  delete from rsite where stName=#{stname}
+   </delete>
 <!--    게시글 상세페이지 -->
    <select id="selectNoticeOne" resultType="notice">
-      select * from notice where  nName=#{nName}
+      select a.*, b.empName, b.empPhone from notice a, employee b where a.empNo = b.empNo and nName=#{nName}
    </select>
    <!-- 페이징처리1 -->
    <select id="selectNoticeCount" resultType="_int">
@@ -55,10 +58,7 @@
    </select>
 <!--    게시판 리스트 -->
    <select id="selectNoticeList" resultType="map">
-      select a.*,(select count(*)
-                from upNotice
-                where nNo=a.nNo) as upNoticeCount
-                from notice a order by nDate desc
+     select a.*,(select count(*) from upNotice where nNo=a.nNo) as upNoticeCount , b.empname from notice a , employee b where a.empno = b.empno order by nDate desc
    </select>
    <!-- 게시글 조회수 -->
    <update id="updateReadCount" parameterType="_int">
@@ -70,14 +70,15 @@
     </select>
    <!-- 게시글 필독체크 조회 -->
     <select id="selectNoticeList2" resultType="map">
-       select a.*,(select count(*)
-                from upNotice
-                where nNo=a.nNo) as upNoticeCount
-                from notice a where NCHECK='필독체크'
+    select a.*,(select count(*) from upNotice where nNo=a.nNo) as upNoticeCount , b.empname from notice a , employee b where a.empno = b.empno and NCHECK='필독체크'
     </select>
    <!-- 상세페이지에서 필독체크인지 아닌지 화면에 띄워주기 -->
     <select id="selectNoticeCheck" resultType="map">
        select * from notice where nName=#{nName}
+    </select>
+    
+    <select id="selectNoticeEmp" parameterType="_int" resultType="employee">
+    	select empName from employee where empNo=#{empNo}
     </select>
 
    <!--     사이트 리스트(내부) -->

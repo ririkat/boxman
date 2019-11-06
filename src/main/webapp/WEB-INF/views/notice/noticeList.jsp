@@ -63,7 +63,7 @@
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2["NNAME"]}&nReadCount=${list2["NNO"]}&nNo=${list2["NNO"]}'>${list2["NNAME"] }</a></td>
-							<td>${loginEmp["EMPNAME"] }</td>
+							<td>${list2['EMPNAME'] }</td>
 							<c:choose>
 								<c:when test="${list2['UPNOTICECOUNT'] > '0' }">
 									<td><img src="${path}/resources/b4/img/btn_disk.gif" alt="첨부파일 있음"></td>
@@ -84,7 +84,7 @@
 							    <tr>
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
-									<td>${loginEmp['EMPNAME'] }</td>							 
+									<td>${notice['EMPNAME'] }</td>							 
 									<td><img src="${path}/resources/b4/img/btn_disk.gif" alt="첨부파일 있음"></td>									
 									<td><c:out value='${notice["NDATE"]}'/></td>
 									<td><c:out value='${notice["NREADCOUNT"]}'/></td>
@@ -94,7 +94,7 @@
 							    <tr>
 									<td><c:out value='${notice["NNO"]}'/></td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
-									<td>${loginEmp['EMPNAME'] }</td>							 
+									<td>${notice['EMPNAME'] }</td>							 
 									<td></td>
 									<td><c:out value='${notice["NDATE"]}'/></td>
 									<td><c:out value='${notice["NREADCOUNT"]}'/></td>

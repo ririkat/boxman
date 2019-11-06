@@ -3,6 +3,7 @@ package com.spring.bm.acct.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -14,19 +15,21 @@ public class AccDaoImpl implements AcctDao {
 		return session.selectList("acct.selectIcList");
 	}
 
+	/* 월급 관련 리스트 가져오기 */
 	@Override
-	public List<Map<String, String>> selectEmpList(SqlSessionTemplate session) {
-		return session.selectList("acct.selectEmpList");
+	public List<Map<String, String>> selectEmpList(int cPage, int numPerPage, SqlSessionTemplate session) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectEmpList",null, rows);
 	}
-
+	@Override
+	public int selectEmpCount(SqlSessionTemplate session) {
+		return session.selectOne("acct.selectEmpCount");
+	}
+	
+	
 	@Override
 	public int updateWagePayment(SqlSessionTemplate session, int salno) {
 		return session.update("acct.updateWagePayment", salno);
-	}
-
-	@Override
-	public List<Map<String, String>> selectSevList(SqlSessionTemplate session) {
-		return session.selectList("acct.selectSevList");
 	}
 
 	@Override
@@ -39,9 +42,43 @@ public class AccDaoImpl implements AcctDao {
 		return session.update("acct.updateEmployeeStatus", m);
 	}
 
+	/* biztrip */
 	@Override
-	public List<Map<String, String>> selectBizTripList(SqlSessionTemplate session) {
-		return session.selectList("acct.selectBizTripList");
+	public List<Map<String, String>> selectBizTripList(int cPage, int numPerPage, SqlSessionTemplate session) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectBizTripList", null, rows);
 	}
+	@Override
+	public int selecBizTripCount(SqlSessionTemplate session) {
+		return session.selectOne("acct.selectBizTripCount");
+	}
+	/* biztrip end */
+
+	
+	
+	/* severance */
+	@Override
+	public List<Map<String, String>> selectSevList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectSevList", null, rows);
+	}
+	@Override
+	public int selectSevCount(SqlSessionTemplate session) {
+		return session.selectOne("acct.selectSevCount");
+	}
+	
+	/* severance search */
+	@Override
+	public List<Map<String, String>> selectsSalarySearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectsSalarySearchList", param, rows);
+	}
+
+	@Override
+	public int salarySearchCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("acct.salarySearchCount", param);
+	}
+
 
 }

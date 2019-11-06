@@ -25,18 +25,8 @@ public class AcctServiceImpl implements AcctService {
 	}
 
 	@Override
-	public List<Map<String, String>> selectEmpList() {
-		return dao.selectEmpList(session);
-	}
-
-	@Override
 	public int updateWagePayment(int salno) {
 		return dao.updateWagePayment(session, salno);
-	}
-
-	@Override
-	public List<Map<String, String>> selectSevList() {
-		return dao.selectSevList(session);
 	}
 
 	@Override
@@ -52,10 +42,46 @@ public class AcctServiceImpl implements AcctService {
 		return result;
 	}
 
+	/* biztrip */
 	@Override
-	public List<Map<String, String>> selectBizTripList() {
-		return dao.selectBizTripList(session);
+	public List<Map<String, String>> selectBizTripList(int cPage, int numPerPage) {
+		return dao.selectBizTripList(cPage, numPerPage, session);
+	}
+	@Override
+	public int selectBizTripCount() {
+		return dao.selecBizTripCount(session);
+	}
+	/* biztrip end */
+	
+	@Override
+	public List<Map<String, String>> selectEmpList(int cPage, int numPerPage) {
+		return dao.selectEmpList(cPage, numPerPage, session);
 	}
 
+	@Override
+	public int selectEmpCount() {
+		return dao.selectEmpCount(session);
+	}
+
+	/* severance */
+	@Override
+	public List<Map<String, String>> selectSevList(int cPage, int numPerPage) {
+		return dao.selectSevList(session, cPage, numPerPage);
+	}
+
+	@Override
+	public int selectSevCount() {
+		return dao.selectSevCount(session);
+	}
+
+	/* salary search */
+	@Override
+	public List<Map<String, String>> selectsSalarySearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectsSalarySearchList(session,cPage, numPerPage, param);
+	}
+	@Override
+	public int salarySearchCount(Map<String, Object> param) {
+		return dao.salarySearchCount(session, param);
+	}
 
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="calendar">
+ 	<insert id="insertCalendar" parameterType="map">
+ 		insert into schedule values(seq_schNo.nextval, #{schTitle}, #{schContent}, sysdate, #{schEventDate}, (select schCateNo from scheCategory where schCateNo=#{schCateNo}), #{schLevel}, #{empNo})
+ 	</insert>
+ 	<update id="updateCalendar" parameterType="map">
+ 		update schedule set schTitle=#{schTitle}, schContent=#{schContent}, schEventDate=#{schEventDate}, schLevel=#{schLevel} where schNo=#{schNo}
+ 	</update>
+ 	<select id="selectScheCategory" resultType="map">
+ 		select * from schecategory
+ 	</select>
+</mapper>

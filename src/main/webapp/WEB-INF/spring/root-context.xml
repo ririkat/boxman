@@ -16,9 +16,15 @@
 		<!--  DB연결에 필요한 데이터를 BasicDataSource객체에  값을 넣음  -->
 		<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+			<!-- server -->
 			<property name="url" value="jdbc:oracle:thin:@rclass.iptime.org:1521:xe"/>
 			<property name="username" value="boxman"/>
 			<property name="password" value="12345"/>
+			
+			<!-- local -->
+			<!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+			<property name="username" value="final1"/>
+			<property name="password" value="1234"/> -->
 		</bean>
 		
 		<!-- 로그를 출력하기 위한 라이브러리 추가 -->

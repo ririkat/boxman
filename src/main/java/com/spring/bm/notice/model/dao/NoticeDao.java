@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.bm.employee.model.vo.Employee;
 import com.spring.bm.notice.model.vo.Notice;
 import com.spring.bm.notice.model.vo.UploadNotice;
 
@@ -47,5 +48,9 @@ public interface NoticeDao {
 	List<Map<String, Object>> selectSiteList(SqlSessionTemplate sqlSession);
 	
 	List<Map<String, Object>> selectSiteList2(SqlSessionTemplate sqlSession);
+
+	int deleteSite(SqlSessionTemplate sqlSession, String param);
+
+	Employee selectNoticeEmp(SqlSessionTemplate sqlSession, int empNo);
 
 }

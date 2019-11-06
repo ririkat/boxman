@@ -93,7 +93,6 @@
 					</div>
 				</div>
 				${pageBar }
-				
 </section>
 
 

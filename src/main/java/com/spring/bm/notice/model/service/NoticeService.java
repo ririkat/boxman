@@ -3,6 +3,7 @@ package com.spring.bm.notice.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.spring.bm.employee.model.vo.Employee;
 import com.spring.bm.notice.model.vo.Notice;
 import com.spring.bm.notice.model.vo.UploadNotice;
 
@@ -45,4 +46,8 @@ public interface NoticeService {
 	int selectNoticeCount();
 	int selectNoticeCount2();
 	int selectNoticeCount3();
+	//관련사이트 삭제
+	int deleteSite(String param);
+	//empName 가져오기
+	Employee selectNoticeEmp(int empNo);
 }

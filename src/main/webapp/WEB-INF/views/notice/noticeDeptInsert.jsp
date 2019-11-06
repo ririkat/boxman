@@ -29,7 +29,7 @@ div#demo-container {
                         <label class="form-check-label">
                          <input type="checkbox" class="form-check-input" name="nCheck" value="필독체크">필독체크 <i class="input-helper"></i></label>
                       </div>
-                            
+                            <input type = "hidden" name = "empNo" value = "${loginEmp['EMPNO'] }"/>
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
                         <input type="text" class="form-control" id="exampleInputName1" name="nName" placeholder="">
@@ -81,9 +81,11 @@ div#demo-container {
 									</td>
 								</tr>
 							</table>
-							
+							<div style="margin:0 auto; width:fit-content;">
+                           
                       <button type="button" onclick="insertNotice();" class="btn btn-success mr-2">등록</button>
                       <button class="btn btn-light">취소</button>
+                        </div>
                     </form>
                   </div>
                 </div>

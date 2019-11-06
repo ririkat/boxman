@@ -102,6 +102,7 @@
                                         </div>
                                  </div>
                            </div>
+                           ${pageBar }
 <!-- Modal -->
 <form action="${path }/acct/quitJob.do" method="post">
 	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -4,7 +4,6 @@ import java.sql.Date;
 
 import lombok.Data;
 
-
 @Data
 public class Notice {
 	private int nNo; //글 번호
@@ -15,12 +14,14 @@ public class Notice {
 	private Date nDate; //공지사항 등록일
 	private String deptName;
 	private int categoryNo;
+	private String empName;
+	private int empPhone;
 
 	
 	public Notice() {
 		super();
 	}
-
+	
 
 	public Notice(int nNo, String nName, String nText, int nReadCount, Date nDate, String deptName) {
 		super();
@@ -31,7 +32,6 @@ public class Notice {
 		this.nDate = nDate;
 		this.deptName = deptName;
 	}
-
 
 	public Notice(int nNo, String nName, String nText, String nCheck, int nReadCount, Date nDate,
 			String deptName, int categoryNo) {
@@ -46,10 +46,4 @@ public class Notice {
 		this.categoryNo = categoryNo;
 	}
 	
-
 }
-
-
-
-
-

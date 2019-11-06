@@ -7,18 +7,27 @@ import java.util.Map;
 public interface AcctService {
 
 	List<Map<String, String>> selectICList();
-
-	List<Map<String, String>> selectEmpList();
-
+	
+	/* salary */
+	List<Map<String, String>> selectEmpList(int cPage, int numPerPage);
+	int selectEmpCount();
+	
+	/* salary payment */
 	int updateWagePayment(int salno);
-
-	List<Map<String, String>> selectSevList();
 
 	int updateSeveranceStatus(Map<String, String> m);
 
-	List<Map<String, String>> selectBizTripList();
+	/* biztrip */
+	List<Map<String, String>> selectBizTripList(int cPage, int numPerPage);
+	int selectBizTripCount();
 
+	/* severance */
+	List<Map<String, String>> selectSevList(int cPage, int numPerPage);
+	int selectSevCount();
 	
-	
+	/* salary search */
+	List<Map<String, String>> selectsSalarySearchList(int cPage, int numPerPage, Map<String, Object> param);
+	int salarySearchCount(Map<String, Object> param);
+
 
 }

@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.bm.acct.service.AcctService;
+import com.spring.bm.common.PageBarFactory;
 
 @Controller
 public class AcctController {
@@ -41,11 +43,34 @@ public class AcctController {
 		
 	}
 	
+	/* 월급 지급하기 */
 	@RequestMapping("/acct/wage.do")
-	public String wage(Model model) {
-		List <Map<String, String>> list = service.selectEmpList();
-		model.addAttribute("list", list);
-		return "acct/wage";
+	public ModelAndView wage(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage = 10;
+		List <Map<String, String>> list = service.selectEmpList(cPage, numPerPage);
+		int totalCount = service.selectEmpCount();
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/wage.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/wage");
+		return mv;
+	}
+	
+	/* salary search */
+	@RequestMapping("/acct/salarySearch.do")
+	public ModelAndView salarySearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param) {
+		int numPerPage = 10;
+		List <Map<String, String>> list = service.selectsSalarySearchList(cPage, numPerPage, param);
+		int totalCount = service.salarySearchCount(param);
+	
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/wage.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/wage");
+		return mv;
 	}
 	
 	@RequestMapping("/acct/wagePay.do")
@@ -59,18 +84,30 @@ public class AcctController {
 		return mapper.writeValueAsString(num);
 	}
 	
+	/* 출장비용 */
 	@RequestMapping("/acct/biztrip.do")
-	public String bizTrip(Model model) {
-		List <Map<String, String>> list = service.selectBizTripList();
-		model.addAttribute("list", list);
-		return "acct/biztrip";
+	public ModelAndView bizTrip(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage=5;
+		List <Map<String, String>> list = service.selectBizTripList(cPage, numPerPage);
+		int totalCount = service.selectBizTripCount();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/biztrip.do"));
+		mv.addObject("list", list);
+		mv.setViewName("acct/biztrip");
+		return mv;
 	}
 	
+	/* severance */
 	@RequestMapping("/acct/severance.do")
-	public String severance(Model model) {
-		List <Map<String, String>> list = service.selectSevList();
-		model.addAttribute("list", list);
-		return "acct/severance";
+	public ModelAndView severance(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage) {
+		int numPerPage = 5;
+		List <Map<String, String>> list = service.selectSevList(cPage, numPerPage);
+		int totalCount = service.selectSevCount();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/severance.do"));
+		mv.addObject("list", list);
+		mv.setViewName("acct/severance");
+		return mv;
 	}
 	
 	@RequestMapping("/acct/quitJob.do")
