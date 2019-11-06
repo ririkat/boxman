@@ -80,7 +80,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<table class="table table-striped table-hover" id="dataTable"
+							<table class="table table-striped table-hover tablesorter" id="myTable"
 								width="100%" cellspacing="0" role="grid"
 								aria-describedby="dataTable_info" style="width: 100%;">
 								<thead>
@@ -165,5 +165,10 @@
 		$("#searchFrm").attr("action","${path}/emp/selectDayOffList.do");
 		$("#searchFrm").submit();
 	}
+	
+	//테이블 정렬
+	$(function() {
+	  $("#myTable").tablesorter();
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

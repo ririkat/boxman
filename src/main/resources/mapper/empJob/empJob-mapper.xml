@@ -3,7 +3,7 @@
 <mapper namespace="empJob">
 	<!-- 직급등록 -->
 	<insert id="insertEmpJob" parameterType="map">
-		INSERT INTO EMPJOB VALUES(SEQ_EMPJOB.NEXTVAL,#{jobName},#{jobStatus},default)
+		INSERT INTO EMPJOB VALUES(SEQ_EMPJOB.NEXTVAL,#{jobName},#{jobStatus})
 	</insert>
 	
 	<!-- 직급리스트출력 -->

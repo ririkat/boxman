@@ -8,7 +8,7 @@
 		FROM DEPARTMENT D JOIN EMPLOYEE A ON (A.DEPTNO = D.DEPTNO)
 		JOIN
 		EMPJOB J ON (A.JOBNO=J.JOBNO)
-		ORDER BY A.EMPNO, A.JOBNO
+		ORDER BY A.JOBNO,A.EMPNO
 	</select>
 	<select id="selectEmpCount" resultType="_int">
 		SELECT COUNT(*) FROM

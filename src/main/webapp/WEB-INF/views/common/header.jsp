@@ -52,6 +52,9 @@
   <script src='${path }/resources/hb/fullcalendar/daygrid/main.js'></script>
   <script src='${path }/resources/hb/fullcalendar/timegrid/main.js'></script>
   <script src='${path }/resources/hb/fullcalendar/interaction/main.js'></script>
+  
+  <!-- tableSorter -->
+  <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>
     
 
   <script>

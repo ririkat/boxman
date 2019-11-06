@@ -57,7 +57,7 @@
                </div>
              </div>
              <div>
-             	<div>
+             	<div style="margin:0 auto; width:fit-content;">
 		             <button type="button" class="btn btn-success mr-2" id="jobInsert">등록</button>
 		             <button type="button" class="btn btn-success mr-2" id="jobUpdate">수정</button>
 	             </div>

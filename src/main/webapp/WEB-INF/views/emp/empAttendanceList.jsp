@@ -76,7 +76,7 @@
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
-							<table class="table table-striped table-hover" id="dataTable"
+							<table class="table table-striped table-hover tablesorter" id="myTable"
 								width="100%" cellspacing="0" role="grid"
 								aria-describedby="dataTable_info" style="width: 100%;">
 								<thead>
@@ -189,98 +189,10 @@
 		$("#searchFrm").attr("action", "${path}/emp/selectAttenList.do");
 		$("#searchFrm").submit();
 	}
-	//calendar
-/* 	document.addEventListener('DOMContentLoaded', function() {
-		  var calendarEl = document.getElementById('calendar1');
-		  var calendar = new FullCalendar.Calendar(calendarEl, {
-		    plugins: [ 'interaction', 'dayGrid', 'timeGrid' ],
-		    defaultView: 'dayGridMonth',
-		    defaultDate: new Date(),
-		    header: {
-		      left: 'prev,next today',
-		      center: 'title',
-		      right: 'dayGridMonth,timeGridWeek,timeGridDay'
-		    } */
-		    /* events: [
-		      {
-		        title: 'All Day Event',
-		        start: '2019-10-01'
-		      },
-		      {
-		        title: 'Long Event',
-		        start: '2019-10-07',
-		        end: '2019-10-10'
-		      },
-		      {
-		        groupId: '999',
-		        title: 'Repeating Event',
-		        start: '2019-10-09T16:00:00'
-		      },
-		      {
-		        groupId: '999',
-		        title: 'Repeating Event',
-		        start: '2019-10-16T16:00:00'
-		      },
-		      {
-		        title: 'Conference',
-		        start: '2019-10-11',
-		        end: '2019-10-13'
-		      },
-		      {
-		        title: 'Meeting',
-		        start: '2019-10-12T10:30:00',
-		        end: '2019-10-12T12:30:00'
-		      },
-		      {
-		        title: 'Lunch',
-		        start: '2019-10-12T12:00:00'
-		      },
-		      {
-		        title: 'Meeting',
-		        start: '2019-10-12T14:30:00'
-		      },
-		      {
-		        title: 'Birthday Party',
-		        start: '2019-10-13T07:00:00'
-		      },
-		      {
-		        title: 'Click for Google',
-		        url: 'http://google.com/',
-		        start: '2019-10-28'
-		      }
-		    ] */
-/* 		  });
-		  calendar.render();
-		});
-	
-	var dataset = [
-	    <c:forEach var="listview" items="${listview}" varStatus="status">
-	        <c:if test="${listview.tsstartdate != ''}">
-	            {"id":'<c:out value="${listview.tsno}" />'
-	            ,"title":'<c:out value="${listview.tstitle}" />'
-	            ,"start":"<c:out value="${listview.tsstartdate}" />"
-	            <c:if test="${listview.tsenddate != ''}">
-	                ,"end":"<c:out value="${listview.tsenddate}" />"
-	            </c:if>
-	            } <c:if test="${!status.last}">,</c:if>
-	        </c:if>
-	    </c:forEach>
-	];
-	
-	$(document).ready(function() {
-	    $('#calendar').fullCalendar({
-	        header: {
-	            left: 'prev,next today',
-	            center: 'title',
-	            right: 'month,basicWeek,basicDay'
-	        },
-	        defaultDate: new Date(),
-	        navLinks: true,
-	        editable: false,
-	        eventLimit: true,
-	        events: dataset
-	    });
-	}); */
+	//테이블 정렬
+	$(function() {
+	  $("#myTable").tablesorter();
+	});
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
 

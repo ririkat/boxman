@@ -28,6 +28,7 @@ public class RSAEncrypto implements MyEncrypt{
 
 	public RSAEncrypto() {
 		String path = this.getClass().getResource("/").getPath();
+		/* 서버용 */
 //		path = path.substring(0,path.lastIndexOf("/classes"));
 //		File f = new File(path + "/keys.hb");
 		path = path.substring(0,path.lastIndexOf("/target"));
@@ -67,9 +68,9 @@ public class RSAEncrypto implements MyEncrypt{
 		Map<String, Object> keys = new HashMap();
 		keys.put("public", publicKey);
 		keys.put("private", privateKey);
+		String path = this.getClass().getResource("/").getPath();
 //		path = path.substring(0,path.lastIndexOf("/classes"));
 //		File f = new File(path + "/keys.hb");
-		String path = this.getClass().getResource("/").getPath();
 		path = path.substring(0,path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {

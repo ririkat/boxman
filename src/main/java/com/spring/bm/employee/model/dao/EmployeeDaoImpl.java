@@ -66,9 +66,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	
 	/* 사원검색 */
 	@Override
-	public List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param) {
-		int cPage = (Integer)(param.get("cPage"));
-		int numPerPage = (Integer)(param.get("numPerPage"));
+	public List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param) {
 		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
 		return session.selectList("emp.selectEmpSearchList", param, rows);
 	}
