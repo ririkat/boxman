@@ -119,7 +119,6 @@ public class EmployeeController {
 	public ModelAndView empLogin(@RequestParam Map<String,Object> map,HttpSession session) {
 
 		Map<String, Object> m = service.selectLoginEmp(map);
-		System.out.println(m.get("EMPNO"));
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
