@@ -190,4 +190,8 @@ public class ApvServiceImpl implements ApvService {
 		return result;
 	}
 	
+	@Override
+	public Map<String, Object> selectEmpInfoAll(Map<String, Object> param) {
+		return dao.selectEmpInfoAll(session,param);
+	}
 }

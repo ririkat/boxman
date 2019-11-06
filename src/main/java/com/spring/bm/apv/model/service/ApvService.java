@@ -53,5 +53,7 @@ public interface ApvService {
 
 	int updateApvLine(Map<String, Object> param) throws Exception;
 
+	Map<String, Object> selectEmpInfoAll(Map<String, Object> loginEmp);
+
 
 }

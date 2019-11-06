@@ -141,4 +141,9 @@ public class ApvDaoImpl implements ApvDao {
 	public int deleteApvlApplicants(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.delete("apv.deleteApvlApplicants",param);
 	}
+	
+	@Override
+	public Map<String, Object> selectEmpInfoAll(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectEmpInfoAll",param);
+	}
 }

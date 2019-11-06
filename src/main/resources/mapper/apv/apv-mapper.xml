@@ -125,4 +125,9 @@
 		DELETE FROM APVLAPPLICANT WHERE APVLNO=#{apvlNo}
 	</delete>
 	
+	<!-- 기안하기 등록 뷰 호출 -->
+	<select id="selectEmpInfoAll" parameterType="map" resultType="map">
+		SELECT * FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPTNO=D.DEPTNO JOIN EMPJOB J ON E.JOBNO=J.JOBNO WHERE EMPNO=#{EMPNO}
+	</select>
+	
 </mapper>

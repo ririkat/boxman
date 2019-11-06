@@ -48,8 +48,6 @@
 <script type="text/javascript"
 	src="${path }/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 	
-	<script src="https://www.w3schools.com/lib/w3.js"></script>
-
 <style>
 .title {
 	margin-top: 20px;
@@ -68,20 +66,32 @@
 				<div class="card shadow mb-4">
 					<div class="card-body">
 						<div class="table-responsive">
-							결재폼
-							<hr/>
-							<div id="id01" class="text-center">
-								${dfOne["DFHEADFORM"]}
-							</div>
-							
-							<table class="table table-borded">
+							<table class="table table-boarded">
 								<tr>
+									<th>기안제목</th>
 									<td>
-									본문내용
+										<input type="text" id="apvTitle"/>
 									</td>
 								</tr>
 								<tr>
-									<td><textarea id="dfContentForm"
+									<th colspan="2">
+										결재폼									
+									</th>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<div id="id01" class="text-center">
+											${dfOne["DFHEADFORM"]}
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<th colspan="2">
+									본문내용
+									</th>
+								</tr>
+								<tr>
+									<td colspan="2"><textarea id="dfContentForm"
 											name="dfContentForm" rows="10" cols="100">${dfOne['DFCONTENTFORM']}</textarea></td>
 								</tr>
 							</table>
@@ -89,7 +99,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="submit" />
+				<input type="submit" class="btn btn-primary" style="width:100%"/>
 				</form>
 				</div>
 				
@@ -107,8 +117,6 @@
 
 				});
 				
-				var myObject = {"loginEmp.empName" : "류별리", "dfTitle" : "테스트1","inputText1":"<input type='text'/>","inputNumber1":"<input type='number'/>"};
-				w3.displayObject("id01", myObject);
 				</script>
 	</section>
 

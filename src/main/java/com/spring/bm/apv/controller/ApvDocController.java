@@ -3,6 +3,8 @@ package com.spring.bm.apv.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -216,12 +218,58 @@ public class ApvDocController {
 	/* 기안 등록 뷰 */
 	@RequestMapping("/apv/requestApvEnroll.do")
 	public ModelAndView requestApvEnroll(@RequestParam(value="dfNo", 
-			required=false, defaultValue="0") int dfNo) {
+			required=false, defaultValue="0") int dfNo,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		/* List<Map<String,Object>> docCate=service.selectDocCate(); */
 		Map<String,Object> dfOne=service.selectDfModi(dfNo);
-		String title=(String)dfOne.get("DFTITLE");
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<c:out value='${dfOne[\"DFTITLE\"]}' ​escapeXml=\"false\"/>", title);
+		
+		//테이블에 값 넣기
+		//먼저 index로 변수들이 있는지 파악
+		//-1이면 테이블에 해당 변수 없음.
+		//해당 변수가 있을 때 replace 시켜줌.
+		//replace 시켜줄 때는, 태그로 감싸서 넣기!!나중에 뽑아 쓸 수 있도록 id값을 설정해서 넣기!!
+		//그대로 출력
+		Map<String,Object> loginEmp=(Map<String, Object>) session.getAttribute("loginEmp");
+		Map<String,Object> empInfo=service.selectEmpInfoAll(loginEmp);
+		
+		String head=((String)dfOne.get("DFHEADFORM"));
+		
+		///head에서 index 다 돌려~~!!
+		if(head.indexOf("{{title}}")>-1) {
+			String content=(String)dfOne.get("DFTITLE");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{title}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{empName}}")>-1) {
+			String content=(String)empInfo.get("EMPNAME");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{empName}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{empEmail}}")>-1) {
+			String content=(String)empInfo.get("EMPEMAIL");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{empEmail}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{deptName}}")>-1) {
+			String content=(String)empInfo.get("DEPTNAME");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{deptName}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{jobName}}")>-1) {
+			String content=(String)empInfo.get("JOBNAME");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{jobName}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{text_box_1}}")>-1) {
+			String content="<input type='text' id='textBox1'/>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{text_box_1}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{approval_line_html}}")>-1) {
+			String content="<table id='approval_line_html'><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></table>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{approval_line_html}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
 		
 		mv.addObject("dfOne",dfOne);
 		/* mv.addObject("docCate",docCate); */

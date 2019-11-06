@@ -57,4 +57,6 @@ public interface ApvDao {
 
 	int deleteApvlApplicants(SqlSessionTemplate session, Map<String, Object> param);
 
+	Map<String, Object> selectEmpInfoAll(SqlSessionTemplate session, Map<String, Object> param);
+
 }
