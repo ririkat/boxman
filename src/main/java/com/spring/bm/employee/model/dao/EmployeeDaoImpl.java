@@ -21,7 +21,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public List<Map<String, String>> selectEmpList(SqlSessionTemplate session, int cPage, int numPerPage) {
 		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
-		return session.selectList("emp.selectEmpList", rows);
+		return session.selectList("emp.selectEmpList",null, rows);
 	}
 
 	@Override
@@ -67,8 +67,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	/* 사원검색 */
 	@Override
 	public List<Map<String, String>> selectEmpSearchList(SqlSessionTemplate session, Map<String, Object> param) {
-		logger.debug((String)param.get("type"));
-		logger.debug((String)param.get("data"));
 		int cPage = (Integer)(param.get("cPage"));
 		int numPerPage = (Integer)(param.get("numPerPage"));
 		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
@@ -78,8 +76,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	@Override
 	public int selectEmpSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
 		// TODO Auto-generated method stub
-		logger.debug((String)param.get("type"));
-		logger.debug((String)param.get("data"));
 		return session.selectOne("emp.selectEmpSearchCount", param);
 	}
 

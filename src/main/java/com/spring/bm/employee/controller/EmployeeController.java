@@ -72,6 +72,9 @@ public class EmployeeController {
 
 		int numPerPage = 10;
 		List<Map<String,String>> list = service.selectEmpList(cPage, numPerPage);
+		for(Map<String, String> m : list) {
+			logger.debug(""+m);
+		}
 		int totalCount = service.selectEmpCount();
 
 		ModelAndView mv=new ModelAndView();
