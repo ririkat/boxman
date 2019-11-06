@@ -39,8 +39,11 @@
                             <label class="col-sm-3 col-form-label" for="exampleInputPassword1">링크</label>
                             <input type="text" class="form-control" name="stLink" id="exampleInputPassword1" placeholder="">
                           </div>
-                          <button type="submit" class="btn btn-success mr-2" onclick="insertNotice();">등록</button>
+                          <div style="margin:0 auto; width:fit-content;">
+                           
+                          <button type="button" class="btn btn-success mr-2" onclick="insertNotice();">등록</button>
                           <button class="btn btn-light">Cancel</button>
+                        </div>
                         </form>
                       </div>
                     </div>

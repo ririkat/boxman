@@ -24,7 +24,8 @@ div#demo-container {
                     <h4 class="card-title">공지사항</h4>
                     <p class="card-description"> 게시글 작성 </p>
                     <form class="forms-sample">
-                    	<input type = "hidden" name = "categoryNo" value = "1"/>                  	
+                    	<input type = "hidden" name = "categoryNo" value = "1"/>
+                    	<input type = "hidden" name = "empNo" value = "${loginEmp['EMPNO'] }"/>
                     	 <div class="custom-control custom-checkbox mb-3">
 					      <input type="checkbox" class="custom-control-input" id="customCheck" name="nCheck" value="필독체크">
 					      <label class="custom-control-label" for="customCheck">필독체크</label>
@@ -79,9 +80,11 @@ div#demo-container {
 									</td>
 								</tr>
 							</table>
-							
+							<div style="margin:0 auto; width:fit-content;">
+                           
                       <button type="button" onclick="insertNotice();" class="btn btn-success mr-2">등록</button>
                       <button class="btn btn-light">취소</button>
+                        </div>
                     </form>
                   </div>
                 </div>

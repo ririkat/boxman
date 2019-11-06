@@ -51,7 +51,8 @@ public class ChatController {
 		  int result = 0;
 		  int empNo = 0;
 		  ChatRoom chatroom = service.chatRoom(m);
-		  List<Chat> list = null;
+		  List<Chat> list2 = null;
+		  List<Map<String, String>> list = null;
 		  ChatRoom cr = null;
 		  service.updateReadCount(m);
 		  
@@ -60,27 +61,35 @@ public class ChatController {
 		  
 		  if(chatroom  != null ) {
 			  
-			  System.out.println("방 있음");
-			  
 			  loc="chat/chatRoom";
 			  empNo = service.selectEmpno(receiver);
 			  cr = service.selectChatRoom(m);
-			  list = service.seletChat(cr.getRoomNo());
+			  list2 = service.seletChat(cr.getRoomNo());
 		  }else {
 			  result = service.createChatRoom(m);
-			  
-			  loc = "stuff/stuffList";
+			  if(result > 0) {
 
+				  list = service.selectChatList();
+				  
+				  msg = "채팅방 생성 완료";
+				  loc = "/chat/chatList.do";
+				  
+				  model.addAttribute("msg", msg);
+				  model.addAttribute("loc", loc);
+				  
+				  return "common/msg";
+			  }
 		  }
-		  
+
 		  model.addAttribute("empNo", empNo);
 	      model.addAttribute("list",list);
+	      model.addAttribute("list2", list2);
 	      model.addAttribute("cr",cr);
 
 	      return loc;
 
 	}
-	
+	//사원검색
 	@RequestMapping("/chat/searchEmp.do")
 	public ModelAndView searchEmp(@RequestParam(value="data") String data) {
 		
@@ -95,12 +104,13 @@ public class ChatController {
 		return mv;
 		
 	}
-	
+	//안읽은메세지갯수
 	@RequestMapping("/chat/readCount.do")
 	@ResponseBody
 	public int chatReadCount(@RequestParam(value="userId") int userId) {
 		
 		int nrc = service.noReadCount(userId);
+		System.out.println(nrc);
 		
 	     return nrc;
 	}

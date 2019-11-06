@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.employee.model.service.EmployeeService;
+import com.spring.bm.employee.model.vo.Employee;
 import com.spring.bm.notice.model.service.NoticeService;
 import com.spring.bm.notice.model.vo.Notice;
 import com.spring.bm.notice.model.vo.UploadNotice;
@@ -252,7 +253,7 @@ public class NoticeController {
 
       String msg="";
       String loc="/notice/selectNoticeList.do";
-
+      
       if(result>0) {
          msg="게시글 삭제 완료!";
       }else {
@@ -277,7 +278,8 @@ public class NoticeController {
       int numPerPage = 5;
       List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
       List<Notice> list2 = noticeService.selectNoticeList2();
-      System.out.println("list2 ==============>>> "+list2);
+     
+
       int totalCount = noticeService.selectNoticeCount();
 
       mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));
@@ -405,6 +407,31 @@ public class NoticeController {
       return mv;
    }
 
+   //사이트삭제
+   @RequestMapping("/notice/deleteSite.do")
+   public ModelAndView deleteSite(@RequestParam (value = "stname") String param) {
+	
+	   
+	   System.out.println("넘어왔냐");
+	   int result = noticeService.deleteSite(param);
+	   System.out.println("넘어온 결과 : " + result);
+	   
+	   String msg="";
+	   String loc="/notice/site.do";
+	   if(result>0) {
+		   msg="삭제완료!";
+	   }else {
+		   msg="삭제실패!";
+	   }
+	   
+	   ModelAndView mv = new ModelAndView();
+	   
+	   mv.addObject("msg", msg);
+	   mv.addObject("loc", loc);
+	   mv.setViewName("common/msg");
+	   
+	   return mv;
+   }
    //관련사이트 목록
    @RequestMapping("/notice/site.do")
    public ModelAndView siteList() {
@@ -412,6 +439,7 @@ public class NoticeController {
       //반환될 modelAndView객체 생성
       ModelAndView mv = new ModelAndView();
 
+      
       List<Map<String,Object>> list = noticeService.selectSiteList(); //내부
       System.out.println("내부 ---->"+list);
       List<Map<String,Object>> list2 = noticeService.selectSiteList2(); //외부

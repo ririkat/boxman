@@ -332,6 +332,7 @@ form:active {
 	   $("#searchFrm").attr("action","${path}/chat/searchEmp.do");
 	   $("#searchFrm").submit();
 	}
+	function 
 </script>
 
  <!-- JAVASCRIPTS -->
