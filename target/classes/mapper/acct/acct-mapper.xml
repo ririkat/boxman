@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="acct">
+
+
+
+
+	<!-- income statement -->
 	<select id="selectIcList" resultType="map">
 		select 
 		    (select sum(salrealpay+saltax) from salary where salcheck='Y') as salaries,
@@ -9,6 +14,11 @@
 		    (select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from businessTripPay) as biztrip
 		from dual
 	</select>
+	
+	
+	
+	
+	
 	<!-- 월급 리스트 가져오기 -->
 	<select id="selectEmpList" resultType="map">
 		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
@@ -22,6 +32,9 @@
 		select count(*) from salary
 	</select>
 	<!-- 월급 리스트 가져오기 끝-->
+	
+	
+	
 	
 	<!-- salary search -->
 	<select id="selectsSalarySearchList" resultType="map">
@@ -77,6 +90,25 @@
 	
 	
 	
+	
+	
+	<!-- biztrip -->
+	<select id="selectBizTripList" resultType="map">
+		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
+			from employee
+			    inner join businesstrip on employee.empno=businesstrip.empno
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno
+	</select>
+	<select id="selectBizTripCount" resultType="_int">
+		select count(*) from businessTrip
+	</select>
+	
+	
+	
+	
+	
 	<!-- biztrip search -->
 	<select id="selectBiztripSearchList" resultType="map">
 		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
@@ -126,6 +158,10 @@
 	
 	
 	
+	
+	
+	
+	
 	<!-- severance -->
 	<select id="selectSevList" resultType="map">
 		select 
@@ -158,19 +194,65 @@
 				employee.empentyn='Y'
 					where empno=#{empno}
 	</update>
+	<!-- severance end -->
 	
-	<!-- biztrip -->
-	<select id="selectBizTripList" resultType="map">
-		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
-		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
-			from employee
-			    inner join businesstrip on employee.empno=businesstrip.empno
-			    inner join empjob on employee.jobno=empjob.jobno
-			    inner join department on employee.deptno=department.deptno
+	
+	
+	
+	
+	<!-- severance search -->
+	<select id="selectSevSearchList" resultType="map">
+		select
+			employee.empno, employee.empname, employee.empsal,
+				    to_char(employee.emphiredate, 'mm/dd/yyyy')as hiredate, 
+				    department.deptname, empjob.jobname,
+				    employee.empentyn as empentyn, 
+				    to_char(severance.sevdate, 'mm/dd/yyyy')as sevdate, severance.sevno 
+				    from employee 
+				        join severance on employee.empno=severance.empno
+				        join empjob on employee.jobno=empjob.jobno
+				        join department on employee.deptno=department.deptno
+						where 1=1
+						    <choose>
+						    	<when test="type eq 'empNo'">
+					                and employee.empno like '%'||#{data}||'%' 
+				            	</when>
+				              	<when test="type eq 'empName'">
+				              		and employee.empname like '%'||#{data}||'%'
+				              	</when>
+				              	<when test="type eq 'deptName'">
+									and department.deptname like '%'||#{data}||'%'
+				              	</when>
+				              	<when test="type eq 'jobName'">
+				              		and empjob.jobname like '%'||#{data}||'%'
+				              	</when>
+						    </choose>
 	</select>
-	<select id="selectBizTripCount" resultType="_int">
-		select count(*) from businessTrip
+	<select id="sevSearchCount" parameterType="map">
+		select count(*) from employee 
+	        join severance on employee.empno=severance.empno
+	        join empjob on employee.jobno=empjob.jobno
+	        join department on employee.deptno=department.deptno
+			where 1=1
+				<choose>
+			    	<when test="type eq 'empNo'">
+		                and employee.empno like '%'||#{data}||'%' 
+	            	</when>
+	              	<when test="type eq 'empName'">
+	              		and employee.empname like '%'||#{data}||'%'
+	              	</when>
+	              	<when test="type eq 'deptName'">
+						and department.deptname like '%'||#{data}||'%'
+	              	</when>
+	              	<when test="type eq 'jobName'">
+	              		and empjob.jobname like '%'||#{data}||'%'
+	              	</when>
+			    </choose>
 	</select>
+	
+	
+	
+	
 </mapper>
 
 

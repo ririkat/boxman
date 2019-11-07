@@ -31,8 +31,12 @@ public interface AcctService {
 
 	/* biztrip search */
 	List<Map<String, String>> selectBiztripSearchList(int cPage, int numPerPage, Map<String, Object> param);
-
 	int biztripSearchCount(Map<String, Object> param);
 
+	/* severance search */
+	List<Map<String, String>> selectSevSearchList(int cPage, int numPerPage, Map<String, Object> param);
+	int sevSearchCount(Map<String, Object> param);
+	
+	
 
 }

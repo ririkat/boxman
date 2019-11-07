@@ -37,6 +37,11 @@ public interface AcctDao {
 	/* biztrip search */
 	List<Map<String, String>> selectBiztripSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param);
 	int biztripSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	
+	/* severance search */
+	List<Map<String, String>> selectSevSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param);
+	int sevSearchCount(SqlSessionTemplate session, Map<String, Object> param);
 	
 
 }

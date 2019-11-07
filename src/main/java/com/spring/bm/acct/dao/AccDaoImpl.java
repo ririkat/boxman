@@ -67,7 +67,9 @@ public class AccDaoImpl implements AcctDao {
 		return session.selectOne("acct.selectSevCount");
 	}
 	
-	/* severance search */
+	
+	
+	/* salary search */
 	@Override
 	public List<Map<String, String>> selectsSalarySearchList(SqlSessionTemplate session, int cPage, int numPerPage,
 			Map<String, Object> param) {
@@ -80,6 +82,8 @@ public class AccDaoImpl implements AcctDao {
 	}
 
 	
+	
+	
 	/* biztrip search */
 	@Override
 	public List<Map<String, String>> selectBiztripSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param) {
@@ -90,9 +94,21 @@ public class AccDaoImpl implements AcctDao {
 	public int biztripSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("acct.biztripSearchCount", param);
 	}
-	
-	
-	
 
-
+	
+	
+	
+	/* severance search */
+	@Override
+	public List<Map<String, String>> selectSevSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectSevSearchList", param, rows);
+	}
+	@Override
+	public int sevSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("acct.sevSearchCount", param);
+	}
+	
+	
+	
 }
