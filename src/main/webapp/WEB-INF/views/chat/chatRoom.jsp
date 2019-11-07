@@ -120,8 +120,8 @@ window.onload = function(){
 }
 	
 //creating web socket
-     /* var socket = new  WebSocket("ws://192.168.120.171:9090/bm/chatRoom"); */
-	var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom");
+     var socket = new  WebSocket("ws://192.168.120.171:9090/bm/chatRoom");
+	/* var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom"); */
      
      // This method is triggered when it's received
      socket.onmessage = function(e) {
@@ -141,8 +141,9 @@ window.onload = function(){
 
           var date =  document.createTextNode(formatAMPM(new Date()));
 		
-          
-          if(crSender != sender) {
+          console.log(msg.receiver != sender);
+          console.log(msg.receiver);
+          if(msg.sender != sender) {
         	  
         	  /* inputting image */
         	  var imgDiv = $("<div>").attr({
@@ -174,7 +175,7 @@ window.onload = function(){
 	          $("#text-history").append(wrap);
 	          $("#text").val("");
 	          scrollDown();
-          } else {
+          } else  {
 		
 	          var div = $("<div>").attr({
 	              "class" : "mf-content bg-primary  text-white"

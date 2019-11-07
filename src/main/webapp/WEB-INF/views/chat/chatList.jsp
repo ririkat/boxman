@@ -147,8 +147,8 @@ form:active {
 							  		<!-- Venue -->
 							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><span>방열기</span></a></label></div>					  				
 					  				<c:if test="${list['READCOUNT'] == 0}">
-						  				<div class="subject">
-						  					<i class="fas fa-comment-dots" style="color:#4e73df;"></i>
+						  				<div class="venue">
+						  					<i class="fas fa-comment-dots" style="color:#e73b66d6;"></i>
 						  				</div>
 					  				</c:if>
 					  			</div>
@@ -190,8 +190,8 @@ form:active {
 							  			 <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><span>방열기</span></a></label>
 							  		</div>
 							  		<c:if test="${list['READCOUNT'] == 0}">
-						  				<div class="subject">
-						  					<i class="fas fa-comment-dots" style="color:#4e73df;"></i>
+						  				<div class="venue">
+						  					<i class="fas fa-comment-dots" style="color:#e73b66d6;"></i>
 						  				</div>
 					  				</c:if>	
 					  			</div>
@@ -230,8 +230,8 @@ form:active {
 							  		<!-- Venue -->
 							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><span>방열기</span></a></label></div>
 					  				<c:if test="${list['READCOUNT'] == 0}">
-						  				<div class="subject">
-						  					<i class="fas fa-comment-dots" style="color:#4e73df;"></i>
+						  				<div class="venue">
+						  					<i class="fas fa-comment-dots" style="color:#e73b66d6;"></i>
 						  				</div>
 					  				</c:if>
 					  			</div>
@@ -270,8 +270,8 @@ form:active {
 							  		<!-- Venue -->
 							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><span>방열기</span></a></label></div>
 					  				<c:if test="${list['READCOUNT'] == 0}">
-						  				<div class="subject">
-						  					<i class="fas fa-comment-dots" style="color:#4e73df;"></i>
+						  				<div class="venue">
+						  					<i class="fas fa-comment-dots" style="color:#e73b66d6;"></i>
 						  				</div>
 					  				</c:if>
 					  			</div>
@@ -310,8 +310,8 @@ form:active {
 							  		<!-- Venue -->
 							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><span>방열기</span></a></label></div>
 					  				<c:if test="${list['READCOUNT'] == 0}">
-						  				<div class="subject">
-						  					<i class="fas fa-comment-dots" style="color:#4e73df;"></i>
+						  				<div class="venue">
+						  					<i class="fas fa-comment-dots" style="color:#e73b66d6;"></i>
 						  				</div>
 					  				</c:if>
 					  			</div>
@@ -332,8 +332,8 @@ form:active {
 	   $("#searchFrm").attr("action","${path}/chat/searchEmp.do");
 	   $("#searchFrm").submit();
 	}
-	function 
 </script>
+
 
  <!-- JAVASCRIPTS -->
   <!-- jQuey -->

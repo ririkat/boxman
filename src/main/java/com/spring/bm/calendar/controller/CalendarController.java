@@ -28,12 +28,13 @@ public class CalendarController {
 	public String allView() {
 		return "calendar/calendarAll";
 	}
+	
 	//등록페이지로 이동
 	@RequestMapping("/calendar/insertCalendar.do")
 	public ModelAndView insertView() {
 		
 		List<Map<String, Object>> list = service.selectScheCategory();
-		System.out.println("찍어봐야겠녜"+list);
+
 		ModelAndView mv = new ModelAndView();
 		
 		mv.addObject("list",list);
@@ -44,16 +45,17 @@ public class CalendarController {
 	
 	//스케줄 등록
 	@RequestMapping("/calendar/insertCalendarEnd.do")
-	public ModelAndView insertCalendar(@RequestParam Map<String,Object> param) {
+	public ModelAndView insertCalendar(@RequestParam Map<String,Object> param, @RequestParam(value="empNo") int empNo) {
 		
+		System.out.println("empNo는 이거에요 =>"+empNo);
 		int result = service.insertCalender(param);
 		
 		String msg="";
 		String loc="/calendar/allView.do";
 		if(result>0) {
-			msg="스케줄이 등록 되었습니다.";
+			msg="스케줄 등록이 완료되었습니다.";
 		}else {
-			msg="스케줄이 등록되지 않았습니다.";
+			msg="스케줄 등록에 실패하였습니다.";
 		}
 		
 		ModelAndView mv = new ModelAndView();

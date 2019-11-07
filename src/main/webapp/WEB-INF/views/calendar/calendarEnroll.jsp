@@ -72,7 +72,7 @@ div#demo-container {
 							<label class="col-sm-2 col-form-labe">스케줄 유형</label>
 						</div>
 						<div class="col-sm-10">
-							<select name="schCateNo" id="schCateNo" class="form-control"
+							<select name="schCateName" id="schCateName" class="form-control"
 								required="required">
 								<option value="0">스케줄 유형선택</option>
 								<c:forEach var="sch" items="${list }">
