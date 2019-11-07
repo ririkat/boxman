@@ -45,26 +45,6 @@ public class SaleController {
 		return mv;
 	}
 	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-
-	@RequestMapping("/sale/addStuffToTemp.do")
-	public @ResponseBody Map<String,String> addStuffToTemp(@RequestParam Map<String,String> param) {
-		String stuffNo = param.get("stuffNo");
-		
-		Map<String,String> stuff = service.addStuffToTemp(stuffNo);
-		
-		return stuff;
-	}
-	
-	@RequestMapping("/sale/calPrice.do")
-	public @ResponseBody int calPrice(@RequestParam(value="price") int price,
-			@RequestParam(value="stNum") int stNum) {
-		int result = price*stNum;
-		return result;
-	}
-	
-	
 	@RequestMapping("/sale/enrollSaleInfoEnd.do")
 	public ModelAndView enrollSaleInfoEnd(@RequestParam Map<String,String> param) {
 		int result = 0;

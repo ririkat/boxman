@@ -48,6 +48,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		if(result==0) throw new RuntimeException();
 
 		if(result!=0) {
+			result = 0;
 			Map<String,Object> paramMap = new HashMap<String,Object>();
 			List<Map<String,String>> stList = new ArrayList<Map<String,String>>();
 			for(int i=0; i<Integer.parseInt(param.get("cnt")); i++) {

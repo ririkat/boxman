@@ -67,7 +67,7 @@
 					
 						<div class="form-radio">
 							<label class="form-check-label">
-								<input type="radio" class="form-check-input" name="conCateg" id="conCategory2" value="유통" disabled> 유통업체 <i class="input-helper"></i>
+								<input type="radio" class="form-check-input" name="conCateg" id="conCategory3" value="유통" disabled> 유통업체 <i class="input-helper"></i>
 							</label>
 						</div>
 					</div>
@@ -169,8 +169,10 @@
 					</script>
 				</div>
 				<br/>
-				<button type="button" class="btn btn-success mr-2" onclick="submitConn();">수정</button>
-				<button type="button" class="btn btn-light" onclick="deleteConn();">삭제</button>
+				<div style="margin:0 auto; width:fit-content;">
+					<button type="button" class="btn btn-success mr-2" onclick="submitConn();">수정</button>
+					<button type="button" class="btn btn-light" onclick="deleteConn();">삭제</button>
+				</div>
 			</form>
 		</div>
 	</div>
