@@ -12,6 +12,7 @@
 </jsp:include>
 
 <section id="content">
+
 	<div class="card shadow mb-4">
        <div class="card-header py-3">
          <h6 class="m-0 font-weight-bold text-primary">메인카테고리 목록</h6>
@@ -89,7 +90,9 @@
                </div>
                </div>
                </div>
+               <div style="margin:0 auto; width:fit-content;">
                  ${pageBar }
+                 </div>
                </div>
 	
 </section>

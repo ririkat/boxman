@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bm.calendar.model.dao.CalendarDao;
+import com.spring.bm.calendar.model.vo.Calendar;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
@@ -30,6 +31,11 @@ public class CalendarServiceImpl implements CalendarService {
 	@Override
 	public List<Map<String, Object>> selectScheCategory() {
 		return dao.selectScheCategory(sqlSession);
+	}
+
+	@Override
+	public List<Calendar> selectCalendarEmpNo(int empNo) {
+		return dao.selectCalendarEmpNo(sqlSession, empNo);
 	}
 
 	

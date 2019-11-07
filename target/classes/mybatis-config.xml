@@ -19,6 +19,7 @@
 		<typeAlias type = "com.spring.bm.chat.model.vo.Chat" alias = "chat"/>
 		<typeAlias type = "com.spring.bm.employee.model.vo.Employee" alias = "employee"/>
 		<typeAlias type = "com.spring.bm.chat.model.vo.ChatRoom" alias = "chatRoom"/>
+		<typeAlias type = "com.spring.bm.calendar.model.vo.Calendar" alias = "calendar"/>
 	</typeAliases>
 
 </configuration>
