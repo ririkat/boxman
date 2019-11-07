@@ -1,9 +1,11 @@
 package com.spring.bm.acct.controller;
 
-import java.util.HashMap;
+import java.util.HashMap;	
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spring.bm.acct.service.AcctService;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 
 @Controller
 public class AcctController {
+	
+	private Logger logger = LoggerFactory.getLogger(AcctController.class);
+	private PageUrlFactory path = new PageUrlFactory();
 	
 	@Autowired
 	AcctService service;
@@ -66,7 +72,7 @@ public class AcctController {
 		int totalCount = service.salarySearchCount(param);
 	
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/wage.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/wage.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/wage");
@@ -92,7 +98,7 @@ public class AcctController {
 		List <Map<String, String>> list = service.selectBiztripSearchList(cPage, numPerPage, param);
 		int totalCount = service.biztripSearchCount(param);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/biztrip.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/biztrip.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/biztrip");
@@ -111,7 +117,7 @@ public class AcctController {
 		System.out.println(totalCount);
 		System.out.println("////////");
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/severance.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/severance.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/severance");
