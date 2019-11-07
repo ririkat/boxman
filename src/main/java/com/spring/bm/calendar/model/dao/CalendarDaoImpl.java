@@ -30,6 +30,11 @@ public class CalendarDaoImpl implements CalendarDao {
 	public List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int username) {
 		return sqlSession.selectList("calendar.selectCalendarEmpNo",username);
 	}
+
+	@Override
+	public int selectCalendarCount(SqlSessionTemplate sqlSession, int username) {
+		return sqlSession.selectOne("calendar.selectCalendarCount", username);
+	}
 	
 	
 	

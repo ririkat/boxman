@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.calendar.model.service.CalendarService;
 import com.spring.bm.calendar.model.vo.Calendar;
+import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 
 
 
@@ -25,6 +27,8 @@ public class CalendarController {
 	
 	@Autowired
 	CalendarService service;
+	
+	private PageUrlFactory path = new PageUrlFactory();
 	
 	/* 일정관리첫페이지로 이동 */
 	@RequestMapping("/calendar/allView.do")	//사원등록 폼으로 전환
@@ -50,13 +54,14 @@ public class CalendarController {
 	
 	//스케줄 조회
 	@RequestMapping("/calendar/selectCal.do")
-	public @ResponseBody List<Calendar> selectCal(@RequestParam(value = "username") int username){
-		
+	public @ResponseBody List<Calendar> selectCal(@RequestParam(value = "data") int username){
 		System.out.println(username);
 		List<Calendar> list = service.selectCalendarEmpNo(username);
 		
 		return list;
 	}
+	
+
 //	//스케줄 수정
 //	@RequestMapping("/calendar/updateCalendar.do")
 //	public ModelAndView updateCalendar(@RequestParam Map<String,Object> param) {

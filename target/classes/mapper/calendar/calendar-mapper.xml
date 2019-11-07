@@ -4,8 +4,12 @@
  	<insert id="insertCalendar" parameterType="map">
  		insert into Schedule values (seq_schNo.nextval, #{title}, #{description}, #{start}, #{end}, #{type}, #{username}, #{backgroundColor}, #{textColor} , #{allDay})
  	</insert>
- 	<select id = "selectCalendarEmpNo" parameterType="_int" resultType="calendar">
+ 	<select id = "selectCalendarEmpNo" parameterType="map" resultType="calendar">
  		select * from schedule where "username" = #{username}
+ 	</select>
+ 	
+ 	<select id = "selectCalendarCount" parameterType = "map" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{username}
  	</select>
 
 </mapper>
