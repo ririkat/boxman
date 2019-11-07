@@ -61,7 +61,9 @@
 						<div class="col-sm-12">
 						<jsp:useBean id="now" class="java.util.Date" />
 						<fmt:formatDate value="${now}" pattern="MM" var="nowDate" />
-							<h3><c:out value="nowDate"/> 달 신청내역</h3>
+						<fmt:formatDate value="${now}" pattern="YYYYMM" var="nowYearMonth" />
+						
+							<h3><c:out value="${nowDate }"/> 월 신청내역</h3>
 								<input type="hidden" name="empNo" value='${e["EMPNO"]}' id="empNo"/>
 								<input type="hidden" name="btNo" value='${e["BTNO"]}'/>								
 								<table class="table table-striped table-hover tablesorter" id="myTable"
@@ -81,16 +83,19 @@
 									</thead>
 									<tbody>
 										<c:forEach var="el" items="${list}">
-											<tr>
-												<td><c:out value='${el["BTNO"]}' /></td>
-												<td><c:out value='${el["EMPNO"]}' /></td>
-												<td><fmt:formatDate value='${el["BTSTART"]}' pattern="yyyy-MM-dd"/></td>
-												<td><fmt:formatDate value='${el["BTEND"]}' pattern="yyyy-MM-dd"/></td>
-												<td><fmt:formatNumber value='${el["BTPROOM"] }' pattern="###,###,###"/></td>
-												<td><fmt:formatNumber value='${el["BTPTRANSPORTATION"] }' pattern="###,###,###"/></td>
-												<td><fmt:formatNumber value='${el["BTPENTERTAIN"] }' pattern="###,###,###"/></td>
-												<td><c:out value="${el['BTPCHECK'] }"/></td>
-											</tr>
+										<fmt:formatDate value="${el['BTSTART']}" pattern="YYYYMM" var="btStart" />
+											<c:if test="${nowYearMonth eq btStart}">
+												<tr>
+													<td><c:out value='${el["BTNO"]}' /></td>
+													<td><c:out value='${el["EMPNO"]}' /></td>
+													<td><fmt:formatDate value='${el["BTSTART"]}' pattern="yyyy-MM-dd"/></td>
+													<td><fmt:formatDate value='${el["BTEND"]}' pattern="yyyy-MM-dd"/></td>
+													<td><fmt:formatNumber value='${el["BTPROOM"] }' pattern="###,###,###"/></td>
+													<td><fmt:formatNumber value='${el["BTPTRANSPORTATION"] }' pattern="###,###,###"/></td>
+													<td><fmt:formatNumber value='${el["BTPENTERTAIN"] }' pattern="###,###,###"/></td>
+													<td><c:out value="${el['BTPCHECK'] }"/></td>
+												</tr>
+											</c:if>
 										</c:forEach>
 									</tbody>
 								</table> 

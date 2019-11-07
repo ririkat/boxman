@@ -145,24 +145,21 @@ public class AcctController {
 	}
 	
 	@RequestMapping("/acct/quitJob.do")
-	public ModelAndView quitJob(String empname, String amt, String empno, Model mode) {
-		System.out.println("//////////////////////////////////////////////");
-		System.out.println(empname);
-		System.out.println(empno);
-		System.out.println(amt);
+	public ModelAndView quitJob(String empname, String amt, String empno,  Model mode) {
 		
 		Map <String, String> m = new HashMap();
 		m.put("empname",empname);
 		m.put("amt", amt);
 		m.put("empno", empno);
-		System.out.println(m);
 		
 		int result = 0;
 		String msg="";
-		String loc="/acct/severance.do";
+		String loc="/emp/empList.do";
 		try {
 			result = service.updateSeveranceStatus(m);
-			msg=empname+"님을 퇴사 시켰습니다";
+			if(result > 0) {
+				msg=empname+"님을 퇴사 시켰습니다";
+			}
 		} catch (RuntimeException e) {
 			msg="문제가 발생했습니다";
 		}

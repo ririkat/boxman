@@ -123,7 +123,7 @@
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">주민등록번호</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control noFalse" name="empSSN"
+									<input type="text" class="form-control" name="empSSN"
 										value='${emp["EMPSSN"]}' readonly>
 								</div>
 							</div>
@@ -187,30 +187,47 @@
 					<c:forEach var="f" items="${list}">
 						<div class="row">
 							<c:if test="${f.efcName eq '증명사진'}">
-							<input type="hidden" value='${f.efNo}' name="proNo"/>
-							<input type="hidden" value='${f.efReName}' name="proImg"/>
-							<div class="col-md-6">
-								<div class="form-group row">
-									<label class="col-sm-3 col-form-label">사원사진</label>
-									<div class="col-sm-9">
-											<img src="${path}/resources/upload/emp/${f.efReName}" style="width:200px; height:auto;" id="proImg"/>
+							<input type="hidden" value='${f.efNo}' name="oriProNo"/>
+							<input type="hidden" value='${f.efReName}' name="oriProImg"/>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">사원사진</label>
+										<div class="col-sm-9">
+												<img src="${path}/resources/upload/emp/${f.efReName}" style="width:200px; height:auto;" id="proImg"/>
+										</div>
+										<div class="custom-file divFile" style="display:none;">
+						                    <input type="file" class="custom-file-input" name="proImg" id="upFile1">
+						                    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
+						                </div>
 									</div>
-									<div class="custom-file divFile" style="display:none;">
-					                    <input type="file" class="custom-file-input" name="proImg" id="upFile1">
-					                    <label class="custom-file-label" for="upFile1">파일을 선택하세요</label>
-					                </div>
 								</div>
-							</div>
+								<div class="col-md-6">
+									<div class="form-group row">
+										<label class="col-sm-3 col-form-label">입사일자</label>
+										<div class="col-sm-9">
+											<input type="text" value='<fmt:formatDate value="${emp.EMPHIREDATE}" pattern="yyyy-MM-dd"/>' class="form-control noFalse" readonly/>
+										</div>
+									</div>
+								</div>
+								<c:if test='${emp["EMPENTYN"] eq "Y"}'>
+									<div class="col-md-6">
+										<div class="form-group row">
+											<label class="col-sm-3 col-form-label">퇴사일자</label>
+											<div class="col-sm-9">
+												<input type="text" value="${emp['EMPENTDATE']}" class="form-control noFalse" readonly/>
+											</div>
+										</div>
+									</div>
+								</c:if>
 							</c:if>
 							<c:if test="${f.efcName eq '결재도장'}">
-							<input type="hidden" value='${f.efNo}' name="stampNo"/>
-							<input type="hidden" value='${f.efReName}' name="stampImg"/>
+							<input type="hidden" value='${f.efNo}' name="oriStampNo"/>
+							<input type="hidden" value='${f.efReName}' name="oriStampImg"/>
 							<div class="col-md-6">
 								<div class="form-group row">
 									<label class="col-sm-3 col-form-label">결재도장</label>
 									<div class="col-sm-9">
 											<img src="${path}/resources/upload/emp/${f.efReName}" style="width:200px; height:auto;" id="stampImg"/>
-										
 									</div>
 									<div class="custom-file divFile" style="display:none;">
 					                    <input type="file" class="custom-file-input" name="stampImg" id="upFile3">
@@ -220,41 +237,19 @@
 							</div>
 							</c:if>
 						</div>
-						<%-- <div class="row">
-							<c:if test="${f.efcName eq '자격증'}">
-							<input type="hidden" value='${f.efNo}' name="licenNo"/>
-							<input type="hidden" value='${f.efReName}' name="licenReName"/>
-							<div class="col-md-6">
-								<div class="form-group row">
-									<label class="col-sm-3 col-form-label">자격증사진 </label>
-									<div class="col-sm-9">
-										<img src="${path}/resources/upload/emp/${f.efReName}" style="width:200px; height:auto;"/>
-									</div>
-									<div class="divFile" style="display:none;">
-										<button type="button" class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
-						                       <span class="text">추가</span>
-						                  </button>
-						               <div class="custom-file">
-						               		<div id="fileBox">
-							                    <input type="file" class="custom-file-input" name="upFile" id="upFile2">
-							                    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
-						                    </div>
-						                </div>
-					                </div>
-								</div>
-							</div>
-							</c:if>
-							<div class="col-md-6">
-								<div class="form-group row" id="setHeight" style="height: 40px;">
-								</div>
-							</div>
-						</div> --%>
+						
 					</c:forEach>
 					<div style="margin: 0 auto; width: fit-content;">
 						<input type="button" id="updateEmp" class="btn btn-success mr-2"
 							value="정보수정" style="width: 150px;">
 						<input type="button" id="updatePwEmp" class="btn btn-success mr-2"
 							value="비밀번호 변경" style="width: 150px;">
+							<c:if test='${fn:trim(emp["EMPENTYN"]) eq "N" }' var="r">
+                           	  	 <c:set var="empname" value='${emp["EMPNAME"]}'/>
+                                 <c:set var="hiredate" value='${emp["EMPHIREDATE"]}'/>
+                                 <c:set var="salary" value='${emp["EMPSAL"]}'/>
+                                 <button type="button" class="btn btn-success"  onclick="quit('${emp.EMPNO}', '${hiredate }', '${salary }', '${empname }');" data-toggle="modal"  data-target="#exampleModal">퇴사 시키기</button>
+                           </c:if>
 					</div>
 				</form>
 			</div>
@@ -266,8 +261,54 @@
 			</form>
 		</div>
 	</div>
+	<!-- Modal -->
+	<form action="${path }/acct/quitJob.do" method="post" id="updateEntFrm">
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"  aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel" name="empname"></h5>
+		      </div>
+		      <div class="modal-body">
+		       <input type="text" class=" col-xs-2" name="amt" readonly required>원 
+		       <input type="hidden" id="empname" name="empname">
+		       <input type="hidden" id="empno" name="empno">
+		       <input type="hidden" name="temp" value="emp"/>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary"  data-dismiss="modal">취소</button>
+		        <input type="submit" id="updateEnt" class="btn btn-primary" value="퇴사" />
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</form>
 </section>
 <script>
+	function quit(empno, hiredate, salary, empname){
+	    
+	    var salary = salary;
+	    
+	    var sd = new Date(hiredate);
+	    var today = new Date();
+	    var days = (today.getTime()-sd.getTime())/(1000*60*60*24);
+
+	    var x = salary/24;
+	    var y = days/365;
+	    var result;
+	    y = Math.floor(y);
+	    if(y>0) {
+	    	result = Math.ceil(x*y/100)*100;
+	    } else {
+	    	result = 0;
+	    }
+
+	    $(".modal-body>[name=amt]").val(result);
+	    $(".modal-title").html(empname + "님의 퇴직금");
+	    $("#empname").val(empname);
+	    $('#empno').val(empno);
+	    
+	}
 	//수정버튼 누를때
 	$(function(){
 		$('#updateEmp').click(function(){
@@ -295,9 +336,6 @@
 		
 		//비밀번호 변경
 		$('#updatePwEmp').click(function() {
-			/* var empNo = $('#empNo').val().trim();
-			console.log(empNo); */
-			console.log('');
 			var url = '${path}/emp/updatePassword.do';
 			var status = "width=600, height=400, resizable=no, status=no, toolbars=no, menubar=no";
 			var title="비밀번호 변경";
@@ -307,16 +345,20 @@
 			updatePwFrm.action=url;
 			updatePwFrm.method="post";
 			updatePwFrm.submit();
+		//퇴사
+			$('#updateEnt').click(function(){
+				if(confirm('퇴사하시겠습니까?')) {
+					$('#updateEntFrm').submit();
+				}
+			});
 		});
 	});
+	
+	
    
 	var setHeight = $('#setHeight').height();
 	//파일등록시 
 	$(function(){
-		/* $(document).on("change",$('[name=upFile]'), function(event){
-			var fileName=this.files[0].name;
-			$(this).next('.custom-file-label').html(fileName);
-		}); */
 		$('[name=proImg]').on('change', function(event){
 			var fileName=this.files[0].name;
 			var reader = new FileReader();
@@ -336,27 +378,6 @@
 			reader.readAsDataURL(this.files[0]);
 		});
 	});
-	var count = 4;
-	
-	//파일추가
-	/* $(function(){
-		$('#addFile').click(function(){
-			setHeight = setHeight + 80;
-			$('#setHeight').css("height",setHeight + "px");
-			var addWrap = '<div class="custom-file" style="height:80px;">'; 
-    		addWrap += '<input type="file" class="custom-file-input" name="upFile" id="upFile' + count + '"'
-    		addWrap += '>';
-    		addWrap += '<label class="custom-file-label" for="upFile' + count + '"';
-    		addWrap += '>';
-    		addWrap += "파일을 선택하세요";
-    		addWrap += "</label>";
-	        addWrap += '<input type="button" name="removeFile" class="btn" id="btnRemove" value="삭제">';
-	        addWrap += '</div>'; 
-            $(this).next().after(addWrap);
-            count++;
-      }); 
-   }); */
-	
 
 	function sample6_execDaumPostcode() {
         new daum.Postcode({

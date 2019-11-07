@@ -64,10 +64,10 @@
 		WHERE 1=1 
  		<choose>
 			<when test="type eq 'deptName'">
-				AND A.DEPTNO=(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME = #{data}) 
+				AND A.DEPTNO IN(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME LIKE '%'||#{data}||'%') 
 			</when>
 			<when test="type eq 'jobName'">
-				AND A.JOBNO=(SELECT JOBNO FROM EMPJOB WHERE JOBNAME = #{data}) 
+				AND A.JOBNO IN(SELECT JOBNO FROM EMPJOB WHERE JOBNAME LIKE '%'||#{data}||'%') 
 			</when>
 			<otherwise>
 				AND A.${type} LIKE '%'||#{data}||'%' 
@@ -79,10 +79,10 @@
 		SELECT COUNT(*) FROM EMPLOYEE A WHERE 1=1
 		<choose>
 			<when test="type eq 'deptName'">
-				AND A.DEPTNO=(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME = #{data}) 
+				AND A.DEPTNO IN(SELECT DEPTNO FROM DEPARTMENT WHERE DEPTNAME LIKE '%'||#{data}||'%') 
 			</when>
 			<when test="type eq 'jobName'">
-				AND A.JOBNO=(SELECT JOBNO FROM EMPJOB WHERE JOBNAME = #{data}) 
+				AND A.JOBNO IN(SELECT JOBNO FROM EMPJOB WHERE JOBNAME LIKE '%'||#{data}||'%') 
 			</when>
 			<otherwise>
 				AND A.${type} LIKE '%'||#{data}||'%' 
@@ -100,7 +100,8 @@
 	<!-- 사원수정 -->
 	<update id="updateEmp" parameterType="map">
 		UPDATE EMPLOYEE SET EMPSAL=#{empSal}, EMPPHONE=#{empPhone}, EMPEMAIL=#{empEmail}, 
-			DEPTNO=#{deptNo}, JOBNO=#{jobNo}, EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr}
+			DEPTNO=#{deptNo}, JOBNO=#{jobNo}, EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr},
+			EMPSSN = #{empSSN}
 			WHERE EMPNO=#{empNo}
 	</update>
 	<!-- 비밀번호변경 -->
@@ -175,15 +176,32 @@
 		</choose>
 	</select>
 	<select id="selectAttenCount" parameterType="map" resultType="_int">
-		SELECT COUNT(*) FROM ATTENDANCE WHERE 1=1
+		SELECT COUNT(*)
+		 FROM ATTENDANCE A 
+		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
+		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
+		 WHERE 1=1
 		<choose>
 			<when test="temp eq 'search'">
-				AND TO_CHAR(ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND EMPNO=#{empNo}
 			</when>
 			<when test="temp eq 'searchAll'">
-				AND TO_CHAR(ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
-				AND EMPNO=#{empNo}
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
+				<if test="data != null and data != ''">
+					<if test="type eq 'empNo'">
+						AND A.${type} like '%'||#{data}||'%'
+					</if>
+					<if test="type neq 'empNo'">
+						AND ${type} like '%'||#{data}||'%'
+					</if>
+				</if>
+			</when>
+			<when test="temp eq 'all'"><!-- 인사관리 -->
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
+			</when>
+			<when test="temp eq 'my'"><!-- 인사관리 -->
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
 			</when>
 		</choose>
 	</select>
@@ -229,11 +247,18 @@
 		<choose>
 			<when test="temp eq 'search' or temp eq 'searchAll'">
 				AND TO_CHAR(DOSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
-				AND EMPNO=#{empNo}
+				<choose>
+					<when test="data neq '' and data != null">
+					AND EMPNO=#{empNo}
+					</when>
+				</choose>
 			</when>
 			<when test="temp eq 'my'">
 				AND EMPNO=#{empNo} 
 				AND EXTRACT(YEAR FROM DOSTART) = EXTRACT(YEAR FROM SYSDATE)
+			</when>
+			<when test="temp eq 'all'">
+				AND TO_CHAR(DOSTART,'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
 			</when>
 		</choose>
 	</select>
@@ -263,7 +288,7 @@
 			</when>
 			<when test="temp eq 'searchAll'"><!-- 인사관리에서 검색 -->
 				AND TO_CHAR(A.BTSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
-				<if test="type != null and type != ''">
+				<if test="data != null and data != ''">
 					<if test="type eq 'empNo'">
 						AND A.${type} like '%'||#{data}||'%'
 						ORDER BY B.DEPTNO, A.BTSTART DESC
@@ -286,6 +311,9 @@
 			<when test="temp eq 'searchAll'">
 				AND TO_CHAR(BTSTART,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND EMPNO=#{empNo}
+			</when>
+			<when test="temp eq 'all'">
+				AND TO_CHAR(BTSTART,'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
 			</when>
 		</choose>
 	</select>
@@ -359,4 +387,5 @@
 		INSERT INTO BUSINESSTRIPPAY VALUES(SEQ_BUSINESSTRIPPAY.NEXTVAL,
 		  #{btNo}, #{btpRoom}, #{btpTransportation}, #{btpEntertain}, DEFAULT, NULL, DEFAULT)
 	</insert>
+	
 </mapper>

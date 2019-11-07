@@ -241,6 +241,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return dao.selectBTOne(session, param);
 	}
+	
+	/* 출장비등록 */
 	@Override
 	public int insertBTP(Map<String, Object> param) throws Exception {
 		int result = 0;
@@ -248,7 +250,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		if(result == 0) throw new Exception();
 		return result;
 	}
-	
 	
 
 	
