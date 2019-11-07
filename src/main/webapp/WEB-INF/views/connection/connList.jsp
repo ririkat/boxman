@@ -57,18 +57,18 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align:center;">
                        <thead>
                          <tr>
-                           <th>거래처코드</th>
-                     <th>거래처명</th>
-                     <th>대표자명</th>
-                     <th>전화번호</th>
-                     <th>핸드폰번호</th>
-                     <th>구분</th>
-                     <th>사용구분</th>
-                     <th>이체정보</th>
-                     <th>주소</th>
+                             <th>거래처코드</th>
+		                     <th>거래처명</th>
+		                     <th>대표자명</th>
+		                     <th>전화번호</th>
+		                     <th>핸드폰번호</th>
+		                     <th>구분</th>
+		                     <th>사용구분</th>
+		                     <th>이체정보</th>
+		                     <th>주소</th>
                          </tr>
                        </thead>
                        <tbody>
@@ -82,7 +82,7 @@
                            <td><c:out value='${c["CONCATEG"] }'/></td>
                            <td><c:out value='${c["CONUSECK"] }' /></td>
                            <td><c:out value='${c["CONTRANSCK"] }' /></td>
-                           <td><c:out value='${c["CONADDR"] }' /></td>
+                           <td style="text-align:left;"><c:out value='${c["CONADDR"] }' /></td>
                         </tr>
                      </c:forEach>
                        </tbody>
