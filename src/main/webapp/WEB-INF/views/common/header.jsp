@@ -46,11 +46,6 @@
   <!-- tableSorter -->
   <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>
     
-
-  <script>
-
-
-  </script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
 </head>
@@ -515,7 +510,7 @@
 								}
 							}
 						});
-					},100000);
+					},1000);
 			}); 
 			
 			function showUnread(result){

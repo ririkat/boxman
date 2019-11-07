@@ -15,6 +15,8 @@ public interface CalendarDao {
 
 	List<Map<String, Object>> selectScheCategory(SqlSessionTemplate sqlSession);
 
-	List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int empNo);
+	List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int username);
+
+	int selectCalendarCount(SqlSessionTemplate sqlSession, int username);
 
 }

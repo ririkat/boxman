@@ -140,7 +140,6 @@ public class PageBarFactory {
 					+ "href='javascript:fn_paging("+(pageNo-1)+")'>이전</a>";
 			pageBar+="</li>";
 		}
-
 		while(!(pageNo>pageEnd||pageNo>totalPage)) {
 			if(cPage==pageNo) {
 				pageBar+="<li class='page-item active'>";

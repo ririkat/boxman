@@ -2,16 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="calendar">
  	<insert id="insertCalendar" parameterType="map">
- 		insert into schedule values (seq_schNo.nextval,#{schTitle},sysdate,(select schcateno from schecategory where schcatename = #{cateName}),#{schLevel},#{empName},#{startDate},#{endDate},#{color})
+ 		insert into Schedule values (seq_schNo.nextval, #{title}, #{description}, #{start}, #{end}, #{type}, #{username}, #{backgroundColor}, #{textColor} , #{allDay})
  	</insert>
- 	<update id="updateCalendar" parameterType="map">
- 		update schedule set schTitle=#{schTitle}, schContent=#{schContent}, schEventDate=#{schEventDate}, schLevel=#{schLevel} where schNo=#{schNo}
- 	</update>
- 	<select id="selectScheCategory" resultType="map">
- 		select * from schecategory
+ 	<select id = "selectCalendarEmpNo" parameterType="map" resultType="calendar">
+ 		select * from schedule where "username" = #{username}
  	</select>
  	
- 	<select id = "selectCalendarEmpNo" parameterType="_int" resultType="calendar">
- 		SELECT * FROM SCHEDULE WHERE EMPNO = #{empNo}
+ 	<select id = "selectCalendarCount" parameterType = "map" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{username}
  	</select>
+
 </mapper>
