@@ -135,7 +135,7 @@
     <script src="${path }/resources/full/js/editEvent.js"></script>
     <script src="${path }/resources/full/js/etcSetting.js"></script>
     
-    <script>
+<!--     <script>
     var arr = [];
     var empNo = $('#empNo').val();
     
@@ -159,6 +159,47 @@
            
            return arr;
 	});
-    </script>
+    </script> -->
+<!--     <script>
+	$(document).ready(function() {
+		fn_get_events();
+	});
+
+	function fn_set_calendar(events){
+		$('#calendar').fullCalendar({
+			events: events, 	
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
+			editable: true,
+			droppable: true, // this allows things to be dropped onto the calendar
+			drop: function() {
+				// is the "remove after drop" checkbox checked?
+				if ($('#drop-remove').is(':checked')) {
+				  // if so, remove the element from the "Draggable Events" list
+				  $(this).remove();
+				}
+			}
+		});
+	}
+		
+	function fn_get_events()
+	{
+		var empNo = $('#empNo').val();
+		$.ajax({
+			url: "${path}/calendar/selectCalendarEmpNo.do?empNo="+ empNo,
+			dataType: 'json', 
+			success: function(plan) {
+				console.log(plan);
+				fn_set_calendar(plan);
+			}
+		}); 
+	}
+    </script> -->
+
+
+
     
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

@@ -54,7 +54,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
 
     <link rel="stylesheet" href="${path }/resources/full/css/main.css">
-    
 	<!-- 달력 -->
   
   <!-- tableSorter -->
