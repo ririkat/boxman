@@ -535,6 +535,9 @@
 				$('#unread').html(result);
 			}
 </script>
+<!-- --------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------------------------------------------------------------------- -->
+<!-- --------------------------------------------------------------------------------------------------------------------------------------- -->
 
 <section>
      <div class="container">
@@ -596,9 +599,9 @@
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-type">구분</label>
                                 <select class="inputModal" type="text" name="edit-type" id="edit-type">
-                                <c:forEach var = "cate" items = "${list }">
-									<option value = "${cate['SCHCATENAME'] }">${cate['SCHCATENAME'] }</option>
-								</c:forEach>
+									<option value = "개인">개인</option>
+									<option value = "부서">부서</option>
+									<option value = "회사">회사</option>
                                 </select>
                             </div>
                         </div>
@@ -618,6 +621,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="col-xs-4" for="edit-desc">설명</label>
+                                <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
+                                    id="edit-desc"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer modalBtnContainer-addEvent">
                         <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
@@ -632,6 +642,8 @@
             <div class="panel-heading">
                 <h3 class="panel-title"></h3>
             </div>
+            
+            
 
       
         </div>

@@ -5,6 +5,13 @@ function getDisplayEventDate(event) {
 
   var displayEventDate;
 
+  if (event.allDay == false) {
+    var startTimeEventInfo = moment(event.start).format('HH:mm');
+    var endTimeEventInfo = moment(event.end).format('HH:mm');
+    displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
+  } else {
+    displayEventDate = "하루종일";
+  }
 
   return displayEventDate;
 }
@@ -80,7 +87,7 @@ function calDateWhenDragnDrop(event) {
 
 var calendar = $('#calendar').fullCalendar({
 
-  eventRender: function (event, element, view) {
+    eventRender: function (event, element, view) {
 
     //일정에 hover시 요약
     element.popover({
@@ -89,12 +96,14 @@ var calendar = $('#calendar').fullCalendar({
         text: event.title
       }).css({
         'background': event.backgroundColor,
-        'color': 'black'
+        'color': event.textColor
       }),
       content: $('<div />', {
           class: 'popoverInfoCalendar'
         }).append('<p><strong>등록자:</strong> ' + event.username + '</p>')
-        .append('<p><strong>구분:</strong> ' + event.type + '</p>'),
+        .append('<p><strong>구분:</strong> ' + event.type + '</p>')
+        .append('<p><strong>시간:</strong> ' + getDisplayEventDate(event) + '</p>')
+        .append('<div class="popoverDescCalendar"><strong>설명:</strong> ' + event.description + '</div>'),
       delay: {
         show: "800",
         hide: "50"
@@ -107,6 +116,25 @@ var calendar = $('#calendar').fullCalendar({
 
     return filtering(event);
 
+  },
+
+  //주말 숨기기 & 보이기 버튼
+  customButtons: {
+    viewWeekends: {
+      text: '주말',
+      click: function () {
+        activeInactiveWeekends ? activeInactiveWeekends = false : activeInactiveWeekends = true;
+        $('#calendar').fullCalendar('option', {
+          weekends: activeInactiveWeekends
+        });
+      }
+    }
+  },
+
+  header: {
+    left: 'today, prevYear, nextYear, viewWeekends',
+    center: 'prev, title, next',
+    right: 'month,agendaWeek,agendaDay,listWeek'
   },
   views: {
     month: {
@@ -130,14 +158,13 @@ var calendar = $('#calendar').fullCalendar({
    *  일정 받아옴 
    * ************** */
   events: function (start, end, timezone, callback) {
-	  var empNo = $('#empNo').val();
-	  $.ajax({
+	var username = $('#empNo').val();
+    $.ajax({
       type: "get",
-      url: "selectCalendarEmpNo.do?empNo="+ empNo,
+      url: "selectCal.do?username="+username,
       data: {
-    	  //실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
+        // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
-      dataType: 'json',
       success: function (response) {
     	  console.log(response);
         var fixedDate = response.map(function (array) {
@@ -159,7 +186,62 @@ var calendar = $('#calendar').fullCalendar({
     }
   },
 
+  //일정 리사이즈
+  eventResize: function (event, delta, revertFunc, jsEvent, ui, view) {
+    $('.popover.fade.top').remove();
 
+    /** 리사이즈시 수정된 날짜반영
+     * 하루를 빼야 정상적으로 반영됨. */
+    var newDates = calDateWhenResize(event);
+
+    //리사이즈한 일정 업데이트
+    $.ajax({
+      type: "get",
+      url: "",
+      data: {
+        //id: event._id,
+        //....
+      },
+      success: function (response) {
+        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+      }
+    });
+
+  },
+
+  eventDragStart: function (event, jsEvent, ui, view) {
+    draggedEventIsAllDay = event.allDay;
+  },
+
+  //일정 드래그앤드롭
+  eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
+    $('.popover.fade.top').remove();
+
+    //주,일 view일때 종일 <-> 시간 변경불가
+    if (view.type === 'agendaWeek' || view.type === 'agendaDay') {
+      if (draggedEventIsAllDay !== event.allDay) {
+        alert('드래그앤드롭으로 종일<->시간 변경은 불가합니다.');
+        location.reload();
+        return false;
+      }
+    }
+
+    // 드랍시 수정된 날짜반영
+    var newDates = calDateWhenDragnDrop(event);
+
+    //드롭한 일정 업데이트
+    $.ajax({
+      type: "get",
+      url: "",
+      data: {
+        //...
+      },
+      success: function (response) {
+        alert('수정: ' + newDates.startDate + ' ~ ' + newDates.endDate);
+      }
+    });
+
+  },
 
   select: function (startDate, endDate, jsEvent, view) {
 
@@ -240,6 +322,7 @@ var calendar = $('#calendar').fullCalendar({
   },
   eventLimitClick: 'week', //popover
   navLinks: true,
+  defaultDate: moment('2019-05'), //실제 사용시 삭제
   timeFormat: 'HH:mm',
   defaultTimedEventDuration: '01:00:00',
   editable: true,

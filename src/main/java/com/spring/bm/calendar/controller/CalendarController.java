@@ -29,24 +29,9 @@ public class CalendarController {
 	/* 일정관리첫페이지로 이동 */
 	@RequestMapping("/calendar/allView.do")	//사원등록 폼으로 전환
 	public String allView(Model model) {
-		List<Map<String, Object>> list = service.selectScheCategory();
-		model.addAttribute("list", list);
 		return "calendar/calendarAll";
 	}
-	//등록페이지로 이동
-	@RequestMapping("/calendar/insertCalendar.do")
-	public ModelAndView insertView() {
-		
-		List<Map<String, Object>> list = service.selectScheCategory();
-		System.out.println("찍어봐야겠녜"+list);
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("list",list);
-		mv.setViewName("calendar/calendarEnroll");
-		
-		return mv;
-	}
-	
+
 	//스케줄 등록
 	@RequestMapping("/calendar/insertCalendarEnd.do")
 	public @ResponseBody int insertCalendar(@RequestParam Map<String,Object> param) {
@@ -54,44 +39,45 @@ public class CalendarController {
 		for ( String key : param.keySet() ) {
 		    System.out.println("key : " + key +" / value : " + param.get(key));
 		}
-		/*
-		 * int result = service.insertCalender(param);
-		 */
 
-		 return 0;
+		int result = service.insertCalender(param); System.out.println("잘나오냐 : " + result);
+		 
+
+
+		 return result;
 	
 	}
-	//스케줄 수정
-	@RequestMapping("/calendar/updateCalendar.do")
-	public ModelAndView updateCalendar(@RequestParam Map<String,Object> param) {
-		
-		int result = service.updateCalendar(param);
-		
-		String msg="";
-		String loc="/calendar/allView.do";
-		if(result>0) {
-			msg="스케줄 수정이 완료되었습니다.";
-		}else {
-			msg="스케줄 수정에 실패하였습니다.";
-		}
-		
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("msg",msg);
-		mv.addObject("loc",loc);
-		mv.setViewName("common/msg");
-		
-		return mv;
-	}
 	
-	@RequestMapping("/calendar/selectCalendarEmpNo.do")
-	public @ResponseBody List<Calendar> selectcCalendarEmpNo (int empNo) {
+	//스케줄 조회
+	@RequestMapping("/calendar/selectCal.do")
+	public @ResponseBody List<Calendar> selectCal(@RequestParam(value = "username") int username){
 		
-		List<Calendar> list = service.selectCalendarEmpNo(empNo);
-		System.out.println("리스트 잘 나오냐 : " + list);
+		System.out.println(username);
+		List<Calendar> list = service.selectCalendarEmpNo(username);
 		
 		return list;
-		
 	}
+//	//스케줄 수정
+//	@RequestMapping("/calendar/updateCalendar.do")
+//	public ModelAndView updateCalendar(@RequestParam Map<String,Object> param) {
+//		
+//		int result = service.updateCalendar(param);
+//		
+//		String msg="";
+//		String loc="/calendar/allView.do";
+//		if(result>0) {
+//			msg="스케줄 수정이 완료되었습니다.";
+//		}else {
+//			msg="스케줄 수정에 실패하였습니다.";
+//		}
+//		
+//		ModelAndView mv = new ModelAndView();
+//		
+//		mv.addObject("msg",msg);
+//		mv.addObject("loc",loc);
+//		mv.setViewName("common/msg");
+//		
+//		return mv;
+//	}
 
 }

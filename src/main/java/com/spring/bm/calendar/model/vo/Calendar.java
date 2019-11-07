@@ -7,14 +7,15 @@ import lombok.Data;
 @Data
 public class Calendar {
 	
-	private int schNo;
-	private String schTitle;
-	private Date schEnrolldate;
-	private int schCateno;
-	private String schLevel;
-	private int empNo;
-	private Date startDate;
-	private Date endDate;
-	private String color;
+	private int _id;
+	private String title;
+	private String description;
+	private Date start;
+	private Date end;
+	private String type;
+	private int username;
+	private String backgroundColor;
+	private String allDay;
+	
 
 }

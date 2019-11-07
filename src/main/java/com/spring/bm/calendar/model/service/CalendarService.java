@@ -15,6 +15,6 @@ public interface CalendarService {
 	List<Map<String, Object>> selectScheCategory();
 	
 	//회원번호로 스케줄 조회
-	List<Calendar> selectCalendarEmpNo(int empNo);
+	List<Calendar> selectCalendarEmpNo(int username);
 
 }

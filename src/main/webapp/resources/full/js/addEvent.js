@@ -1,6 +1,5 @@
 var modalTitle = $('.modal-title');
 var eventModal = $('#eventModal');
-
 var loginEmp = $('#empNo');
 var editAllDay = $('#edit-allDay');
 var editTitle = $('#edit-title'); 
@@ -8,6 +7,7 @@ var editStart = $('#edit-start');
 var editEnd = $('#edit-end');
 var editType = $('#edit-type');
 var editColor = $('#edit-color');
+var editDesc = $('#edit-desc');
 
 var addBtnContainer = $('.modalBtnContainer-addEvent');
 var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
@@ -19,7 +19,7 @@ var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 var newEvent = function (start, end, eventType) {
 
     $("#contextMenu").hide(); //메뉴 숨김
-
+//나쁘지않치
     modalTitle.html('새로운 일정');
     editStart.val(start);
     editEnd.val(end);
@@ -34,7 +34,9 @@ var newEvent = function (start, end, eventType) {
     $('#save-event').on('click', function () {
 
         var eventData = {
+        	
             title: editTitle.val(),
+            description: editDesc.val(),
             start: editStart.val(),
             end: editEnd.val(),
             type: editType.val(),
@@ -42,6 +44,7 @@ var newEvent = function (start, end, eventType) {
             backgroundColor: editColor.val(),
             textColor: '#ffffff',
             allDay: false
+            
         };
 
         if (eventData.start > eventData.end) {
@@ -76,12 +79,26 @@ var newEvent = function (start, end, eventType) {
             type: "get",
             url: "insertCalendarEnd.do?",
             data: {
-                eventData : eventData
+                title: eventData.title,
+                description: eventData.description,
+                start: eventData.start,
+                end: eventData.end,
+                type: eventData.type,
+                username: eventData.username,
+                backgroundColor: eventData.backgroundColor,
+                textColor: eventData.textColor,
+                allDay: eventData.allDay
             },
+            dataType :'html',
             success: function (response) {
-                //DB연동시 중복이벤트 방지를 위한
-                //$('#calendar').fullCalendar('removeEvents');
-                //$('#calendar').fullCalendar('refetchEvents');
+                $('#calendar').fullCalendar('removeEvents');
+                $('#calendar').fullCalendar('refetchEvents');
+                
+                if(response > 0) {
+                	alert("일정 등록 성공 \n 새로고침해주세요.");
+                } else {
+                	alert("일정 등록 실패");
+                }
             }
         });
     });
