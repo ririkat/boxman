@@ -29,6 +29,10 @@ public class AcctController {
 	@Autowired
 	AcctService service;
 
+	
+/* Income Statement Start */
+	
+	/* Income Statement list */
 	@RequestMapping("acct/is.do")
 	public String is(Model model) {
 		ObjectMapper mapper = new ObjectMapper(); // json 객체를 자동으로 연결
@@ -38,6 +42,7 @@ public class AcctController {
 		return "acct/is";
 	}
 	
+	/* Income Statement Result */
 	@RequestMapping("acct/result.do") 
 	@ResponseBody
 	public String result(Model model) throws JsonProcessingException{
@@ -48,8 +53,17 @@ public class AcctController {
 		return mapper.writeValueAsString(list);
 		
 	}
+
+/* Income Statement End */
 	
-	/* 월급 지급하기 */
+	
+	
+	
+	
+	
+/* Salary Start */
+	
+	/* salary list */
 	@RequestMapping("/acct/wage.do")
 	public ModelAndView wage(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
 		int numPerPage = 10;
@@ -57,7 +71,7 @@ public class AcctController {
 		int totalCount = service.selectEmpCount();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/wage.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/wage.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/wage");
@@ -72,25 +86,45 @@ public class AcctController {
 		int totalCount = service.salarySearchCount(param);
 	
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/wage.do",""+param.get("type"), ""+param.get("data")));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/salarySearch.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/wage");
 		return mv;
 	}
 	
+	/* wage payment */
 	@RequestMapping("/acct/wagePay.do")
 	@ResponseBody
 	public String payment(int data) throws JsonProcessingException {
-
 		int num = service.updateWagePayment(data);
-		
 		ObjectMapper mapper = new ObjectMapper();
-		
 		return mapper.writeValueAsString(num);
 	}
 	
+/* Salary End */
 	
+	
+	
+	
+	
+	
+	
+	
+/* BusinessTrip Start */
+	/* biztrip list */
+	@RequestMapping("/acct/biztrip.do")
+	public ModelAndView bizTrip(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
+		int numPerPage=5;
+		List <Map<String, String>> list = service.selectBizTripList(cPage, numPerPage);
+		int totalCount = service.selectBizTripCount();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/biztrip.do"));
+		mv.addObject("list", list);
+		mv.setViewName("acct/biztrip");
+		return mv;
+	}
+
 	/* biztrip search */
 	@RequestMapping("/acct/biztripSearch.do")
 	public ModelAndView biztripSearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param ) {
@@ -98,10 +132,33 @@ public class AcctController {
 		List <Map<String, String>> list = service.selectBiztripSearchList(cPage, numPerPage, param);
 		int totalCount = service.biztripSearchCount(param);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/biztrip.do",""+param.get("type"), ""+param.get("data")));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/biztripSearch.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/biztrip");
+		return mv;
+	}
+/* BusinessTrip End */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/* Severance Start */	
+	/* severance list */
+	@RequestMapping("/acct/severance.do")
+	public ModelAndView severance(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage) {
+		int numPerPage = 5;
+		List <Map<String, String>> list = service.selectSevList(cPage, numPerPage);
+		int totalCount = service.selectSevCount();
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/severance.do"));
+		mv.addObject("list", list);
+		mv.setViewName("acct/severance");
 		return mv;
 	}
 	
@@ -117,46 +174,16 @@ public class AcctController {
 		System.out.println(totalCount);
 		System.out.println("////////");
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/severance.do",""+param.get("type"), ""+param.get("data")));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/severanceSearch.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("acct/severance");
 		return mv;
 	}
 	
-	
-	/* 출장비용 */
-	@RequestMapping("/acct/biztrip.do")
-	public ModelAndView bizTrip(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
-		int numPerPage=5;
-		List <Map<String, String>> list = service.selectBizTripList(cPage, numPerPage);
-		int totalCount = service.selectBizTripCount();
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/biztrip.do"));
-		mv.addObject("list", list);
-		mv.setViewName("acct/biztrip");
-		return mv;
-	}
-	
-	/* severance */
-	@RequestMapping("/acct/severance.do")
-	public ModelAndView severance(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage) {
-		int numPerPage = 5;
-		List <Map<String, String>> list = service.selectSevList(cPage, numPerPage);
-		int totalCount = service.selectSevCount();
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/severance.do"));
-		mv.addObject("list", list);
-		mv.setViewName("acct/severance");
-		return mv;
-	}
-	
+	/* action to quit the job */
 	@RequestMapping("/acct/quitJob.do")
 	public ModelAndView quitJob(String empname, String amt, String empno, Model mode) {
-		System.out.println("//////////////////////////////////////////////");
-		System.out.println(empname);
-		System.out.println(empno);
-		System.out.println(amt);
 		
 		Map <String, String> m = new HashMap();
 		m.put("empname",empname);
@@ -180,7 +207,7 @@ public class AcctController {
 		mv.addObject("loc", loc);
 		mv.setViewName("common/msg");
 		return mv;
-		
 	}
+/* Severance End */
 	
 }

@@ -689,7 +689,6 @@ public class EmployeeController {
 		//출장 한개
 		Map<String, Object> e = service.selectBTOne(param);
 		
-		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("list", list);
 		mv.addObject("e", e);
