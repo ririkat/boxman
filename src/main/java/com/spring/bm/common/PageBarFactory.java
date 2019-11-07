@@ -109,7 +109,7 @@ public class PageBarFactory {
 		
 		pageBar+="<script>";
 		pageBar+="function fn_paging(cPage){";
-		pageBar+="location.href='"+url+"?cPage='+cPage&type="+type+"&data="+data;
+		pageBar+="location.href='"+url+"?cPage='+cPage+'&type="+type+"&data="+data+"'";
 		pageBar+="}";
 		pageBar+="</script>";
 		return pageBar;
