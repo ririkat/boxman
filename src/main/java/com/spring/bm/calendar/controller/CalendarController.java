@@ -54,12 +54,12 @@ public class CalendarController {
 		for ( String key : param.keySet() ) {
 		    System.out.println("key : " + key +" / value : " + param.get(key));
 		}
-		
-		int result = service.insertCalender(param);
-		
+		/*
+		 * int result = service.insertCalender(param);
+		 */
 
-		
-		return result;
+		 return 0;
+	
 	}
 	//스케줄 수정
 	@RequestMapping("/calendar/updateCalendar.do")

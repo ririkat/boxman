@@ -134,10 +134,10 @@ var calendar = $('#calendar').fullCalendar({
 	  $.ajax({
       type: "get",
       url: "selectCalendarEmpNo.do?empNo="+ empNo,
-      dataType: 'json',
       data: {
     	  //실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
+      dataType: 'json',
       success: function (response) {
     	  console.log(response);
         var fixedDate = response.map(function (array) {
@@ -145,6 +145,7 @@ var calendar = $('#calendar').fullCalendar({
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
           }
+          console.log(array);
           return array;
         })
         callback(fixedDate);

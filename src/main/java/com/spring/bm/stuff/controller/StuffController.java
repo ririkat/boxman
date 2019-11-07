@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.connection.model.vo.Connection;
 import com.spring.bm.stuff.model.service.StuffService;
 import com.spring.bm.stuff.model.vo.Stuff;
@@ -37,6 +38,8 @@ public class StuffController {
    
    @Autowired
    StuffService service;
+   
+   private PageUrlFactory path = new PageUrlFactory();
 
    
    //물품등록 화면으로 페이지 전환
@@ -140,7 +143,7 @@ public class StuffController {
       List<Stuff> list=service.selectStuffList(cPage,numPerPage);
       int totalCount = service.selectStuffCount();
       
-      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/stuffAllList.do"));
+      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl() +"/stuff/stuffAllList.do"));
       mv.addObject("count",totalCount);
       mv.addObject("list",list);
       mv.setViewName("stuff/stuffList");
@@ -163,7 +166,7 @@ public class StuffController {
       
       if(totalCount > 0) {
       
-      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/stuff/searchStuff.do"));
+      mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/stuff/searchStuff.do",""+param.get("type"), ""+param.get("data")));
       mv.addObject("count",totalCount);
       mv.addObject("list",list);
       mv.setViewName("stuff/stuffList");
