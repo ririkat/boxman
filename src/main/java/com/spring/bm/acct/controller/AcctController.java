@@ -189,14 +189,15 @@ public class AcctController {
 		m.put("empname",empname);
 		m.put("amt", amt);
 		m.put("empno", empno);
-		System.out.println(m);
 		
 		int result = 0;
 		String msg="";
-		String loc="/acct/severance.do";
+		String loc="/emp/empList.do";
 		try {
 			result = service.updateSeveranceStatus(m);
-			msg=empname+"님을 퇴사 시켰습니다";
+			if(result > 0) {
+				msg=empname+"님을 퇴사 시켰습니다";
+			}
 		} catch (RuntimeException e) {
 			msg="문제가 발생했습니다";
 		}

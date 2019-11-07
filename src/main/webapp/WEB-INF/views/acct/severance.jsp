@@ -89,7 +89,7 @@
                                                                          </td>
                                                                          <td>
                                                                                 <c:if test='${fn:trim(e["EMPENTYN"]) eq "N" }' var="r">
-                                                                                	<c:set var="empname" value='${ e["EMPNAME"]}'/>
+                                                                                	  <c:set var="empname" value='${ e["EMPNAME"]}'/>
                                                                                       <c:set var="hiredate" value='${e["HIREDATE"]}'/>
                                                                                       <c:set var="salary" value='${e["EMPSAL"]}'/>
                                                                                       <button type="button" class="btn btn-success"  onclick="quit('${e.EMPNO}', '${hiredate }', '${salary }', '${empname }');" data-toggle="modal"  data-target="#exampleModal">퇴사 시키기</button>

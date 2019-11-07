@@ -114,7 +114,7 @@
 											<td><c:out value='${e["DOCNAME"]}' /></td>
 											<td><c:out value='${e["DOREMAININGDAYS"] }' /></td>
 											<td><c:out value='${e["DOCHECK"]}' /></td>
-											<td><c:out value='${e["DOCHECKDATE"]}' /></td>
+											<td><fmt:formatDate value='${e["DOCHECKDATE"]}' pattern="yyyy-MM-dd"/></td>
 											<td><c:out value='${e["DOREASON"] }' /></td>
 										</tr>
 									</c:forEach>

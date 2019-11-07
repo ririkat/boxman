@@ -94,11 +94,11 @@
 										<th>종료일</th>
 										<th>출장사유</th>
 										<th>승인여부</th>
-										<c:if test="${temp eq 'my' or temp eq 'search'}">
-											<c:if test="${e['BTCHECK'] 	eq 'Y' }">
+										<c:choose>
+											<c:when test="${temp eq 'my' or temp eq 'search'}">
 												<th>출장비신청</th>
-											</c:if>
-										</c:if>
+											</c:when>
+										</c:choose> 
 									</tr>
 								</thead>
 								<tbody>
@@ -121,8 +121,12 @@
 													<c:when test="${nowDate eq endDate or nowDate-1 eq endDate}">
 														<!-- 출장종료달, 출장종료-1달 에만 수정요청 가능 -->
 														<!-- 결재 종결 후 기안할 수 없음. -->
-														<c:if test="${e['BTCHECK'] eq 'Y' and e['BTPCHECK'] eq 'N'}">
-															<td><button type="button" class="btn btn-primary mr-2" onclick="location.href='${path}/emp/insertBTP.do?btNo=${e.BTNO}&temp=newMonthBTP&empNo=${e.EMPNO}'">출장비신청</button></td>
+														<c:if test="${fn:trim(e['BTCHECK']) eq 'Y'}">	<!--  and fn:trim(e['BTPCHECK']) eq 'N' -->
+															<td>
+																<button type="button" class="btn btn-primary mr-2" onclick="location.href='${path}/emp/insertBTP.do?btNo=${e.BTNO}&temp=newMonthBTP&empNo=${e.EMPNO}'">
+																	출장비신청
+																</button>
+															</td>
 														</c:if>
 													</c:when>
 													<c:otherwise>

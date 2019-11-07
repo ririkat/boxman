@@ -43,7 +43,6 @@
   <!-- datepicker -->
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
   
-  
   <!-- tableSorter -->
   <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>
     

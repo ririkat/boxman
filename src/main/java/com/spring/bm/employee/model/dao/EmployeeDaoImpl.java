@@ -237,6 +237,5 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.insert("emp.insertBTP", param);
 	}
 
-	
 
 }

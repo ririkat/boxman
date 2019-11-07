@@ -183,7 +183,7 @@
 		update severance
 		    set
 		        severance.sevpay=#{amt},
-		        severance.sevdate=sysdate
+		        severance.sevdate=null
 		        where empno=#{empno}
 	</update>
 	
@@ -195,11 +195,7 @@
 					where empno=#{empno}
 	</update>
 	<!-- severance end -->
-	
-	
-	
-	
-	
+
 	<!-- severance search -->
 	<select id="selectSevSearchList" resultType="map">
 		select
