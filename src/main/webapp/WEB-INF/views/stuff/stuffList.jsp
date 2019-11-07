@@ -51,7 +51,7 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
 						<tr>
 							<th scope="col">번호</th>
@@ -97,7 +97,9 @@
                </div>
                </div>
                </div>
+			   <div style="margin:0 auto; width:fit-content;">
                  ${pageBar }
+               </div>
                </div>
 	
 </section>
@@ -112,6 +114,10 @@ function searchStuff(){
 		alert("검색하실 내용을 입력해주세요.");
 	}
 }
+
+$(function() {
+    $("#myTable").tablesorter();
+  });
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 

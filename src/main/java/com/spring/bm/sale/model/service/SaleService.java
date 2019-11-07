@@ -9,11 +9,7 @@ public interface SaleService {
 	int selectSaleCount();
 	
 	List<Map<String,String>> selectConnList();
-	
-	///////////////////////////////////////////////////////////////////////
 
-	Map<String,String> addStuffToTemp(String stuffNo);
-	
 	int enrollSaleInfo(Map<String,String> param) throws Exception;
 	
 	List<Map<String,String>> selectSaleSearchList(Map<String, Object> m);

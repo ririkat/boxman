@@ -84,6 +84,41 @@ public class AcctController {
 		return mapper.writeValueAsString(num);
 	}
 	
+	
+	/* biztrip search */
+	@RequestMapping("/acct/biztripSearch.do")
+	public ModelAndView biztripSearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param ) {
+		int numPerPage = 5;
+		List <Map<String, String>> list = service.selectBiztripSearchList(cPage, numPerPage, param);
+		int totalCount = service.biztripSearchCount(param);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/biztrip.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/biztrip");
+		return mv;
+	}
+	
+	/* severance search */
+	@RequestMapping("/acct/severanceSearch")
+	public ModelAndView severanceSearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param) {
+		int numPerPage = 5;
+		List <Map<String, String>>list = service.selectSevSearchList(cPage, numPerPage, param);
+		System.out.println("////////");
+		System.out.println(list);
+		int totalCount = service.sevSearchCount(param);
+		System.out.println(totalCount);
+		System.out.println(totalCount);
+		System.out.println("////////");
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/severance.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/severance");
+		return mv;
+	}
+	
+	
 	/* 출장비용 */
 	@RequestMapping("/acct/biztrip.do")
 	public ModelAndView bizTrip(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {

@@ -149,7 +149,7 @@ public class StuffController {
    
    //물품 검색
    @RequestMapping("/stuff/searchStuff.do")
-   public ModelAndView searchStuff(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+   public ModelAndView searchStuff(@RequestParam(value="cPage",required=false, defaultValue="1") int cPage,
 			@RequestParam Map<String, Object> param) {
       
 	  int numPerPage = 10;

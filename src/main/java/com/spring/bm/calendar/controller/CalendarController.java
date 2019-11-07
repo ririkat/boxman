@@ -7,11 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.calendar.model.service.CalendarService;
+import com.spring.bm.calendar.model.vo.Calendar;
 
 
 
@@ -25,7 +28,9 @@ public class CalendarController {
 	
 	/* 일정관리첫페이지로 이동 */
 	@RequestMapping("/calendar/allView.do")	//사원등록 폼으로 전환
-	public String allView() {
+	public String allView(Model model) {
+		List<Map<String, Object>> list = service.selectScheCategory();
+		model.addAttribute("list", list);
 		return "calendar/calendarAll";
 	}
 	
@@ -45,26 +50,17 @@ public class CalendarController {
 	
 	//스케줄 등록
 	@RequestMapping("/calendar/insertCalendarEnd.do")
-	public ModelAndView insertCalendar(@RequestParam Map<String,Object> param, @RequestParam(value="empNo") int empNo) {
+	public @ResponseBody int insertCalendar(@RequestParam Map<String,Object> param) {
 		
-		System.out.println("empNo는 이거에요 =>"+empNo);
-		int result = service.insertCalender(param);
-		
-		String msg="";
-		String loc="/calendar/allView.do";
-		if(result>0) {
-			msg="스케줄 등록이 완료되었습니다.";
-		}else {
-			msg="스케줄 등록에 실패하였습니다.";
+		for ( String key : param.keySet() ) {
+		    System.out.println("key : " + key +" / value : " + param.get(key));
 		}
 		
-		ModelAndView mv = new ModelAndView();
+		int result = service.insertCalender(param);
 		
-		mv.addObject("msg",msg);
-		mv.addObject("loc",loc);
-		mv.setViewName("common/msg");
+
 		
-		return mv;
+		return result;
 	}
 	//스케줄 수정
 	@RequestMapping("/calendar/updateCalendar.do")
@@ -87,6 +83,16 @@ public class CalendarController {
 		mv.setViewName("common/msg");
 		
 		return mv;
+	}
+	
+	@RequestMapping("/calendar/selectCalendarEmpNo.do")
+	public @ResponseBody List<Calendar> selectcCalendarEmpNo (int empNo) {
+		
+		List<Calendar> list = service.selectCalendarEmpNo(empNo);
+		System.out.println("리스트 잘 나오냐 : " + list);
+		
+		return list;
+		
 	}
 
 }

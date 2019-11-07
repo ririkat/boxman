@@ -100,7 +100,9 @@
                </div>
                </div>
                </div>
+               <div style="margin:0 auto; width:fit-content;">
                  ${pageBar }
+                 </div>
                </div>
 	
 </section>

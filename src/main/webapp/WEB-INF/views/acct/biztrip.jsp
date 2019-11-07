@@ -16,7 +16,7 @@
 <!-- DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary">월급 관리</h6>
+			<h6 class="m-0 font-weight-bold text-primary">출장 관리</h6>
 		</div>
 		<div class="card-body">
 			<div class="table-responsive">
@@ -55,6 +55,9 @@
 								<thead>
 									<tr>
 										<th>사원번호</th>
+										<th>이름</th>
+										<th>직급</th>
+										<th>부서</th>
 										<th>출장 시작</th>
 										<th>출장 끝</th>
 										<th>사유</th>
@@ -71,8 +74,17 @@
 											</td>
 											<td>
 												<a href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'>
-													<c:out value='${e["BTSTART"]}' />
+													<c:out value='${e["EMPNAME"]}' />
 												</a>
+											</td>
+											<td>
+												<c:out value='${e["JOBNAME"] }'/>
+											</td>
+											<td>
+												<c:out value='${e["DEPTNAME"] }'/>
+											</td>
+											<td>
+												<c:out value='${e["BTSTART"]}' />
 											</td>
 											<td>
 												<c:out value='${e["BTEND"]}' />
@@ -94,6 +106,16 @@
 				</div>
 				${pageBar }
 </section>
+
+<script>
+
+//검색
+function fn_search(){
+	$("#searchFrm").attr("action", "${path}/acct/biztripSearch.do");
+	$("#searchFrm").submit();
+}
+
+</script>
 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

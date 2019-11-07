@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.bm.calendar.model.vo.Calendar;
+
 public interface CalendarDao {
 
 	int insertCalendar(SqlSessionTemplate sqlSession, Map<String, Object> param);
@@ -12,5 +14,7 @@ public interface CalendarDao {
 	int updateCalendar(SqlSessionTemplate sqlSession, Map<String, Object> param);
 
 	List<Map<String, Object>> selectScheCategory(SqlSessionTemplate sqlSession);
+
+	List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int empNo);
 
 }

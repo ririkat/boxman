@@ -1306,7 +1306,7 @@ select.form-control:not([size]):not([multiple]) {
 .schedule .schedule-contents {
   margin-top: 30px;
   margin-bottom: 30px;
-  padding: 30px;
+
 }
 
 .schedule .schedule-contents .schedule-item ul {
@@ -3094,9 +3094,9 @@ ul.pagination .active a {
   border-color: #ff6600 !important;
 }
 
-.sidebar {
+/* .sidebar {
   padding: 0 20px;
-}
+} */
 
 .widget {
   margin-bottom: 45px;

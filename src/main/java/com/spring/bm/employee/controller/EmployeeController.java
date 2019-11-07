@@ -119,7 +119,6 @@ public class EmployeeController {
 	public ModelAndView empLogin(@RequestParam Map<String,Object> map,HttpSession session) {
 
 		Map<String, Object> m = service.selectLoginEmp(map);
-		System.out.println(m.get("EMPNO"));
 
 		ModelAndView mv = new ModelAndView();
 		String msg = "";
@@ -254,7 +253,7 @@ public class EmployeeController {
 		List<Map<String, String>> list = service.selectEmpSearchList(cPage, numPerPage, param);
 		int totalCount = service.selectEmpSearchCount(param);
 		ModelAndView mv=new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/empList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/searchEmp.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("emp/empList");
