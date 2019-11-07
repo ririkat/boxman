@@ -146,4 +146,9 @@ public class ApvDaoImpl implements ApvDao {
 	public Map<String, Object> selectEmpInfoAll(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("apv.selectEmpInfoAll",param);
 	}
+	
+	@Override
+	public int insertRequestApv(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.insert("apv.insertRequestApv",param);
+	}
 }

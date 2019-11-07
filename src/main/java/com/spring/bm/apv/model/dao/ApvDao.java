@@ -59,4 +59,6 @@ public interface ApvDao {
 
 	Map<String, Object> selectEmpInfoAll(SqlSessionTemplate session, Map<String, Object> param);
 
+	int insertRequestApv(SqlSessionTemplate session, Map<String, Object> param);
+
 }

@@ -55,5 +55,7 @@ public interface ApvService {
 
 	Map<String, Object> selectEmpInfoAll(Map<String, Object> loginEmp);
 
+	int insertRequestApv(Map<String, Object> param) throws Exception;
+
 
 }

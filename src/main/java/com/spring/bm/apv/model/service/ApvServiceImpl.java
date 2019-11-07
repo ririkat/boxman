@@ -194,4 +194,17 @@ public class ApvServiceImpl implements ApvService {
 	public Map<String, Object> selectEmpInfoAll(Map<String, Object> param) {
 		return dao.selectEmpInfoAll(session,param);
 	}
+	
+	@Override
+	public int insertRequestApv(Map<String, Object> param) throws Exception{
+		int result=0;
+		result=dao.insertRequestApv(session,param);
+		if(result==0) throw new Exception();
+		ArrayList listA=(ArrayList) param.get("apvLA");
+		ArrayList listR=(ArrayList) param.get("apvLR");
+		String apvE=(String)param.get("apvLE");
+		//결재자,시행자,참조자 넣는 로직
+		
+		return result;
+	}
 }

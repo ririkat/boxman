@@ -31,7 +31,7 @@ public class ApvLineController {
 	/* 결재 라인 관리 리스트 뷰 호출 */
 	@RequestMapping("/apv/apvLineList.do")
 	public ModelAndView apvLine(@RequestParam(value="cPage", 
-	required=false, defaultValue="0") int cPage, int loginNo) {
+	required=false, defaultValue="1") int cPage, int loginNo) {
 		int numPerPage = 10;
 		List<Map<String,Object>> myList=service.selectMyApvLineList(cPage,numPerPage,loginNo);
 		int totalCount = service.selectMyALCount(loginNo);
@@ -85,7 +85,7 @@ public class ApvLineController {
 	/* 결재 라인 삭제 로직*/
 	@RequestMapping("/apv/apvLineDelete.do")
 	public ModelAndView apvLineDelete(@RequestParam(value="alNo", 
-			required=false, defaultValue="0") int alNo,int loginNo){
+			required=true) int alNo,int loginNo){
 		ModelAndView mv = new ModelAndView();
 		
 		int result=0;
@@ -114,7 +114,7 @@ public class ApvLineController {
 	/* 결재 양식 수정 팝업창 */
 	@RequestMapping("/apv/apvLineModify.do")
 	public ModelAndView apvDocModify(@RequestParam(value="alNo", 
-			required=false, defaultValue="0") int alno) {
+			required=true) int alno) {
 		ModelAndView mv = new ModelAndView();
 		Map<String,Object> apvl=service.selectALModi(alno);
 		List applicants=new ArrayList();
@@ -139,5 +139,15 @@ public class ApvLineController {
 		}
 
 		return result;
+	}
+	
+	/* 기안하기 -> 결재 라인 등록뷰 호출 */
+	@RequestMapping("/apv/requestApvLineEnroll.do")
+	public ModelAndView requestApvLineEnroll() {
+		ModelAndView mv = new ModelAndView();
+		List<Map<String,Object>> deptList=service.selectDeptList();
+		mv.addObject("deptList",deptList);
+		mv.setViewName("apv/requestApvLineEnroll");
+		return mv;
 	}
 }

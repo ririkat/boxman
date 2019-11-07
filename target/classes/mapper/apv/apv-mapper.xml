@@ -30,7 +30,7 @@
 		<result property="DFCONTENTFORM" column="DFCONTENTFORM" jdbcType="CLOB" javaType="java.lang.String" />
 	</resultMap>
 	<select id="selectDfModi" parameterType="_int" resultType="map" resultMap="dfModiClobMap">
-		SELECT * FROM DOCFORM WHERE DFNO=#{dfNo}
+		SELECT * FROM DOCFORM DF JOIN DOCCATE DC ON DF.DCNO=DC.DCNO WHERE DFNO=#{dfNo}
 	</select>
 	<!-- 결재 양식 수정 저장-->
 	<update id="updateApvDoc" parameterType="map">
@@ -129,5 +129,15 @@
 	<select id="selectEmpInfoAll" parameterType="map" resultType="map">
 		SELECT * FROM EMPLOYEE E JOIN DEPARTMENT D ON E.DEPTNO=D.DEPTNO JOIN EMPJOB J ON E.JOBNO=J.JOBNO WHERE EMPNO=#{EMPNO}
 	</select>
+	
+	<!-- 기안하기 등록 로직  -->
+	<!-- approval 테이블 insert -->
+	<insert id="insertRequestApv" parameterType="map">
+		INSERT INTO APPROVAL VALUES(SEQ_APPROVAL.NEXTVAL,#{apvTitle),#{headContent},#{dfContentForm},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{apvType},#{dcNo},#{empNo})
+		<selectKey keyProperty="apvNo" resultType="Integer"
+			order="AFTER">
+			SELECT SEQ_APPROVAL.CURRVAL FROM DUAL
+		</selectKey>
+	</insert>
 	
 </mapper>

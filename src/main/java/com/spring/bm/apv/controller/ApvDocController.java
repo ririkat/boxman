@@ -9,7 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -265,15 +267,42 @@ public class ApvDocController {
 			String form=((String)dfOne.get("DFHEADFORM")).replace("{{text_box_1}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("{{approval_line_html}}")>-1) {
-			String content="<table id='approval_line_html'><tr><td></td><td></td><td></td><td></td><td></td></tr><tr><td></td><td></td><td></td><td></td><td></td></tr></table>";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("{{approval_line_html}}", content);
+		if(head.indexOf("<p>&nbsp;{{approval_line_html}}</p>")>-1) {
+			String content="<table id=\"approval_line_html\" border=\"1px;\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" valign=\"middle\" width=\"100%\" height=\"100%\"><tr><td id=\"prior1\">1</td><td id=\"prior2\"></td><td id=\"prior3\"></td><td id=\"prior4\"></td><td id=\"prior5\"></td></tr><tr height=\"100px;\"><td id=\"stamp1\"></td><td id=\"stamp2\"></td><td id=\"stamp3\"></td><td id=\"stamp4\"></td><td id=\"stamp5\"></td></tr></table>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{approval_line_html}}</p>", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		
+		if(head.indexOf("<p>&nbsp;{{request_name}}</p>")>-1) {
+			String content="<p id=\"requestName\">시행자명</p>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{request_name}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("<p>&nbsp;{{form_idx}}</p>")>-1) {
+			String content="<p id=\"request_name\">시행자명</p>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{form_idx}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		 
 		mv.addObject("dfOne",dfOne);
 		/* mv.addObject("docCate",docCate); */
 		mv.setViewName("apv/requestApvEnroll");
 		return mv;
+	}
+	
+	/* 기안 상신하기 로직 */
+	@RequestMapping(value="/apv/requestApvEnrollEnd.do",method=RequestMethod.POST)
+	@ResponseBody
+	public int requestApvEnrollEnd(@RequestBody Map<String,Object> param){
+		int result=0;
+		
+		try { 
+			result=service.insertRequestApv(param);
+		}
+		catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		 
+
+		return result;
 	}
 }

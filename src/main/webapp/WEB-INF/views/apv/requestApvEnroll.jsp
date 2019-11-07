@@ -47,7 +47,7 @@
 
 <script type="text/javascript"
 	src="${path }/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-	
+
 <style>
 .title {
 	margin-top: 20px;
@@ -60,6 +60,7 @@
 <body id="page-top">
 	<section>
 		<div class="container">
+			<button type="button" class="btn btn-primary" onclick="enrollApvl();">결재라인등록</button>
 			<h2 class="title font-weight-bold text-primary">${dfOne["DFTITLE"]}</h2>
 
 			<form id="apvDocModiForm" class="form-sample" method="post" action="">
@@ -69,26 +70,38 @@
 							<table class="table table-boarded">
 								<tr>
 									<th>기안제목</th>
-									<td>
-										<input type="text" id="apvTitle"/>
-									</td>
+									<td><input type="text" id="apvTitle" name="apvTitle"
+										width="100%" /></td>
 								</tr>
 								<tr>
-									<th colspan="2">
-										결재폼									
-									</th>
+									<th>신청구분</th>
+									<td><select id="apvType" name="apvType">
+											<option value="일반">일반</option>
+											<option value="품의">품의(비용청구)</option>
+											<option value="휴가">휴가</option>
+											<option value="출장">출장</option>
+											<option value="근태">근태</option>
+									</select></td>
+								</tr>
+								<tr>
+									<th>문서분류</th>
+									<td><input type="text" id="dcTitle" name="dcTitle"
+										value="${dfOne['DCTITLE']}" readonly /> <input type="hidden"
+										name="empNo" id="empNo" value="${loginEmp['EMPNO']}" />
+										<input type="hidden"
+										name="dcNo" id="dcNo" value="${dfOne['DCNO']}" /></td>
+								</tr>
+								<tr>
+									<th colspan="2">결재폼</th>
 								</tr>
 								<tr>
 									<td colspan="2">
 										<div id="id01" class="text-center">
-											${dfOne["DFHEADFORM"]}
-										</div>
+											${dfOne["DFHEADFORM"]}</div>
 									</td>
 								</tr>
 								<tr>
-									<th colspan="2">
-									본문내용
-									</th>
+									<th colspan="2">본문내용</th>
 								</tr>
 								<tr>
 									<td colspan="2"><textarea id="dfContentForm"
@@ -99,23 +112,101 @@
 						</div>
 					</div>
 				</div>
-				<input type="submit" class="btn btn-primary" style="width:100%"/>
-				</form>
-				</div>
-				
-				<script>{{}}
+				<input type="button" class="btn btn-primary" style="width: 100%"
+					onclick="submitRequestApv();" />
+			</form>
+		</div>
+
+		<script>
 				var oEditors = [];
 				$(function() {
 
 					nhn.husky.EZCreator
-							.createInIFrame({
-								oAppRef : oEditors,
-								elPlaceHolder : "dfContentForm",
-								sSkinURI : "${path }/resources/se2/SmartEditor2Skin.html",
-								fCreator : "createSEditor2"
-							});
+					.createInIFrame({
+						oAppRef : oEditors,
+						elPlaceHolder : "dfContentForm",
+						sSkinURI : "${path }/resources/se2/SmartEditor2Skin.html",
+						fCreator : "createSEditor2"
+					});
 
 				});
+				
+				function enrollApvl(){
+					var url="${path}/apv/requestApvLineEnroll.do";
+		      		var name="결재라인등록"
+		            window.open(url,name,"width=1000,height=800,left=600");
+		      		
+		      		<%-- opener.document.getElementById("cid_").value='<%=id%>';
+					opener.document.getElementById("cpass").focus(); --%>
+					/* 팝업에서 세팅할 때 사용!! */
+				}
+				
+				function returnApvLA(value,idx){
+					var inputApvlA=$('<input>');
+					inputApvlA.val(value);
+					inputApvlA.attr({"id":"apvLA"+idx,"type":"hidden","name":"apvLA"});
+					
+					$('#apvDocModiForm').append(inputApvlA);
+				}
+				function returnApvLE(value){
+					var inputApvlE=$('<input>');
+					inputApvlE.val(value);
+					inputApvlE.attr({"id":"apvLE","type":"hidden","name":"apvLE"});
+					
+					$('#apvDocModiForm').append(inputApvlE);
+				}
+				function returnApvLR(value,idx){
+					var inputApvlR=$('<input>');
+					inputApvlR.val(value);
+					inputApvlR.attr({"id":"apvLR"+idx,"type":"hidden","name":"apvLR"});
+					
+					$('#apvDocModiForm').append(inputApvlR);
+				}
+				
+				function submitRequestApv(){
+					var formContents = $('#apvDocModiForm').serializeObject();
+					
+					var headContent=$('#id01').html().trim();
+					formContents["headContent"]=headContent;
+					
+					console.log(formContents);
+					
+					$.ajax({
+						url:"${path}/apv/requestApvEnrollEnd.do",
+						type : "post",
+						data : JSON.stringify(formContents),
+						contentType: "application/json",
+						success : function(data) {
+							if(data>0){
+								self.close();
+								window.opener.location.reload();
+							}else{
+								alert("기안실패");
+							}
+						}
+					});
+				}
+				
+				$.fn.serializeObject = function() {
+
+					  var result = {}
+					  var extend = function(i, element) {
+					    var node = result[element.name]
+					    if ("undefined" !== typeof node && node !== null) {
+					      if ($.isArray(node)) {
+					        node.push(element.value)
+					      } else {
+					        result[element.name] = [node, element.value]
+					      }
+					    } else {
+					      result[element.name] = element.value
+					    }
+					  }
+
+					  $.each(this.serializeArray(), extend)
+					  return result
+					}
+
 				
 				</script>
 	</section>
