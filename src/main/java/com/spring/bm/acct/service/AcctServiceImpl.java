@@ -84,4 +84,19 @@ public class AcctServiceImpl implements AcctService {
 		return dao.salarySearchCount(session, param);
 	}
 
+	
+	/* biztrip search */
+	@Override
+	public List<Map<String, String>> selectBiztripSearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectBiztripSearchList(session, cPage, numPerPage, param);
+	}
+	@Override
+	public int biztripSearchCount(Map<String, Object> param) {
+		return dao.biztripSearchCount(session, param);
+	}
+
+	
+	
+	
+
 }

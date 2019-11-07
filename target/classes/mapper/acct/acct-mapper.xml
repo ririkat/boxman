@@ -73,6 +73,57 @@
 	<update id="updateWagePayment" parameterType="_int">
 		update salary set salcheck = 'Y' where salno=#{salno}
 	</update>
+	<!-- salary search end -->
+	
+	
+	
+	<!-- biztrip search -->
+	<select id="selectBiztripSearchList" resultType="map">
+		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
+			from employee
+			    inner join businesstrip on employee.empno=businesstrip.empno
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno
+                where 1=1
+                <choose>
+			    	<when test="type eq 'empNo'">
+		                and employee.empno like '%'||#{data}||'%' 
+	            	</when>
+	              	<when test="type eq 'empName'">
+	              		and employee.empname like '%'||#{data}||'%'
+	              	</when>
+	              	<when test="type eq 'deptName'">
+						and department.deptname like '%'||#{data}||'%'
+	              	</when>
+	              	<when test="type eq 'jobName'">
+	              		and empjob.jobname like '%'||#{data}||'%'
+	              	</when>
+		    </choose>
+	</select>
+	<select id="biztripSearchCount" parameterType="map" resultType="_int">
+		select count(*) from employee
+		    inner join businesstrip on employee.empno=businesstrip.empno
+		    inner join empjob on employee.jobno=empjob.jobno
+		    inner join department on employee.deptno=department.deptno
+            where 1=1
+		    <choose>
+		    	<when test="type eq 'empNo'">
+	                and employee.empno like '%'||#{data}||'%' 
+            	</when>
+              	<when test="type eq 'empName'">
+              		and employee.empname like '%'||#{data}||'%'
+              	</when>
+              	<when test="type eq 'deptName'">
+					and department.deptname like '%'||#{data}||'%'
+              	</when>
+              	<when test="type eq 'jobName'">
+              		and empjob.jobname like '%'||#{data}||'%'
+              	</when>
+		    </choose>
+	</select>
+	<!-- biztrip search end -->
+	
 	
 	
 	<!-- severance -->
@@ -110,7 +161,12 @@
 	
 	<!-- biztrip -->
 	<select id="selectBizTripList" resultType="map">
-		select * from businessTrip
+		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
+			from employee
+			    inner join businesstrip on employee.empno=businesstrip.empno
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno
 	</select>
 	<select id="selectBizTripCount" resultType="_int">
 		select count(*) from businessTrip

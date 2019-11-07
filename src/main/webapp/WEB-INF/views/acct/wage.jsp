@@ -138,6 +138,7 @@
 		$("#searchFrm").attr("action", "${path}/acct/salarySearch.do");
 		$("#searchFrm").submit();
 	}
+	
 </script>
 
 

@@ -74,11 +74,25 @@ public class AccDaoImpl implements AcctDao {
 		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
 		return session.selectList("acct.selectsSalarySearchList", param, rows);
 	}
-
 	@Override
 	public int salarySearchCount(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("acct.salarySearchCount", param);
 	}
+
+	
+	/* biztrip search */
+	@Override
+	public List<Map<String, String>> selectBiztripSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param) {
+		RowBounds rows = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return session.selectList("acct.selectBiztripSearchList", param, rows);
+	}
+	@Override
+	public int biztripSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("acct.biztripSearchCount", param);
+	}
+	
+	
+	
 
 
 }

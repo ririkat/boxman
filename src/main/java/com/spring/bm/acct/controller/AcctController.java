@@ -84,6 +84,21 @@ public class AcctController {
 		return mapper.writeValueAsString(num);
 	}
 	
+	
+	/* biztrip search */
+	@RequestMapping("/acct/biztripSearch.do")
+	public ModelAndView severanceSearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param ) {
+		int numPerPage = 5;
+		List <Map<String, String>> list = service.selectBiztripSearchList(cPage, numPerPage, param);
+		int totalCount = service.biztripSearchCount(param);
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/biztrip.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list", list);
+		mv.setViewName("acct/biztrip");
+		return mv;
+	}
+	
 	/* 출장비용 */
 	@RequestMapping("/acct/biztrip.do")
 	public ModelAndView bizTrip(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, Model model) {
