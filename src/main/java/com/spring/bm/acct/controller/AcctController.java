@@ -108,6 +108,7 @@ public class AcctController {
 		System.out.println(list);
 		int totalCount = service.sevSearchCount(param);
 		System.out.println(totalCount);
+		System.out.println(totalCount);
 		System.out.println("////////");
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/acct/severance.do"));

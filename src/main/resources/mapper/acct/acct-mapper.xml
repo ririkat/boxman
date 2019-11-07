@@ -228,7 +228,7 @@
 				              	</when>
 						    </choose>
 	</select>
-	<select id="sevSearchCount" parameterType="map">
+	<select id="sevSearchCount" parameterType="map" resultType="_int">
 		select count(*) from employee 
 	        join severance on employee.empno=severance.empno
 	        join empjob on employee.jobno=empjob.jobno
@@ -249,9 +249,6 @@
 	              	</when>
 			    </choose>
 	</select>
-	
-	
-	
 	
 </mapper>
 
