@@ -200,11 +200,72 @@ public class ApvServiceImpl implements ApvService {
 		int result=0;
 		result=dao.insertRequestApv(session,param);
 		if(result==0) throw new Exception();
-		ArrayList listA=(ArrayList) param.get("apvLA");
-		ArrayList listR=(ArrayList) param.get("apvLR");
-		String apvE=(String)param.get("apvLE");
+		
+		int apvNo=Integer.parseInt((String) param.get("apvNo"));
+		
 		//결재자,시행자,참조자 넣는 로직
+		if((param.get("apvLA"))!=null&&((ArrayList) param.get("apvLA")).size()>0) {
+			int pno=1;
+			ArrayList listA=(ArrayList) param.get("apvLA");
+			for(int i=0; i<listA.size(); i++) {
+				Map<String,Object> param2=new HashMap<String,Object>();
+				param2.put("priorNo",pno);
+				param2.put("empNo",Integer.parseInt(listA.get(i).toString()));
+				param2.put("apvNo",apvNo);
+				result=dao.insertApvApplicant(session,param2);
+				pno++;
+				if(result==0) throw new Exception();
+			}
+		}
+		if((param.get("apvLR"))!=null&&((ArrayList) param.get("apvLR")).size()>0) {
+			int pno=1;
+			ArrayList listR=(ArrayList) param.get("apvLR");
+			for(int i=0; i<listR.size(); i++) {
+				Map<String,Object> param2=new HashMap<String,Object>();
+				param2.put("priorNo",pno);
+				param2.put("empNo",Integer.parseInt(listR.get(i).toString()));
+				param2.put("apvNo",apvNo);
+				result=dao.insertApvReferer(session,param2);
+				pno++;
+				if(result==0) throw new Exception();
+			}
+		}
+		if(param.get("apvLE")!=null&&!((String.valueOf(param.get("apvLE"))).equals(""))) {
+			System.out.println("들어오니?");
+			String apvE=String.valueOf(param.get("apvLE"));
+			System.out.println(apvE);
+			Map<String,Object> param2=new HashMap<String,Object>();
+			param2.put("empNo",Integer.parseInt(apvE));
+			param2.put("apvNo",apvNo);
+			result=dao.insertApvEnforcer(session,param2);
+			if(result==0) throw new Exception();
+		}
 		
 		return result;
+	}
+	
+	/*상신함 리스트 불러오기*/
+	@Override
+	public List<Map<String, Object>> selectSendApvList(int cPage, int numPerPage,int loginNo) {
+		return dao.selectSendApvList(session,cPage,numPerPage,loginNo);
+	}
+	@Override
+	public int selectSendApvCount(int loginNo) {
+		return dao.selectSendApvCount(session,loginNo);
+	}
+	
+	/*수신함 리스트 불러오기*/
+	@Override
+	public List<Map<String, Object>> selectReceiveApvList(int cPage, int numPerPage, int loginNo) {
+		/*처음부터 조인해서 페이징 처리할 것. 다시 짜라!!*/
+		List<Map<String, Object>> ynList=dao.selectReceiveAYN(session,loginNo);
+		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+		if(ynList!=null && ynList.size()>0) {
+			Map<String,Object> param=new HashMap<String, Object>();
+			param.
+			list=dao.selectReceiveApvList(session, cPage, numPerPage, loginNo);
+		}
+		
+		return list;
 	}
 }

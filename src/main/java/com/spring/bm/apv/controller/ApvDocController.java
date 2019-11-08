@@ -18,11 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.apv.model.service.ApvService;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 
 
 @Controller
 public class ApvDocController {
 	private Logger logger=LoggerFactory.getLogger(ApvDocController.class);
+	private String path=new PageUrlFactory().getUrl();
 
 	@Autowired
 	ApvService service;
@@ -36,25 +38,12 @@ public class ApvDocController {
 		int totalCount = service.selectDfCount();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/apv/apvDoc.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/apvDoc.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/apvDocList");
 		return mv;
 	}
-	
-	/* 상신결재함 관리 */
-	@RequestMapping("/apv/receiveApv.do")
-	public String receiveApv() {
-		return "apv/receiveApv";
-	}
-	
-	/* 수신결재함 관리 */
-	@RequestMapping("/apv/sendApv.do")
-	public String sendApv() {
-		return "apv/sendApv";
-	}
-	
 	
 	/* 결재 양식 등록 팝업창 */
 	@RequestMapping("/apv/apvDocEnroll.do")
@@ -210,7 +199,7 @@ public class ApvDocController {
 		int totalCount = service.selectDfCount();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/apv/requestApv.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/requestApv.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/requestApvMain");
@@ -294,15 +283,46 @@ public class ApvDocController {
 	@ResponseBody
 	public int requestApvEnrollEnd(@RequestBody Map<String,Object> param){
 		int result=0;
-		
 		try { 
 			result=service.insertRequestApv(param);
 		}
 		catch (Exception e) {
 			e.printStackTrace(); 
 		}
-		 
-
 		return result;
+	}
+	
+	/*상신함*/
+	@RequestMapping("/apv/sendApv.do")
+	public ModelAndView sendApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectSendApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectSendApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/sendApv.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/sendApv");
+		return mv;
+	}
+	
+	/*수신함*/
+	@RequestMapping("/apv/receiveApv.do")
+	public ModelAndView receiveApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectReceiveApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectReceiveApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/sendApv.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/sendApv");
+		return mv;
 	}
 }

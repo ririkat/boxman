@@ -61,4 +61,18 @@ public interface ApvDao {
 
 	int insertRequestApv(SqlSessionTemplate session, Map<String, Object> param);
 
+	int insertApvApplicant(SqlSessionTemplate session, Map<String, Object> param2);
+
+	int insertApvReferer(SqlSessionTemplate session, Map<String, Object> param2);
+
+	int insertApvEnforcer(SqlSessionTemplate session, Map<String, Object> param2);
+
+	List<Map<String, Object>> selectSendApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectSendApvCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectReceiveApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	List<Map<String, Object>> selectReceiveAYN(SqlSessionTemplate session, int loginNo);
+
 }

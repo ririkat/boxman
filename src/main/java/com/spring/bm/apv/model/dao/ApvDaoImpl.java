@@ -147,8 +147,47 @@ public class ApvDaoImpl implements ApvDao {
 		return session.selectOne("apv.selectEmpInfoAll",param);
 	}
 	
+	/*기안하기*/
+	//approval 테이블
 	@Override
 	public int insertRequestApv(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.insert("apv.insertRequestApv",param);
+	}
+	//apvApplicant 테이블
+	@Override
+	public int insertApvApplicant(SqlSessionTemplate session, Map<String, Object> param2) {
+		return session.insert("apv.insertApvApplicant",param2);
+	}
+	//apvReferer 테이블
+	@Override
+	public int insertApvReferer(SqlSessionTemplate session, Map<String, Object> param2) {
+		return session.insert("apv.insertApvReferer",param2);
+	}
+	//apvEnforcer 테이블
+	@Override
+	public int insertApvEnforcer(SqlSessionTemplate session, Map<String, Object> param2) {
+		return session.insert("apv.insertApvEnforcer",param2);
+	}
+	
+	/*상신함*/
+	@Override
+	public List<Map<String, Object>> selectSendApvList(SqlSessionTemplate session, int cPage, int numPerPage,
+			int loginNo) {
+		return session.selectList("apv.selectSendApvList",loginNo);
+	}
+	@Override
+	public int selectSendApvCount(SqlSessionTemplate session, int loginNo) {
+		return session.selectOne("apv.selectSendApvCount",loginNo);
+	}
+	
+	/*수신함*/
+	@Override
+	public List<Map<String, Object>> selectReceiveAYN(SqlSessionTemplate session, int loginNo) {
+		return session.selectList("apv.selectReceiveAYN",loginNo);
+	}
+	@Override
+	public List<Map<String, Object>> selectReceiveApvList(SqlSessionTemplate session, int cPage, int numPerPage,
+			int loginNo) {
+		return session.selectList("apv.selectReceiveApvList",loginNo);
 	}
 }

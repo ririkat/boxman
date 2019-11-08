@@ -133,11 +133,42 @@
 	<!-- 기안하기 등록 로직  -->
 	<!-- approval 테이블 insert -->
 	<insert id="insertRequestApv" parameterType="map">
-		INSERT INTO APPROVAL VALUES(SEQ_APPROVAL.NEXTVAL,#{apvTitle),#{headContent},#{dfContentForm},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{apvType},#{dcNo},#{empNo})
-		<selectKey keyProperty="apvNo" resultType="Integer"
+		INSERT INTO APPROVAL VALUES(SEQ_APPROVAL.NEXTVAL,#{apvTitle},#{headContent},#{dfContentForm},DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,#{apvType},#{dcNo},#{empNo})
+		<selectKey keyProperty="apvNo" resultType="string"
 			order="AFTER">
 			SELECT SEQ_APPROVAL.CURRVAL FROM DUAL
 		</selectKey>
 	</insert>
+	<!-- apvApplicant 테이블 insert-->
+	<!-- 구분번호,우선순위,결재상태,품의번호,사원번호 -->
+	<insert id="insertApvApplicant" parameterType="map">
+		INSERT INTO APVAPPLICANT VALUES(SEQ_APVAPPLICANT.NEXTVAL,#{priorNo},DEFAULT,#{apvNo},#{empNo})
+	</insert>
+	<!-- apvReferer 테이블 insert-->
+	<!-- 구분번호,열람상태,품의번호,사원번호 -->
+	<insert id="insertApvReferer" parameterType="map">
+		INSERT INTO APVREFERER VALUES(SEQ_APVREFERER.NEXTVAL,DEFAULT,#{apvNo},#{empNo})
+	</insert>
+	<!-- apvEnforcer 테이블 insert-->
+	<!-- 구분번호,시행상태,품의번호,사원번호 -->
+	<insert id="insertApvEnforcer" parameterType="map">
+		INSERT INTO APVENFORCER VALUES(SEQ_APVENFORCER.NEXTVAL,DEFAULT,#{apvNo},#{empNo})
+	</insert>
 	
+	<!-- 상신함 -->
+	<!-- 상신함 리스트 불러오기 -->
+	<select id="selectSendApvList" parameterType="_int" resultType="map">
+		SELECT * FROM APPROVAL JOIN DOCCATE USING(DCNO) WHERE EMPNO=#{loginNo}
+	</select>
+	<select id="selectSendApvCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*) FROM APPROVAL WHERE EMPNO=#{loginNo}
+	</select>
+	
+	<!-- 수신함 -->
+	<select id="selectReceiveAYN" parameterType="_int" resultType="map">
+		SELECT APVNO,APVAPRIOR FROM APVAPPLICANT WHERE EMPNO=#{loginNo}
+	</select>
+	<select id="selectReceiveApvList" parameterType="_int" resultType="map">
+		SELECT APVNO,APVAPRIOR FROM APVAPPLICANT WHERE EMPNO=#{loginNo}
+	</select>
 </mapper>

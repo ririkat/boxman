@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.apv.model.service.ApvService;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 
 import net.sf.json.JSONArray;
 
@@ -24,7 +25,8 @@ import net.sf.json.JSONArray;
 public class ApvLineController {
 
 	private Logger logger=LoggerFactory.getLogger(ApvLineController.class);
-
+	private String path=new PageUrlFactory().getUrl();
+	
 	@Autowired
 	ApvService service;
 
@@ -37,7 +39,7 @@ public class ApvLineController {
 		int totalCount = service.selectMyALCount(loginNo);
 
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/apv/apvLineList.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/apvLineList.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("myList",myList);
 		mv.setViewName("apv/apvLineList");

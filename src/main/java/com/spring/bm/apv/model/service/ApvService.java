@@ -57,5 +57,12 @@ public interface ApvService {
 
 	int insertRequestApv(Map<String, Object> param) throws Exception;
 
+	List<Map<String, Object>> selectSendApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectSendApvCount(int loginNo);
+
+	List<Map<String, Object>> selectReceiveApvList(int cPage, int numPerPage, int loginNo);
+
+
 
 }
