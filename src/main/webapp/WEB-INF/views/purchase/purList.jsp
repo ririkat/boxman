@@ -10,6 +10,12 @@
    <jsp:param value="구매 관리" name="tabTitle"/> 
 </jsp:include>
 
+<style>
+th {
+	text-align: center;
+}
+</style>
+
 <section>
 
 	<div class="card shadow mb-4">
@@ -58,7 +64,7 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align:center;">
+                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
                          <tr>
                             <th>구매코드</th>
@@ -74,7 +80,7 @@
                        </thead>
                        <tbody>
                           <c:forEach items="${list }" var="p">
-								<tr>
+								<tr style="text-align:center;">
 									<td><a href='${path }/purchase/verificationPurInfo.do?purCode=${p["PURCODE"]}'><c:out value='${p["PURCODE"] }'/></a></td>
 									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
 									<td><c:out value='${p["CONNAME"] }' /></td>
@@ -93,7 +99,9 @@
                </div>
 			</div>
 		</div>
-       ${pageBar }
+      <div style="margin:0 auto; width:fit-content;">
+		${pageBar }
+      </div>
 	</div>
 
 </section>

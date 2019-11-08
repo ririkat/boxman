@@ -13,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.connection.model.service.ConnectionService;
 import com.spring.bm.connection.model.vo.Connection;
 
 @Controller
 public class ConnectionController {
+	
+	private PageUrlFactory path = new PageUrlFactory();
 	
 	@Autowired
 	ConnectionService service;
@@ -29,7 +32,7 @@ public class ConnectionController {
 		List<Map<String,String>> list = service.selectConnList(cPage,numPerPage);
 		int totalCount = service.selectConnCount();
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount,cPage,numPerPage, "/bm/connection/connList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount,cPage,numPerPage, path.getUrl()+"/connection/connList.do"));
 		mv.addObject("count",totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("connection/connList");
@@ -160,12 +163,9 @@ public class ConnectionController {
 		List<Map<String,String>> list = service.selectConnSearchList(m);
 		int totalCount = service.selectConnSearchCount(m);
 
-		System.out.println("list : " + list);
-		System.out.println("totalCount : " + totalCount);
-
 		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/connection/searchConnection.do", type, data));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("connection/connList");
@@ -190,7 +190,7 @@ public class ConnectionController {
 	    System.out.println("list : " + list + "/" + "count : " + totalCount);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection2.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/connection/searchConnection2.do", param.get("type_"), param.get("data_")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("connection/connSearchPopUp");
@@ -213,7 +213,7 @@ public class ConnectionController {
 	    System.out.println("list : " + list + "/" + "count : " + totalCount);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/connection/searchConnection3.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/connection/searchConnection3.do", param.get("type_"), param.get("data_")));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("connection/connSearchPopUp");

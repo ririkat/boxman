@@ -43,18 +43,7 @@
   <!-- datepicker -->
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
   
-	<!-- 달력 -->
-	<link rel=" shortcut icon" href="image/favicon.ico">
 
-    <link rel="stylesheet" href="${path }/resources/full/vendor/css/fullcalendar.min.css" />
-    <link rel="stylesheet" href="${path }/resources/full/vendor/css/bootstrap.min.css">
-    <link rel="stylesheet" href='${path }/resources/full/vendor/css/select2.min.css' />
-    <link rel="stylesheet" href='${path }/resources/full/vendor/css/bootstrap-datetimepicker.min.css' />
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,500,600">
-
-    <link rel="stylesheet" href="${path }/resources/full/css/main.css">
-	<!-- 달력 -->
   
   <!-- tableSorter -->
   <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>

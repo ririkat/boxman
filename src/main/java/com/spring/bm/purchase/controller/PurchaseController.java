@@ -12,10 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.purchase.model.service.PurchaseService;
 
 @Controller
 public class PurchaseController {
+	
+	private PageUrlFactory path = new PageUrlFactory();
 	
 	@Autowired
 	PurchaseService service;
@@ -27,7 +30,7 @@ public class PurchaseController {
 		List<Map<String,String>> list = service.selectPurList(cPage,numPerPage);
 		int totalCount = service.selectPurCount();
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount,cPage,numPerPage, "/bm/purchase/purList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount,cPage,numPerPage, path.getUrl()+"/purchase/purList.do"));
 		mv.addObject("count",totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("purchase/purList");
@@ -104,7 +107,7 @@ public class PurchaseController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/purchase/searchPurInfo.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/purchase/searchPurInfo.do", type, data));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("purchase/purList");
