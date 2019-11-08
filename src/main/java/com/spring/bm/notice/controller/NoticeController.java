@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.employee.model.service.EmployeeService;
@@ -33,7 +34,9 @@ import com.spring.bm.notice.model.vo.UploadNotice;
 
 @Controller
 public class NoticeController {
+	
 
+   private PageUrlFactory path = new PageUrlFactory();
    @Autowired
    NoticeService noticeService;
    @Autowired
@@ -282,7 +285,7 @@ public class NoticeController {
 
       int totalCount = noticeService.selectNoticeCount();
 
-      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeList.do"));
+      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/notice/selectNoticeList.do"));
       mv.addObject("count", totalCount);
       mv.addObject("list",list);   //key value형식 -> model로 들어감
       mv.addObject("list2",list2); //필독체크 리스트
@@ -303,7 +306,7 @@ public class NoticeController {
       List<Notice> list2 = noticeService.selectNoticeList2();
       int totalCount = noticeService.selectNoticeCount2();
 
-      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/selectNoticeDeptList.do"));
+      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/notice/selectNoticeDeptList.do"));
       mv.addObject("count", totalCount);
       mv.addObject("list",list);   //key value형식 -> model로 들어감
       mv.addObject("list2",list2); //필독체크 리스트
@@ -324,7 +327,7 @@ public class NoticeController {
       List<Notice> list2 = noticeService.selectNoticeList2();
       int totalCount = noticeService.selectNoticeCount3();
 
-      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/notice/guidelineList.do"));
+      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/notice/guidelineList.do"));
       mv.addObject("count", totalCount);
       mv.addObject("list",list);   //key value형식 -> model로 들어감
       mv.addObject("list2",list2); //필독체크 리스트
@@ -344,7 +347,7 @@ public class NoticeController {
    public void fileDownLoad(String oName, String rName, HttpServletRequest req, HttpServletResponse res) {
       BufferedInputStream bis = null;
       ServletOutputStream sos = null;
-      String dir = req.getSession().getServletContext().getRealPath("/resources/b4/upload/notice");
+      String dir = req.getSession().getServletContext().getRealPath("/resources/upload/notice");
       File saveFile = new File(dir + "/" + rName);
       try {
          FileInputStream fis = new FileInputStream(saveFile);
@@ -355,7 +358,7 @@ public class NoticeController {
                req.getHeader("user-agent").indexOf("Trident")!= -1;
          if(isMSIE) {
             resFileName = URLEncoder.encode(oName,"UTF-8");
-            resFileName = resFileName.replaceAll("\\+", "%20");   //띄어쓰기 바꿔주는것
+            resFileName = resFileName.replaceAll("\\+", "%20"); //띄어쓰기 바꿔주는것
          } else {
             resFileName = new String(oName.getBytes("UTF-8"),"ISO-8859-1");
          }

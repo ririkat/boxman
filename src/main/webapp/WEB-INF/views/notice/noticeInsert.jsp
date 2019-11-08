@@ -54,10 +54,7 @@ div#demo-container {
 		                    <label class="custom-file-label" for="upFile"></label>
 		                </div>
                		  </div>	 -->
-                      <button name="addButton" type="button" value="추가" class="btn btn-light btn-icon-split" 
-                      							style=" cursor: hand; position:absolute; right:0;" id="addFile" onClick="insRow()">
-				             <span class="text">추가</span>
-				      </button>										
+              								
                       	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 								<tr>
 									<td height="25">
@@ -128,41 +125,6 @@ div#demo-container {
 	
 	
 	
-	       var oTbl;
-               //Row 추가
-               function insRow() {
-                 oTbl = document.getElementById("addTable");
-                 var oRow = oTbl.insertRow();
-                 oRow.onmouseover=function(){oTbl.clickedRowIndex=this.rowIndex}; //clickedRowIndex - 클릭한 Row의 위치를 확인;
-                 var oCell = oRow.insertCell();
-
-               
-                 //삽입될 Form Tag         
-                 var frmTag = "<div class=' custom-file'>";
-                 frmTag += "<input type='file' class='custom-file-input' name='upFile' id='addImg'> ";
-                 frmTag += "<label class='custom-file-label' for='addImg'></label>";
-                 frmTag += "</div>";
-                 frmTag += "<input type=button value='삭제' class='btn btn-light btn-icon-split' onClick='removeRow()' style='cursor:hand'>";
-                 oCell.innerHTML = frmTag;
-               }
-               //Row 삭제
-               function removeRow() {
-                 oTbl.deleteRow(oTbl.clickedRowIndex);
-               }
-
-               function frmCheck()
-               {
-                 var frm = document.form;
-                 
-                 for( var i = 0; i <= frm.elements.length - 1; i++ ){
-                    if( frm.elements[i].name == "addImg" )
-                    {
-                        if( !frm.elements[i].value ){
-                                frm.elements[i].focus();
-                   return;
-                         }
-                     }
-                  }
-                }
+	 
 
 </script>

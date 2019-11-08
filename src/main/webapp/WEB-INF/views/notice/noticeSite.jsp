@@ -58,12 +58,12 @@
 					<ul class="nav nav-pills text-center">
 					  <li class="nav-item">
 					    <a class="nav-link active" href="#nov20" data-toggle="pill">
-					    	내부
+					    	협회
 					    </a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link" href="#nov21" data-toggle="pill">
-							외부
+							거래처
 					    </a>
 					  </li>
 					</ul>

@@ -62,10 +62,7 @@
 					        </c:forEach>
 		                </div>
                		  </div>
-                      <button name="addButton" type="button" value="추가" class="btn btn-light btn-icon-split" 
-                      							style=" cursor: hand; position:absolute; right:0;" id="addFile" onClick="insRow()">
-				             <span class="text">추가</span>
-				      </button>										
+              									
                       	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 								<tr>
 									<td height="25">
