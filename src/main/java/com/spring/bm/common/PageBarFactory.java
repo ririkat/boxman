@@ -116,7 +116,7 @@ public class PageBarFactory {
 	}
 	
 	public static String getPageBar(int totalCount, int cPage, 
-			int numPerPage, String url, int data) {
+			int numPerPage, String url, String data) {
 		String pageBar="";
 		int pageBarSize=5;
 		

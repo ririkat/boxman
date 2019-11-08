@@ -19,4 +19,11 @@ public interface CalendarDao {
 
 	int selectCalendarCount(SqlSessionTemplate sqlSession, int username);
 
+	List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int cPage, int numPerPage, int param);
+
+	int selectCalendarCount2(SqlSessionTemplate sqlSession, int param);
+
+	int deleteCal(SqlSessionTemplate sqlSession, int data);
+
+
 }

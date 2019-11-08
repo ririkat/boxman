@@ -193,7 +193,7 @@
 				</div></li>
 
 			<!-- 일정 관리 -->
-			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do">
+			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do?data=${loginEmp['EMPNO'] }">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 

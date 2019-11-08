@@ -17,7 +17,17 @@ public interface CalendarService {
 	//회원번호로 스케줄 조회
 	List<Calendar> selectCalendarEmpNo(int username);
 	
-	//전체 스케줄 조회
+	//전체 스케줄 갯수 조회
 	int selectCalendarCount(int username);
+	
+	//회원번호 스케줄 조회2
+	List<Calendar> selectCalendarEmpNo(int cPage, int numPerPage, int param);
+	int selectCalendarCount2(int param);
+	
+	//일정 삭제
+	int deletecCal(int data);
+
+	
+
 
 }

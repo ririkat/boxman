@@ -44,7 +44,6 @@
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
   
 	<!-- 달력 -->
-	<link rel=" shortcut icon" href="image/favicon.ico">
 
     <link rel="stylesheet" href="${path }/resources/full/vendor/css/fullcalendar.min.css" />
     <link rel="stylesheet" href="${path }/resources/full/vendor/css/bootstrap.min.css">
@@ -211,7 +210,7 @@
 				</div></li>
 
 			<!-- 일정 관리 -->
-			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do">
+			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do?data=${loginEmp['EMPNO'] }">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 
@@ -638,15 +637,59 @@
         </div><!-- /.modal -->
 
         <div class="panel panel-default">
-
             <div class="panel-heading">
                 <h3 class="panel-title"></h3>
             </div>
-            
-            
-
-      
         </div>
+        <div class="card-header py-3">
+         <h4 class="m-0 font-weight-bold text-primary">일정 목록</h4>
+       </div>
+           <div class="row">
+                 <div class="col-sm-12">
+                    <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+						<tr>
+							<th scope="col">No</th>
+							<th scope="col">Title</th>
+							<th scope="col">Start</th>
+							<th scope="col">End</th>							
+							<th scope="col">Type</th>
+							<th scope="col"></th>
+						</tr>
+                       </thead>
+                       <tbody>
+                          <c:forEach items="${list}" var="cal" varStatus = "v">
+      						<tr>
+								<td>
+         						<c:if test="${param.cPage eq null }">
+         								<c:out value="${v.count }"/>
+         						</c:if>
+             					<c:if test="${param.cPage == 1 }">
+										<c:out value="${v.count }"/>
+								</c:if>			
+         						<c:if test="${param.cPage > 1 }">
+										<c:out value="${v.count+(5*(param.cPage-1)) }"/>
+								</c:if>
+								</td>
+         						<td>${cal.title}</td>
+         						<td>${cal.start}</td>
+         						<td>${cal.end}</td>        						
+         						<td>${cal.type}</td>
+         						<td>
+									<button type="button" class="btn btn-success mr-2"
+									onclick="location.href='${pageContext.request.contextPath }/calender/deleteCal.do?data=${cal._id }&empNo=${loginEmp['EMPNO'] }'">삭제</button>
+								</td>
+      						</tr>
+   						</c:forEach>
+                       </tbody>
+                     </table>
+                   </div>
+                 </div>
+               <div style="margin:0 auto; width:fit-content;">
+                 ${pageBar }
+               </div>
+        
+        
         <!-- /.filter panel -->
     </div>
     <!-- /.container -->
@@ -662,7 +705,7 @@
     <script src="${path }/resources/full/js/addEvent.js"></script>
     <script src="${path }/resources/full/js/editEvent.js"></script>
     <script src="${path }/resources/full/js/etcSetting.js"></script>
-    
+
 <!--     <script>
     var arr = [];
     var empNo = $('#empNo').val();

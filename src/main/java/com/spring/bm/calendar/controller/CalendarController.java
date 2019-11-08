@@ -32,31 +32,43 @@ public class CalendarController {
 	
 	/* 일정관리첫페이지로 이동 */
 	@RequestMapping("/calendar/allView.do")	//사원등록 폼으로 전환
-	public String allView(Model model) {
-		return "calendar/calendarAll";
+	public ModelAndView allView(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, Model model, @RequestParam(value = "data") int param) {
+
+	    int numPerPage = 5;
+	    
+		ModelAndView mv = new ModelAndView();
+		
+		List<Calendar> list = service.selectCalendarEmpNo(cPage, numPerPage, param);
+	    int totalCount = service.selectCalendarCount2(param);
+	    
+	    System.out.println("list나온거 : " + list);
+	    System.out.println("totalCount나온거 : " + totalCount);
+		
+	    mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/calendar/allView.do",""+param));
+		mv.addObject("list",list);
+		mv.addObject("count",totalCount);
+		mv.setViewName("calendar/calendarAll");
+	    
+		return mv;
 	}
 
 	//스케줄 등록
 	@RequestMapping("/calendar/insertCalendarEnd.do")
 	public @ResponseBody int insertCalendar(@RequestParam Map<String,Object> param) {
 		
-		for ( String key : param.keySet() ) {
-		    System.out.println("key : " + key +" / value : " + param.get(key));
-		}
-
-		int result = service.insertCalender(param); System.out.println("잘나오냐 : " + result);
+		int result = service.insertCalender(param);
 		 
-
-
-		 return result;
+		return result;
 	
 	}
 	
 	//스케줄 조회
 	@RequestMapping("/calendar/selectCal.do")
-	public @ResponseBody List<Calendar> selectCal(@RequestParam(value = "data") int username){
-		System.out.println(username);
-		List<Calendar> list = service.selectCalendarEmpNo(username);
+	public @ResponseBody List<Calendar> selectCal(@RequestParam(value = "data") int data){
+
+		List<Calendar> list = service.selectCalendarEmpNo(data);
+
 		
 		return list;
 	}
@@ -84,5 +96,31 @@ public class CalendarController {
 //		
 //		return mv;
 //	}
+	
+	//스케줄 삭제
+	@RequestMapping("/calender/deleteCal.do")
+	public ModelAndView updateCalendar(@RequestParam (value = "data") int data, @RequestParam(value = "empNo") int data2) {
+		
+		System.out.println(data);
+		
+		int result = service.deletecCal(data);
+		
+		String msg = "";
+		String loc = "/calendar/allView.do?data="+data2;
+		
+		if(result > 0) {
+			msg="스케줄 삭제 완료되었습니다.";
+		} else {
+			msg="스케줄 삭제 실패하였습니다.";
+		}
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("msg", msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
 
 }

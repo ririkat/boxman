@@ -91,11 +91,13 @@ var newEvent = function (start, end, eventType) {
             },
             dataType :'html',
             success: function (response) {
+            	console.log(response);
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('refetchEvents');
                 
                 if(response > 0) {
-                	alert("일정 등록 성공 \n 새로고침해주세요.");
+                	alert("일정 등록 성공 \n새로고침해주세요.");
+                	
                 } else {
                 	alert("일정 등록 실패");
                 }

@@ -3,6 +3,7 @@ package com.spring.bm.calendar.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -35,7 +36,25 @@ public class CalendarDaoImpl implements CalendarDao {
 	public int selectCalendarCount(SqlSessionTemplate sqlSession, int username) {
 		return sqlSession.selectOne("calendar.selectCalendarCount", username);
 	}
-	
+
+	@Override
+	public List<Calendar> selectCalendarEmpNo(SqlSessionTemplate sqlSession, int cPage, int numPerPage, int param) {
+		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("calendar.selectCalendarEmpNo2",param,rows);
+	}
+
+	@Override
+	public int selectCalendarCount2(SqlSessionTemplate sqlSession, int param) {
+		return sqlSession.selectOne("calendar.selectCalendarCount2", param);
+	}
+
+	@Override
+	public int deleteCal(SqlSessionTemplate sqlSession, int data) {
+		return sqlSession.delete("calendar.deleteCalendar",data);
+	}
+
+
+
 	
 	
 	
