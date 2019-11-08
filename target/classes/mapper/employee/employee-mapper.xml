@@ -100,8 +100,13 @@
 	<!-- 사원수정 -->
 	<update id="updateEmp" parameterType="map">
 		UPDATE EMPLOYEE SET EMPSAL=#{empSal}, EMPPHONE=#{empPhone}, EMPEMAIL=#{empEmail}, 
-			DEPTNO=#{deptNo}, JOBNO=#{jobNo}, EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr},
-			EMPSSN = #{empSSN}
+			EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr}
+			<!-- EMPSSN = #{empSSN} -->
+			<choose>
+				<when test="temp neq 'my'">
+					,DEPTNO=#{deptNo}, JOBNO=#{jobNo}
+				</when>
+			</choose>
 			WHERE EMPNO=#{empNo}
 	</update>
 	<!-- 비밀번호변경 -->
@@ -149,12 +154,13 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
+				AND A.ATTENDAY=TO_CHAR(SYSDATE,'YYYY-MM-DD')
 				ORDER BY A.ATTENDAY 
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND A.EMPNO=#{empNo}
-				ORDER BY A.ATTENDAY
+				ORDER BY A.ATTENDAY DESC
 			</when>
 			<when test="temp eq 'all'"><!-- 인사관리 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
@@ -165,11 +171,11 @@
 				<if test="type != null and type != ''">
 					<if test="type eq 'empNo'">
 						AND A.${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENDAY
+						ORDER BY B.DEPTNO, A.ATTENDAY DESC
 					</if>
 					<if test="type neq 'empNo'">
 						AND ${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENDAY
+						ORDER BY B.DEPTNO, A.ATTENDAY DESC
 					</if>
 				</if>
 			</when>
@@ -184,7 +190,7 @@
 		<choose>
 			<when test="temp eq 'search'">
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
-				AND EMPNO=#{empNo}
+				AND A.EMPNO=#{empNo}
 			</when>
 			<when test="temp eq 'searchAll'">
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
@@ -200,8 +206,9 @@
 			<when test="temp eq 'all'"><!-- 인사관리 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
 			</when>
-			<when test="temp eq 'my'"><!-- 인사관리 -->
+			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				AND A.EMPNO=#{empNo}
 			</when>
 		</choose>
 	</select>

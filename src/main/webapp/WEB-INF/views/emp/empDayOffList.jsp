@@ -33,7 +33,7 @@
 									</c:when>
 								</c:choose>
 								<input type="hidden" value="${loginEmp.EMPNO}" name="empNo"/>
-								
+								<input type="hidden" value="${temp}" name="temp" />
 								<label>Search:
 									<c:choose>
 										<c:when test="${temp eq 'my' or temp eq 'all'}"> 

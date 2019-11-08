@@ -85,6 +85,7 @@ public class EmployeeController {
 		Map<String, Object> empMap = service.selectEmpOne(empNo);
 		try {
 			empMap.replace("EMPSSN", enc.decrypt(String.valueOf(empMap.get("EMPSSN"))));
+			empMap.replace("EMPBANKNUM", enc.decrypt(String.valueOf(empMap.get("EMPBANKNUM"))));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -97,8 +98,10 @@ public class EmployeeController {
 		List<Map<String, String>> jobList = jService.empJobList();
 		String strAddr = String.valueOf(empMap.get("EMPADDR"));
 		String[] addr = strAddr.split("/");
-
+		
+		
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("temp", temp);
 		mv.addObject("emp", empMap);
 		mv.addObject("addr", addr);
 		mv.addObject("dept", dept);
@@ -163,6 +166,7 @@ public class EmployeeController {
 
 		try {
 			param.replace("empSSN", enc.encrypt(String.valueOf(param.get("empSSN"))));
+			param.replace("empBankNum", enc.encrypt(String.valueOf(param.get("empBankNum"))));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -275,6 +279,7 @@ public class EmployeeController {
 
 		try {
 			param.replace("empSSN", enc.encrypt(String.valueOf(param.get("empSSN"))));
+			param.replace("empBankNum", enc.encrypt(String.valueOf(param.get("empBankNum"))));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -348,7 +353,7 @@ public class EmployeeController {
 			}
 		}
 		int result = 0;
-		
+		logger.debug(""+param.get("temp"));
 		try {
 			result=service.updateEmp(param,fileList);
 		}catch (Exception e) {
@@ -356,7 +361,7 @@ public class EmployeeController {
 		}
 
 		String msg = "";
-		String loc = "/emp/selectEmpOne.do?empNo="+param.get("empNo");
+		String loc = "/emp/selectEmpOne.do?empNo="+param.get("empNo")+"&temp="+(""+param.get("temp"));
 		if(result > 0) {
 			msg = param.get("empName") + "사원이 수정되었습니다.";
 		} else {
@@ -468,10 +473,13 @@ public class EmployeeController {
 			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", temp));
 		}
 		if(String.valueOf(param.get("temp")).equals("search") || String.valueOf(param.get("temp")).equals("searchAll")) {
-			if(String.valueOf(param.get("type"))!=null && !String.valueOf(param.get("type")).equals("")) {
+			if(param.get("type")!=null && !String.valueOf(param.get("type")).equals("")) {
 				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp, String.valueOf(param.get("type")), String.valueOf(param.get("data"))));
 			} else {
-				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp));
+				if(String.valueOf(param.get("temp")).equals("search")) {
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp, String.valueOf(param.get("empNo"))));
+				} else
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp));
 			}
 			
 		}
@@ -511,7 +519,14 @@ public class EmployeeController {
 			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do",temp));
 		}
 		if(String.valueOf(param.get("temp")).equals("search") || String.valueOf(param.get("temp")).equals("searchAll")) {
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp));
+			if(param.get("type")!=null && !String.valueOf(param.get("type")).equals("")) {
+				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp, String.valueOf(param.get("type")), String.valueOf(param.get("data"))));
+			} else {
+				if(String.valueOf(param.get("temp")).equals("search")) {
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp, String.valueOf(param.get("empNo"))));
+				} else
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp));
+			}
 		}
 		mv.addObject("temp", temp);
 		mv.addObject("count", totalCount);
@@ -546,7 +561,14 @@ public class EmployeeController {
 			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do",temp));
 		}
 		if(String.valueOf(param.get("temp")).equals("search") || String.valueOf(param.get("temp")).equals("searchAll")) {
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp));
+			if(param.get("type")!=null && !String.valueOf(param.get("type")).equals("")) {
+				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp, String.valueOf(param.get("type")), String.valueOf(param.get("data"))));
+			} else {
+				if(String.valueOf(param.get("temp")).equals("search")) {
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp, String.valueOf(param.get("empNo"))));
+				} else
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp));
+			}
 		}
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);

@@ -112,14 +112,15 @@
 		});
 		
 	});
-	//검색
+	//기안하기
 	function validate() {
-		if($('#doRemainingDays')<$('#doDays')) {
+		if($('#doRemainingDays').val()<$('#doDays').val()) {
 			alert("남은 연차 일수보다 많이 사용할 수 없습니다.");
 			return false;
+		} else {
+			$('#doFrm').attr("action","${path}/emp/insertDayOffEnd.do");
+			$('#doFrm').submit();
 		}
-		$('#doFrm').attr("action","${path}/emp/insertDayOffEnd.do");
-		$('#doFrm').submit();
 	}
 	
 	

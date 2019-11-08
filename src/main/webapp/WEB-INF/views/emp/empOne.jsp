@@ -16,6 +16,7 @@
 				<form class="form-sample" id="empUpFrm" method="post"
 					enctype="multipart/form-data">
 					<input type="hidden" value='${emp["EMPNO"]}' name="empNo" id="empNo"/>
+					<input type="hidden" value='${temp}' name="temp" id="temp"/>
 					<p class="card-description">Personal info</p>
 					<div class="row">
 						<div class="col-md-6">
@@ -31,22 +32,29 @@
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">부서</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control selectBox" name="deptName"
+									<c:if test="${temp ne 'my'}">
+										<input type="text" class="form-control selectBox" name="deptName"
 										value='${dept["DEPTNAME"]}' readonly> 
-									<input type="hidden" name="deptNo" class="selectBox" value='${dept["DEPTNO"] }'/>
-									<select
-										name="deptNo" id="deptNo" class="form-control"
-										style="display: none;">
-										<option value='${dept["DEPTNO"]}'><c:out
-													value='${dept["DEPTNAME"]}' /></option>
-										<c:forEach items="${deptList}" var="d">
-											<c:set var="listNo" value="${d['DEPTNO']}"/>
-											<c:if test='${dept["DEPTNO"] ne listNo}'>
-												<option value="<c:out value='${d["DEPTNO"]}'/>">
-												<c:out value='${d["DEPTNAME"]}' /></option>
-											</c:if>
-										</c:forEach>
-									</select>
+									</c:if>
+									<c:if test="${temp eq 'my'}">
+										<input type="text" class="form-control noFalse" name="deptName"
+										value='${dept["DEPTNAME"]}' readonly> 
+									</c:if>
+									<c:if test="${temp ne 'my'}">
+										<select
+											name="deptNo" id="deptNo" class="form-control"
+											style="display: none;">
+											<option value='${dept["DEPTNO"]}'><c:out
+														value='${dept["DEPTNAME"]}' /></option>
+											<c:forEach items="${deptList}" var="d">
+												<c:set var="listNo" value="${d['DEPTNO']}"/>
+												<c:if test='${dept["DEPTNO"] ne listNo}'>
+													<option value="<c:out value='${d["DEPTNO"]}'/>">
+													<c:out value='${d["DEPTNAME"]}' /></option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -68,20 +76,27 @@
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">직급</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control selectBox"
-										value='${job["JOBNAME"] }' readonly /> 
-									<input type="hidden" value='${job["JOBNO"] }' class="selectBox"/>
-									<select name="jobNo"
-										id="jobNo" class="form-control" style="display: none;">
-										<option value='${job["JOBNO"]}'><c:out value='${job["JOBNAME"]}' /></option>
-										<c:forEach items="${jobList}" var="j">
-											<c:if test='${job["JOBNO"] ne j["JOBNO"]}'>
-												<option value="<c:out value='${j["JOBNO"]}'/>">
-													<c:out value='${j["JOBNAME"]}' />
-												</option>
-											</c:if>
-										</c:forEach>
-									</select>
+									<c:if test="${temp ne 'my'}">
+										<input type="text" class="form-control selectBox"
+											value='${job["JOBNAME"] }' readonly /> 
+									</c:if>
+									<c:if test="${temp eq 'my'}">
+										<input type="text" class="form-control noFalse"
+											value='${job["JOBNAME"] }' readonly /> 
+									</c:if>
+									<c:if test="${temp ne 'my'}">
+										<select name="jobNo"
+											id="jobNo" class="form-control" style="display: none;">
+											<option value='${job["JOBNO"]}'><c:out value='${job["JOBNAME"]}' /></option>
+											<c:forEach items="${jobList}" var="j">
+												<c:if test='${job["JOBNO"] ne j["JOBNO"]}'>
+													<option value="<c:out value='${j["JOBNO"]}'/>">
+														<c:out value='${j["JOBNAME"]}' />
+													</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</c:if>
 								</div>
 							</div>
 						</div>
@@ -123,7 +138,7 @@
 							<div class="form-group row">
 								<label class="col-sm-3 col-form-label">주민등록번호</label>
 								<div class="col-sm-9">
-									<input type="text" class="form-control" name="empSSN"
+									<input type="text" class="form-control noFalse" name="empSSN"
 										value='${emp["EMPSSN"]}' readonly>
 								</div>
 							</div>
@@ -209,16 +224,6 @@
 										</div>
 									</div>
 								</div>
-								<c:if test='${emp["EMPENTYN"] eq "Y"}'>
-									<div class="col-md-6">
-										<div class="form-group row">
-											<label class="col-sm-3 col-form-label">퇴사일자</label>
-											<div class="col-sm-9">
-												<input type="text" value="${emp['EMPENTDATE']}" class="form-control noFalse" readonly/>
-											</div>
-										</div>
-									</div>
-								</c:if>
 							</c:if>
 							<c:if test="${f.efcName eq '결재도장'}">
 							<input type="hidden" value='${f.efNo}' name="oriStampNo"/>
@@ -235,6 +240,16 @@
 					                </div>
 								</div>
 							</div>
+							<c:if test='${fn:trim(emp["EMPENTYN"]) eq "Y"}'>
+									<div class="col-md-6">
+										<div class="form-group row">
+											<label class="col-sm-3 col-form-label">퇴사일자</label>
+											<div class="col-sm-9">
+												<input type="text" value='<fmt:formatDate value="${emp.EMPENTDATE}" pattern="yyyy-MM-dd"/>' class="form-control noFalse" readonly/>
+											</div>
+										</div>
+									</div>
+								</c:if>
 							</c:if>
 						</div>
 						
@@ -248,7 +263,9 @@
                            	  	 <c:set var="empname" value='${emp["EMPNAME"]}'/>
                                  <c:set var="hiredate" value='${emp["EMPHIREDATE"]}'/>
                                  <c:set var="salary" value='${emp["EMPSAL"]}'/>
-                                 <button type="button" class="btn btn-success"  onclick="quit('${emp.EMPNO}', '${hiredate }', '${salary }', '${empname }');" data-toggle="modal"  data-target="#exampleModal">퇴사 시키기</button>
+                                 <c:if test='${temp ne "my"}'>
+                                 	<button type="button" class="btn btn-success"  onclick="quit('${emp.EMPNO}', '${hiredate }', '${salary }', '${empname }');" data-toggle="modal"  data-target="#exampleModal">퇴직처리</button>
+                                 </c:if>
                            </c:if>
 					</div>
 				</form>
