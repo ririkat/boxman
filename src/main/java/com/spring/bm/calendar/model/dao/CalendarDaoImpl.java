@@ -53,6 +53,49 @@ public class CalendarDaoImpl implements CalendarDao {
 		return sqlSession.delete("calendar.deleteCalendar",data);
 	}
 
+	@Override
+	public Calendar resultCalendar(SqlSessionTemplate sqlSession, int result) {
+		return sqlSession.selectOne("calendar.selectCal", result);
+	}
+
+	@Override
+	public List<Calendar> selectCalendar1(SqlSessionTemplate sqlSession, int cPage, int numPerPage, int data) {
+		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("calendar.selectCalendar1", data, rows);
+	}
+	
+	@Override
+	public List<Calendar> selectCalendar2(SqlSessionTemplate sqlSession, int cPage, int numPerPage, int data) {
+		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("calendar.selectCalendar2", data, rows);
+	}
+	
+	@Override
+	public List<Calendar> selectCalendar3(SqlSessionTemplate sqlSession, int cPage, int numPerPage, int data) {
+		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("calendar.selectCalendar3", data, rows);
+	}
+
+	@Override
+	public int selectCalendar1Count(SqlSessionTemplate sqlSession, int data) {
+		return sqlSession.selectOne("calendar.selectCalendar1Count", data);
+	}
+	
+	@Override
+	public int selectCalendar2Count(SqlSessionTemplate sqlSession, int data) {
+		return sqlSession.selectOne("calendar.selectCalendar2Count", data);
+	}
+	
+	@Override
+	public int selectCalendar3Count(SqlSessionTemplate sqlSession, int data) {
+		return sqlSession.selectOne("calendar.selectCalendar3Count", data);
+	}
+
+	@Override
+	public Calendar selectCno(SqlSessionTemplate sqlSession, int data) {
+		return sqlSession.selectOne("calendar.selectCal2", data);
+	}
+
 
 
 	

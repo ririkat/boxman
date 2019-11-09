@@ -39,11 +39,9 @@ public class CalendarController {
 	    
 		ModelAndView mv = new ModelAndView();
 		
+		//스케줄 조회 페이징처리
 		List<Calendar> list = service.selectCalendarEmpNo(cPage, numPerPage, param);
 	    int totalCount = service.selectCalendarCount2(param);
-	    
-	    System.out.println("list나온거 : " + list);
-	    System.out.println("totalCount나온거 : " + totalCount);
 		
 	    mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/calendar/allView.do",""+param));
 		mv.addObject("list",list);
@@ -55,11 +53,11 @@ public class CalendarController {
 
 	//스케줄 등록
 	@RequestMapping("/calendar/insertCalendarEnd.do")
-	public @ResponseBody int insertCalendar(@RequestParam Map<String,Object> param) {
+	public @ResponseBody Calendar insertCalendar(@RequestParam Map<String,Object> param) {
 		
-		int result = service.insertCalender(param);
+		Calendar c = service.insertCalender(param);
 		 
-		return result;
+		return c;
 	
 	}
 	
@@ -122,5 +120,77 @@ public class CalendarController {
 		
 		return mv;
 	}
-
+	
+	//개인별
+	@RequestMapping("/calender/1Cal.do")
+	public ModelAndView Calendar1(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, Model model, @RequestParam(value = "empNo") int data) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		int numPerPage = 5;
+		List<Calendar> list = service.selectCalendar1(cPage, numPerPage, data);
+		int totalCount = service.selectCalendar1Count(data);
+		
+	    mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/calender/1Cal.do",""+data));
+		mv.addObject("list",list);
+		mv.addObject("count",totalCount);
+		mv.setViewName("calendar/calendarAll");
+	    
+		return mv;
+	}
+	
+	//부서별
+	@RequestMapping("/calender/2Cal.do")
+	public ModelAndView Calendar2(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, Model model, @RequestParam(value = "empNo") int data) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		int numPerPage = 5;
+		List<Calendar> list = service.selectCalendar2(cPage, numPerPage, data);
+		int totalCount = service.selectCalendar2Count(data);
+		
+	    mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/calender/2Cal.do",""+data));
+		mv.addObject("list",list);
+		mv.addObject("count",totalCount);
+		mv.setViewName("calendar/calendarAll");
+	    
+		return mv;
+	}
+	
+	//회사별
+	@RequestMapping("/calender/3Cal.do")
+	public ModelAndView Calendar3(@RequestParam(value="cPage", 
+	         required=false, defaultValue="0") int cPage, Model model, @RequestParam(value = "empNo") int data) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		int numPerPage = 5;
+		List<Calendar> list = service.selectCalendar2(cPage, numPerPage, data);
+		int totalCount = service.selectCalendar2Count(data);
+		
+	    mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/calender/3Cal.do",""+data));
+		mv.addObject("list",list);
+		mv.addObject("count",totalCount);
+		mv.setViewName("calendar/calendarAll");
+	    
+		return mv;
+	}
+	
+	//일정 수정
+	@RequestMapping("/calendar/updateCal.do")
+	public ModelAndView updateCal(@RequestParam(value = "calNo") int data) {
+		System.out.println(data);
+		
+		//일정 번호로 조회
+		Calendar c = service.selectCno(data);
+		System.out.println("잘 나왔냐 : " + c);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("c", c);
+		mv.setViewName("calendar/updateCal");
+		
+		return mv;
+	}
 }

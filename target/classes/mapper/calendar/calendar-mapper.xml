@@ -24,5 +24,36 @@
  	<delete id = "deleteCalendar" parameterType="_int">
  		DELETE FROM SCHEDULE WHERE "_id" = #{data}
  	</delete>
+ 	
+ 	<select id = "selectCal" parameterType="_int" resultType="calendar">
+ 		SELECT * FROM SCHEDULE WHERE "_id" = #{result}
+ 	</select>
+ 	
+ 	<select id = "selectCalendar1" parameterType="_int" resultType = "calendar">
+ 		SELECT * FROM SCHEDULE WHERE "username" = #{data} AND "type" = '개인'
+ 	</select>
+ 	
+ 	<select id = "selectCalendar2" parameterType="_int" resultType = "calendar">
+ 		SELECT * FROM SCHEDULE WHERE "username" = #{data} AND "type" = '부서'
+ 	</select>
 
+ 	<select id = "selectCalendar3" parameterType="_int" resultType = "calendar">
+ 		SELECT * FROM SCHEDULE WHERE "username" = #{data} AND "type" = '회사'
+ 	</select>
+ 	
+ 	<select id = "selectCalendar1Count" parameterType="_int" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data} AND "type" = '개인' 
+ 	</select>
+ 	
+ 	 <select id = "selectCalendar2Count" parameterType="_int" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data} AND "type" = '부서' 
+ 	</select>
+ 	
+ 	 <select id = "selectCalendar3Count" parameterType="_int" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data} AND "type" = '회사' 
+ 	</select>
+ 	
+ 	<select id = "selectCal2" parameterType="_int" resultType="calendar">
+ 		SELECT * FROM SCHEDULE WHERE "_id" = #{data}
+ 	</select>
 </mapper>

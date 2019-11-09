@@ -165,6 +165,7 @@ var calendar = $('#calendar').fullCalendar({
       data: {
         // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
+      dataType : "json",
       success: function (response) {
     	  console.log(response);
         var fixedDate = response.map(function (array) {

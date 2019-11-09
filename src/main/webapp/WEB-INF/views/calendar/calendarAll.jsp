@@ -642,18 +642,48 @@
             </div>
         </div>
         <div class="card-header py-3">
+         <h4 class="m-0 font-weight-bold text-primary">새로운 일정</h4>
+       </div>
+           <div class="row">
+                 <div class="col-sm-12">
+                   <table class="table table-striped table-hover tablesorter" id="myTable2" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+						<tr>
+							<th scope="col">내용</th>						
+							<th scope="col">카테고리</th>
+						</tr>
+                       </thead>
+                       <tbody>
+                       
+                       </tbody>
+                   </table>
+                 </div>
+           </div>
+        <div class="card-header py-3">
          <h4 class="m-0 font-weight-bold text-primary">일정 목록</h4>
        </div>
+       <div class="card-header py-3">
+         <button type ="button" class="btn btn-success mr-2"
+		onclick="location.href='${pageContext.request.contextPath }/calender/1Cal.do?empNo=${loginEmp['EMPNO'] }'">개인</button>
+		
+		<button type ="button" class="btn btn-success mr-2"
+		onclick="location.href='${pageContext.request.contextPath }/calender/2Cal.do?empNo=${loginEmp['EMPNO'] }'">부서</button>
+		
+		<button type ="button" class="btn btn-success mr-2"
+		onclick="location.href='${pageContext.request.contextPath }/calender/3Cal.do?empNo=${loginEmp['EMPNO'] }'">회사</button>
+       </div>
+
            <div class="row">
                  <div class="col-sm-12">
                     <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
 						<tr>
 							<th scope="col">No</th>
-							<th scope="col">Title</th>
-							<th scope="col">Start</th>
-							<th scope="col">End</th>							
-							<th scope="col">Type</th>
+							<th scope="col">내용</th>
+							<th scope="col">시작 날짜</th>
+							<th scope="col">종료 날짜</th>							
+							<th scope="col">카테고리</th>
+							<th scope="col">참고번호</th>
 							<th scope="col"></th>
 						</tr>
                        </thead>
@@ -675,8 +705,10 @@
          						<td>${cal.start}</td>
          						<td>${cal.end}</td>        						
          						<td>${cal.type}</td>
+         						<td>${cal._id }</td>
          						<td>
-									<button type="button" class="btn btn-success mr-2"
+         							<button type ="button" class="btn btn-success mr-2 checkBtn" id = "btn1">수정</button>
+									<button type ="button" class="btn btn-success mr-2"
 									onclick="location.href='${pageContext.request.contextPath }/calender/deleteCal.do?data=${cal._id }&empNo=${loginEmp['EMPNO'] }'">삭제</button>
 								</td>
       						</tr>
@@ -688,7 +720,7 @@
                <div style="margin:0 auto; width:fit-content;">
                  ${pageBar }
                </div>
-        
+        	    <input type = "hidden" id = "empNo2" value = "${loginEmp['EMPNO'] }"/>
         
         <!-- /.filter panel -->
     </div>
@@ -705,6 +737,36 @@
     <script src="${path }/resources/full/js/addEvent.js"></script>
     <script src="${path }/resources/full/js/editEvent.js"></script>
     <script src="${path }/resources/full/js/etcSetting.js"></script>
+    <script>
+    
+
+    $(".checkBtn").click(function(){ 
+		
+		var str = ""
+		var tdArr = new Array();	// 배열 선언
+		var checkBtn = $(this);
+		
+		// checkBtn.parent() : checkBtn의 부모는 <td>이다.
+		// checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+		var tr = checkBtn.parent().parent();
+		var td = tr.children();
+		
+		var no = td.eq(5).text();
+		console.log(no);
+		
+		window.open("${path}/calendar/updateCal.do?calNo="+no,"일정 수정","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+		
+
+		
+    });
+
+		
+		
+
+       
+
+    </script>
+
 
 <!--     <script>
     var arr = [];
