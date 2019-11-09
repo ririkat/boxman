@@ -106,8 +106,6 @@
 				</div>
 				<div class = "col-sm-10">
 					<select name = "stuffMain" id = "stuffMain" class = "form-control">
-					    <option value = "${c.color }" style = "color: ${c.color};">
-					    <c:if test = "${c.color eq '#D25565'}">빨간색</c:if></option>
 						<option value="#D25565" style="color: #D25565;">빨간색</option>
 						<option value="#9775fa" style="color: #9775fa;">보라색</option>
 						<option value="#ffa94d" style="color: #ffa94d;">주황색</option>
