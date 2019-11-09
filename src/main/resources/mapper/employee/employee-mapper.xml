@@ -8,7 +8,7 @@
 		FROM DEPARTMENT D JOIN EMPLOYEE A ON (A.DEPTNO = D.DEPTNO)
 		JOIN
 		EMPJOB J ON (A.JOBNO=J.JOBNO)
-		ORDER BY A.JOBNO,A.EMPNO
+		ORDER BY A.EMPNO,A.DEPTNO,A.JOBNO
 	</select>
 	<select id="selectEmpCount" resultType="_int">
 		SELECT COUNT(*) FROM
@@ -171,11 +171,11 @@
 				<if test="type != null and type != ''">
 					<if test="type eq 'empNo'">
 						AND A.${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENDAY DESC
+						ORDER BY A.ATTENDAY DESC, B.DEPTNO
 					</if>
 					<if test="type neq 'empNo'">
 						AND ${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENDAY DESC
+						ORDER BY A.ATTENDAY DESC, B.DEPTNO
 					</if>
 				</if>
 			</when>
@@ -272,7 +272,7 @@
 	
 	<!-- 출장리스트출력 -->
 	<select id="selectBTList" parameterType="map" resultType="map">
-		SELECT A.*, B.*, C.*
+		SELECT A.*, B.*, C.*, BT.*
 		 FROM BUSINESSTRIP A 
 		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
 		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
@@ -321,6 +321,10 @@
 			</when>
 			<when test="temp eq 'all'">
 				AND TO_CHAR(BTSTART,'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
+			</when>
+			<when test="temp eq 'my'">
+				AND (EXTRACT(YEAR FROM SYSDATE)=EXTRACT(YEAR FROM BTSTART))
+				AND EMPNO=#{empNo}
 			</when>
 		</choose>
 	</select>
@@ -395,4 +399,22 @@
 		  #{btNo}, #{btpRoom}, #{btpTransportation}, #{btpEntertain}, DEFAULT, NULL, DEFAULT)
 	</insert>
 	
+	<!-- 사원수 통계 -->
+	<select id="empYearCount" resultType="map">
+		SELECT EXTRACT(YEAR FROM EMPHIREDATE) AS EYEAR, SUM(COUNT(*))
+		OVER(ORDER BY EXTRACT(YEAR FROM EMPHIREDATE) ROWS
+		BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS ECOUNT
+		FROM EMPLOYEE WHERE EMPENTYN='N'
+		GROUP BY EXTRACT(YEAR FROM EMPHIREDATE)
+	</select>
+	
+	<!-- 년도별 입/퇴사자수 -->
+	<select id="newEmpYearCount" resultType="map">
+		SELECT EXTRACT(YEAR FROM EMPHIREDATE) AS EYEAR,
+		COUNT(CASE EMPENTYN WHEN 'N' THEN 1 END) AS NEWEMP,
+		COUNT(CASE EMPENTYN WHEN 'Y' THEN 1 END) AS ENDEMP
+		FROM EMPLOYEE GROUP BY EXTRACT(YEAR FROM EMPHIREDATE)
+		ORDER BY EXTRACT(YEAR FROM EMPHIREDATE)
+	</select>
+
 </mapper>

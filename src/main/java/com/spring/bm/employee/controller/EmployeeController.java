@@ -32,6 +32,9 @@ import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.employee.model.vo.EmpFile;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 @Controller
 public class EmployeeController {
 
@@ -625,7 +628,7 @@ public class EmployeeController {
 		// 올해 휴가 신청 내역 있는지 조회
 		map.put("temp", "my");
 		map.put("empNo", empNo);
-		int result = service.selectDayOffCount(param);
+		int result = service.selectDayOffCount(map);
 		if(result > 0) {
 			map.replace("temp", "yes");	//해당 년도 휴가 신청 내역이 있을때
 		} else {
@@ -758,6 +761,32 @@ public class EmployeeController {
 		mv.setViewName("emp/empBTPForm");
 
 		return mv;
+	}
+	
+	/* 사원통계 */
+	@RequestMapping("/emp/empChart.do")
+	public ModelAndView empChart() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("emp/empChart");
+
+		return mv;
+	}
+	
+	/* 전체사원통계 */
+	@RequestMapping("/emp/empChartJson.do")
+	@ResponseBody
+	public List<Map<String, Object>> empChart1() {
+		List<Map<String, Object>> list = service.empYearCount();
+		return list;
+	}
+	
+	/* 입/퇴사통계 */
+	@RequestMapping("/emp/empChartJson2.do")
+	@ResponseBody
+	public List<Map<String, Object>> empChart2() {
+		List<Map<String, Object>> list = service.newEmpYearCount();
+
+		return list;
 	}
 	
 

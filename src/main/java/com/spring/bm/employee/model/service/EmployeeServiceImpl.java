@@ -251,6 +251,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	/* 사원통계 */
+	@Override
+	public List<Map<String, Object>> empYearCount() {
+		// TODO Auto-generated method stub
+		return dao.empYearCount(session);
+	}
+	@Override
+	public List<Map<String, Object>> newEmpYearCount() {
+		// TODO Auto-generated method stub
+		return dao.newEmpYearCount(session);
+	}
+	@Override
+	public List<Map<String, Object>> entEmpYearCount() {
+		// TODO Auto-generated method stub
+		return dao.entEmpYearCount(session);
+	}
+	
 
 	
 }

@@ -71,5 +71,10 @@ public interface EmployeeDao {
 	Map<String, Object> selectBTOne(SqlSessionTemplate session, Map<String, Object> param);
 	/* 출장비신청 */
 	int insertBTP(SqlSessionTemplate session, Map<String, Object> param);
+	/* 사원통계 */
+	List<Map<String, Object>> empYearCount(SqlSessionTemplate session);
+	List<Map<String, Object>> newEmpYearCount(SqlSessionTemplate session);
+	List<Map<String, Object>> entEmpYearCount(SqlSessionTemplate session);
+	/* 사원통계끝 */
 
 }

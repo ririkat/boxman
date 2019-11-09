@@ -123,7 +123,8 @@
 													<c:when test="${nowDate eq endDate or nowDate-1 eq endDate}">
 														<!-- 출장종료달, 출장종료-1달 에만 수정요청 가능 -->
 														<!-- 결재 종결 후 기안할 수 없음. -->
-														<c:if test="${fn:trim(e['BTCHECK']) eq 'Y' and endfDate<=nowfDate}">	<!--  and fn:trim(e['BTPCHECK']) eq 'N' -->
+														<c:if test="${fn:trim(e['BTCHECK']) eq 'Y' and endfDate<=nowfDate 
+														and (fn:trim(e['BTPCHECK']) eq 'N' or empty fn:trim(e['BTPCHECK']))}">	
 															<td>
 																<button type="button" class="btn btn-primary mr-2" onclick="location.href='${path}/emp/insertBTP.do?btNo=${e.BTNO}&temp=newMonthBTP&empNo=${e.EMPNO}'">
 																	출장비신청
@@ -163,7 +164,7 @@
 		
 		$('.pic').datepicker({
 		    format: "yyyy-mm-dd",	//데이터 포맷 형식(yyyy : 년 mm : 월 dd : 일 )
-		    startDate: '-1y',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
+		    startDate: '-10y',	//달력에서 선택 할 수 있는 가장 빠른 날짜. 이전으로는 선택 불가능 ( d : 일 m : 달 y : 년 w : 주)
 		    endDate: '+0d',	//달력에서 선택 할 수 있는 가장 느린 날짜. 이후로 선택 불가 ( d : 일 m : 달 y : 년 w : 주)
 		    autoclose : true,	//사용자가 날짜를 클릭하면 자동 캘린더가 닫히는 옵션
 		    calendarWeeks : false, //캘린더 옆에 몇 주차인지 보여주는 옵션 기본값 false 보여주려면 true

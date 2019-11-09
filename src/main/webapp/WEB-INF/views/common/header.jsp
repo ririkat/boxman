@@ -42,17 +42,18 @@
   <link rel="icon" href="${path }/resources/logo/boxmanLogo.ico" type="image/gif" sizes="16x16">
   <!-- datepicker -->
   <link rel="stylesheet" href="${path }/resources/hb/css/bootstrap-datepicker.css">
+  <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
+  <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
   
   <!-- tableSorter -->
   <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>
     
+  <!-- chart -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
-  <script>
-
-
-  </script>
-  <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
-  <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
 </head>
 <style>
 .table-responsive {
@@ -117,7 +118,6 @@
 		        </a>
 		        <div id="collapseMy" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		          <div class="bg-white py-2 collapse-inner rounded">
-		            <h6 class="collapse-header">Custom Components:</h6>
 		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}&temp=my">내정보확인</a>
 		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태현황</a>
 		            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?empNo=${loginEmp.EMPNO}&temp=my">휴가현황</a>
@@ -150,7 +150,6 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
             <a class="collapse-item" href="${path }/emp/empList.do?temp=all">사원관리</a>
             <a class="collapse-item" href="${path }/dept/deptList.do?t=N">부서관리</a>
             <a class="collapse-item" href="${path }/empJob/empJobList.do?t=N">직급관리</a>
@@ -169,7 +168,6 @@
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="${pageContext.request.contextPath}/stuff/stuffAllList.do">물품 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/maincategoryUpdate.do">메인 카테고리 관리</a>
             <a class="collapse-item" href="${pageContext.request.contextPath}/category/subcategoryUpdate.do">서브 카테고리 관리</a>
@@ -189,7 +187,6 @@
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
 					<div class="bg-white py-2 collapse-inner rounded">
-						<h6 class="collapse-header">Accounting</h6>
 						<a class="collapse-item" href="${path }/acct/is.do">손익계산표</a>
 						<a class="collapse-item" href="${path }/acct/wage.do">월급 관리</a> 
 						<a class="collapse-item" href="${path }/acct/biztrip.do">출장비 관리</a>
@@ -211,7 +208,6 @@
 	        
 	        <div id="collapseNotice" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 	          <div class="bg-white py-2 collapse-inner rounded">
-	            <h6 class="collapse-header">Custom Components:</h6>
 	            <a class="collapse-item" href="${path }/notice/selectNoticeList.do">공지사항</a>
 	            <a class="collapse-item" href="${path }/notice/selectNoticeDeptList.do">부서별게시판</a>
 	            <a class="collapse-item" href="${path }/notice/guidelineList.do">편람/지침</a>

@@ -237,5 +237,24 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		return session.insert("emp.insertBTP", param);
 	}
 
+	/* 사원통계 */
+	@Override
+	public List<Map<String, Object>> empYearCount(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.empYearCount");
+	}
+
+	@Override
+	public List<Map<String, Object>> newEmpYearCount(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.newEmpYearCount");
+	}
+
+	@Override
+	public List<Map<String, Object>> entEmpYearCount(SqlSessionTemplate session) {
+		// TODO Auto-generated method stub
+		return session.selectList("emp.entEmpYearCount");
+	}
+
 
 }
