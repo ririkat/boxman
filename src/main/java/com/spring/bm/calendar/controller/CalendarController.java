@@ -183,8 +183,22 @@ public class CalendarController {
 		
 		System.out.println("수정했어? : " + result);
 		
+		String msg = "";
+		String loc = "/calendar/updateCal.do?calNo=" + param.get("calNo");
+
+		if (result > 0) {
+			msg = "스케줄 수정 완료";
+		} else {
+			msg = "스케줄 수정 실패";
+		}
 
 		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
+		
+		
 
 		return mv;
 	}

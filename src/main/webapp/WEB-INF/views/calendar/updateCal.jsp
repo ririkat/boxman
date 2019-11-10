@@ -131,6 +131,33 @@
 			</div>
 				<div class = "col-sm-10">
 					<select name = "backgoundColor" id = "color" class = "form-control">
+					<c:if test='${fn:trim(c.backgroundColor) eq "#D25565"}'>
+						<option value="#D25565" style="color: #D25565;">빨간색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#9775fa"}'>
+						<option value="#D25565" style="color: #9775fa;">보라색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#ffa94d"}'>
+						<option value="#D25565" style="color: #ffa94d;">주황색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#74c0fc"}'>
+						<option value="#D25565" style="color: #74c0fc;">파란색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#f06595"}'>
+						<option value="#D25565" style="color: #f06595;">핑크색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#63e6be"}'>
+						<option value="#D25565" style="color: #63e6be;">연두색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#a9e34b"}'>
+						<option value="#D25565" style="color: #a9e34b;">초록색</option>
+					</c:if>
+					<c:if test='${fn:trim(c.backgroundColor) eq "#4d638c"}'>
+						<option value="#D25565" style="color: #4d638c;">남색</option>
+					</c:if>				
+					<c:if test='${fn:trim(c.backgroundColor) eq "#495057"}'>
+						<option value="#D25565" style="color: #495057;">검정색</option>
+					</c:if>									
 						<option value="#D25565" style="color: #D25565;">빨간색</option>
 						<option value="#9775fa" style="color: #9775fa;">보라색</option>
 						<option value="#ffa94d" style="color: #ffa94d;">주황색</option>
