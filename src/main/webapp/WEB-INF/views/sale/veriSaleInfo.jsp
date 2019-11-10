@@ -224,22 +224,28 @@
 
 <script>
 function enroll_validate() {
-	var trs = $('#dataTable2').children().eq(1).children();
-	for(var i=0; i<trs.length; i++){
-		var element = $("<input type='hidden' />");
-		element.attr("name", "stNo"+i);
-		element.attr("value", trs.eq(i).children().eq(0).text());
-		$("#enrollSalInfoFrm").append(element);
-		
-		var element2 = $("<input type='hidden' />");
-		element2.attr("name", "stNum"+i);
-		element2.attr("value", trs.eq(i).children().eq(4).find('input').val());
-		$("#enrollSalInfoFrm").append(element2);
+	if("${loginEmp['EMPNO']}" == "${saleInfo['EMPNO']}") {
+		var trs = $('#dataTable2').children().eq(1).children();
+		for(var i=0; i<trs.length; i++){
+			var element = $("<input type='hidden' />");
+			element.attr("name", "stNo"+i);
+			element.attr("value", trs.eq(i).children().eq(0).text());
+			$("#enrollSalInfoFrm").append(element);
+			
+			var element2 = $("<input type='hidden' />");
+			element2.attr("name", "stNum"+i);
+			element2.attr("value", trs.eq(i).children().eq(4).find('input').val());
+			$("#enrollSalInfoFrm").append(element2);
+		}
+		var count = $("<input type='hidden' name='cnt' />");
+		count.attr("value", trs.length);
+		$("#enrollSalInfoFrm").append(count);
+		return true;
 	}
-	var count = $("<input type='hidden' name='cnt' />");
-	count.attr("value", trs.length);
-	$("#enrollSalInfoFrm").append(count);
-	return true;
+	else {
+		alert("해당 판매정보를 등록한 사원만 결재올리기가 가능합니다.");
+		return false;
+	}
 }
 
 function submitCancel(){
