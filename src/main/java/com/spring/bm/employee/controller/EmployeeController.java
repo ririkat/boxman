@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spring.bm.common.PageBarFactory;
@@ -356,7 +357,6 @@ public class EmployeeController {
 			}
 		}
 		int result = 0;
-		logger.debug(""+param.get("temp"));
 		try {
 			result=service.updateEmp(param,fileList);
 		}catch (Exception e) {
@@ -594,16 +594,28 @@ public class EmployeeController {
 
 	/* 근태수정완료 */
 	@RequestMapping("/emp/updateAttenEnd.do")
-	public ModelAndView updateAttenEnd(@RequestParam Map<String, Object> param) {
-		ModelAndView mv = new ModelAndView();
-
+	public String updateAttenEnd(@RequestParam Map<String, Object> param, RedirectAttributes redirect, Model model) {
+		Map<String, Object> map = new HashMap();
+		String msg = "";
+		String loc = "";
+		String loc1 = "";
 		int result = 0;
 		if((""+param.get("temp")).equals("my")) {
 			try {
-				logger.debug("야야");
 				result = service.insertUpAttendance(param);
+				logger.debug("controller "+result);
 				if(result > 0) {
 					//근태수정요청 결재로 이동
+					map = service.selectUpAttendanceOne(result);
+					map.put("temp", "upAttendance");
+					redirect.addAllAttributes(map);
+					loc1 = "redirect:/apv/addReqApvEnroll.do";
+				} else {
+					msg = "error[304] 다시 신청해주세요";
+					loc = "emp/empAttendanceOne";
+					map = service.selectAttenNoOne(param);
+					model.addAttribute("att", map);
+					loc1 = "common/msg";
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -611,11 +623,7 @@ public class EmployeeController {
 			}
 		}
 
-		Map<String, Object> map = new HashMap();
-		map = service.selectAttenNoOne(param);
-		mv.addObject("att", map);
-		mv.setViewName("emp/empAttendanceOne");
-		return mv;
+		return loc1;
 	}
 
 	/* 휴가신청 */
@@ -643,7 +651,7 @@ public class EmployeeController {
 
 	/* 휴가신청 */
 	@RequestMapping("/emp/insertDayOffEnd.do")
-	public ModelAndView insertDayOffEnd(@RequestParam Map<String, Object> param) {
+	public String insertDayOffEnd(@RequestParam Map<String, Object> param, RedirectAttributes redirect, Model model) {
 
 		param.put("temp", "my");
 		int empNo = Integer.parseInt((""+param.get("empNo")));
@@ -660,30 +668,31 @@ public class EmployeeController {
 		int num = service.selectDoRemaining(param);
 		param.put("DOREMAININGDAYS", num);
 
+		Map<String, Object> map = new HashMap();	//결재로 넘길 map
+		
 		String loc = "";
+		String loc1 = "";
 		String msg = "/emp/empList.do";
 		result = 0;
 		try {
 			result = service.insertDayOff(param);
+			if(result > 0) {
+				map = service.selectDayoffOne(result);
+				map.put("temp", "dayoff");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "휴가신청이 실패하였습니다.";
+				loc= "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		ModelAndView mv = new ModelAndView();
-		if(result > 0) {
-			msg = "휴가신청이 완료되었습니다.";
-			loc = "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
-		} else {
-			msg = "휴가신청이 실패하였습니다.";
-			loc= "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
-			mv.setViewName("common/msg");
-		}
-
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
-
-		return mv;
+		return loc1;
 	}
 
 	/* 출장신청 */
@@ -699,33 +708,33 @@ public class EmployeeController {
 
 	/* 출장신청완료 */
 	@RequestMapping("/emp/insertBTEnd.do")
-	public ModelAndView insertBTEnd(@RequestParam Map<String, Object> param) {
-		ModelAndView mv = new ModelAndView();
+	public String insertBTEnd(@RequestParam Map<String, Object> param, RedirectAttributes redirect, Model model) {
 		int result = 0;
+		Map<String, Object> map = new HashMap();
+		int empNo = Integer.parseInt((""+param.get("empNo")));
+		String loc = "";
+		String loc1 = "";
+		String msg = "";
 		try {
 			result = service.insertBT(param);
+			if(result > 0) {
+				param.put("btNo", result);
+				map = service.selectBTOne(param);
+				map.put("temp", "businessTrip");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "출장신청이 실패하였습니다.";
+				loc= "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int empNo = Integer.parseInt((""+param.get("empNo")));
-		String msg = "";
-		String loc = "";
 
-		if(result > 0) {
-			msg = "출장신청이 완료되었습니다.";
-			loc = "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
-		} else {
-			msg = "출장신청이 실패하였습니다.";
-			loc= "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
-			mv.setViewName("common/msg");
-		}
-
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
-
-		return mv;
+		return loc1;
 	}
 	/*출장비용 청구*/
 	@RequestMapping("/emp/insertBTP.do")
@@ -747,20 +756,32 @@ public class EmployeeController {
 
 	/* 출장비용신청 */
 	@RequestMapping("/emp/insertBTPEnd.do")
-	public ModelAndView insertBTPEnd(@RequestParam Map<String, Object> param) {
-
+	public String insertBTPEnd(@RequestParam Map<String, Object> param,RedirectAttributes redirect, Model model) {
+		
 		int result = 0;
+		Map<String, Object> map = new HashMap();
+		String loc = "";
+		String loc1 = "";
+		String msg = "";
 		try {
 			result = service.insertBTP(param);
+			if(result > 0) {
+				param.put("btpNo", result);
+				map = service.selectBTPOne(result);
+				map.put("temp", "businessTripPay");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "출장신청이 실패하였습니다.";
+				loc= "emp/empBTPForm";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("emp/empBTPForm");
-
-		return mv;
+		return loc1;
 	}
 	
 	/* 사원통계 */

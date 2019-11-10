@@ -6,7 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="BoxMan" name="tabTitle" />
-	<jsp:param value='${emp["EMPNAME"]}' name="pageTitle" />
+	<jsp:param value='' name="pageTitle" />
 </jsp:include>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <section>
@@ -17,7 +17,7 @@
 					enctype="multipart/form-data">
 					<input type="hidden" value='${emp["EMPNO"]}' name="empNo" id="empNo"/>
 					<input type="hidden" value='${temp}' name="temp" id="temp"/>
-					<p class="card-description">Personal info</p>
+					<p class="card-description"><c:out value='${emp["EMPNAME"]} (${emp["EMPNO"]})'/></p>
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group row">

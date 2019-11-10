@@ -22,15 +22,6 @@
 	        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 	        	<div class="row">
 	        		<div class="col-sm-12 col-md-6">
-	        			<div class="dataTables_length" id="dataTable_length">
-	        				<label>Search:
-	         					<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
-	          			</label>
-						<button onclick="fn_search();"
-							class="btn btn-primary mr-2">
-							<span class="text">검색</span>
-						</button>
-	        			</div>
 	        		</div>
 	        		<div class="col-sm-12 col-md-6">
 	         		<div id="dataTable_filter" class="dataTables_filter">
@@ -78,4 +69,5 @@
 	   </div>
 ${pageBar }
 </section>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

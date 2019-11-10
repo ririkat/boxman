@@ -121,7 +121,6 @@
 											<c:if test="${temp eq 'my' or temp eq 'search'}">
 												<c:choose>
 													<c:when test="${nowDate eq endDate or nowDate-1 eq endDate}">
-														<!-- 출장종료달, 출장종료-1달 에만 수정요청 가능 -->
 														<!-- 결재 종결 후 기안할 수 없음. -->
 														<c:if test="${fn:trim(e['BTCHECK']) eq 'Y' and endfDate<=nowfDate 
 														and (fn:trim(e['BTPCHECK']) eq 'N' or empty fn:trim(e['BTPCHECK']))}">	

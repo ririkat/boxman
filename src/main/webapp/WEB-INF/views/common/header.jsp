@@ -50,7 +50,6 @@
     
   <!-- chart -->
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
  <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
  <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
@@ -326,7 +325,7 @@
 						                		if(data==1) {
 						                			alert(currentTime + " 퇴근체크되었습니다.");
 						                		} else {
-						                			alert("지정된 위치에서 출근체크 해주세요.");
+						                			alert("지정된 위치에서 퇴근체크 해주세요.");
 						                		}
 						                	}
 						                }); 

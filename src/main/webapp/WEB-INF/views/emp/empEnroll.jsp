@@ -85,7 +85,7 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">연봉</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" name="empSal" id="empSal" required>
+                <input type="text" class="form-control" name="empSal" id="empSal" onkeypress="f_onlyNum();" onkeyup="f_setCommaValue(this);" required>
               </div>
             </div>
           </div>
@@ -147,7 +147,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">전화번호</label>
                <div class="col-sm-9" style="">
-                 <input type="text" class="form-control" name="empPhone" placeholder="-없이 입력하세요" id="empPhone" required>
+                 <input type="text" class="form-control" name="empPhone" placeholder="-없이 입력하세요" id="empPhone" maxlength="11" required>
                </div>
              </div>
            </div>
@@ -155,7 +155,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">주민등록번호</label>
                <div class="col-sm-9">
-                 <input type="text" class="form-control" name="empSSN" id="empSSN" placeholder="123456-1234567" required>
+                 <input type="text" class="form-control" name="empSSN" id="empSSN" placeholder="123456-1234567" maxlength="14" required>
                </div>
              </div>
            </div>
@@ -268,8 +268,6 @@
  </div>
 </section>
 <script>
-	var setHeight = $('#setHeight').height();
-	
 	/* 아이디 중복검사 */
 	$(function(){
 		$('#empId').keyup(function(){
@@ -282,7 +280,6 @@
 				url:"${path}/emp/checkId.do",
 				data:{"empId":empId},
 				success:function(data){
-					console.log(data);
 					if(data == 0) {
 						$("span.okId").show();
 						$("span.noId").hide();
@@ -299,40 +296,11 @@
 		$('[name=proImg]').on('change', function(event){
 			var fileName=this.files[0].name;
 			var reader = new FileReader();
-			$(this).next('.custom-file-label').html(fileName);
-			reader.onload = function(e) {
-				$('#proImg').attr("src",e.target.result);
-			}
-			reader.readAsDataURL(this.files[0]);
-		});
-		$('[name=stampImg]').on('change', function(event){
-			var fileName=this.files[0].name;
-			var reader = new FileReader();
-			$(this).next('.custom-file-label').html(fileName);
-			reader.onload = function(e) {
-				$('#stampImg').attr("src",e.target.result);
-			}
-			reader.readAsDataURL(this.files[0]);
-		});
-	});
-	var count = 4;
-   
-   //유효성검사
-   $(function(){
-         $(document).on("click","#btnRemove",function(event){
-            setHeight = setHeight - 80;
-         $('#setHeight').css("height",setHeight + "px");
-            var pa = $(this).parent();
-              pa.remove();
-         });
-         
-         //확장자, 정규식 검사
-         $(document).on("change","input[name='upFile']",function(event) {
-            var ext = $(this).val().split('.').pop().toLowerCase();
+			var ext = $(this).val().split('.').pop().toLowerCase();
             var fileSize = (this).files[0].size;
             var maxSize = 1024*1024*1024;
             
-            if($.inArray(ext, ['gif','png','jpg','jpeg','doc','docx','xls','xlsx','hwp']) == -1) {
+            if($.inArray(ext, ['png','jpg','jpeg']) == -1) {
                alert("등록할 수 없는 확장자입니다.");
                $(this).val("");
                return;
@@ -343,14 +311,46 @@
                $(this).val("");
                return;
             }
-         });
+			$(this).next('.custom-file-label').html(fileName);
+			reader.onload = function(e) {
+				$('#proImg').attr("src",e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		});
+		$('[name=stampImg]').on('change', function(event){
+			var fileName=this.files[0].name;
+			var reader = new FileReader();
+			var ext = $(this).val().split('.').pop().toLowerCase();
+            var fileSize = (this).files[0].size;
+            var maxSize = 1024*1024*1024;
+            
+            if($.inArray(ext, ['png','jpg','jpeg']) == -1) {
+               alert("등록할 수 없는 확장자입니다.");
+               $(this).val("");
+               return;
+            } 
+            
+            if(fileSize > maxSize) {
+               alert("첨부파일 크기는 1GB 이내로 등록 가능합니다.");
+               $(this).val("");
+               return;
+            }
          
-         
+			$(this).next('.custom-file-label').html(fileName);
+			reader.onload = function(e) {
+				$('#stampImg').attr("src",e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		});
+	});
+   
+   //유효성검사
+   $(function(){         
          $('#empPhone').on("keyup",function() {
    		  $(this).val($(this).val().replace(/[^0-9]/g, ""));
    	   	 });
          
-         $('#pw2').blur(function(){
+         $('#pw2').on("keyup",function(){
 	         var pw = $('#pw').val();
 	         var pw2 = $('#pw2').val();
         	 if(pw == pw2) {
@@ -361,8 +361,63 @@
  				$("span.noPw").show();
         	 }
          });
-         
    });
+
+   String.prototype.trim = function() {
+       return this.replace(/(^\s*)|(\s*$)/gi, "");  
+   }
+
+   String.prototype.replaceAll = function(str1, str2) {  
+       var temp_str = "";  
+       if(this.trim() != "" && str1 != str2) {  
+           temp_str = this.trim();  
+           while (temp_str.indexOf(str1) > -1){  
+               temp_str = temp_str.replace(str1, str2);  
+           }  
+       }  
+       return temp_str;  
+   }
+
+   //input에 comma세팅
+   function f_setCommaValue(el){
+       var value = f_getOnlyNum(el);
+       var temp = '';
+       var idx = value.length % 3;
+       if(idx>0 && value.length > 3){
+           temp = value.substring(0, idx) + ',';
+           value = value.substring(idx);
+       }
+       for(i=(value.length/3) - 1; i>0; i--){
+           temp += value.substring(0, 3) + ',';
+           value = value.substring(3); 
+       }
+       temp += value;
+       el.value = temp;
+
+   }
+
+   // 숫자만 반환
+
+   function f_getOnlyNum(el){
+       var value = el.value;
+       if(value.trim().length == 0){
+           value = '0';
+    	}
+       value = value.replaceAll(',', '');
+       value = parseInt(value, 10).toString();
+       return value;
+   }
+  
+   //숫자만 입력
+   function f_onlyNum(){
+       var key = event.keyCode;
+       var messageArea = document.getElementById("ssnMessage");
+       if(!(key==8||key==9||key==13||key==46||key==144||(key>=48&&key<=57)||key==110||key==190)){
+           alert('숫자만 입력 가능합니다');
+           event.returnValue = false;
+       }
+
+   }
    
    function validate() {
       var empAddr = $('#sample6_postcode').val();

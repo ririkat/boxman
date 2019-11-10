@@ -268,6 +268,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dao.entEmpYearCount(session);
 	}
 	
+	/* 근태수정 한개보기 */
+	@Override
+	public Map<String, Object> selectUpAttendanceOne(int result) {
+		// TODO Auto-generated method stub
+		return dao.selectUpAttendanceOne(session, result);
+	}
+	
+	/* 휴가한개보기 */
+	@Override
+	public Map<String, Object> selectDayoffOne(int doNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDayoffOne(session, doNo);
+	}
+
+	/* 출장비한개보기 */
+	@Override
+	public Map<String, Object> selectBTPOne(int btpNo) {
+		// TODO Auto-generated method stub
+		return dao.selectBTPOne(session, btpNo);
+	}
+	
 
 	
 }

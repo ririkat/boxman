@@ -57,10 +57,11 @@
 													<option value="기타">기타</option>
 												</select> 
 											</td>
-											<td id="doRemainingDays"><c:out value='${e["DOREMAININGDAYS"]}'/></td>
+											<td><c:out value='${e["DOREMAININGDAYS"]}'/></td>
 										</tr>
 									</tbody>
 								</table>
+								<input type="hidden" value='${e["DOREMAININGDAYS"]}' id="doRemainingDays"/>
 								<div style="margin:0 auto; width:fit-content;">
 									<input type="button" class="btn btn-success mr-2" value="기안하기" onclick="return validate();" style="width:150px;">
 								</div>
@@ -117,9 +118,14 @@
 		if($('#doRemainingDays').val()<$('#doDays').val()) {
 			alert("남은 연차 일수보다 많이 사용할 수 없습니다.");
 			return false;
+		} else if($('#doDays').val()<0){
+			alert("종료일은 시작일보다 늦어야 합니다.");
+			return false;
 		} else {
-			$('#doFrm').attr("action","${path}/emp/insertDayOffEnd.do");
-			$('#doFrm').submit();
+			if(confirm("휴가신청 하시겠습니까?")) {
+				$('#doFrm').attr("action","${path}/emp/insertDayOffEnd.do");
+				$('#doFrm').submit();
+			}
 		}
 	}
 	
