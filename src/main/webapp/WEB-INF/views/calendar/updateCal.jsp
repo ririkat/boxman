@@ -85,15 +85,29 @@
 		<form id = "updateCalFrm" method = "post" action="${path}/calendar/updateCal2.do">
 		<div class="card-body">
 		<input type = "hidden" name = "calNo" value = "${c._id }"/>
-		 <div class="custom-control custom-checkbox mb-3">
 		<c:if test='${fn:trim(c.allDay) eq "true"}'>
-		 		<input type="checkbox" class="custom-control-input" id="customCheck" name="allDay" checked="checked">
-		 </c:if>
-		<c:if test='${fn:trim(c.allDay) eq "false"}'>
-				<input type="checkbox" class="custom-control-input" id="customCheck" name="allDay">
-		</c:if>
-				<label class="custom-control-label" for="customCheck">필독체크</label>
+		<label for="exampleInputName1">AllDay</label><br>
+		 	<div class="custom-control">
+		 		<input type="radio" class="custom-control-input" id="customCheck" name="allDay" value = "true" checked="checked">
+				<label class="custom-control-label" for="customCheck">Y</label>
 			</div>
+			<div class="custom-control">
+				<input type="radio" class="custom-control-input" id="customCheck1" name="allDay" value = "false">
+				<label class="custom-control-label" for="customCheck1">N</label>
+			</div>
+		</c:if>
+				<c:if test='${fn:trim(c.allDay) eq "false"}'>
+		<label for="exampleInputName1">AllDay</label><br>
+		 	<div class="custom-control">
+		 		<input type="radio" class="custom-control-input" id="customCheck" name="allDay" value = "true">
+				<label class="custom-control-label" for="customCheck">Y</label>
+			</div>
+			<div class="custom-control">
+				<input type="radio" class="custom-control-input" id="customCheck1" name="allDay" value = "false" checked="checked">
+				<label class="custom-control-label" for="customCheck1">N</label>
+			</div>
+		</c:if>
+		<br>
 			<div class="form-group">
 				<label for="exampleInputName1">Title</label> 
 				<input type="text" class="form-control" id="stuffName" value = "${c.title }" name="title">
@@ -116,7 +130,7 @@
 				<label class = "col-sm-2 col-form-labe">카테고리</label>
 			</div>
 				<div class = "col-sm-10">
-					<select name = "stuffMain" id = "color" class = "form-control">
+					<select name = "backgoundColor" id = "color" class = "form-control">
 						<option value="#D25565" style="color: #D25565;">빨간색</option>
 						<option value="#9775fa" style="color: #9775fa;">보라색</option>
 						<option value="#ffa94d" style="color: #ffa94d;">주황색</option>

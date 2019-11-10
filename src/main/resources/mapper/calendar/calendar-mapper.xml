@@ -56,4 +56,8 @@
  	<select id = "selectCal2" parameterType="_int" resultType="calendar">
  		SELECT * FROM SCHEDULE WHERE "_id" = #{data}
  	</select>
+ 	
+ 	<update id="updateCalendar" parameterType="map">
+ 		UPDATE SCHEDULE SET "title" = #{title}, "start" = #{start} , "end" = #{end} , "backgroundColor" = #{backgoundColor} , "type" = #{type} , "description" = #{description} , "allDay" = #{allDay} WHERE "_id" = #{calNo}
+ 	</update>
 </mapper>
