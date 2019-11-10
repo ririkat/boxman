@@ -132,6 +132,7 @@
                     <input type="file" class="custom-file-input" name="upFile" id="upFile" required="required">
                     <label class="custom-file-label" for="upFile">파일을 선택하세요</label>
                 	</div>
+                	<div id="fileCheck" class="rg-checkMsg card-title"></div>
 				</div>
 				
 				<br><br>
@@ -237,11 +238,17 @@
 		           var maxSize = 1024*1024*1024;
 		           
 		           if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
-		              alert("등록할 수 없는 확장자입니다.");
-		              var hh = document.getElementById('upFile');
-		              $(this).val("");
-		              return;
-		           } 
+		        	   	$(fileCheck).text("gif, png, jpg, jpeg 형식의 파일만 업로드 할 수 있습니다.");
+						$(fileCheck).css({
+							"color" : "red",
+							"font-size" : "15px"
+						});
+						$(fileCheck).prop("disabled",true);
+						$('#btn').attr('disabled', true);
+		           } else {
+		        	   $(fileCheck).text("");
+						$('#btn').prop("disabled",false);
+		           }
 		           
 		           if(fileSize > maxSize) {
 		              alert("첨부파일 크기는 1GB 이내로 등록 가능합니다.");

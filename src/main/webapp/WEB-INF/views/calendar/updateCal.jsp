@@ -82,7 +82,7 @@
 		<div class="card-header py-3">
 			<h6 class="m-0 font-weight-bold text-primary">일정 수정</h6>
 		</div>
-		<form id = "updateCalFrm" method = "post" action="${path}/calendar/updateCal2.do">
+		<form id = "updateCalFrm" method = "post" action="${path}/calendar/updateCal2.do" onsubmit="return checkValue();">
 		<div class="card-body">
 		<input type = "hidden" name = "calNo" value = "${c._id }"/>
 		<c:if test='${fn:trim(c.allDay) eq "true"}'>
@@ -122,7 +122,7 @@
 			<div class="form-group">
 				<label for="exampleInputName1">End</label>
  				 				<input type="date"
-					class="form-control" id="exampleInputName1"
+					class="form-control" id="exampleInputName2"
 					name="end" value = "${c.end }">
 			</div>
 			
@@ -193,6 +193,16 @@
 	</div>
 
 </section>
+
+<script>
+	function checkValue() {
+		if($('#exampleInputName1').val() > $('#exampleInputName2').val()) {
+			alert("종료 날짜는 시작 날짜보다 빠를 수 없습니다!");
+			
+			return false;
+		}
+	}
+</script>
 
 
 
