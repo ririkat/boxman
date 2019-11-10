@@ -175,13 +175,6 @@
 		});
 	});
     
-    $(function(){
-    	$('[name=upFile]').on('change', function(){
-    		var fileName = this.files[0].name;
-    		$(this).next('.custom-file-label').html(fileName);
-    	
-    	})  
-      });
     
 	function readURL(input) {
 		  if (input.files && input.files[0]) {
@@ -233,6 +226,38 @@
 						});
 					});
 				});
+		
+		
+		    $(function(){
+		        
+		        //확장자, 정규식 검사
+		        $(document).on("change","input[name='upFile']",function(event) {
+		           var ext = $(this).val().split('.').pop().toLowerCase();
+		           var fileSize = (this).files[0].size;
+		           var maxSize = 1024*1024*1024;
+		           
+		           if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+		              alert("등록할 수 없는 확장자입니다.");
+		              var hh = document.getElementById('upFile');
+		              $(this).val("");
+		              return;
+		           } 
+		           
+		           if(fileSize > maxSize) {
+		              alert("첨부파일 크기는 1GB 이내로 등록 가능합니다.");
+		              $(this).val("");
+		              return;
+		           }
+		        });
+		     });
+		    
+			$(function(){
+		    	$('[name=upFile]').on('change', function(){
+		    		var fileName = this.files[0].name;
+		    		$(this).next('.custom-file-label').html(fileName);
+		    	
+		    	})  
+		      });
 		 
 </script>
 

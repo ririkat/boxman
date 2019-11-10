@@ -624,7 +624,7 @@
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-desc">설명</label>
                                 <textarea rows="4" cols="50" class="inputModal" name="edit-desc"
-                                    id="edit-desc"></textarea>
+                                    id="edit-desc" style = "resize: none"></textarea>
                             </div>
                         </div>
                     </div>

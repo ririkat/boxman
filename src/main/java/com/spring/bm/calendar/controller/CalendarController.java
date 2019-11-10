@@ -71,30 +71,6 @@ public class CalendarController {
 		return list;
 	}
 	
-
-//	//스케줄 수정
-//	@RequestMapping("/calendar/updateCalendar.do")
-//	public ModelAndView updateCalendar(@RequestParam Map<String,Object> param) {
-//		
-//		int result = service.updateCalendar(param);
-//		
-//		String msg="";
-//		String loc="/calendar/allView.do";
-//		if(result>0) {
-//			msg="스케줄 수정이 완료되었습니다.";
-//		}else {
-//			msg="스케줄 수정에 실패하였습니다.";
-//		}
-//		
-//		ModelAndView mv = new ModelAndView();
-//		
-//		mv.addObject("msg",msg);
-//		mv.addObject("loc",loc);
-//		mv.setViewName("common/msg");
-//		
-//		return mv;
-//	}
-	
 	//스케줄 삭제
 	@RequestMapping("/calender/deleteCal.do")
 	public ModelAndView updateCalendar(@RequestParam (value = "data") int data, @RequestParam(value = "empNo") int data2) {
@@ -167,8 +143,8 @@ public class CalendarController {
 		ModelAndView mv = new ModelAndView();
 		
 		int numPerPage = 5;
-		List<Calendar> list = service.selectCalendar2(cPage, numPerPage, data);
-		int totalCount = service.selectCalendar2Count(data);
+		List<Calendar> list = service.selectCalendar3(cPage, numPerPage, data);
+		int totalCount = service.selectCalendar3Count(data);
 		
 	    mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/calender/3Cal.do",""+data));
 		mv.addObject("list",list);
@@ -178,7 +154,7 @@ public class CalendarController {
 		return mv;
 	}
 	
-	//일정 수정
+	//일정 수정 화면 전환
 	@RequestMapping("/calendar/updateCal.do")
 	public ModelAndView updateCal(@RequestParam(value = "calNo") int data) {
 		System.out.println(data);
@@ -192,5 +168,25 @@ public class CalendarController {
 		mv.setViewName("calendar/updateCal");
 		
 		return mv;
+	}
+	
+	//일정 수정 동작
+	@RequestMapping("/calendar/updateCal2.do")
+	public ModelAndView updateCalEnd(@RequestParam Map<String, String> param) {
+		
+		for ( String key : param.keySet() ) {
+		    System.out.println("key : " + key +" / value : " + param.get(key));
+		}
+		
+		if(param.get("allDay").equals("on")) {
+			param.put("allDay", "true");
+
+		}
+		
+		System.out.println(param.get("allDay"));
+		
+		ModelAndView mv = new ModelAndView();
+		
+		return null;
 	}
 }

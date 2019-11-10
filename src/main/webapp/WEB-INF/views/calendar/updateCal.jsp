@@ -48,6 +48,7 @@
     
   <script src="${path }/resources/hb/js/bootstrap-datepicker.js"></script>
   <script src="${path }/resources/hb/js/bootstrap-datepicker.ko.js"></script>
+
 </head>
 <style>
 .table-responsive {
@@ -81,8 +82,18 @@
 		<div class="card-header py-3">
 			<h6 class="m-0 font-weight-bold text-primary">일정 수정</h6>
 		</div>
+		<form id = "updateCalFrm" method = "post" action="${path}/calendar/updateCal2.do">
 		<div class="card-body">
 		<input type = "hidden" name = "calNo" value = "${c._id }"/>
+		 <div class="custom-control custom-checkbox mb-3">
+		<c:if test='${fn:trim(c.allDay) eq "true"}'>
+		 		<input type="checkbox" class="custom-control-input" id="customCheck" name="allDay" checked="checked">
+		 </c:if>
+		<c:if test='${fn:trim(c.allDay) eq "false"}'>
+				<input type="checkbox" class="custom-control-input" id="customCheck" name="allDay">
+		</c:if>
+				<label class="custom-control-label" for="customCheck">필독체크</label>
+			</div>
 			<div class="form-group">
 				<label for="exampleInputName1">Title</label> 
 				<input type="text" class="form-control" id="stuffName" value = "${c.title }" name="title">
@@ -91,21 +102,21 @@
 				<label for="exampleInputName1">Start</label>
  				<input type="date"
 					class="form-control" id="exampleInputName1"
-					name="calsStart" value = "${c.start }">
+					name="start" value = "${c.start }">
 			</div>
 			
 			<div class="form-group">
 				<label for="exampleInputName1">End</label>
  				 				<input type="date"
 					class="form-control" id="exampleInputName1"
-					name="calsEnd" value = "${c.end }">
+					name="end" value = "${c.end }">
 			</div>
 			
 		    <div class = "form-group row">
 				<label class = "col-sm-2 col-form-labe">카테고리</label>
-				</div>
+			</div>
 				<div class = "col-sm-10">
-					<select name = "stuffMain" id = "stuffMain" class = "form-control">
+					<select name = "stuffMain" id = "color" class = "form-control">
 						<option value="#D25565" style="color: #D25565;">빨간색</option>
 						<option value="#9775fa" style="color: #9775fa;">보라색</option>
 						<option value="#ffa94d" style="color: #ffa94d;">주황색</option>
@@ -117,11 +128,31 @@
 						<option value="#495057" style="color: #495057;">검정색</option>
 					</select>	
 				</div>
-
+				<br>
+		    <div class = "form-group row">
+				<label class = "col-sm-2 col-form-labe">구분</label>
+			</div>
+				<div class = "col-sm-10">
+					<select class="form-control" name="type" id="edit-type">
+					    <option value = "${c.type }">${c.type }</option>
+						<option value="개인">개인</option>
+						<option value="부서">부서</option>
+						<option value="회사">회사</option>
+					</select>
+				</div>
+				<br>
+				<div class="form-group">
+                        <label for="exampleTextarea1">설명</label>
+                        <textarea rows="8" cols="20" class = "form-control" id = "etc" name = "description" style = "resize: none">${c.description }</textarea>
+            	</div>
+            	<input type = "submit" class = "btn btn-success mr-2" value="수정" id = "btn">
 		</div>
+					
+		</form>
 	</div>
 
 </section>
+
 
 
 </body>
