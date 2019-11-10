@@ -94,7 +94,7 @@
                         <button class="btn btn-primary" id="removeAll" onclick="removeAll()" >비우기</button>
                      </div>   
                      </div>
-                        <div class="row" style="height:300px; overflow: hidden;  padding:5px; border: thin solid gray;">
+                        <div class="row" style="height:400px; overflow: hidden;  padding:5px; border: thin solid gray;">
                            <div class="col-sm-12" >
                            <form id="apvLineForm" class="form-controll" style="width:100%">
                            <table class="table table-stripped">
@@ -104,6 +104,14 @@
                                  </th>
                                  <td>
                                  <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" />
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <th>
+                                 설명
+                                 </th>
+                                 <td>
+                                 <input type="text" name="description" id="description" style="width:600px;" />
                                  </td>
                               </tr>
                               <tr>
@@ -149,11 +157,7 @@
                                        var tbody = $('#empListTbl').children('#body');
                                        tbody.html("");
                                        $.each(result,function(idx,val) {
-                                                      //체크박스
-                                                      //사원번호
-                                                      //부서
-                                                      //직급
-                                                      //사원명
+                                                      //체크박스,사원번호,부서,직급,사원명
                                                       var tr = $('<tr>');
                                                       var ckbox = $('<input>').attr({
                                                                      "type" : "checkbox",
@@ -225,11 +229,13 @@
             
             var myObject=new Object();
             var apvLTitle=$('#apvLTitle').val();
+            var description=$('#description').val();
             var selOpts=new Array();
             $('#apvL option').each(function(){
             	selOpts.push($(this).val());
             })
             myObject["apvLTitle"]=apvLTitle;
+            myObject["description"]=description;
             myObject["selOpts"]=selOpts;
 
             $.ajax({

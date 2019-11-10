@@ -117,8 +117,7 @@
 						</div>
 					</div>
 				</div>
-				<input type="button" class="btn btn-primary" style="width: 100%"
-					onclick="submitRequestApv();" />
+				<button type="button" class="btn btn-primary" style="width: 100%" onclick="submitRequestApv();">기안하기</button>
 			</form>
 		</div>
 
@@ -140,10 +139,6 @@
 					var url="${path}/apv/requestApvLineEnroll.do";
 		      		var name="결재라인등록"
 		            window.open(url,name,"width=1000,height=800,left=600");
-		      		
-		      		<%-- opener.document.getElementById("cid_").value='<%=id%>';
-					opener.document.getElementById("cpass").focus(); --%>
-					/* 팝업에서 세팅할 때 사용!! */
 				}
 				
 				function returnApvLA(value,idx){
@@ -173,8 +168,6 @@
 					
 					var headContent=$('#id01').html().trim();
 					formContents["headContent"]=headContent;
-					
-					console.log(formContents);
 					
 					$.ajax({
 						url:"${path}/apv/requestApvEnrollEnd.do",
