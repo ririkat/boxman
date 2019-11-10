@@ -494,7 +494,7 @@
 		var userId = $("#userId").val();
 
 		//안읽은메세지수 출력
-		$(function(){
+		/* $(function(){
 					timer = setInterval(function(){
 						$.ajax({
 							type:"post",
@@ -511,7 +511,7 @@
 							}
 						});
 					},1000);
-			}); 
+			});  */
 			
 			function showUnread(result){
 				$('#unread').html(result);
