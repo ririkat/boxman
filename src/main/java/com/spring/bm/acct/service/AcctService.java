@@ -36,6 +36,9 @@ public interface AcctService {
 	/* severance search */
 	List<Map<String, String>> selectSevSearchList(int cPage, int numPerPage, Map<String, Object> param);
 	int sevSearchCount(Map<String, Object> param);
+
+	/* 퇴직금한개보기 */
+	Map<String, String> selectSevOne(String empno);
 	
 	
 

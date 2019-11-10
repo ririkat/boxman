@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.spring.bm.common.PageBarFactory;
@@ -31,6 +32,9 @@ import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.employee.model.vo.EmpFile;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 public class EmployeeController {
@@ -85,6 +89,7 @@ public class EmployeeController {
 		Map<String, Object> empMap = service.selectEmpOne(empNo);
 		try {
 			empMap.replace("EMPSSN", enc.decrypt(String.valueOf(empMap.get("EMPSSN"))));
+			empMap.replace("EMPBANKNUM", enc.decrypt(String.valueOf(empMap.get("EMPBANKNUM"))));
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -97,8 +102,10 @@ public class EmployeeController {
 		List<Map<String, String>> jobList = jService.empJobList();
 		String strAddr = String.valueOf(empMap.get("EMPADDR"));
 		String[] addr = strAddr.split("/");
-
+		
+		
 		ModelAndView mv = new ModelAndView();
+		mv.addObject("temp", temp);
 		mv.addObject("emp", empMap);
 		mv.addObject("addr", addr);
 		mv.addObject("dept", dept);
@@ -163,6 +170,7 @@ public class EmployeeController {
 
 		try {
 			param.replace("empSSN", enc.encrypt(String.valueOf(param.get("empSSN"))));
+			param.replace("empBankNum", enc.encrypt(String.valueOf(param.get("empBankNum"))));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -275,6 +283,7 @@ public class EmployeeController {
 
 		try {
 			param.replace("empSSN", enc.encrypt(String.valueOf(param.get("empSSN"))));
+			param.replace("empBankNum", enc.encrypt(String.valueOf(param.get("empBankNum"))));
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -348,7 +357,6 @@ public class EmployeeController {
 			}
 		}
 		int result = 0;
-		
 		try {
 			result=service.updateEmp(param,fileList);
 		}catch (Exception e) {
@@ -356,7 +364,7 @@ public class EmployeeController {
 		}
 
 		String msg = "";
-		String loc = "/emp/selectEmpOne.do?empNo="+param.get("empNo");
+		String loc = "/emp/selectEmpOne.do?empNo="+param.get("empNo")+"&temp="+(""+param.get("temp"));
 		if(result > 0) {
 			msg = param.get("empName") + "사원이 수정되었습니다.";
 		} else {
@@ -468,10 +476,13 @@ public class EmployeeController {
 			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", temp));
 		}
 		if(String.valueOf(param.get("temp")).equals("search") || String.valueOf(param.get("temp")).equals("searchAll")) {
-			if(String.valueOf(param.get("type"))!=null && !String.valueOf(param.get("type")).equals("")) {
+			if(param.get("type")!=null && !String.valueOf(param.get("type")).equals("")) {
 				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp, String.valueOf(param.get("type")), String.valueOf(param.get("data"))));
 			} else {
-				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp));
+				if(String.valueOf(param.get("temp")).equals("search")) {
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp, String.valueOf(param.get("empNo"))));
+				} else
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectAttenList.do", startDay, endDay, temp));
 			}
 			
 		}
@@ -511,7 +522,14 @@ public class EmployeeController {
 			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do",temp));
 		}
 		if(String.valueOf(param.get("temp")).equals("search") || String.valueOf(param.get("temp")).equals("searchAll")) {
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp));
+			if(param.get("type")!=null && !String.valueOf(param.get("type")).equals("")) {
+				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp, String.valueOf(param.get("type")), String.valueOf(param.get("data"))));
+			} else {
+				if(String.valueOf(param.get("temp")).equals("search")) {
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp, String.valueOf(param.get("empNo"))));
+				} else
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectDayOffList.do", startDay, endDay, temp));
+			}
 		}
 		mv.addObject("temp", temp);
 		mv.addObject("count", totalCount);
@@ -546,7 +564,14 @@ public class EmployeeController {
 			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do",temp));
 		}
 		if(String.valueOf(param.get("temp")).equals("search") || String.valueOf(param.get("temp")).equals("searchAll")) {
-			mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp));
+			if(param.get("type")!=null && !String.valueOf(param.get("type")).equals("")) {
+				mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp, String.valueOf(param.get("type")), String.valueOf(param.get("data"))));
+			} else {
+				if(String.valueOf(param.get("temp")).equals("search")) {
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp, String.valueOf(param.get("empNo"))));
+				} else
+					mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/emp/selectBTList.do", startDay, endDay, temp));
+			}
 		}
 		mv.addObject("temp", String.valueOf(param.get("temp")));
 		mv.addObject("count", totalCount);
@@ -569,16 +594,30 @@ public class EmployeeController {
 
 	/* 근태수정완료 */
 	@RequestMapping("/emp/updateAttenEnd.do")
-	public ModelAndView updateAttenEnd(@RequestParam Map<String, Object> param) {
-		ModelAndView mv = new ModelAndView();
-
+	public String updateAttenEnd(@RequestParam Map<String, Object> param, RedirectAttributes redirect, Model model) {
+		Map<String, Object> map = new HashMap();
+		String msg = "";
+		String loc = "";
+		String loc1 = "";
 		int result = 0;
 		if((""+param.get("temp")).equals("my")) {
 			try {
-				logger.debug("야야");
 				result = service.insertUpAttendance(param);
+				logger.debug("controller "+result);
 				if(result > 0) {
 					//근태수정요청 결재로 이동
+					map = service.selectUpAttendanceOne(result);
+					map.put("temp", "upAttendance");
+					redirect.addAllAttributes(map);
+					loc1 = "redirect:/apv/addReqApvEnroll.do";
+				} else {
+					msg = "error[304] 다시 신청해주세요";
+					loc = "emp/empAttendanceOne";
+					map = service.selectAttenNoOne(param);
+					model.addAttribute("msg", msg);
+					model.addAttribute("loc", loc);
+					model.addAttribute("att", map);
+					loc1 = "common/msg";
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -586,11 +625,7 @@ public class EmployeeController {
 			}
 		}
 
-		Map<String, Object> map = new HashMap();
-		map = service.selectAttenNoOne(param);
-		mv.addObject("att", map);
-		mv.setViewName("emp/empAttendanceOne");
-		return mv;
+		return loc1;
 	}
 
 	/* 휴가신청 */
@@ -603,7 +638,7 @@ public class EmployeeController {
 		// 올해 휴가 신청 내역 있는지 조회
 		map.put("temp", "my");
 		map.put("empNo", empNo);
-		int result = service.selectDayOffCount(param);
+		int result = service.selectDayOffCount(map);
 		if(result > 0) {
 			map.replace("temp", "yes");	//해당 년도 휴가 신청 내역이 있을때
 		} else {
@@ -618,7 +653,7 @@ public class EmployeeController {
 
 	/* 휴가신청 */
 	@RequestMapping("/emp/insertDayOffEnd.do")
-	public ModelAndView insertDayOffEnd(@RequestParam Map<String, Object> param) {
+	public String insertDayOffEnd(@RequestParam Map<String, Object> param, RedirectAttributes redirect, Model model) {
 
 		param.put("temp", "my");
 		int empNo = Integer.parseInt((""+param.get("empNo")));
@@ -635,30 +670,31 @@ public class EmployeeController {
 		int num = service.selectDoRemaining(param);
 		param.put("DOREMAININGDAYS", num);
 
+		Map<String, Object> map = new HashMap();	//결재로 넘길 map
+		
 		String loc = "";
-		String msg = "/emp/empList.do";
+		String loc1 = "";
+		String msg = "";
 		result = 0;
 		try {
 			result = service.insertDayOff(param);
+			if(result > 0) {
+				map = service.selectDayoffOne(result);
+				map.put("temp", "dayoff");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "휴가신청이 실패하였습니다.";
+				loc= "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		ModelAndView mv = new ModelAndView();
-		if(result > 0) {
-			msg = "휴가신청이 완료되었습니다.";
-			loc = "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
-		} else {
-			msg = "휴가신청이 실패하였습니다.";
-			loc= "/emp/selectDayOffList.do?empNo=" + empNo+"&temp=my";
-			mv.setViewName("common/msg");
-		}
-
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
-
-		return mv;
+		return loc1;
 	}
 
 	/* 출장신청 */
@@ -674,33 +710,33 @@ public class EmployeeController {
 
 	/* 출장신청완료 */
 	@RequestMapping("/emp/insertBTEnd.do")
-	public ModelAndView insertBTEnd(@RequestParam Map<String, Object> param) {
-		ModelAndView mv = new ModelAndView();
+	public String insertBTEnd(@RequestParam Map<String, Object> param, RedirectAttributes redirect, Model model) {
 		int result = 0;
+		Map<String, Object> map = new HashMap();
+		int empNo = Integer.parseInt((""+param.get("empNo")));
+		String loc = "";
+		String loc1 = "";
+		String msg = "";
 		try {
 			result = service.insertBT(param);
+			if(result > 0) {
+				param.put("btNo", result);
+				map = service.selectBTOne(param);
+				map.put("temp", "businessTrip");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "출장신청이 실패하였습니다.";
+				loc= "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int empNo = Integer.parseInt((""+param.get("empNo")));
-		String msg = "";
-		String loc = "";
 
-		if(result > 0) {
-			msg = "출장신청이 완료되었습니다.";
-			loc = "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
-		} else {
-			msg = "출장신청이 실패하였습니다.";
-			loc= "/emp/selectBTList.do?empNo=" + empNo+"&temp=my";
-			mv.setViewName("common/msg");
-		}
-
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
-
-		return mv;
+		return loc1;
 	}
 	
 	/*출장비용 청구*/
@@ -721,21 +757,58 @@ public class EmployeeController {
 
 	/* 출장비용신청 */
 	@RequestMapping("/emp/insertBTPEnd.do")
-	public ModelAndView insertBTPEnd(@RequestParam Map<String, Object> param) {
-
+	public String insertBTPEnd(@RequestParam Map<String, Object> param,RedirectAttributes redirect, Model model) {
+		
 		int result = 0;
+		Map<String, Object> map = new HashMap();
+		String loc = "";
+		String loc1 = "";
+		String msg = "";
 		try {
 			result = service.insertBTP(param);
+			if(result > 0) {
+				param.put("btpNo", result);
+				map = service.selectBTPOne(result);
+				map.put("temp", "businessTripPay");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "출장신청이 실패하였습니다.";
+				loc= "emp/empBTPForm";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		return loc1;
+	}
+	
+	/* 사원통계 */
+	@RequestMapping("/emp/empChart.do")
+	public ModelAndView empChart() {
 		ModelAndView mv = new ModelAndView();
-		mv.setViewName("emp/empBTPForm");
+		mv.setViewName("emp/empChart");
 
 		return mv;
 	}
 	
+	/* 전체사원통계 */
+	@RequestMapping("/emp/empChartJson.do")
+	@ResponseBody
+	public List<Map<String, Object>> empChart1() {
+		List<Map<String, Object>> list = service.empYearCount();
+		return list;
+	}
+	
+	/* 입/퇴사통계 */
+	@RequestMapping("/emp/empChartJson2.do")
+	@ResponseBody
+	public List<Map<String, Object>> empChart2() {
+		List<Map<String, Object>> list = service.newEmpYearCount();
 
+		return list;
+	}
+	
 }

@@ -246,6 +246,13 @@
 			    </choose>
 	</select>
 	
+	<!-- 퇴직금한개보기 -->
+	<select id="selectSevOne" parameterType="_int" resultType="map">
+		SELECT E.*, S.* FROM EMPLOYEE E JOIN SEVERANCE S ON (E.EMPNO=S.EMPNO)
+		WHERE S.EMPNO=#{empno}
+	</select>
+	
+	
 </mapper>
 
 

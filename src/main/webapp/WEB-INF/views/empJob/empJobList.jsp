@@ -15,22 +15,13 @@
 <!-- DataTales Example -->
 	<div class="card shadow mb-4">
 	    <div class="card-header py-3">
-	      <h6 class="m-0 font-weight-bold text-primary">직급</h6>
+	      <h6 class="m-0 font-weight-bold text-primary">직급목록</h6>
 	    </div>
 	    <div class="card-body">
 	      <div class="table-responsive">
 	        <div id="dataTable_wrapper" class="dataTables_wrapper dt-bootstrap4">
 	        	<div class="row">
 	        		<div class="col-sm-12 col-md-6">
-	        			<div class="dataTables_length" id="dataTable_length">
-	        				<label>Search:
-	         					<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable">
-	          			</label>
-						<button onclick="fn_search();"
-							class="btn btn-primary mr-2">
-							<span class="text">검색</span>
-						</button>
-	        			</div>
 	        		</div>
 	        		<div class="col-sm-12 col-md-6">
 	         		<div id="dataTable_filter" class="dataTables_filter">

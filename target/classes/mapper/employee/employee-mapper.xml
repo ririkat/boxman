@@ -8,7 +8,7 @@
 		FROM DEPARTMENT D JOIN EMPLOYEE A ON (A.DEPTNO = D.DEPTNO)
 		JOIN
 		EMPJOB J ON (A.JOBNO=J.JOBNO)
-		ORDER BY A.JOBNO,A.EMPNO
+		ORDER BY A.EMPNO,A.DEPTNO,A.JOBNO
 	</select>
 	<select id="selectEmpCount" resultType="_int">
 		SELECT COUNT(*) FROM
@@ -46,7 +46,7 @@
 	</select>
 	<select id="selectEmpFileList" resultType="empFile"
 		parameterType="_int">
-		SELECT * FROM EMPFILE WHERE EMPNO=#{empNo}
+		SELECT * FROM EMPFILE WHERE EMPNO=#{empNo} ORDER BY EFCNAME DESC
 	</select>
 	<!-- 사원상세보기끝 -->
 	<!-- 사원로그인 -->
@@ -100,8 +100,13 @@
 	<!-- 사원수정 -->
 	<update id="updateEmp" parameterType="map">
 		UPDATE EMPLOYEE SET EMPSAL=#{empSal}, EMPPHONE=#{empPhone}, EMPEMAIL=#{empEmail}, 
-			DEPTNO=#{deptNo}, JOBNO=#{jobNo}, EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr},
-			EMPSSN = #{empSSN}
+			EMPBANK=#{empBank}, EMPBANKNUM=#{empBankNum}, EMPADDR=#{empAddr}
+			<!-- EMPSSN = #{empSSN} -->
+			<choose>
+				<when test="temp neq 'my'">
+					,DEPTNO=#{deptNo}, JOBNO=#{jobNo}
+				</when>
+			</choose>
 			WHERE EMPNO=#{empNo}
 	</update>
 	<!-- 비밀번호변경 -->
@@ -149,12 +154,13 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
+				AND A.ATTENDAY=TO_CHAR(SYSDATE,'YYYY-MM-DD')
 				ORDER BY A.ATTENDAY 
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
 				AND A.EMPNO=#{empNo}
-				ORDER BY A.ATTENDAY
+				ORDER BY A.ATTENDAY DESC
 			</when>
 			<when test="temp eq 'all'"><!-- 인사관리 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
@@ -165,11 +171,11 @@
 				<if test="type != null and type != ''">
 					<if test="type eq 'empNo'">
 						AND A.${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENDAY
+						ORDER BY A.ATTENDAY DESC, B.DEPTNO
 					</if>
 					<if test="type neq 'empNo'">
 						AND ${type} like '%'||#{data}||'%'
-						ORDER BY B.DEPTNO, A.ATTENDAY
+						ORDER BY A.ATTENDAY DESC, B.DEPTNO
 					</if>
 				</if>
 			</when>
@@ -184,7 +190,7 @@
 		<choose>
 			<when test="temp eq 'search'">
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
-				AND EMPNO=#{empNo}
+				AND A.EMPNO=#{empNo}
 			</when>
 			<when test="temp eq 'searchAll'">
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD') BETWEEN #{startDay} AND #{endDay}
@@ -200,8 +206,9 @@
 			<when test="temp eq 'all'"><!-- 인사관리 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM-DD')=TO_CHAR(SYSDATE,'YYYY-MM-DD')
 			</when>
-			<when test="temp eq 'my'"><!-- 인사관리 -->
+			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND TO_CHAR(A.ATTENDAY,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
+				AND A.EMPNO=#{empNo}
 			</when>
 		</choose>
 	</select>
@@ -265,7 +272,7 @@
 	
 	<!-- 출장리스트출력 -->
 	<select id="selectBTList" parameterType="map" resultType="map">
-		SELECT A.*, B.*, C.*
+		SELECT A.*, B.*, C.*, BT.*
 		 FROM BUSINESSTRIP A 
 		 JOIN EMPLOYEE B ON A.EMPNO=B.EMPNO
 		 JOIN DEPARTMENT C ON B.DEPTNO=C.DEPTNO
@@ -315,6 +322,10 @@
 			<when test="temp eq 'all'">
 				AND TO_CHAR(BTSTART,'YYYY-MM') = TO_CHAR(SYSDATE, 'YYYY-MM')
 			</when>
+			<when test="temp eq 'my'">
+				AND (EXTRACT(YEAR FROM SYSDATE)=EXTRACT(YEAR FROM BTSTART))
+				AND EMPNO=#{empNo}
+			</when>
 		</choose>
 	</select>
 
@@ -330,7 +341,17 @@
 		INSERT INTO UPATTENDANCE VALUES(
 			SEQ_UPATTENDANCE.NEXTVAL, #{attenNo}, #{uaStart}, #{uaEnd}, #{uaCate},default, default, #{uaReason}
 		)
+		<selectKey keyProperty="uaNo" resultType="_int"
+			order="AFTER">
+			SELECT SEQ_UPATTENDANCE.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
+	
+	<!-- 근태수정신청 한개보기 -->
+	<select id="selectUpAttendanceOne" parameterType="_int"  resultType="map">
+		SELECT A.*, U.* FROM UPATTENDANCE U JOIN ATTENDANCE A ON (U.ATTENNO=A.ATTENNO)
+		WHERE U.UANO=#{uaNo}
+	</select>
 	
 	<!-- 남은 휴가일수 보기 -->
 	<select id="selectDoRemaining" parameterType="map" resultType="map">
@@ -351,11 +372,24 @@
 		INSERT INTO DAYOFF VALUES(SEQ_DAYOFF.NEXTVAL, #{empNo}, #{docName}, #{doStart}, #{doEnd}, #{doDays}, 
 		(#{DOREMAININGDAYS}-#{doDays}),DEFAULT, DEFAULT, NULL
 		)
+		<selectKey keyProperty="doNo" resultType="_int"
+			order="AFTER">
+			SELECT SEQ_DAYOFF.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
+	
+	<!-- 휴가 한개 보기 -->
+	<select id="selectDayoffOne" parameterType="_int" resultType="map">
+		SELECT * FROM DAYOFF WHERE DONO=#{doNo}
+	</select>
 	
 	<!-- 출장신청 -->
 	<insert id="insertBT" parameterType="map">
 		INSERT INTO BUSINESSTRIP VALUES(SEQ_BUSINESSTRIP.NEXTVAL, #{empNo},#{btStart}, #{btEnd}, #{btReason}, DEFAULT)
+		<selectKey keyProperty="btNo" resultType="_int"
+			order="AFTER">
+			SELECT SEQ_BUSINESSTRIP.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	
 	<!-- 출장비리스트 -->
@@ -386,6 +420,33 @@
 	<insert id="insertBTP" parameterType="map">
 		INSERT INTO BUSINESSTRIPPAY VALUES(SEQ_BUSINESSTRIPPAY.NEXTVAL,
 		  #{btNo}, #{btpRoom}, #{btpTransportation}, #{btpEntertain}, DEFAULT, NULL, DEFAULT)
+		  <selectKey keyProperty="btpNo" resultType="_int"
+			order="AFTER">
+			SELECT SEQ_BUSINESSTRIPPAY.CURRVAL FROM DUAL
+		</selectKey>
 	</insert>
 	
+	<!-- 사원수 통계 -->
+	<select id="empYearCount" resultType="map">
+		SELECT EXTRACT(YEAR FROM EMPHIREDATE) AS EYEAR, SUM(COUNT(*))
+		OVER(ORDER BY EXTRACT(YEAR FROM EMPHIREDATE) ROWS
+		BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS ECOUNT
+		FROM EMPLOYEE WHERE EMPENTYN='N'
+		GROUP BY EXTRACT(YEAR FROM EMPHIREDATE)
+	</select>
+	
+	<!-- 년도별 입/퇴사자수 -->
+	<select id="newEmpYearCount" resultType="map">
+		SELECT EXTRACT(YEAR FROM EMPHIREDATE) AS EYEAR,
+		COUNT(CASE EMPENTYN WHEN 'N' THEN 1 END) AS NEWEMP,
+		COUNT(CASE EMPENTYN WHEN 'Y' THEN 1 END) AS ENDEMP
+		FROM EMPLOYEE GROUP BY EXTRACT(YEAR FROM EMPHIREDATE)
+		ORDER BY EXTRACT(YEAR FROM EMPHIREDATE)
+	</select>
+
+	<!-- 출장비한개보기 -->
+	<select id="selectBTPOne" parameterType="_int"  resultType="map">
+		SELECT B.*, BT.* FROM BUSINESSTRIPPAY BT JOIN BUSINESSTRIP B ON (BT.BTNO=B.BTNO)
+		WHERE BTPNO=#{btpNo}
+	</select>
 </mapper>
