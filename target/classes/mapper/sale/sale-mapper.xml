@@ -17,18 +17,11 @@
 	<select id="selectConnList" resultType="map">
 		SELECT * FROM CONNECTION WHERE CONCATEG='매출'
 	</select>
-	
-	<!-- ////////////////////////////////////////////////////////////////////////////////////// -->
-	
-	
-	<select id="addStuffToTemp" parameterType="string" resultType="map">
-		SELECT * FROM STUFF WHERE STUFFNO=#{stuffNo}
-	</select>
-	
+
 	<insert id="enrollSaleInfo" parameterType="map">
 		INSERT INTO saleTab
 		VALUES (seq_sale.NEXTVAL, SYSDATE, (SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매출'),
-				#{chargeNo}, #{saleTotAmt}, default, null, default, null)
+				#{chargeNo}, #{saleSuperTax}, #{salTranType}, #{salTotAmt}, default, null, default, null)
 	</insert>
 	
 	<insert id="enrollSaleItem" parameterType="map">

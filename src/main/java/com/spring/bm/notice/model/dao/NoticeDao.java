@@ -53,4 +53,8 @@ public interface NoticeDao {
 
 	Employee selectNoticeEmp(SqlSessionTemplate sqlSession, int empNo);
 
+	List<Map<String, String>> selectNoticeList3(SqlSessionTemplate sqlSession, int cPage, int numPerPage);
+
+	List<Map<String, String>> selectNoticeList4(SqlSessionTemplate sqlSession, int cPage, int numPerPage);
+
 }

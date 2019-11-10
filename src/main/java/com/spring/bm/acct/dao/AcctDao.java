@@ -30,9 +30,21 @@ public interface AcctDao {
 
 	
 	/* salary search */
-	List<Map<String, String>> selectsSalarySearchList(SqlSessionTemplate session, int cPage, int numPerPage,
-			Map<String, Object> param);
+	List<Map<String, String>> selectsSalarySearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param);
 	int salarySearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	
+	/* biztrip search */
+	List<Map<String, String>> selectBiztripSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param);
+	int biztripSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	
+	/* severance search */
+	List<Map<String, String>> selectSevSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param);
+	int sevSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	/* 퇴직금한개보기 */
+	Map<String, String> selectSevOne(SqlSessionTemplate session, String empno);
 	
 
 }

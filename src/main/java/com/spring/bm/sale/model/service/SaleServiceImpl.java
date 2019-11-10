@@ -34,14 +34,6 @@ public class SaleServiceImpl implements SaleService {
 	public List<Map<String, String>> selectConnList() {
 		return dao.selectConnList(session);
 	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////
-	
-
-	@Override
-	public Map<String, String> addStuffToTemp(String stuffNo) {
-		return dao.addStuffToTemp(session,stuffNo);
-	}
 
 	@Override
 	public int enrollSaleInfo(Map<String, String> param) throws Exception {

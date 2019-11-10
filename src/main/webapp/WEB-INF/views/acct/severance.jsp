@@ -13,7 +13,7 @@
 <!-- DataTales Example -->
        <div class="card shadow mb-4">
              <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">월급 관리</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">퇴직금 관리</h6>
              </div>
              <div class="card-body">
                     <div class="table-responsive">
@@ -89,7 +89,7 @@
                                                                          </td>
                                                                          <td>
                                                                                 <c:if test='${fn:trim(e["EMPENTYN"]) eq "N" }' var="r">
-                                                                                	<c:set var="empname" value='${ e["EMPNAME"]}'/>
+                                                                                	  <c:set var="empname" value='${ e["EMPNAME"]}'/>
                                                                                       <c:set var="hiredate" value='${e["HIREDATE"]}'/>
                                                                                       <c:set var="salary" value='${e["EMPSAL"]}'/>
                                                                                       <button type="button" class="btn btn-success"  onclick="quit('${e.EMPNO}', '${hiredate }', '${salary }', '${empname }');" data-toggle="modal"  data-target="#exampleModal">퇴사 시키기</button>
@@ -144,6 +144,12 @@
              $('#empno').val(empno);
              
        }
+       
+	    // 검색
+	   	function fn_search(){
+	   		$("#searchFrm").attr("action", "${path}/acct/severanceSearch.do");
+	   		$("#searchFrm").submit();
+	   	}
 </script>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

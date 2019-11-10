@@ -26,13 +26,6 @@ public class SaleDaoImpl implements SaleDao {
 		return session.selectList("sale.selectConnList");
 	}
 
-	/////////////////////////////////////////////////////////////////////////////////
-
-	@Override
-	public Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo) {
-		return session.selectOne("sale.addStuffToTemp", stuffNo);
-	}
-
 	@Override
 	public int enrollSaleInfo(SqlSessionTemplate session, Map<String, String> param) {
 		return session.insert("sale.enrollSaleInfo", param);

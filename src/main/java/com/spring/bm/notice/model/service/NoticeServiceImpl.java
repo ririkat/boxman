@@ -171,6 +171,16 @@ public class NoticeServiceImpl implements NoticeService {
 	public Employee selectNoticeEmp(int empNo) {
 		return dao.selectNoticeEmp(sqlSession, empNo);
 	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeList3(int cPage, int numPerPage) {
+		return dao.selectNoticeList3(sqlSession, cPage, numPerPage);
+	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeList4(int cPage, int numPerPage) {
+		return dao.selectNoticeList4(sqlSession, cPage, numPerPage);
+	}
 	
 	
 

@@ -58,7 +58,7 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align:center;">
                        <thead>
                          <tr>
                             <th>구매코드</th>
@@ -79,7 +79,7 @@
 									<td><c:out value='${p["PURENROLLDATE"] }' /></td>
 									<td><c:out value='${p["CONNAME"] }' /></td>
 									<td><c:out value='${p["EMPNAME"] }' /></td>
-									<td><c:out value='${p["PURTOTAMT"] }'/></td>
+									<td style="text-align:right;"><c:out value='${p["PURTOTAMT"] }'/></td>
 									<td><c:out value='${p["PURCK"] }'/></td>
 									<td><c:out value='${p["PURDATE"] }' /></td>
 									<td><c:out value='${p["DEPOSCK"] }' /></td>

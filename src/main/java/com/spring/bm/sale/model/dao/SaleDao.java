@@ -11,11 +11,7 @@ public interface SaleDao {
 	int selectSaleCount(SqlSessionTemplate session);
 	
 	List<Map<String, String>> selectConnList(SqlSessionTemplate session);
-	
-	////////////////////////////////////////////////////////////////////////////
 
-	Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo);
-	
 	int enrollSaleInfo(SqlSessionTemplate session, Map<String, String> param);
 	int enrollSaleItem(SqlSessionTemplate session, Map<String,Object> paramMap);
 	

@@ -29,5 +29,17 @@ public interface AcctService {
 	List<Map<String, String>> selectsSalarySearchList(int cPage, int numPerPage, Map<String, Object> param);
 	int salarySearchCount(Map<String, Object> param);
 
+	/* biztrip search */
+	List<Map<String, String>> selectBiztripSearchList(int cPage, int numPerPage, Map<String, Object> param);
+	int biztripSearchCount(Map<String, Object> param);
+
+	/* severance search */
+	List<Map<String, String>> selectSevSearchList(int cPage, int numPerPage, Map<String, Object> param);
+	int sevSearchCount(Map<String, Object> param);
+
+	/* 퇴직금한개보기 */
+	Map<String, String> selectSevOne(String empno);
+	
+	
 
 }

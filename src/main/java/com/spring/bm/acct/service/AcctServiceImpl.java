@@ -53,6 +53,9 @@ public class AcctServiceImpl implements AcctService {
 	}
 	/* biztrip end */
 	
+	
+	
+	/* salary */
 	@Override
 	public List<Map<String, String>> selectEmpList(int cPage, int numPerPage) {
 		return dao.selectEmpList(cPage, numPerPage, session);
@@ -63,17 +66,24 @@ public class AcctServiceImpl implements AcctService {
 		return dao.selectEmpCount(session);
 	}
 
+	
+	
+	
+	
 	/* severance */
 	@Override
 	public List<Map<String, String>> selectSevList(int cPage, int numPerPage) {
 		return dao.selectSevList(session, cPage, numPerPage);
 	}
-
 	@Override
 	public int selectSevCount() {
 		return dao.selectSevCount(session);
 	}
 
+	
+	
+	
+	
 	/* salary search */
 	@Override
 	public List<Map<String, String>> selectsSalarySearchList(int cPage, int numPerPage, Map<String, Object> param) {
@@ -83,5 +93,44 @@ public class AcctServiceImpl implements AcctService {
 	public int salarySearchCount(Map<String, Object> param) {
 		return dao.salarySearchCount(session, param);
 	}
+
+	
+	
+	/* biztrip search */
+	@Override
+	public List<Map<String, String>> selectBiztripSearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectBiztripSearchList(session, cPage, numPerPage, param);
+	}
+	@Override
+	public int biztripSearchCount(Map<String, Object> param) {
+		return dao.biztripSearchCount(session, param);
+	}
+
+	
+	
+	/* severance search */
+	@Override
+	public List<Map<String, String>> selectSevSearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectSevSearchList(session, cPage, numPerPage, param);
+	}
+	@Override
+	public int sevSearchCount(Map<String, Object> param) {
+		return dao.sevSearchCount(session, param);
+	}
+
+	/* 퇴직금한개보기 */
+	@Override
+	public Map<String, String> selectSevOne(String empno) {
+		// TODO Auto-generated method stub
+		return dao.selectSevOne(session, empno);
+	}
+
+	
+	
+	
+	
+	
+	
+	
 
 }

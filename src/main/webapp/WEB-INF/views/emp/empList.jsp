@@ -45,6 +45,9 @@
 						<div class="col-sm-12 col-md-6">
 							<div id="dataTable_filter" class="dataTables_filter">
 								<div style="float: right;">
+									<button type="button" onclick="location.href='${path}/emp/empChart.do'" class="btn btn-primary mr-2">
+			               				사원통계
+			                 		</button>
 									<button type="button" onclick="location.href='${path}/emp/insertEmp.do?t=Y'" class="btn btn-primary mr-2">
 			               				사원등록
 			                 		</button>
@@ -73,10 +76,10 @@
 									<c:forEach var="e" items="${list}">
 										<tr>
 											<td><a
-												href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'><c:out
+												href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}&temp=all'><c:out
 														value='${e["EMPNO"]}' /></a></td>
 											<td><a
-												href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}'><c:out
+												href='${path }/emp/selectEmpOne.do?empNo=${e["EMPNO"]}&temp=all'><c:out
 														value='${e["EMPNAME"]}' /></a></td>
 											<td><c:out value='${e["JOBNAME"]}' /></td>
 											<td><c:out value='${e["DEPTNAME"]}' /></td>

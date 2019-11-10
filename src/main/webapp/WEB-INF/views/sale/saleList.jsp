@@ -58,7 +58,7 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <table class="table table-striped table-hover tablesorter" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align:center;">
                        <thead>
                          <tr>
                             <th>판매코드</th>
@@ -76,16 +76,16 @@
                        <tbody>
                           <c:forEach items="${list }" var="s">
 								<tr>
-									<td><a href='#'><c:out value='${p["SALCODE"] }'/></a></td>
-									<td><c:out value='${p["SALENROLLDATE"] }' /></td>
-									<td><c:out value='${p["CONNAME"] }' /></td>
-									<td><c:out value='${p["EMPNAME"] }' /></td>
-									<td><c:out value='${p["SALTRANTYPE"] }' /></td>
-									<td><c:out value='${p["SALTOTAMT"] }'/></td>
-									<td><c:out value='${p["SALCK"] }'/></td>
-									<td><c:out value='${p["SALDATE"] }' /></td>
-									<td><c:out value='${p["REMITCK"] }' /></td>
-									<td><c:out value='${p["REMITDATE"] }' /></td>
+									<td><a href='${path }/sale/verificationSaleInfo.do?salCode=${s["SALCODE"] }'><c:out value='${s["SALCODE"] }'/></a></td>
+									<td><c:out value='${s["SALENROLLDATE"] }' /></td>
+									<td><c:out value='${s["CONNAME"] }' /></td>
+									<td><c:out value='${s["EMPNAME"] }' /></td>
+									<td><c:out value='${s["SALTRANTYPE"] }' /></td>
+									<td style="text-align:right;"><c:out value='${s["SALTOTAMT"] }'/></td>
+									<td><c:out value='${s["SALCK"] }'/></td>
+									<td><c:out value='${s["SALDATE"] }' /></td>
+									<td><c:out value='${s["REMITCK"] }' /></td>
+									<td><c:out value='${s["REMITDATE"] }' /></td>
 								</tr>
 							</c:forEach>
                        </tbody>
@@ -101,6 +101,11 @@
 </section>
 
 <script>
+//테이블 정렬
+$(function() {
+	$("#dataTable").tablesorter();
+});
+
 function searchSaleInfo(){
 	$("#searchFrm").attr("action","${path}/sale/searchSaleInfo.do");
 	$("#searchFrm").submit();

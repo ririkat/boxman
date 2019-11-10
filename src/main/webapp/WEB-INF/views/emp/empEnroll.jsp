@@ -27,7 +27,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">이름</label>
                <div class="col-sm-9">
-                 <input type="text" class="form-control" name="empName" required>
+                 <input type="text" class="form-control" name="empName" id="empName" required>
                </div>
              </div>
            </div>
@@ -85,7 +85,7 @@
             <div class="form-group row">
               <label class="col-sm-3 col-form-label">연봉</label>
               <div class="col-sm-9">
-                <input type="number" class="form-control" name="empSal" required>
+                <input type="text" class="form-control" name="empSal" id="empSal" onkeypress="f_onlyNum();" onkeyup="f_setCommaValue(this);" required>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">계좌번호</label>
                <div class="col-sm-9">
-                 <input type="text" class="form-control" name="empBankNum" required>
+                 <input type="text" class="form-control" name="empBankNum" id="empBankNum" required>
                </div>
              </div>
            </div>
@@ -147,7 +147,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">전화번호</label>
                <div class="col-sm-9" style="">
-                 <input type="text" class="form-control" name="empPhone" placeholder="-없이 입력하세요" id="empPhone" required>
+                 <input type="text" class="form-control" name="empPhone" placeholder="-없이 입력하세요" id="empPhone" maxlength="11" required>
                </div>
              </div>
            </div>
@@ -155,7 +155,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">주민등록번호</label>
                <div class="col-sm-9">
-                 <input type="text" class="form-control" name="empSSN" placeholder="123456-1234567" required>
+                 <input type="text" class="form-control" name="empSSN" id="empSSN" placeholder="123456-1234567" maxlength="14" required>
                </div>
              </div>
            </div>
@@ -165,7 +165,7 @@
              <div class="form-group row">
                <label class="col-sm-3 col-form-label">이메일</label>
                <div class="col-sm-9" style="">
-                 <input type="email" class="form-control" name="empEmail" placeholder="abc@abc.com" required>
+                 <input type="email" class="form-control" name="empEmail" id="empEmail" placeholder="abc@abc.com" required>
                </div>
              </div>
            </div>
@@ -259,31 +259,8 @@
              </div>
            </div>
          </div>
-         <!-- <div class="row">
-           <div class="col-md-6">
-             <div class="form-group row">
-               <label class="col-sm-3 col-form-label">자격증사진 </label>
-               		<div class="col-sm-9">
-						<img src="#" style="width:200px; height:auto; display:none;" id="licenImg1"/>
-					</div>
-                   <button type="button" class="btn btn-light btn-icon-split" style="position:absolute; right:0;" id="addFile">
-                       <span class="text">추가</span>
-                  </button>
-               <div class="custom-file">
-               		<div id="fileBox">
-	                    <input type="file" class="custom-file-input" name="upFile" id="upFile2">
-	                    <label class="custom-file-label" for="upFile2">파일을 선택하세요</label>
-                    </div>
-                </div>
-             </div>
-           </div>
-           <div class="col-md-6">
-             <div class="form-group row" id="setHeight" style="height:40px;">
-             </div>
-           </div>
-         </div> -->
          <div style="margin:0 auto; width:fit-content;">
-            <input type="button" class="btn btn-success mr-2" value="등록" onclick="return validate();" style="width:150px;">
+            <button type="button" class="btn btn-success mr-2" onclick="return validate();" style="width:150px;">등록</button>
          </div>
        </form>
    	</div>
@@ -291,8 +268,6 @@
  </div>
 </section>
 <script>
-	var setHeight = $('#setHeight').height();
-	
 	/* 아이디 중복검사 */
 	$(function(){
 		$('#empId').keyup(function(){
@@ -305,7 +280,6 @@
 				url:"${path}/emp/checkId.do",
 				data:{"empId":empId},
 				success:function(data){
-					console.log(data);
 					if(data == 0) {
 						$("span.okId").show();
 						$("span.noId").hide();
@@ -319,66 +293,14 @@
 	});
 	//파일등록시 
 	$(function(){
-		/* $(document).on("change",$('[name=upFile]'), function(event){
-			var fileName=this.files[0].name;
-			$(this).next('.custom-file-label').html(fileName);
-		}); */
 		$('[name=proImg]').on('change', function(event){
 			var fileName=this.files[0].name;
 			var reader = new FileReader();
-			$(this).next('.custom-file-label').html(fileName);
-			reader.onload = function(e) {
-				$('#proImg').attr("src",e.target.result);
-			}
-			reader.readAsDataURL(this.files[0]);
-		});
-		$('[name=stampImg]').on('change', function(event){
-			var fileName=this.files[0].name;
-			var reader = new FileReader();
-			$(this).next('.custom-file-label').html(fileName);
-			reader.onload = function(e) {
-				$('#stampImg').attr("src",e.target.result);
-			}
-			reader.readAsDataURL(this.files[0]);
-		});
-	});
-	var count = 4;
-	
-	//파일추가
-	/* $(function(){
-		$('#addFile').click(function(){
-			setHeight = setHeight + 80;
-			$('#setHeight').css("height",setHeight + "px");
-			var addWrap = '<div class="custom-file" style="height:80px;">'; 
-    		addWrap += '<input type="file" class="custom-file-input" name="upFile" id="upFile' + count + '"'
-    		addWrap += '>';
-    		addWrap += '<label class="custom-file-label" for="upFile' + count + '"';
-    		addWrap += '>';
-    		addWrap += "파일을 선택하세요";
-    		addWrap += "</label>";
-	        addWrap += '<input type="button" name="removeFile" class="btn" id="btnRemove" value="삭제">';
-	        addWrap += '</div>'; 
-            $(this).next().after(addWrap);
-            count++;
-      }); 
-   }); */
-   
-   //유효성검사
-   $(function(){
-         $(document).on("click","#btnRemove",function(event){
-            setHeight = setHeight - 80;
-         $('#setHeight').css("height",setHeight + "px");
-            var pa = $(this).parent();
-              pa.remove();
-         });
-         
-         //확장자, 정규식 검사
-         $(document).on("change","input[name='upFile']",function(event) {
-            var ext = $(this).val().split('.').pop().toLowerCase();
+			var ext = $(this).val().split('.').pop().toLowerCase();
             var fileSize = (this).files[0].size;
             var maxSize = 1024*1024*1024;
             
-            if($.inArray(ext, ['gif','png','jpg','jpeg','doc','docx','xls','xlsx','hwp']) == -1) {
+            if($.inArray(ext, ['png','jpg','jpeg']) == -1) {
                alert("등록할 수 없는 확장자입니다.");
                $(this).val("");
                return;
@@ -389,14 +311,46 @@
                $(this).val("");
                return;
             }
-         });
+			$(this).next('.custom-file-label').html(fileName);
+			reader.onload = function(e) {
+				$('#proImg').attr("src",e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		});
+		$('[name=stampImg]').on('change', function(event){
+			var fileName=this.files[0].name;
+			var reader = new FileReader();
+			var ext = $(this).val().split('.').pop().toLowerCase();
+            var fileSize = (this).files[0].size;
+            var maxSize = 1024*1024*1024;
+            
+            if($.inArray(ext, ['png','jpg','jpeg']) == -1) {
+               alert("등록할 수 없는 확장자입니다.");
+               $(this).val("");
+               return;
+            } 
+            
+            if(fileSize > maxSize) {
+               alert("첨부파일 크기는 1GB 이내로 등록 가능합니다.");
+               $(this).val("");
+               return;
+            }
          
-         
+			$(this).next('.custom-file-label').html(fileName);
+			reader.onload = function(e) {
+				$('#stampImg').attr("src",e.target.result);
+			}
+			reader.readAsDataURL(this.files[0]);
+		});
+	});
+   
+   //유효성검사
+   $(function(){         
          $('#empPhone').on("keyup",function() {
    		  $(this).val($(this).val().replace(/[^0-9]/g, ""));
    	   	 });
          
-         $('#pw2').blur(function(){
+         $('#pw2').on("keyup",function(){
 	         var pw = $('#pw').val();
 	         var pw2 = $('#pw2').val();
         	 if(pw == pw2) {
@@ -407,8 +361,63 @@
  				$("span.noPw").show();
         	 }
          });
-         
    });
+
+   String.prototype.trim = function() {
+       return this.replace(/(^\s*)|(\s*$)/gi, "");  
+   }
+
+   String.prototype.replaceAll = function(str1, str2) {  
+       var temp_str = "";  
+       if(this.trim() != "" && str1 != str2) {  
+           temp_str = this.trim();  
+           while (temp_str.indexOf(str1) > -1){  
+               temp_str = temp_str.replace(str1, str2);  
+           }  
+       }  
+       return temp_str;  
+   }
+
+   //input에 comma세팅
+   function f_setCommaValue(el){
+       var value = f_getOnlyNum(el);
+       var temp = '';
+       var idx = value.length % 3;
+       if(idx>0 && value.length > 3){
+           temp = value.substring(0, idx) + ',';
+           value = value.substring(idx);
+       }
+       for(i=(value.length/3) - 1; i>0; i--){
+           temp += value.substring(0, 3) + ',';
+           value = value.substring(3); 
+       }
+       temp += value;
+       el.value = temp;
+
+   }
+
+   // 숫자만 반환
+
+   function f_getOnlyNum(el){
+       var value = el.value;
+       if(value.trim().length == 0){
+           value = '0';
+    	}
+       value = value.replaceAll(',', '');
+       value = parseInt(value, 10).toString();
+       return value;
+   }
+  
+   //숫자만 입력
+   function f_onlyNum(){
+       var key = event.keyCode;
+       var messageArea = document.getElementById("ssnMessage");
+       if(!(key==8||key==9||key==13||key==46||key==144||(key>=48&&key<=57)||key==110||key==190)){
+           alert('숫자만 입력 가능합니다');
+           event.returnValue = false;
+       }
+
+   }
    
    function validate() {
       var empAddr = $('#sample6_postcode').val();
@@ -416,6 +425,12 @@
       empAddr += "/" + $('#sample6_detailAddress').val();
       empAddr += "/" + $('#sample6_extraAddress').val();
       $('#empAddr').val(empAddr);
+      
+      if(empAddr==null || empAddr=='') {
+    	  alert("주소를 입력하세요.");
+    	  return false;
+      }
+      
       
       if($('span.noId').is(":visible")) {
     	  alert("아이디를 확인하세요.");
@@ -426,6 +441,45 @@
     	  alert("비밀번호를 확인하세요.");
     	  return false;
       }
+      if($('#empName').val()==null || $('#empName').val()=="") {
+    	  alert("이름을 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#empId').val()==null || $('#empId').val()=="") {
+    	  alert("아이디를 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#pw2').val()==null || $('#pw2').val()=="") {
+    	  alert("비밀번호를 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#empPhone').val()==null || $('#empPhone').val()=="") {
+    	  alert("전화번호를 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#empEmail').val()==null || $('#empEmail').val()=="") {
+    	  alert("이메일을 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#empSal').val()==null || $('#empSal').val()=="") {
+    	  alert("연봉을 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#empBankNum').val()==null || $('#empBankNum').val()=="") {
+    	  alert("계좌번호를 입력하세요.");
+    	  return false;
+      } 
+      
+      if($('#empSSN').val()==null || $('#empSSN').val()=="") {
+    	  alert("주민등록번호를 입력하세요.");
+    	  return false;
+      } 
       
       if($('#deptNo').val()=='0') {
     	  alert("부서를 선택하세요.");
