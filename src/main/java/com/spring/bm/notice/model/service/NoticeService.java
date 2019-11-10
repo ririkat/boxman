@@ -50,4 +50,6 @@ public interface NoticeService {
 	int deleteSite(String param);
 	//empName 가져오기
 	Employee selectNoticeEmp(int empNo);
+	List<Map<String, String>> selectNoticeList3(int cPage, int numPerPage);
+	List<Map<String, String>> selectNoticeList4(int cPage, int numPerPage);
 }

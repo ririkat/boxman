@@ -13,6 +13,7 @@
                     <h4 class="card-title">상세페이지</h4>
                     <p class="card-description"> 각 부서의 노동 정책 및 행정업무에 대한 자료를 보실 수 있습니다. </p>
                     <form class="forms-sample" id="devFrm" enctype="multipart/form-data" method="post">
+                    <input type = "hidden" name = "categoryNo" value = "${nt.categoryNo }"/>
                    <c:forEach items="${list2 }" var="list2" varStatus="v">
                   	 <c:choose>							 
 						<c:when test="${list2['NCHECK'] == '필수아님'}">
@@ -62,10 +63,7 @@
 					        </c:forEach>
 		                </div>
                		  </div>
-                      <button name="addButton" type="button" value="추가" class="btn btn-light btn-icon-split" 
-                      							style=" cursor: hand; position:absolute; right:0;" id="addFile" onClick="insRow()">
-				             <span class="text">추가</span>
-				      </button>										
+              									
                       	<table width="100%" border="0" cellpadding="0" cellspacing="0">
 								<tr>
 									<td height="25">
@@ -118,6 +116,9 @@
 			$("#devFrm").submit();
 		}
 		
+		
+
+           
 		//첨부파일 다운로드
 		function fileDownload(oName, rName)
 		{

@@ -123,6 +123,18 @@ public class NoticeDaoImpl implements NoticeDao {
 	public Employee selectNoticeEmp(SqlSessionTemplate sqlSession, int empNo) {
 		return sqlSession.selectOne("notice.selectNoticeEmp", empNo);
 	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeList3(SqlSessionTemplate sqlSession, int cPage, int numPerPage) {
+		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("notice.selectNoticeList3", null, rows);
+	}
+
+	@Override
+	public List<Map<String, String>> selectNoticeList4(SqlSessionTemplate sqlSession, int cPage, int numPerPage) {
+		RowBounds rows=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return sqlSession.selectList("notice.selectNoticeList4", null, rows);
+	}
 	
 
 }

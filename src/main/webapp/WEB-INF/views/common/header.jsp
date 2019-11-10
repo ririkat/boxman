@@ -211,7 +211,7 @@
 	          <div class="bg-white py-2 collapse-inner rounded">
 	            <a class="collapse-item" href="${path }/notice/selectNoticeList.do">공지사항</a>
 	            <a class="collapse-item" href="${path }/notice/selectNoticeDeptList.do">부서별게시판</a>
-	            <a class="collapse-item" href="${path }/notice/guidelineList.do">편람/지침</a>
+	            <a class="collapse-item" href="${path }/notice/guidelineList.do">지침/규정</a>
 	            <a class="collapse-item" href="${path }/notice/site.do">관련사이트</a>
 	          </div>
 	        </div>

@@ -58,12 +58,12 @@
 					<ul class="nav nav-pills text-center">
 					  <li class="nav-item">
 					    <a class="nav-link active" href="#nov20" data-toggle="pill">
-					    	내부
+					    	협회
 					    </a>
 					  </li>
 					  <li class="nav-item">
 					    <a class="nav-link" href="#nov21" data-toggle="pill">
-							외부
+							거래처
 					    </a>
 					  </li>
 					</ul>
@@ -133,7 +133,11 @@
 							  		<!-- Depart -->
 							  		<div class="depart"><c:out value='${list2["STNAME"]}'/></div>
 							  		<!-- Subject -->
-							  		<div class="subject"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list2['STLINK']}" target="_blank"><span>사이트연결</span></a></label></div>
+							  		<div class="subject">
+								  		<label class="">
+								  			<a class="b-related btn btn-outline-success my-2 my-sm-0" href="${list2['STLINK']}" target="_blank"><span>사이트연결</span></a>
+								  		</label>
+							  		</div>
 					  				<!-- Venue -->
 					  				<div class="venue">
 					  					<button type="button" class="b-related btn btn-outline-success2 my-2 my-sm-0" onclick="location.href='${path }/notice/deleteSite.do?stname=${list2['STNAME']}'" >삭제</button>
