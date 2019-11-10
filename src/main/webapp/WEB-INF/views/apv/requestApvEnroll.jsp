@@ -107,6 +107,11 @@
 									<td colspan="2"><textarea id="dfContentForm"
 											name="dfContentForm" rows="10" cols="100">${dfOne['DFCONTENTFORM']}</textarea></td>
 								</tr>
+								<tr>
+									<th>특이사항</th>
+									<td><textarea id="moreInfo"
+											name="moreInfo" rows="10" cols="100"></textarea></td>
+								</tr>
 							</table>
 
 						</div>

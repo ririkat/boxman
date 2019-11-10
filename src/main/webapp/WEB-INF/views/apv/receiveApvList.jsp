@@ -5,8 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="상신결재함" name="tabTitle" />
-	<jsp:param value="상신결재함" name="pageTitle" />
+	<jsp:param value="수신결재함" name="tabTitle" />
+	<jsp:param value="수신결재함" name="pageTitle" />
 </jsp:include>
 
 <section>
@@ -31,8 +31,9 @@
                       <th>문서분류</th>
                       <th>신청구분</th>
                       <th>기안제목</th>
-                      <th>결재상태</th>
+                      <th>문서결재상태</th>
                       <th>시행상태</th>
+                      <th>내결재상태</th>
                       <th>등록일</th>
                       <th>관리</th>
                     </tr>
@@ -46,8 +47,9 @@
 							<td><c:out value='${a["APVTITLE"]}' /></td>
 							<td><c:out value='${a["APVSTATUS"]}' /></td>
 							<td><c:out value='${a["APVESTATUS"]}' /></td>
+							<td><c:out value='${a["APVASTATUS"]}' /></td>
 							<td><c:out value='${a["APVENROLLDATE"]}' /></td>
-							<td><button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']})" >조회</button></td>
+							<td><button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']},${loginEmp['EMPNO']})" >결재하기</button></td>
 						</tr>
 					</c:forEach>	
                   </tbody>
@@ -63,10 +65,9 @@
 
 </section>
    <script>
-   			function apvOne(no){
-   		    	alert("작동하니?");
-   		    	var url="${path}/apv/lookupApvOne.do?no="+no;
-   		    	var name="기안조회"
+   			function apvOne(apvNo,empNo){
+   		    	var url="${path}/apv/lookupApvAOne.do?apvNo="+apvNo+"&empNo="+empNo;
+   		    	var name="기안열람"
    		        window.open(url,name,"width=1200,height=800,left=600");
    		    }
       	</script>

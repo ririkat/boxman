@@ -73,6 +73,22 @@ public interface ApvDao {
 
 	List<Map<String, Object>> selectReceiveApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
 
-	List<Map<String, Object>> selectReceiveAYN(SqlSessionTemplate session, int loginNo);
+	int selectReceiveApvCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectEnforceApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectEnforceApvCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectReferApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectReferApvCount(SqlSessionTemplate session, int loginNo);
+
+	Map<String, Object> selectLookupApv(SqlSessionTemplate session, int apvNo);
+
+	Map<String, Object> selectLookupApvR(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateReferYN(SqlSessionTemplate session, Map<String, Object> param);
+
+	Map<String, Object> selectLookupApvA(SqlSessionTemplate session, Map<String, Object> param);
 
 }

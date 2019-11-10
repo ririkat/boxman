@@ -253,19 +253,58 @@ public class ApvServiceImpl implements ApvService {
 	public int selectSendApvCount(int loginNo) {
 		return dao.selectSendApvCount(session,loginNo);
 	}
+	//상신함 -> 조회 뷰
+	@Override
+	public Map<String, Object> selectLookupApv(int apvNo) {
+		return dao.selectLookupApv(session,apvNo);
+	}
 	
 	/*수신함 리스트 불러오기*/
 	@Override
 	public List<Map<String, Object>> selectReceiveApvList(int cPage, int numPerPage, int loginNo) {
-		/*처음부터 조인해서 페이징 처리할 것. 다시 짜라!!*/
-		List<Map<String, Object>> ynList=dao.selectReceiveAYN(session,loginNo);
-		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
-		if(ynList!=null && ynList.size()>0) {
-			Map<String,Object> param=new HashMap<String, Object>();
-			param.
-			list=dao.selectReceiveApvList(session, cPage, numPerPage, loginNo);
-		}
-		
-		return list;
+		return dao.selectReceiveApvList(session, cPage, numPerPage, loginNo);
+	}
+	@Override
+	public int selectReceiveApvCount(int loginNo) {
+		return dao.selectReceiveApvCount(session,loginNo);
+	}
+	
+	/*시행함 리스트 불러오기*/
+	@Override
+	public List<Map<String, Object>> selectEnforceApvList(int cPage, int numPerPage, int loginNo) {
+		return dao.selectEnforceApvList(session, cPage, numPerPage, loginNo);
+	}
+	@Override
+	public int selectEnforceApvCount(int loginNo) {
+		return dao.selectEnforceApvCount(session,loginNo);
+	}
+	
+	/*참조함 리스트 불러오기*/
+	@Override
+	public List<Map<String, Object>> selectReferApvList(int cPage, int numPerPage, int loginNo) {
+		return dao.selectReferApvList(session, cPage, numPerPage, loginNo);
+	}
+	@Override
+	public int selectReferApvCount(int loginNo) {
+		return dao.selectReferApvCount(session,loginNo);
+	}
+	
+	/*참조함 -> 열람 뷰*/
+	@Override
+	public Map<String, Object> selectLookupApvR(Map<String, Object> param) {
+		return dao.selectLookupApvR(session,param);
+	}
+	@Override
+	public int updateReferYN(Map<String, Object> param) throws Exception {
+		int result=0;
+		result=dao.updateReferYN(session,param);
+		if(result==0) throw new Exception();
+		return result;
+	}
+	
+	/*수신결재함 -> 결재하기*/
+	@Override
+	public Map<String, Object> selectLookupApvA(Map<String, Object> param) {
+		return dao.selectLookupApvA(session,param);
 	}
 }

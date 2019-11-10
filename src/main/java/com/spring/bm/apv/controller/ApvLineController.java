@@ -32,7 +32,7 @@ public class ApvLineController {
 
 	/* 결재 라인 관리 리스트 뷰 호출 */
 	@RequestMapping("/apv/apvLineList.do")
-	public ModelAndView apvLine(@RequestParam(value="cPage", 
+	public ModelAndView apvLineList(@RequestParam(value="cPage", 
 	required=false, defaultValue="1") int cPage, int loginNo) {
 		int numPerPage = 10;
 		List<Map<String,Object>> myList=service.selectMyApvLineList(cPage,numPerPage,loginNo);

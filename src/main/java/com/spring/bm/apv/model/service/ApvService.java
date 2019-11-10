@@ -63,6 +63,24 @@ public interface ApvService {
 
 	List<Map<String, Object>> selectReceiveApvList(int cPage, int numPerPage, int loginNo);
 
+	int selectReceiveApvCount(int loginNo);
+
+	List<Map<String, Object>> selectEnforceApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectEnforceApvCount(int loginNo);
+
+	List<Map<String, Object>> selectReferApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectReferApvCount(int loginNo);
+
+	Map<String, Object> selectLookupApv(int apvNo);
+
+	Map<String, Object> selectLookupApvR(Map<String, Object> param);
+
+	int updateReferYN(Map<String, Object> param) throws Exception;
+
+	Map<String, Object> selectLookupApvA(Map<String, Object> param);
+
 
 
 }

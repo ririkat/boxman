@@ -173,21 +173,68 @@ public class ApvDaoImpl implements ApvDao {
 	@Override
 	public List<Map<String, Object>> selectSendApvList(SqlSessionTemplate session, int cPage, int numPerPage,
 			int loginNo) {
-		return session.selectList("apv.selectSendApvList",loginNo);
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectSendApvList",loginNo, rows);
 	}
 	@Override
 	public int selectSendApvCount(SqlSessionTemplate session, int loginNo) {
 		return session.selectOne("apv.selectSendApvCount",loginNo);
 	}
+	//상신함,참조함 -> 조회 뷰
+	@Override
+	public Map<String, Object> selectLookupApv(SqlSessionTemplate session, int apvNo) {
+		return session.selectOne("apv.selectLookupApv",apvNo);
+	}
 	
 	/*수신함*/
 	@Override
-	public List<Map<String, Object>> selectReceiveAYN(SqlSessionTemplate session, int loginNo) {
-		return session.selectList("apv.selectReceiveAYN",loginNo);
-	}
-	@Override
 	public List<Map<String, Object>> selectReceiveApvList(SqlSessionTemplate session, int cPage, int numPerPage,
 			int loginNo) {
-		return session.selectList("apv.selectReceiveApvList",loginNo);
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectReceiveApvList",loginNo, rows);
+	}
+	@Override
+	public int selectReceiveApvCount(SqlSessionTemplate session, int loginNo) {
+		return session.selectOne("apv.selectReceiveApvCount",loginNo);
+	}
+	
+	/*시행함*/
+	@Override
+	public List<Map<String, Object>> selectEnforceApvList(SqlSessionTemplate session, int cPage, int numPerPage,
+			int loginNo) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectEnforceApvList",loginNo, rows);
+	}
+	@Override
+	public int selectEnforceApvCount(SqlSessionTemplate session, int loginNo) {
+		return session.selectOne("apv.selectEnforceApvCount",loginNo);
+	}
+	
+	/*참조함*/
+	@Override
+	public List<Map<String, Object>> selectReferApvList(SqlSessionTemplate session, int cPage, int numPerPage,
+			int loginNo) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectReferApvList",loginNo, rows);
+	}
+	@Override
+	public int selectReferApvCount(SqlSessionTemplate session, int loginNo) {
+		return session.selectOne("apv.selectReferApvCount",loginNo);
+	}
+	
+	/*참조함 -> 열람 뷰*/
+	@Override
+	public Map<String, Object> selectLookupApvR(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectLookupApvR",param);
+	}
+	@Override
+	public int updateReferYN(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateReferYN",param);
+	}
+	
+	/*수신결재함 -> 결재하기*/
+	@Override
+	public Map<String, Object> selectLookupApvA(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectLookupApvA",param);
 	}
 }

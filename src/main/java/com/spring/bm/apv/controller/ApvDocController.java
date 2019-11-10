@@ -1,5 +1,6 @@
 package com.spring.bm.apv.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -309,20 +310,109 @@ public class ApvDocController {
 		return mv;
 	}
 	
+	/*상신함 -> 조회하기*/
+	@RequestMapping("/apv/lookupApvOne.do")
+	public ModelAndView lookupApvOne(@RequestParam(value="no", 
+	required=true) int apvNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> apvOne=service.selectLookupApv(apvNo);
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
 	/*수신함*/
-	@RequestMapping("/apv/receiveApv.do")
+	@RequestMapping("/apv/receiveApvList.do")
 	public ModelAndView receiveApvList(@RequestParam(value="cPage", 
 		required=false, defaultValue="1") int cPage,int loginNo) {
+		System.out.println(loginNo);
 		int numPerPage = 10;
 		
 		List<Map<String,Object>> list=service.selectReceiveApvList(cPage,numPerPage,loginNo);
 		int totalCount = service.selectReceiveApvCount(loginNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/sendApv.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/receiveApvList.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
-		mv.setViewName("apv/sendApv");
+		mv.setViewName("apv/receiveApvList");
 		return mv;
 	}
+	
+	/*시행함*/
+	@RequestMapping("/apv/enforceApvList.do")
+	public ModelAndView enforceApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		System.out.println(loginNo);
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectEnforceApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectEnforceApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/enforceApvList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/enforceApvList");
+		return mv;
+	}
+	
+	/*참조함*/
+	@RequestMapping("/apv/referApvList.do")
+	public ModelAndView referApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectReferApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectReferApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/referApvList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/referApvList");
+		return mv;
+	}
+	
+	/*참조함 -> 조회하기*/
+	@RequestMapping("/apv/lookupApvROne.do")
+	public ModelAndView lookupApvROne(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		Map<String,Object> apvOne=service.selectLookupApvR(param);
+		if(String.valueOf(apvOne.get("OPENYN")).trim().equals("N")) {
+			int result=0;
+			try { 
+				result=service.updateReferYN(param);
+			}
+			catch (Exception e) {
+				e.printStackTrace(); 
+			}
+		}
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	/*결재함 -> 결재하기 뷰*/
+	@RequestMapping("/apv/lookupApvAOne.do")
+	public ModelAndView lookupApvAOne(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		Map<String,Object> apvOne=service.selectLookupApvA(param);
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	
 }
