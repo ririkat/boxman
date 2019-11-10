@@ -53,5 +53,41 @@ public interface ApvService {
 
 	int updateApvLine(Map<String, Object> param) throws Exception;
 
+	Map<String, Object> selectEmpInfoAll(Map<String, Object> loginEmp);
 
+	int insertRequestApv(Map<String, Object> param) throws Exception;
+
+	List<Map<String, Object>> selectSendApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectSendApvCount(int loginNo);
+
+	List<Map<String, Object>> selectReceiveApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectReceiveApvCount(int loginNo);
+
+	List<Map<String, Object>> selectEnforceApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectEnforceApvCount(int loginNo);
+
+	List<Map<String, Object>> selectReferApvList(int cPage, int numPerPage, int loginNo);
+
+	int selectReferApvCount(int loginNo);
+
+	Map<String, Object> selectLookupApv(int apvNo);
+
+	Map<String, Object> selectLookupApvR(Map<String, Object> param);
+
+	int updateReferYN(Map<String, Object> param) throws Exception;
+
+	Map<String, Object> selectLookupApvA(Map<String, Object> param);
+
+	int apvPermit(Map<String, Object> param) throws Exception;
+
+	int apvReturn(Map<String, Object> param) throws Exception;
+
+	Map<String, Object> selectLookupApvEOne(Map<String, Object> param);
+
+	int apvEnforce(Map<String, Object> param) throws Exception;
+
+	int apvEReturn(Map<String, Object> param) throws Exception;;
 }
