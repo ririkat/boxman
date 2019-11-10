@@ -60,4 +60,8 @@
  	<update id="updateCalendar" parameterType="map">
  		UPDATE SCHEDULE SET "title" = #{title}, "start" = #{start} , "end" = #{end} , "backgroundColor" = #{backgoundColor} , "type" = #{type} , "description" = #{description} , "allDay" = #{allDay} WHERE "_id" = #{calNo}
  	</update>
+ 	
+ 	<select id = "selectCalendarEmpNo3" parameterType="_int" resultType="calendar">
+ 		select * from schedule where "username" = #{username} ORDER BY "_id" DESC
+ 	</select>
 </mapper>

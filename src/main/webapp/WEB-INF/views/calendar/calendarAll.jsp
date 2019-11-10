@@ -104,7 +104,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="${path }/common/main.do">
+				href="${path }/common/main.do?empNo=${loginEmp.EMPNO}">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<!-- <i class="fas fa-laugh-wink"></i> -->
 					<!-- <i class="fas fa-warehouse"></i> -->
@@ -210,7 +210,7 @@
 				</div></li>
 
 			<!-- 일정 관리 -->
-			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do?data=${loginEmp['EMPNO'] }">
+			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do?temp=${loginEmp['EMPNO'] }">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 
@@ -664,13 +664,13 @@
        </div>
        <div class="card-header py-3">
          <button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calender/1Cal.do?empNo=${loginEmp['EMPNO'] }'">개인</button>
+		onclick="location.href='${pageContext.request.contextPath }/calender/1Cal.do?temp=${loginEmp['EMPNO'] }'">개인</button>
 		
 		<button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calender/2Cal.do?empNo=${loginEmp['EMPNO'] }'">부서</button>
+		onclick="location.href='${pageContext.request.contextPath }/calender/2Cal.do?temp=${loginEmp['EMPNO'] }'">부서</button>
 		
 		<button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calender/3Cal.do?empNo=${loginEmp['EMPNO'] }'">회사</button>
+		onclick="location.href='${pageContext.request.contextPath }/calender/3Cal.do?temp=${loginEmp['EMPNO'] }'">회사</button>
        </div>
 
            <div class="row">

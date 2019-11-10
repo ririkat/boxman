@@ -39,6 +39,9 @@ public interface CalendarService {
 	
 	//일정 번호로 조회
 	Calendar selectCno(int data);
+	
+	//메인에서 쓸 일정 리스트
+	List<Calendar> selectCalendarEmpNo2(int empNo);
 
 	
 

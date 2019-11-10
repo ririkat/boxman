@@ -31,7 +31,7 @@ public class CalendarController {
 	/* 일정관리첫페이지로 이동 */
 	@RequestMapping("/calendar/allView.do") // 사원등록 폼으로 전환
 	public ModelAndView allView(@RequestParam(value = "cPage", required = false, defaultValue = "0") int cPage,
-			Model model, @RequestParam(value = "data") int param) {
+			Model model, @RequestParam(value = "temp") int param) {
 
 		int numPerPage = 5;
 
@@ -99,7 +99,7 @@ public class CalendarController {
 	// 개인별
 	@RequestMapping("/calender/1Cal.do")
 	public ModelAndView Calendar1(@RequestParam(value = "cPage", required = false, defaultValue = "0") int cPage,
-			Model model, @RequestParam(value = "empNo") int data) {
+			Model model, @RequestParam(value = "temp") int data) {
 
 		ModelAndView mv = new ModelAndView();
 
@@ -119,7 +119,7 @@ public class CalendarController {
 	// 부서별
 	@RequestMapping("/calender/2Cal.do")
 	public ModelAndView Calendar2(@RequestParam(value = "cPage", required = false, defaultValue = "0") int cPage,
-			Model model, @RequestParam(value = "empNo") int data) {
+			Model model, @RequestParam(value = "temp") int data) {
 
 		ModelAndView mv = new ModelAndView();
 
@@ -139,7 +139,7 @@ public class CalendarController {
 	// 회사별
 	@RequestMapping("/calender/3Cal.do")
 	public ModelAndView Calendar3(@RequestParam(value = "cPage", required = false, defaultValue = "0") int cPage,
-			Model model, @RequestParam(value = "empNo") int data) {
+			Model model, @RequestParam(value = "temp") int data) {
 
 		ModelAndView mv = new ModelAndView();
 

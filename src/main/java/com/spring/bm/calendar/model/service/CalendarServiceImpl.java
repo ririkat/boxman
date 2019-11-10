@@ -105,6 +105,11 @@ public class CalendarServiceImpl implements CalendarService {
 		return dao.selectCno(sqlSession, data);
 	}
 
+	@Override
+	public List<Calendar> selectCalendarEmpNo2(int empNo) {
+		return dao.selectCalendarEmpNo2(sqlSession, empNo);
+	}
+
 
 
 

@@ -41,5 +41,7 @@ public interface CalendarDao {
 
 	Calendar selectCno(SqlSessionTemplate sqlSession, int data);
 
+	List<Calendar> selectCalendarEmpNo2(SqlSessionTemplate sqlSession, int empNo);
+
 
 }
