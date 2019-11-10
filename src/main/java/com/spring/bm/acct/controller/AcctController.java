@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -145,31 +146,38 @@ public class AcctController {
 	}
 	
 	@RequestMapping("/acct/quitJob.do")
-	public ModelAndView quitJob(String empname, String amt, String empno,  Model mode) {
+	public String quitJob(String empname, String amt, String empno,  Model model,RedirectAttributes redirect) {
 		
 		Map <String, String> m = new HashMap();
 		m.put("empname",empname);
 		m.put("amt", amt);
 		m.put("empno", empno);
 		
+		String loc = "";
+		String loc1 = "";
+		String msg = "";
+		int severNo;
 		int result = 0;
-		String msg="";
-		String loc="/emp/empList.do";
+
 		try {
 			result = service.updateSeveranceStatus(m);
 			if(result > 0) {
-				msg=empname+"님을 퇴사 시켰습니다";
+				m = service.selectSevOne(empno);
+				m.put("temp", "severance");
+				redirect.addAllAttributes(m);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "퇴사처리가 실패하였습니다.";
+				loc= "emp/empList.do?temp=all";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
 			}
 		} catch (RuntimeException e) {
 			msg="문제가 발생했습니다";
 		}
 		
-		
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
-		return mv;
+		return loc1;
 		
 	}
 	

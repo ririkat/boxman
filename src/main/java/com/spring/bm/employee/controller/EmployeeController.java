@@ -614,6 +614,8 @@ public class EmployeeController {
 					msg = "error[304] 다시 신청해주세요";
 					loc = "emp/empAttendanceOne";
 					map = service.selectAttenNoOne(param);
+					model.addAttribute("msg", msg);
+					model.addAttribute("loc", loc);
 					model.addAttribute("att", map);
 					loc1 = "common/msg";
 				}
@@ -672,7 +674,7 @@ public class EmployeeController {
 		
 		String loc = "";
 		String loc1 = "";
-		String msg = "/emp/empList.do";
+		String msg = "";
 		result = 0;
 		try {
 			result = service.insertDayOff(param);
