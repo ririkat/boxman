@@ -13,6 +13,7 @@
                     <h4 class="card-title">상세페이지</h4>
                     <p class="card-description"> 각 부서의 노동 정책 및 행정업무에 대한 자료를 보실 수 있습니다. </p>
                     <form class="forms-sample" id="devFrm" enctype="multipart/form-data" method="post">
+                    <input type = "hidden" name = "categoryNo" value = "${nt.categoryNo }"/>
                    <c:forEach items="${list2 }" var="list2" varStatus="v">
                   	 <c:choose>							 
 						<c:when test="${list2['NCHECK'] == '필수아님'}">
@@ -115,6 +116,9 @@
 			$("#devFrm").submit();
 		}
 		
+		
+
+           
 		//첨부파일 다운로드
 		function fileDownload(oName, rName)
 		{

@@ -31,6 +31,8 @@ import com.spring.bm.department.model.service.DepartmentService;
 import com.spring.bm.empjob.model.service.EmpJobService;
 import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.employee.model.vo.EmpFile;
+import com.spring.bm.notice.model.service.NoticeService;
+import com.spring.bm.notice.model.vo.Notice;
 
 @Controller
 public class EmployeeController {
@@ -131,7 +133,8 @@ public class EmployeeController {
 			msg = "로그인 성공";
 			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
-			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
+			session.setMaxInactiveInterval(60*60);//세션유효시간 1분			
+			
 		} else if(pwEncoder.matches((CharSequence) map.get("empPassword"), (String)m.get("EMPPASSWORD"))==false){
 			msg = "비밀번호가 일치하지 않습니다.";
 			loc="/";

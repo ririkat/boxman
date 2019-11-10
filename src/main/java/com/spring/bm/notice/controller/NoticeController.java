@@ -232,8 +232,17 @@ public class NoticeController {
          result = noticeService.updateNotice(param);
       }
       
-      String msg="";
-      String loc="/notice/selectNoticeList.do";
+      String categoryNo = request.getParameter("categoryNo");
+      System.out.println("categoryNo"+categoryNo);
+      String msg="";      
+      String loc="";
+
+      switch(categoryNo) {
+      case "1" : loc="/notice/selectNoticeList.do"; break;
+      case "2" : loc="/notice/selectNoticeDeptList.do"; break;
+      case "3" : loc="/notice/guidelineList.do"; break;
+      }
+      
       if(result > 0 || result2 > 0) {
             msg = "게시글 수정 완료!";
          } else {
@@ -302,13 +311,13 @@ public class NoticeController {
       //반환될 modelAndView객체 생성
       ModelAndView mv = new ModelAndView();
       int numPerPage = 5;
-      List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
+      List<Map<String,String>> list3 = noticeService.selectNoticeList3(cPage, numPerPage);
       List<Notice> list2 = noticeService.selectNoticeList2();
       int totalCount = noticeService.selectNoticeCount2();
 
       mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/notice/selectNoticeDeptList.do"));
       mv.addObject("count", totalCount);
-      mv.addObject("list",list);   //key value형식 -> model로 들어감
+      mv.addObject("list3",list3);   //key value형식 -> model로 들어감
       mv.addObject("list2",list2); //필독체크 리스트
 
       mv.setViewName("notice/noticeDeptList");   // -> view
@@ -323,13 +332,13 @@ public class NoticeController {
       //반환될 modelAndView객체 생성
       ModelAndView mv = new ModelAndView();
       int numPerPage = 5;
-      List<Map<String,String>> list = noticeService.selectNoticeList(cPage, numPerPage);
+      List<Map<String,String>> list4 = noticeService.selectNoticeList4(cPage, numPerPage);
       List<Notice> list2 = noticeService.selectNoticeList2();
       int totalCount = noticeService.selectNoticeCount3();
 
       mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/notice/guidelineList.do"));
       mv.addObject("count", totalCount);
-      mv.addObject("list",list);   //key value형식 -> model로 들어감
+      mv.addObject("list4",list4);   //key value형식 -> model로 들어감
       mv.addObject("list2",list2); //필독체크 리스트
 
       mv.setViewName("notice/guidelineList");   // -> view
