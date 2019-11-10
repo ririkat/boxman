@@ -109,18 +109,15 @@
 <script>
 var crSender = $('#crSender').val();
 var sender = $('#sender').val();
-
 // method to scroll down
    function scrollDown(){
       window.scrollTo(0,document.body.scrollHeight);
    }
-
 window.onload = function(){
    scrollDown();
 }
    
 //creating web socket
-
     /* local */
      var socket = new   WebSocket("ws://192.168.220.11:9090/bm/chatRoom");
      
@@ -143,7 +140,6 @@ window.onload = function(){
                   "chatText" : d["chatText"],
                   "roomNo" : d["roomNo"]
           };
-
           var date =  document.createTextNode(formatAMPM(new Date()));
       
           console.log(msg.receiver != sender);
@@ -209,7 +205,6 @@ window.onload = function(){
               "roomNo" : "${cr.roomNo}",
               "chatText" : $('#text').val()
           };
-
           socket.send(JSON.stringify(msg));
      }
      // 날짜/ 시간
@@ -229,5 +224,4 @@ window.onload = function(){
               send();
           }
      });
-
 </script>

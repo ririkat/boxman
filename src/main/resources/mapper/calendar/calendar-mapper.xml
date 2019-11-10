@@ -2,14 +2,66 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="calendar">
  	<insert id="insertCalendar" parameterType="map">
- 		insert into Schedule values (seq_schNo.nextval, #{title}, #{description}, #{start}, #{end}, #{type}, #{username}, #{backgroundColor}, #{textColor} , #{allDay})
+ 		insert into Schedule values (seq_schNo.nextval, #{title}, #{description}, TO_DATE(#{start}, 'yyyy-mm-dd hh24:mi'), TO_DATE(#{end}, 'yyyy-mm-dd hh24:mi'), #{type}, #{username}, #{backgroundColor}, #{textColor} , #{allDay})
+ 		<selectKey resultType="string" order="AFTER" keyProperty="scheNo">SELECT seq_schNo.CURRVAL FROM DUAL </selectKey>
  	</insert>
- 	<select id = "selectCalendarEmpNo" parameterType="map" resultType="calendar">
- 		select * from schedule where "username" = #{username}
+ 	<select id = "selectCalendarEmpNo" parameterType="_int" resultType="calendar">
+ 		select * from schedule where "username" = #{username} ORDER BY "_id" ASC
  	</select>
  	
  	<select id = "selectCalendarCount" parameterType = "map" resultType = "_int">
  		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{username}
  	</select>
+ 	
+ 	<select id = "selectCalendarEmpNo2" parameterType="map" resultType="calendar">
+ 		select * from schedule where "username" = #{data} ORDER BY "_id" ASC
+ 	</select>
+ 	
+ 	<select id = "selectCalendarCount2" parameterType="_int" resultType="_int">
+ 	 	SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data}
+ 	</select>
+ 	
+ 	<delete id = "deleteCalendar" parameterType="_int">
+ 		DELETE FROM SCHEDULE WHERE "_id" = #{data}
+ 	</delete>
+ 	
+ 	<select id = "selectCal" parameterType="_int" resultType="calendar">
+ 		SELECT * FROM SCHEDULE WHERE "_id" = #{result}
+ 	</select>
+ 	
+ 	<select id = "selectCalendar1" parameterType="_int" resultType = "calendar">
+ 		SELECT * FROM SCHEDULE WHERE "username" = #{data} AND "type" = '개인' ORDER BY "_id" ASC
+ 	</select>
+ 	
+ 	<select id = "selectCalendar2" parameterType="_int" resultType = "calendar">
+ 		SELECT * FROM SCHEDULE WHERE "username" = #{data} AND "type" = '부서' ORDER BY "_id" ASC
+ 	</select>
 
+ 	<select id = "selectCalendar3" parameterType="_int" resultType = "calendar">
+ 		SELECT * FROM SCHEDULE WHERE "username" = #{data} AND "type" = '회사' ORDER BY "_id" ASC
+ 	</select>
+ 	
+ 	<select id = "selectCalendar1Count" parameterType="_int" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data} AND "type" = '개인' 
+ 	</select>
+ 	
+ 	 <select id = "selectCalendar2Count" parameterType="_int" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data} AND "type" = '부서' 
+ 	</select>
+ 	
+ 	 <select id = "selectCalendar3Count" parameterType="_int" resultType = "_int">
+ 		SELECT COUNT(*) FROM SCHEDULE WHERE "username" = #{data} AND "type" = '회사' 
+ 	</select>
+ 	
+ 	<select id = "selectCal2" parameterType="_int" resultType="calendar">
+ 		SELECT * FROM SCHEDULE WHERE "_id" = #{data}
+ 	</select>
+ 	
+ 	<update id="updateCalendar" parameterType="map">
+ 		UPDATE SCHEDULE SET "title" = #{title}, "start" = #{start} , "end" = #{end} , "backgroundColor" = #{backgoundColor} , "type" = #{type} , "description" = #{description} , "allDay" = #{allDay} WHERE "_id" = #{calNo}
+ 	</update>
+ 	
+ 	<select id = "selectCalendarEmpNo3" parameterType="_int" resultType="calendar">
+ 		select * from schedule where "username" = #{username} ORDER BY "_id" DESC
+ 	</select>
 </mapper>

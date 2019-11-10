@@ -165,10 +165,11 @@ var calendar = $('#calendar').fullCalendar({
       data: {
         // 실제 사용시, 날짜를 전달해 일정기간 데이터만 받아오기를 권장
       },
+      dataType : "json",
       success: function (response) {
     	  console.log(response);
         var fixedDate = response.map(function (array) {
-          if (array.allDay && array.start !== array.end) {
+          if (array.allDay && array.start != array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
             array.end = moment(array.end).add(1, 'days');
           }
@@ -322,7 +323,7 @@ var calendar = $('#calendar').fullCalendar({
   },
   eventLimitClick: 'week', //popover
   navLinks: true,
-  defaultDate: moment('2019-05'), //실제 사용시 삭제
+  defaultDate: new Date(), //실제 사용시 삭제
   timeFormat: 'HH:mm',
   defaultTimedEventDuration: '01:00:00',
   editable: true,

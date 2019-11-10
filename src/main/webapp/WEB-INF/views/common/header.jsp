@@ -92,7 +92,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="${path }/common/main.do">
+				href="${path }/common/main.do?empNo=${loginEmp.EMPNO}">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<!-- <i class="fas fa-laugh-wink"></i> -->
 					<!-- <i class="fas fa-warehouse"></i> -->
@@ -194,7 +194,7 @@
 				</div></li>
 
 			<!-- 일정 관리 -->
-			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do">
+			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do?temp=${loginEmp['EMPNO'] }">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 

@@ -19,8 +19,7 @@ var modifyBtnContainer = $('.modalBtnContainer-modifyEvent');
 var newEvent = function (start, end, eventType) {
 
     $("#contextMenu").hide(); //메뉴 숨김
-    //나쁘지않치
-    modalTitle.html('새로운 일정');
+    modalTitle.html();
     editStart.val(start);
     editEnd.val(end);
     editType.val(eventType).prop("selected", true);
@@ -89,13 +88,20 @@ var newEvent = function (start, end, eventType) {
                 textColor: eventData.textColor,
                 allDay: eventData.allDay
             },
-            dataType :'html',
+            dataType :'json',
             success: function (response) {
+            	console.log(response);
                 $('#calendar').fullCalendar('removeEvents');
                 $('#calendar').fullCalendar('refetchEvents');
                 
-                if(response > 0) {
-                	alert("일정 등록 성공 \n 새로고침해주세요.");
+                if(response != null) {
+                	$("#myTable2").find(".myTable2").remove();
+        			$("#remo").remove();
+        				tr = $('<tr class="dataTable1"/>');
+        				tr.append("<td>" + response.title + "</td>");
+        				tr.append("<td>" + response.type + "</td>");
+        		        $('#myTable2').append(tr);
+                    	alert("일정 등록 성공");
                 } else {
                 	alert("일정 등록 실패");
                 }
