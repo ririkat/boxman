@@ -307,4 +307,66 @@ public class ApvServiceImpl implements ApvService {
 	public Map<String, Object> selectLookupApvA(Map<String, Object> param) {
 		return dao.selectLookupApvA(session,param);
 	}
+	
+	/*결재하기 -> 개인결재승인처리*/
+	@Override
+	public int apvPermit(Map<String, Object> param) throws Exception{
+		int result=0;
+		//먼저, 해당 결재문서에 결재자들 총 인원을 불러옴
+		result=dao.selectApvACount(session,param);
+		int allCount=result;
+		//개인을 전결처리시킴
+		result=dao.apvPermit(session,param);
+		if(result==0) throw new Exception();
+		//총 인원과 현재 턴 번호가 일치하면 전체 종결상태가 되도록 ,
+		if(Integer.parseInt(String.valueOf(param.get("priorNo")))
+				==allCount) {
+			result=dao.updateApvPermitAll(session,param);
+		}else {
+			//아니라면 진행상태로 update 하고, currturn +1함.
+			result=dao.updateApvPermit(session,param);
+		}
+		
+		return result;
+	}
+	
+	/*결재하기 -> 반려하기*/
+	@Override
+	public int apvReturn(Map<String, Object> param) throws Exception {
+		int result=0;
+		result=dao.apvAReturn(session,param);
+		if(result==0) throw new Exception();
+		result=dao.updateApvReturn(session,param);
+		if(result==0) throw new Exception();
+		return result;
+	}
+	
+	/*시행함 -> 시행관리 뷰*/
+	@Override
+	public Map<String, Object> selectLookupApvEOne(Map<String, Object> param) {
+		return dao.selectLookupApvEOne(session,param);
+	}
+	
+	/*시행관리뷰 -> 시행처리하기*/
+	@Override
+	public int apvEnforce(Map<String, Object> param) throws Exception {
+		// 개인 시행 처리하기
+		int result=0;
+		result=dao.updateApvEEnforce(session,param);
+		if(result==0) throw new Exception();
+		// 문서 시행처리하기
+		result=dao.updateApvEnforce(session,param);
+		if(result==0) throw new Exception();
+		return result;
+	}
+	
+	@Override
+	public int apvEReturn(Map<String, Object> param) throws Exception {
+		int result=0;
+		result=dao.apvEEReturn(session,param);
+		if(result==0) throw new Exception();
+		result=dao.updateApvEReturn(session,param);
+		if(result==0) throw new Exception();
+		return result;
+	}
 }

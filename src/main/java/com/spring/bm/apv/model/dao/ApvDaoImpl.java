@@ -237,4 +237,58 @@ public class ApvDaoImpl implements ApvDao {
 	public Map<String, Object> selectLookupApvA(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("apv.selectLookupApvA",param);
 	}
+	
+	/*결재하기 -> 개인결재승인처리*/
+	@Override
+	public int selectApvACount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectApvACount",param);
+	}
+	@Override
+	public int apvPermit(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.apvPermit",param);
+	}
+	@Override
+	public int updateApvPermitAll(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvPermitAll",param);
+	}
+	@Override
+	public int updateApvPermit(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvPermit",param);
+	}
+	
+	/*결재하기 -> 반려하기*/
+	@Override
+	public int apvAReturn(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.apvAReturn",param);
+	}
+	@Override
+	public int updateApvReturn(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvReturn",param);
+	}
+	
+	/*시행함 -> 시행관리 뷰*/
+	@Override
+	public Map<String, Object> selectLookupApvEOne(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectLookupApvEOne",param);
+	}
+	
+	/*시행관리뷰 -> 시행처리*/
+	@Override
+	public int updateApvEEnforce(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvEEnforce",param);
+	}
+	@Override
+	public int updateApvEnforce(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvEnforce",param);
+	}
+	/*시행관리뷰 -> 반송처리*/
+	@Override
+	public int apvEEReturn(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.apvEEReturn",param);
+	}
+	@Override
+	public int updateApvEReturn(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateApvEReturn",param);
+	}
+	
 }

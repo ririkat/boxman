@@ -81,6 +81,13 @@ public interface ApvService {
 
 	Map<String, Object> selectLookupApvA(Map<String, Object> param);
 
+	int apvPermit(Map<String, Object> param) throws Exception;
 
+	int apvReturn(Map<String, Object> param) throws Exception;
 
+	Map<String, Object> selectLookupApvEOne(Map<String, Object> param);
+
+	int apvEnforce(Map<String, Object> param) throws Exception;
+
+	int apvEReturn(Map<String, Object> param) throws Exception;;
 }

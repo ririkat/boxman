@@ -326,7 +326,6 @@ public class ApvDocController {
 	@RequestMapping("/apv/receiveApvList.do")
 	public ModelAndView receiveApvList(@RequestParam(value="cPage", 
 		required=false, defaultValue="1") int cPage,int loginNo) {
-		System.out.println(loginNo);
 		int numPerPage = 10;
 		
 		List<Map<String,Object>> list=service.selectReceiveApvList(cPage,numPerPage,loginNo);
@@ -414,5 +413,145 @@ public class ApvDocController {
 		return mv;
 	}
 	
+	/*결재하기뷰->결재처리*/
+	@RequestMapping("/apv/apvPermit.do")
+	public ModelAndView apvPermit(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo,int priorNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		param.put("priorNo", priorNo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvAOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvPermit(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="결재처리 완료";
+		}else {
+			msg="결재처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
 	
+	/*결재하기뷰->반려처리*/
+	@RequestMapping("/apv/apvReturn.do")
+	public ModelAndView apvReturn(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo,String moreInfo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		param.put("moreInfo", moreInfo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvAOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvReturn(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="반려처리 완료";
+		}else {
+			msg="반려처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	/*시행함 -> 시행관리 뷰*/
+	@RequestMapping("/apv/lookupApvEOne.do")
+	public ModelAndView lookupApvEOne(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		Map<String,Object> apvOne=service.selectLookupApvEOne(param);
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	/*시행관리뷰->시행처리*/
+	@RequestMapping("/apv/apvEnforce.do")
+	public ModelAndView apvEnforce(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvEOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvEnforce(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="시행처리 완료";
+		}else {
+			msg="시행처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	/*결재하기뷰->반려처리*/
+	@RequestMapping("/apv/apvEReturn.do")
+	public ModelAndView apvEReturn(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo,String moreInfo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		param.put("moreInfo", moreInfo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvEOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvEReturn(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="반송처리 완료";
+		}else {
+			msg="반송처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
 }

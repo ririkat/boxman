@@ -1,9 +1,12 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<jsp:include page="/WEB-INF/views/common/header.jsp">   
-   <jsp:param value="시행결재함" name="tabTitle"/> 
-   <jsp:param value="시행결재함" name="pageTitle"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<c:set var="path" value="${pageContext.request.contextPath}" />
+<jsp:include page="/WEB-INF/views/common/header.jsp">
+	<jsp:param value="시행결재함" name="tabTitle" />
+	<jsp:param value="시행결재함" name="pageTitle" />
 </jsp:include>
 
 <section>
@@ -18,27 +21,44 @@
             <div class="card-header py-3" >
             
               <!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
-              <div style="float: right;">
-              	<input type="button" class="btn btn-primary mr-2 pull-right" onclick="doc_enroll()" value="양식등록"/>
-              </div>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-stripped" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-striped table-hover text-center" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
                       <th>문서번호</th>
                       <th>문서분류</th>
-                      <th>양식명</th>
+                      <th>신청구분</th>
+                      <th>기안제목</th>
+                      <th>문서결재상태</th>
+                      <th>시행상태</th>
                       <th>등록일</th>
-                      <th>조회수</th>
+                      <th>관리</th>
                     </tr>
                   </thead>
-                  <tfoot>
-
-                  </tfoot>
                   <tbody>
-
+					<c:forEach var="a" items="${list}">
+						<tr>
+							<td><c:out value='${a["APVNO"]}' /></td>
+							<td><c:out value='${a["DCTITLE"]}' /></td>
+							<td><c:out value='${a["APVTYPE"]}' /></td>
+							<td><c:out value='${a["APVTITLE"]}' /></td>
+							<td><c:out value='${a["APVSTATUS"]}' /></td>
+							<td><c:out value='${a["APVESTATUS"]}' /></td>
+							<td><c:out value='${a["APVENROLLDATE"]}' /></td>
+							<td>
+								<c:if test="${a['APVSTATUS']=='종결'}">
+									<c:if test="${a['APVESTATUS']=='미시행'}">
+										<button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']},${loginEmp['EMPNO']})" >시행관리</button>
+									</c:if>
+									<c:if test="${a['APVESTATUS']=='시행'}">
+										<button type="button" class="btn btn-primary" disabled='disabled'>시행완료</button>
+									</c:if>
+								</c:if>
+							</td>
+						</tr>
+					</c:forEach>	
                   </tbody>
                 </table>
               </div>
@@ -49,15 +69,13 @@
         <!-- /.container-fluid -->
 
       <!-- End of Main Content -->
-      
-
 
 </section>
-      <script>
-      	function doc_enroll(){
-      		var url="${path}/bm/apv/apvDocEnroll.do";
-      		var name="양식등록"
-            window.open(url,name,"width=1000,height=1000,left=600");
-      	}
-      </script>
+   <script>
+   			function apvOne(apvNo,empNo){
+   		    	var url="${path}/apv/lookupApvEOne.do?apvNo="+apvNo+"&empNo="+empNo;
+   		    	var name="기안열람"
+   		        window.open(url,name,"width=1200,height=800,left=600");
+   		    }
+      	</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

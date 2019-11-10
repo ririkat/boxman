@@ -91,4 +91,26 @@ public interface ApvDao {
 
 	Map<String, Object> selectLookupApvA(SqlSessionTemplate session, Map<String, Object> param);
 
+	int apvPermit(SqlSessionTemplate session, Map<String, Object> param);
+
+	int apvAReturn(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvReturn(SqlSessionTemplate session, Map<String, Object> param);
+
+	int selectApvACount(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvPermitAll(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvPermit(SqlSessionTemplate session, Map<String, Object> param);
+
+	Map<String, Object> selectLookupApvEOne(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvEEnforce(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvEnforce(SqlSessionTemplate session, Map<String, Object> param);
+
+	int apvEEReturn(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvEReturn(SqlSessionTemplate session, Map<String, Object> param);
+
 }
