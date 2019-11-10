@@ -9,7 +9,7 @@
 <section id="content">
 <div class="card shadow mb-4">
        <div class="card-header py-3">
-         <h6 class="m-0 font-weight-bold text-primary">편람/지침</h6>
+         <h6 class="m-0 font-weight-bold text-primary">지침/규정</h6>
        </div>
        <div class="card-body">
          <div class="table-responsive">
@@ -59,7 +59,6 @@
                        </thead>
                        <tbody>
      <c:forEach items="${list2 }" var ="list2" varStatus="v">
-                       <c:if test="${list2['CATEGORYNO'] eq '3' }">
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2["NNAME"]}&nReadCount=${list2["NNO"]}&nNo=${list2["NNO"]}'>${list2["NNAME"] }</a></td>
@@ -75,14 +74,22 @@
 							<td>${list2['NDATE'] }</td>
 							<td>${list2['NREADCOUNT'] }</td>
 						 </tr>
-						 </c:if>
                        </c:forEach>
-                 		<c:forEach items="${list}" var="notice" varStatus="v">
-						 <c:if test="${notice['CATEGORYNO'] eq '3' }">
+                 		<c:forEach items="${list4}" var="notice" varStatus="v">
 							<c:choose>							 
 							    <c:when test="${notice['NCHECK'] eq '필수아님' && notice['UPNOTICECOUNT']>0}">
 							    <tr>
-									<td><c:out value='${notice["NNO"]}'/></td>
+									<td>
+			                           <c:if test="${param.cPage eq null }">
+			                                 <c:out value="${v.count }"/>
+			                           </c:if>
+			                            <c:if test="${param.cPage == 1 }">
+			                              <c:out value="${v.count }"/>
+				                        </c:if>
+				                           <c:if test="${param.cPage > 1 }">
+				                              <c:out value="${v.count+(5*(param.cPage-1)) }"/>
+				                        </c:if>
+			                        </td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
 									<td>${notice['EMPNAME'] }</td>							 
 									<td><img src="${path}/resources/b4/img/btn_disk.gif" alt="첨부파일 있음"></td>									
@@ -92,7 +99,17 @@
 							    </c:when>
 							    <c:when test="${notice['NCHECK'] eq '필수아님' && notice['UPNOTICECOUNT']==0}">
 							    <tr>
-									<td><c:out value='${notice["NNO"]}'/></td>
+									<td>
+			                           <c:if test="${param.cPage eq null }">
+			                                 <c:out value="${v.count }"/>
+			                           </c:if>
+			                            <c:if test="${param.cPage == 1 }">
+			                              <c:out value="${v.count }"/>
+				                        </c:if>
+				                           <c:if test="${param.cPage > 1 }">
+				                              <c:out value="${v.count+(5*(param.cPage-1)) }"/>
+				                        </c:if>
+			                        </td>
 									<td><a href='${path}/notice/selectNoticeOne.do?nName=${notice["NNAME"]}&nReadCount=${notice["NNO"]}&nNo=${notice["NNO"]}'><c:out value='${notice["NNAME"]}'/></a></td>
 									<td>${notice['EMPNAME'] }</td>							 
 									<td></td>
@@ -101,8 +118,7 @@
 									<td><c:out value='${notice["NREADCOUNT"]}'/></td>
 								</tr>
 							    </c:when>
-							</c:choose>
-						</c:if>        
+							</c:choose>     
 						</c:forEach>                    
                        </tbody>
                      </table>

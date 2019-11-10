@@ -92,7 +92,7 @@
 			<!-- Sidebar - Brand -->
 			<a
 				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="${path }/common/main.do">
+				href="${path }/common/main.do?empNo=${loginEmp.EMPNO}">
 				<div class="sidebar-brand-icon rotate-n-15">
 					<!-- <i class="fas fa-laugh-wink"></i> -->
 					<!-- <i class="fas fa-warehouse"></i> -->
@@ -133,8 +133,10 @@
 				<div id="collapseApv" class="collapse" aria-labelledby="headingApv" data-parent="#accordionSidebar">
 		          <div class="bg-white py-2 collapse-inner rounded">
 		          	<a class="collapse-item" href="${path }/apv/requestApv.do">기안하기</a>
-		            <a class="collapse-item" href="${path }/apv/sendApv.do">상신결재함</a>
-		            <a class="collapse-item" href="${path }/apv/receiveApv.do">수신결재함</a>
+		            <a class="collapse-item" href="${path }/apv/sendApv.do?loginNo=${loginEmp['EMPNO'] }">상신결재함</a>
+		            <a class="collapse-item" href="${path }/apv/receiveApvList.do?loginNo=${loginEmp['EMPNO'] }">수신결재함</a>
+		            <a class="collapse-item" href="${path }/apv/enforceApvList.do?loginNo=${loginEmp['EMPNO'] }">시행결재함</a>
+		            <a class="collapse-item" href="${path }/apv/referApvList.do?loginNo=${loginEmp['EMPNO'] }">참조결재함</a>
 		            <a class="collapse-item" href="${path }/apv/apvLineList.do?loginNo=${loginEmp['EMPNO'] }">결재라인관리</a>
 		            <a class="collapse-item" href="${path }/apv/apvDoc.do">결재양식관리</a>
 		          </div>
@@ -194,7 +196,7 @@
 				</div></li>
 
 			<!-- 일정 관리 -->
-			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do">
+			<li class="nav-item"><a class="nav-link" href="${path }/calendar/allView.do?temp=${loginEmp['EMPNO'] }">
 					<i class="fas fa-fw fa-tachometer-alt"></i> <span>일정 관리</span>
 			</a></li>
 
@@ -209,7 +211,7 @@
 	          <div class="bg-white py-2 collapse-inner rounded">
 	            <a class="collapse-item" href="${path }/notice/selectNoticeList.do">공지사항</a>
 	            <a class="collapse-item" href="${path }/notice/selectNoticeDeptList.do">부서별게시판</a>
-	            <a class="collapse-item" href="${path }/notice/guidelineList.do">편람/지침</a>
+	            <a class="collapse-item" href="${path }/notice/guidelineList.do">지침/규정</a>
 	            <a class="collapse-item" href="${path }/notice/site.do">관련사이트</a>
 	          </div>
 	        </div>
@@ -494,7 +496,7 @@
 		var userId = $("#userId").val();
 
 		//안읽은메세지수 출력
-		$(function(){
+		/* $(function(){
 					timer = setInterval(function(){
 						$.ajax({
 							type:"post",
@@ -510,8 +512,8 @@
 								}
 							}
 						});
-					},100000);
-			}); 
+					},1000);
+			});  */
 			
 			function showUnread(result){
 				$('#unread').html(result);

@@ -35,6 +35,8 @@ public class RSAEncrypto implements MyEncrypt{
 		/* 로컬용 */
 		path = path.substring(0,path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
+		
+		
 		if(f.exists()) {
 			try(ObjectInputStream ois=new ObjectInputStream(new FileInputStream(f))){
 				Map<String, Object> keys=((Map<String, Object>) ois.readObject());
@@ -79,6 +81,8 @@ public class RSAEncrypto implements MyEncrypt{
 		/* 로컬용 */
 		path = path.substring(0,path.lastIndexOf("/target"));
 		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
+		
+		
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(f))) {
 			oos.writeObject(keys);
 		} catch(IOException e) {

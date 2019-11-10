@@ -19,14 +19,14 @@
 	
 	
 	
-	<!-- 월급 리스트 가져오기 -->
+	<!-- salary list -->
 	<select id="selectEmpList" resultType="map">
 		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
 		(select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK 
 			from employee
 			    inner join salary on employee.empno=salary.empno
 			    inner join empjob on employee.jobno=empjob.jobno
-			    inner join department on employee.deptno=department.deptno order by saldate desc
+			    inner join department on employee.deptno=department.deptno
 	</select>
 	<select id="selectEmpCount" resultType="_int">
 		select count(*) from salary
@@ -224,7 +224,7 @@
 				              	</when>
 						    </choose>
 	</select>
-	<select id="sevSearchCount" parameterType="map">
+	<select id="sevSearchCount" parameterType="map" resultType="_int">
 		select count(*) from employee 
 	        join severance on employee.empno=severance.empno
 	        join empjob on employee.jobno=empjob.jobno
@@ -251,8 +251,6 @@
 		SELECT E.*, S.* FROM EMPLOYEE E JOIN SEVERANCE S ON (E.EMPNO=S.EMPNO)
 		WHERE S.EMPNO=#{empno}
 	</select>
-	
-	
 	
 	
 </mapper>

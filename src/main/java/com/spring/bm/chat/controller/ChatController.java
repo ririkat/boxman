@@ -29,8 +29,6 @@ public class ChatController {
 		
 		ModelAndView mv = new ModelAndView();
 	    List<Map<String,String>> list = service.selectChatList();
-	    
-	    System.out.println("list찍어보자"+list);
 
 	    mv.addObject("list", list);
 
@@ -95,6 +93,9 @@ public class ChatController {
 		
 		List<Map<String,String>> list = service.selectChatList();
 		List<Map<String,String>> list2 = service.searchEmp(data);
+		
+		System.out.println("사원검색 list "+list);
+		System.out.println("사원검색 list2 "+list2);
 		
 		ModelAndView mv= new ModelAndView();
 		mv.addObject("list",list);

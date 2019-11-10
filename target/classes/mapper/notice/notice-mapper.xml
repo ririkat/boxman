@@ -46,19 +46,27 @@
    </select>
    <!-- 페이징처리1 -->
    <select id="selectNoticeCount" resultType="_int">
-      select count(*) from notice where categoryNo='1'
+      select count(*) from notice where categoryNo='1' and NCHECK!='필독체크'
    </select>
    <!-- 페이징처리2 -->
    <select id="selectNoticeCount2" resultType="_int">
-      select count(*) from notice where categoryNo='2'
+      select count(*) from notice where categoryNo='2' and NCHECK!='필독체크'
    </select>
    <!-- 페이징처리3 -->
    <select id="selectNoticeCount3" resultType="_int">
-      select count(*) from notice where categoryNo='3'
+      select count(*) from notice where categoryNo='3' and NCHECK!='필독체크'
    </select>
 <!--    게시판 리스트 -->
    <select id="selectNoticeList" resultType="map">
-     select a.*,(select count(*) from upNotice where nNo=a.nNo) as upNoticeCount , b.empname from notice a , employee b where a.empno = b.empno order by nDate desc
+     select a.*,(select count(*) from upNotice where nNo=a.nNo) as upNoticeCount , b.empname from notice a , employee b where categoryNo='1' and a.empno = b.empno order by nDate desc
+   </select>
+   <!--    게시판 리스트 -->
+   <select id="selectNoticeList3" resultType="map">
+     select a.*,(select count(*) from upNotice where nNo=a.nNo) as upNoticeCount , b.empname from notice a , employee b where categoryNo='2' and a.empno = b.empno order by nDate desc
+   </select>
+   <!--    게시판 리스트 -->
+   <select id="selectNoticeList4" resultType="map">
+     select a.*,(select count(*) from upNotice where nNo=a.nNo) as upNoticeCount , b.empname from notice a , employee b where categoryNo='3' and a.empno = b.empno order by nDate desc
    </select>
    <!-- 게시글 조회수 -->
    <update id="updateReadCount" parameterType="_int">
