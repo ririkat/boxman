@@ -441,13 +441,10 @@ public class NoticeController {
 
       //반환될 modelAndView객체 생성
       ModelAndView mv = new ModelAndView();
-
       
       List<Map<String,Object>> list = noticeService.selectSiteList(); //내부
-      System.out.println("내부 ---->"+list);
       List<Map<String,Object>> list2 = noticeService.selectSiteList2(); //외부
-      System.out.println("외부 ---->"+list2);
-
+ 
       mv.addObject("list",list);
       mv.addObject("list2",list2);
       mv.setViewName("notice/noticeSite");   // -> view
