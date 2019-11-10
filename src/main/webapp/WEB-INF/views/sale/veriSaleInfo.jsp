@@ -30,16 +30,16 @@
 			<h6 class="m-0 font-weight-bold text-primary">판매정보 조회</h6>
         </div>
 		<div class="card-body">
-			<form id = "enrollSalInfoFrm" class="forms-sample" method="post" action="${path }/sale/saleList.do">
+			<form id = "enrollSalInfoFrm" class="forms-sample" method="post" action="${path }/apv/addReqApvEnroll.do" onsubmit="return enroll_validate();">
 				<div class="form-group" style="width:150px;">
 					<label>판매코드</label>
-					<input type="text" class="form-control" style="text-align:center;" value="${saleInfo['SALCODE'] }" readonly="readonly" />
+					<input type="text" class="form-control" name="salCode" style="text-align:center;" value="${saleInfo['SALCODE'] }" readonly="readonly" />
 				</div>
 				<br/>
 				
 				<div class="form-group" style="width:250px;">
 					<label>등록일자</label>
-					<input type="text" class="form-control" style="text-align:center;" value="${saleInfo['SALENROLLDATE'] }" readonly="readonly" />
+					<input type="text" class="form-control" name="salEnrollDate" style="text-align:center;" value="${saleInfo['SALENROLLDATE'] }" readonly="readonly" />
 				</div>
 				<br/>
 				
@@ -133,17 +133,17 @@
 				<br/>
 				
 				<div class="form-group">
-					<label>판매확정여부</label>
+					<label>결재승인여부</label>
 					<c:if test="${saleInfo['SALCK'].trim() eq 'N' }">
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" checked disabled> 미확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="salCk" value="N" checked disabled> 승인전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" disabled> 판매확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="salCk" value="Y" disabled> 승인 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
@@ -152,36 +152,36 @@
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" disabled> 미확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="salCk" value="N" disabled> 승인전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" checked disabled> 판매확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="salCk" value="Y" checked disabled> 승인 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
 						<br/>
 						<div class="form-group" style="width:250px;">
-							<label>판매일자</label>
-							<input type="text" class="form-control" style="text-align:center;" value="${saleInfo['SALDATE'] }" readonly="readonly" />
+							<label>승인일자</label>
+							<input type="text" class="form-control" name="salDate" style="text-align:center;" value="${saleInfo['SALDATE'] }" readonly="readonly" />
 						</div>
 					</c:if>
 				</div>
 				<br/>
 				
 				<div class="form-group">
-					<label>송금여부</label>
+					<label>입금여부</label>
 					<c:if test="${saleInfo['REMITCK'].trim() eq 'N' }">
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" checked disabled> 송금전 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="remitCk" value="N" checked disabled> 입금전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" disabled> 송금완료 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="remitCk" value="Y" disabled> 입금완료 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
@@ -190,31 +190,62 @@
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" disabled> 송금전 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="remitCk" value="N" disabled> 입금전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" checked disabled> 송금완료 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="remitCk" value="Y" checked disabled> 입금완료 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
 						<br/>
 						<div class="form-group" style="width:250px;">
-							<label>송금일자</label>
-							<input type="text" class="form-control" style="text-align:center;" value="${saleInfo['REMITDATE'] }" readonly="readonly" />
+							<label>입금일자</label>
+							<input type="text" class="form-control" name="remitDate" style="text-align:center;" value="${saleInfo['REMITDATE'] }" readonly="readonly" />
 						</div>
 					</c:if>
 				</div>
 				<br/>
 				
 				<div style="margin:0 auto; width:fit-content;">
-					<button type="submit" class="btn btn-success mr-2">확인</button>
+					<button type="button" class="btn btn-light" onclick="submitCancel();">확인</button>
+					<c:if test="${saleInfo['SALCK'].trim() eq 'N' }">
+						<button type="submit" class="btn btn-success mr-2">결재올리기</button>
+					</c:if>
+					<c:if test="${saleInfo['SALCK'].trim() eq 'Y' }">
+						<button type="submit" class="btn btn-success mr-2" disabled>결재올리기</button>
+					</c:if>
 				</div>
  			</form>
 		</div>
 	</div>
 </section>
+
+<script>
+function enroll_validate() {
+	var trs = $('#dataTable2').children().eq(1).children();
+	for(var i=0; i<trs.length; i++){
+		var element = $("<input type='hidden' />");
+		element.attr("name", "stNo"+i);
+		element.attr("value", trs.eq(i).children().eq(0).text());
+		$("#enrollSalInfoFrm").append(element);
+		
+		var element2 = $("<input type='hidden' />");
+		element2.attr("name", "stNum"+i);
+		element2.attr("value", trs.eq(i).children().eq(4).find('input').val());
+		$("#enrollSalInfoFrm").append(element2);
+	}
+	var count = $("<input type='hidden' name='cnt' />");
+	count.attr("value", trs.length);
+	$("#enrollSalInfoFrm").append(count);
+	return true;
+}
+
+function submitCancel(){
+	location.href="${path}/sale/saleList.do";
+}
+</script>
 
 
 

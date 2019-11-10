@@ -34,7 +34,7 @@ th {
 								<option value="purCode">구매코드</option>
 								<option value="conCode">거래처명</option>
 								<option value="empNo">담당자명</option>
-								<option value="purCk">구매확정여부</option>
+								<option value="purCk">결재승인여부</option>
 								<option value="deposCk">입금확정여부</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
@@ -64,7 +64,7 @@ th {
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                    <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
                          <tr>
                             <th>구매코드</th>
@@ -72,10 +72,10 @@ th {
 							<th>거래처</th>
 							<th>담당자</th>
 							<th>구매총액</th>
-							<th>구매확정</th>
-							<th>구매일자</th>
-							<th>입금여부</th>
-							<th>입금일자</th>
+							<th>결재승인</th>
+							<th>승인일자</th>
+							<th>송금여부</th>
+							<th>송금일자</th>
                          </tr>
                        </thead>
                        <tbody>
@@ -87,9 +87,23 @@ th {
 									<td><c:out value='${p["EMPNAME"] }' /></td>
 									<td style="text-align:right;"><c:out value='${p["PURTOTAMT"] }'/></td>
 									<td><c:out value='${p["PURCK"] }'/></td>
-									<td><c:out value='${p["PURDATE"] }' /></td>
+									<td>
+										<c:if test='${p["PURDATE"] eq null}'>
+											-
+										</c:if>
+										<c:if test='${p["PURDATE"] ne null}'>
+											<c:out value='${p["PURDATE"] }' />
+										</c:if>
+									</td>
 									<td><c:out value='${p["DEPOSCK"] }' /></td>
-									<td><c:out value='${p["DEPOSDATE"] }' /></td>
+									<td>
+										<c:if test='${p["DEPOSDATE"] eq null}'>
+											-
+										</c:if>
+										<c:if test='${p["DEPOSDATE"] ne null}'>
+											<c:out value='${p["DEPOSDATE"] }' />
+										</c:if>
+									</td>
 								</tr>
 							</c:forEach>
                        </tbody>
@@ -111,4 +125,8 @@ function searchPurInfo(){
 	$("#searchFrm").attr("action","${path}/purchase/searchPurInfo.do");
 	$("#searchFrm").submit();
 }
+//테이블 정렬
+$(function() {
+  $("#myTable").tablesorter();
+});
 </script>

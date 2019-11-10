@@ -229,7 +229,7 @@ function conNameDuplCheck(){
       else {
          var url = "${path}/connection/checkConNameDupl.do";
          var name = "거래처 중복검사";
-          var option = "width=300, height=200, top=100, left=500, location=no, menubar=no, status=no"
+          var option = "width=300, height=470, top=100, left=500, location=no, menubar=no, status=no"
           var popup = open("", name, option);
           
           checkconNameDuplFrm.conCateg_.value = conCateg;

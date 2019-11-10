@@ -30,16 +30,16 @@
 			<h6 class="m-0 font-weight-bold text-primary">구매정보 조회</h6>
         </div>
 		<div class="card-body">
-			<form id = "enrollPurInfoFrm" class="forms-sample" method="post" action="${path }/purchase/purList.do">
+			<form id = "enrollPurInfoFrm" class="forms-sample" method="post" action="${path }/apv/addReqApvEnroll.do" onsubmit="return enroll_validate();">
 				<div class="form-group" style="width:150px;">
 					<label>구매코드</label>
-					<input type="text" class="form-control" style="text-align:center;" value="${purInfo['PURCODE'] }" readonly="readonly" />
+					<input type="text" class="form-control" name="purCode" style="text-align:center;" value="${purInfo['PURCODE'] }" readonly="readonly" />
 				</div>
 				<br/>
 				
 				<div class="form-group" style="width:250px;">
 					<label>등록일자</label>
-					<input type="text" class="form-control" style="text-align:center;" value="${purInfo['PURENROLLDATE'] }" readonly="readonly" />
+					<input type="text" class="form-control" name="purEnrollDate" style="text-align:center;" value="${purInfo['PURENROLLDATE'] }" readonly="readonly" />
 				</div>
 				<br/>
 				
@@ -90,22 +90,22 @@
 				
 				<div class="form-group" style="width:150px;">
 					<label>구매 총액</label>
-					<input type="text" class="form-control" id="salTotAmt" name="salTotAmt" value="${purInfo['PURTOTAMT'] } 원" style="text-align:right;" readonly/>
+					<input type="text" class="form-control" name="purTotAmt" value="${purInfo['PURTOTAMT'] } 원" style="text-align:right;" readonly/>
 				</div>
 				<br/>
 				
 				<div class="form-group">
-					<label>구매확정여부</label>
+					<label>결재승인여부</label>
 					<c:if test="${purInfo['PURCK'].trim() eq 'N' }">
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" checked disabled> 미확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="purCk" value="N" checked disabled> 승인전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" disabled> 구매확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="purCk" value="Y" disabled> 승인 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
@@ -114,36 +114,36 @@
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" disabled> 미확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="purCk" value="N" disabled> 승인전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" checked disabled> 구매확정 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="purCk" value="Y" checked disabled> 승인 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
 						<br/>
 						<div class="form-group" style="width:250px;">
-							<label>구매일자</label>
-							<input type="text" class="form-control" style="text-align:center;" value="${purInfo['PURDATE'] }" readonly="readonly" />
+							<label>승인일자</label>
+							<input type="text" class="form-control" name="purDate" style="text-align:center;" value="${purInfo['PURDATE'] }" readonly="readonly" />
 						</div>
 					</c:if>
 				</div>
 				<br/>
 				
 				<div class="form-group">
-					<label>입금여부</label>
+					<label>송금여부</label>
 					<c:if test="${purInfo['DEPOSCK'].trim() eq 'N' }">
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" checked disabled> 송금전 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="deposCk" value="N" checked disabled> 송금전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" disabled> 송금완료 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="deposCk" value="Y" disabled> 송금완료 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
@@ -152,32 +152,62 @@
 						<div class="col-sm-4">
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="N" disabled> 송금전 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="deposCk" value="N" disabled> 송금전 <i class="input-helper"></i>
 								</label>
 							</div>
 							<div class="form-radio">
 								<label class="form-check-label">
-									<input type="radio" class="form-check-input" value="Y" checked disabled> 송금완료 <i class="input-helper"></i>
+									<input type="radio" class="form-check-input" name="deposCk" value="Y" checked disabled> 송금완료 <i class="input-helper"></i>
 								</label>
 							</div>
 						</div>
 						<br/>
 						<div class="form-group" style="width:250px;">
 							<label>송금일자</label>
-							<input type="text" class="form-control" style="text-align:center;" value="${purInfo['DEPOSDATE'] }" readonly="readonly" />
+							<input type="text" class="form-control" name="deposDate" style="text-align:center;" value="${purInfo['DEPOSDATE'] }" readonly="readonly" />
 						</div>
 					</c:if>
 				</div>
 				<br/>
 				
 				<div style="margin:0 auto; width:fit-content;">
-					<button type="submit" class="btn btn-success mr-2">확인</button>
+					<button type="button" class="btn btn-light" onclick="submitCancel();">확인</button>
+					<c:if test="${purInfo['PURCK'].trim() eq 'N' }">
+						<button type="submit" class="btn btn-success mr-2">결재올리기</button>
+					</c:if>
+					<c:if test="${purInfo['PURCK'].trim() eq 'Y' }">
+						<button type="submit" class="btn btn-success mr-2" disabled>결재올리기</button>
+					</c:if>
 				</div>
 			</form>
 		</div>
 	</div>
 </section>
 
+<script>
+function enroll_validate() {
+	var trs = $('#dataTable2').children().eq(1).children();
+	for(var i=0; i<trs.length; i++){
+		var element = $("<input type='hidden' />");
+		element.attr("name", "stNo"+i);
+		element.attr("value", trs.eq(i).children().eq(0).text());
+		$("#enrollPurInfoFrm").append(element);
+		
+		var element2 = $("<input type='hidden' />");
+		element2.attr("name", "stNum"+i);
+		element2.attr("value", trs.eq(i).children().eq(4).find('input').val());
+		$("#enrollPurInfoFrm").append(element2);
+	}
+	var count = $("<input type='hidden' name='cnt' />");
+	count.attr("value", trs.length);
+	$("#enrollPurInfoFrm").append(count);
+	return true;
+}
+
+function submitCancel(){
+	location.href="${path}/purchase/purList.do";
+}
+</script>
 
 
 

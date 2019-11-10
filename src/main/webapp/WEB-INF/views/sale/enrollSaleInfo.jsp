@@ -136,7 +136,7 @@
 				
 				<div class="inputSuperTax form-group">
 					<label>부가세율</label>
-					<input type="number" step="0.01" min="0.00" class="form-control" id="saleSuperTax" name="saleSuperTax" placeholder="0.00"/>
+					<input type="number" step="0.01" min="0.00" class="form-control" id="saleSuperTax" name="saleSuperTax" value="0.00"/>
 				</div>
 				<br/>
 				
