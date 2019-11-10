@@ -58,7 +58,7 @@
                          </tr>
                        </thead>
                        <tbody>
-           	<c:forEach items="${list2 }" var ="list2" varStatus="v">
+           			<c:forEach items="${list2 }" var ="list2" varStatus="v">
                        	 <tr>
 							<td style="content: '\F4CE'; color: #ffaf00;">${v.count}<code style="content: '\F4CE'; color: #ffaf00;"> *필독*</code></td>
 							<td><a href='${path}/notice/selectNoticeOne.do?nName=${list2["NNAME"]}&nReadCount=${list2["NNO"]}&nNo=${list2["NNO"]}'>${list2["NNAME"] }</a></td>
@@ -74,7 +74,7 @@
 							<td>${list2['NDATE'] }</td>
 							<td>${list2['NREADCOUNT'] }</td>
 						 </tr>
-                       </c:forEach>
+                    </c:forEach>
                  		<c:forEach items="${list}" var="notice" varStatus="v">
 							<c:choose>
 							    <c:when test="${notice['NCHECK'] eq '필수아님' && notice['UPNOTICECOUNT']>0}">	

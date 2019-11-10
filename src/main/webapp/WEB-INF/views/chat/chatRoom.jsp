@@ -121,7 +121,7 @@ window.onload = function(){
 	
 //creating web socket
 
-    var socket = new  WebSocket("ws:// 192.168.220.17:9090/bm/chatRoom");
+    var socket = new  WebSocket("ws://172.30.1.13:9090/bm/chatRoom");
 	/* var socket = new  WebSocket("ws://192.168.110.5:9090/bm/chatRoom"); */
      /* var socket = new  WebSocket("wss://rclass.iptime.org/19AM_boxman_final/chatRoom"); */
 	
