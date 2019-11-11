@@ -58,8 +58,12 @@
              </div>
              <div>
              	<div style="margin:0 auto; width:fit-content;">
+             	<c:if test="${temp eq '등록'}">
 		             <button type="button" class="btn btn-success mr-2" id="deptInsert">등록</button>
+	             </c:if>
+	             <c:if test='${temp eq "수정"}'>	
 		             <button type="button" class="btn btn-success mr-2" id="deptUpdate">수정</button>
+	             </c:if>
 	             </div>
              </div>
            </form>

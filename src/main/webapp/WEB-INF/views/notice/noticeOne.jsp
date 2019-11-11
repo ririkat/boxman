@@ -7,7 +7,7 @@
    <jsp:param name="pageTitle" value="게시판상세"/>
 </jsp:include>
 <section id="content">
-<div class="col-md-6 grid-margin stretch-card">
+<div class="col-md-6 grid-margin stretch-card" style="max-width:100%;">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">상세페이지</h4>
@@ -33,7 +33,7 @@
                    <input type="hidden" name="nNo" value="${nt.NNo}">
                       <div class="form-group">
                         <label for="exampleInputName1">제목</label>
-                        <input type="text" class="form-control" id="exampleInputName1" name="nName" value="${nt.NName}" >
+                        <input type="text" class="form-control noFalse" id="exampleInputName1" name="nName" value="${nt.NName}" readonly>
                       </div>
                      <div class="form-group">
                         <label for="exampleInputPassword4">등록일</label>
@@ -49,7 +49,7 @@
                       </div>
                       <div class="form-group">
                         <label for="exampleTextarea1">내용</label>
-                        <textarea class="form-control" id="exampleTextarea1" name="nText" rows="15" >${nt.NText}</textarea> 
+                        <textarea class="form-control noFalse" id="exampleTextarea1" name="nText" rows="15" readonly>${nt.NText}</textarea> 
                       </div>
                        <div class="form-group">
                       	<div class=" custom-file">
@@ -87,8 +87,8 @@
 								</tr>
 							</table>
 							<div style="margin:0 auto; width:fit-content;">
-                           
-                      <button type="button" class="btn btn-success mr-2" onclick="updateNotice();">수정</button>
+                      <button type="button" class="btn btn-success mr-2" onclick="noReadonly();" id="upBtn">수정</button>  
+                      <button type="button" class="btn btn-success mr-2" onclick="updateNotice();" id="endBtn" style="display:none;">수정완료</button>
                       <button type="button" class="btn btn-light" onclick="deleteNotice();">삭제</button>
                         </div>
                     </form>
@@ -104,6 +104,12 @@
 				$(this).next('.custom-file-label').html(fileName);
 			})
 		});
+		function noReadonly() {
+			$('.noFalse').attr("readonly", false);
+			$('#endBtn').show();
+			$('#upBtn').hide();
+		}
+		
 		//수정버튼 클릭시 목록화면으로
 		function updateNotice(){
 			$("#devFrm").attr("action","${path}/notice/updateNotice.do");

@@ -183,7 +183,7 @@
 			<li class="nav-item"><a class="nav-link collapsed" href="#"
 				data-toggle="collapse" data-target="#collapseUtilities"
 				aria-expanded="true" aria-controls="collapseUtilities"> 
-				<i class="fas fa-calculator"></i> <span>회계 관리</span>
+				<i class="fas fa-calculator"></i>&nbsp;&nbsp;<span>회계 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -429,7 +429,7 @@
 									aria-expanded="false"> <span
 									class="mr-2 d-none d-lg-inline text-gray-600 small">${loginEmp.EMPNAME}</span>
 									<img class="img-profile rounded-circle"
-									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+									src="${path}/resources/upload/emp/${loginEmp.EFRENAME}">
 								</a>
 								<!-- Dropdown - User Information -->
 								<div

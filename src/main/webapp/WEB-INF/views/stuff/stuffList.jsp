@@ -27,10 +27,7 @@
 							</select>
                            <input type="search" class="form-control form-control-sm" placeholder="" aria-controls="dataTable" name = "data" id = "data">
                       </label>
-				  		<button onclick = "searchStuff();" class="btn btn-light btn-icon-split">
-                   		 <span class="icon text-gray-600">
-                    	  <i class="fas fa-arrow-right"></i>
-                   		 </span>
+				  		<button onclick = "searchStuff();" class="btn btn-primary mr-2">
                    		 <span class="text">검색</span>
                  		 </button>
                     </div>
@@ -39,13 +36,10 @@
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
                      <div style="float:right;">
-                      <a href="${path}/stuff/stuffEnroll.do" class="btn btn-light btn-icon-split">
-                    <span class="icon text-gray-600">
-                      <i class="fas fa-arrow-right"></i>
-                    </span>
-                    <span class="text">물품 등록</span>
-                  </a>
-                 </div>
+	                    <button type="button" onclick="location.href='${path}/stuff/stuffEnroll.do'" class="btn btn-primary mr-2">
+						        물품 등록
+						</button>
+                	</div>
                   </div>
                  </div>
               </div>

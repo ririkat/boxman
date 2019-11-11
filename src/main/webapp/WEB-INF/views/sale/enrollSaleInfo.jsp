@@ -60,10 +60,7 @@
 						</select>
 						<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable" id = "data">
 					</label>
-				    <button type="button" class="btn btn-light btn-icon-split" onclick="searchConnection();">
-                   		 <span class="icon text-gray-600">
-                    	  <i class="fas fa-arrow-right"></i>
-                   		 </span>
+				    <button type="button" class="btn btn-primary mr-2" onclick="searchConnection();">
                    		 <span class="text">검색</span>
                     </button>
 				</div>

@@ -18,7 +18,7 @@ div#demo-container {
 </style>
 <section id="content">
 <form id="devFrm" enctype="multipart/form-data" method="post">
-<div class="col-md-6 grid-margin stretch-card">
+<div class="col-md-6 grid-margin stretch-card" style="max-width:100%;">
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">부서별 공지사항</h4>

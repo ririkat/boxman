@@ -34,10 +34,8 @@
                                                                     placeholder="" aria-controls="dataTable" name="data">
                                                             </label>
                                                             <button   onclick="fn_search();"
-                                                                   class="btn   btn-light btn-icon-split">
-                                                                   <span   class="icon text-gray-600"> <i
-                                                                           class="fas fa-arrow-right"></i>
-                                                                   </span> <span   class="text">검색</span>
+                                                                   class="btn btn-primary mr-2">
+																<span   class="text">검색</span>
                                                             </button>
                                                      </div>
                                                </form>
