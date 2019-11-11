@@ -207,40 +207,6 @@ $(function(){
 		});
 	});
 });
-
-//제품 이름 중복검사
-$(function(){
- 	var nameCheck = $('#stuffName');
-	$('#stuffName').blur(function(){
-		var stuffName = $('#stuffName').val();
-		$.ajax({
-			url:"<%=request.getContextPath()%>/stuff/stuffNameDupliCheck.do?stuffName="+ stuffName,
-			type : "get",
-			dataType : "html",
-			success : function(result) {
-				if (result > 0) {
-					$(stuffNameCheck).text("존재하는 물품입니다.");
-					$(stuffNameCheck).css({
-						"color" : "red",
-						"font-size" : "15px"
-					});
-					$(stuffNameCheck).prop("disabled",true);
-					$('#btn').attr('disabled', true);
-				} else {
-					$(stuffNameCheck).text("");
-					$('#btn').prop("disabled",false);
-					} 
-				
-				},
-				error : function(request, status, error) {
-					alert("code = " + request.status
-							+ " message = "
-							+ request.responseText
-							+ " error = " + error);
-				}
-			});
-		});
-	});
 	
 $(function(){
     
