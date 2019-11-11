@@ -176,6 +176,7 @@
 						contentType: "application/json",
 						success : function(data) {
 							if(data>0){
+								alert("기안성공");
 								self.close();
 								window.opener.location.reload();
 							}else{

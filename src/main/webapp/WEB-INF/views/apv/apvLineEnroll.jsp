@@ -52,7 +52,7 @@
 </head>
 <body id="page-top">
    <section>
-      <div class="container">
+      <div class="container-fluid">
          <h2 class="title font-weight-bold text-primary">결재 라인 등록</h2>
          <div class="card shadow mb-4">
             <div class="card-body">

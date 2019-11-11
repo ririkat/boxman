@@ -49,7 +49,9 @@
 							<td><c:out value='${a["APVESTATUS"]}' /></td>
 							<td><c:out value='${a["OPENYN"]}' /></td>
 							<td><c:out value='${a["APVENROLLDATE"]}' /></td>
-							<td><button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']},${loginEmp['EMPNO']})" >열람</button></td>
+							<td>
+									<button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']},${loginEmp['EMPNO']})" >열람</button>
+							</td>
 						</tr>
 					</c:forEach>	
                   </tbody>
@@ -57,7 +59,7 @@
               </div>
             </div>
           </div>
-
+			${pageBar }
         </div>
         <!-- /.container-fluid -->
 

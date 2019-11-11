@@ -74,13 +74,13 @@
       	function doc_enroll(){
       		var url="${path}/apv/apvDocEnroll.do";
       		var name="양식등록"
-            window.open(url,name,"width=1000,height=800,left=600");
+            window.open(url,name,"width=1200,height=800,left=600");
       	}
       	
       	function modifyContents(dfno){
       		var url="${path}/apv/apvDocModify.do?dfNo="+dfno;
       		var name="양식수정"
-            window.open(url,name,"width=1000,height=800,left=600");
+            window.open(url,name,"width=1200,height=800,left=600");
       	}
       	
       	function deleteContents(dfno){
@@ -92,13 +92,13 @@
       	function docHead_enroll(){
       		var url="${path}/apv/apvDocHeadEnroll.do";
       		var name="결재폼등록"
-            window.open(url,name,"width=1000,height=800,left=600");
+            window.open(url,name,"width=1200,height=800,left=600");
       	}
       	
       	function docContent_enroll(){
       		var url="${path}/apv/apvDocContentEnroll.do";
       		var name="결재본문양식등록"
-            window.open(url,name,"width=1000,height=800,left=600");
+            window.open(url,name,"width=1200,height=800,left=600");
       	}
       </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />

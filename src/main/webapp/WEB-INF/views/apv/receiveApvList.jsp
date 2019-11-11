@@ -50,13 +50,22 @@
 							<td><c:out value='${a["APVASTATUS"]}' /></td>
 							<td><c:out value='${a["APVENROLLDATE"]}' /></td>
 							<td>
-								<c:if test="${apvOne['APVAPRIOR'] eq apvOne['CURRTURN']}">
+								<c:if test="${a['APVAPRIOR'] eq a['CURRTURN']}">
 									<c:if test="${a['APVSTATUS'] eq '상신' and a['APVASTATUS'] eq '미결'}">
 											<button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']},${loginEmp['EMPNO']})" >결재하기</button>
 									</c:if>
 									<c:if test="${a['APVSTATUS'] eq '진행' and a['APVASTATUS'] eq '미결'}">
 										<button type="button" class="btn btn-primary" onclick="apvOne(${a['APVNO']},${loginEmp['EMPNO']})" >결재하기</button>
 									</c:if>
+								</c:if>
+								<c:if test="${a['APVSTATUS'] eq '종결'}">
+									<button type="button" class="btn btn-primary" disabled="disabled" >종결</button>
+								</c:if>
+								<c:if test="${a['APVSTATUS'] eq '반려'}">
+									<button type="button" class="btn btn-primary" disabled="disabled" >반려</button>
+								</c:if>
+								<c:if test="${a['APVSTATUS'] eq '진행' and a['APVASTATUS'] eq '전결'}">
+									<button type="button" class="btn btn-primary" disabled="disabled" >전결</button>
 								</c:if>
 							</td>
 						</tr>
@@ -66,7 +75,7 @@
               </div>
             </div>
           </div>
-
+			${pageBar }
         </div>
         <!-- /.container-fluid -->
 

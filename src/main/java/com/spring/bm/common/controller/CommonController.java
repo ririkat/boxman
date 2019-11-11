@@ -1,6 +1,5 @@
 package com.spring.bm.common.controller;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.calendar.model.service.CalendarService;
+import com.spring.bm.calendar.model.vo.Calendar;
 import com.spring.bm.notice.model.service.NoticeService;
 import com.spring.bm.notice.model.vo.Notice;
 

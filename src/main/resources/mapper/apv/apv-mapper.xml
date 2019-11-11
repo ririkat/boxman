@@ -163,7 +163,7 @@
 		<result property="APVCCONTENT" column="APVCCONTENT" jdbcType="CLOB" javaType="java.lang.String" />
 	</resultMap>
 	<select id="selectSendApvList" parameterType="_int" resultType="map" resultMap="apvClobMap">
-		SELECT * FROM APPROVAL JOIN DOCCATE USING(DCNO) WHERE EMPNO=#{loginNo}
+		SELECT * FROM APPROVAL JOIN DOCCATE USING(DCNO) WHERE EMPNO=#{loginNo} ORDER BY APVNO DESC
 	</select>
 	<select id="selectSendApvCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*) FROM APPROVAL WHERE EMPNO=#{loginNo}
@@ -176,14 +176,14 @@
 	<!-- 수신함 -->
 	<!-- 리스트 불러오기 -->
 	<select id="selectReceiveApvList" parameterType="_int" resultType="map" resultMap="apvClobMap">
-		SELECT A.EMPNO AS AEMPNO, AA.EMPNO AS AAEMPNO, A.*, AA.* FROM APPROVAL A JOIN APVAPPLICANT AA ON A.APVNO=AA.APVNO WHERE AA.EMPNO=#{loginNo}
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO JOIN APVAPPLICANT AA ON A.APVNO=AA.APVNO WHERE AA.EMPNO=#{loginNo} ORDER BY A.APVNO DESC
 	</select>
 	<select id="selectReceiveApvCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*) FROM APPROVAL A JOIN APVAPPLICANT AA ON A.APVNO=AA.APVNO WHERE AA.EMPNO=#{loginNo}
 	</select>
 	<!-- 결재하기 뷰 -->
 	<select id="selectLookupApvA" parameterType="map" resultType="map" resultMap="apvClobMap">
-		SELECT * FROM APPROVAL A JOIN APVAPPLICANT AA ON A.APVNO=AA.APVNO WHERE AA.EMPNO=#{empNo} AND A.APVNO=#{apvNo}
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO JOIN APVAPPLICANT AA ON A.APVNO=AA.APVNO WHERE AA.EMPNO=#{empNo} AND A.APVNO=#{apvNo}
 	</select>
 	<!-- 결재하기 -> 개인결재승인처리 -->
 	<select id="selectApvACount" parameterType="map" resultType="_int">
@@ -209,14 +209,14 @@
 	<!-- 시행함 -->
 	<!-- 리스트 불러오기 -->
 	<select id="selectEnforceApvList" parameterType="_int" resultType="map" resultMap="apvClobMap">
-		SELECT * FROM APPROVAL A JOIN APVENFORCER AE ON A.APVNO=AE.APVNO WHERE AE.EMPNO=#{loginNo}
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO JOIN APVENFORCER AE ON A.APVNO=AE.APVNO WHERE AE.EMPNO=#{loginNo} ORDER BY A.APVNO DESC
 	</select>
 	<select id="selectEnforceApvCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*) FROM APPROVAL A JOIN APVENFORCER AE ON A.APVNO=AE.APVNO WHERE AE.EMPNO=#{loginNo}
 	</select>
 	<!-- 시행관리 뷰 -->
 	<select id="selectLookupApvEOne" parameterType="map" resultType="map" resultMap="apvClobMap">
-		SELECT * FROM APPROVAL A JOIN APVENFORCER AE ON A.APVNO=AE.APVNO WHERE AE.EMPNO=#{empNo} AND A.APVNO=#{apvNo}
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO JOIN APVENFORCER AE ON A.APVNO=AE.APVNO WHERE AE.EMPNO=#{empNo} AND A.APVNO=#{apvNo}
 	</select>
 	<!-- 시행관리뷰->시행처리 -->
 	<update id="updateApvEEnforce" parameterType="map">
@@ -236,14 +236,14 @@
 	<!-- 참조함 -->
 	<!-- 리스트 불러오기 -->
 	<select id="selectReferApvList" parameterType="_int" resultType="map" resultMap="apvClobMap">
-		SELECT * FROM APPROVAL A JOIN APVREFERER AR ON A.APVNO=AR.APVNO WHERE AR.EMPNO=#{loginNo}
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO JOIN APVREFERER AR ON A.APVNO=AR.APVNO WHERE AR.EMPNO=#{loginNo} ORDER BY A.APVNO DESC
 	</select>
 	<select id="selectReferApvCount" parameterType="_int" resultType="_int">
 		SELECT COUNT(*) FROM APPROVAL A JOIN APVREFERER AR ON A.APVNO=AR.APVNO WHERE AR.EMPNO=#{loginNo}
 	</select>
 	<!-- 참조함 -> 열람 뷰 -->
 	<select id="selectLookupApvR" parameterType="map" resultType="map" resultMap="apvClobMap">
-		SELECT * FROM APPROVAL A JOIN APVREFERER AR ON A.APVNO=AR.APVNO WHERE AR.EMPNO=#{empNo} AND A.APVNO=#{apvNo}
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO JOIN APVREFERER AR ON A.APVNO=AR.APVNO WHERE AR.EMPNO=#{empNo} AND A.APVNO=#{apvNo}
 	</select>
 	<update id="updateReferYN" parameterType="map">
 		UPDATE APVREFERER SET OPENYN='Y' WHERE APVNO=#{apvNo} AND EMPNO=#{empNo}
