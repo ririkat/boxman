@@ -203,32 +203,22 @@ $("#button-addon5").click(function(){
 				var stuffNo = td.eq(0).text();
 				var price = td.eq(3).text();
 				
-				/* var cnt = 0;
-				var tb2TrList = $('#dataTable2').children().eq(1).children();
-				for(var i=0; i<tb2TrList.length; i++){
-					if(tb2TrList.eq(i).children().eq(0).text() == stuffNo){
-						cnt++;
-					}
-				}
-				if(cnt==0){ */
-					var tr = $('<tr class="dataTable2" align="center"/>');
-					tr.append("<td>" + stuffNo + "</td>");
-					tr.append("<td>" + td.eq(1).text() + "</td>");
-					tr.append("<td>" + td.eq(2).text() + "</td>");
-					tr.append("<td>" + price + "</td>");
-					tr.append("<td>" + "<input type='number' class='stuffNum' value='1' min='1' /> 개" + "</td>");
-					tr.append("<td>" + "<input type='text' class='calPrice' value='" + price + "' readonly/>" + " 원" + "</td>");
-					tr.append("<td>" + "<button type='button' class='btn btn-success mr-2 deleteBtn'>삭제</button>" + "</td>");
-				    $('#dataTable2').append(tr);
+				var tr = $('<tr class="dataTable2" align="center"/>');
+				tr.append("<td>" + stuffNo + "</td>");
+				tr.append("<td>" + td.eq(1).text() + "</td>");
+				tr.append("<td>" + td.eq(2).text() + "</td>");
+				tr.append("<td>" + price + "</td>");
+				tr.append("<td>" + "<input type='number' class='stuffNum' value='1' min='1' /> 개" + "</td>");
+				tr.append("<td>" + "<input type='text' class='calPrice' value='" + price + "' readonly/>" + " 원" + "</td>");
+				tr.append("<td>" + "<button type='button' class='btn btn-success mr-2 deleteBtn'>삭제</button>" + "</td>");
+				$('#dataTable2').append(tr);
 
-					var calPriceList = $(".calPrice");
-					var sum = 0;
-					for(var i=0; i<calPriceList.length; i++){
-						sum = sum + Number(calPriceList.eq(i).val());
-					}
-					$("#purTotAmt").attr("value",sum);
-				/* }
-				cnt = 0; */
+				var calPriceList = $(".calPrice");
+				var sum = 0;
+				for(var i=0; i<calPriceList.length; i++){
+					sum = sum + Number(calPriceList.eq(i).val());
+				}
+				$("#purTotAmt").attr("value",sum);
 				
 				$(".stuffNum").change(function(){
 					var stuffNum = $(this);

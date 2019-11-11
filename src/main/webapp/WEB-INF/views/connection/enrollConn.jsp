@@ -185,7 +185,6 @@
 
 <script>
 $(document).ready(function() {
-   
    $("input:radio[name=conTransCk]").click(function() {
        if($("input[name=conTransCk]:checked").val() == "N") {
            $("input[name=trfBkName]").attr("disabled",true);
@@ -270,7 +269,6 @@ function enroll_validate() {
       alert("핸드폰번호는 11자 내의 숫자만 가능합니다.");
       return false;
    }
-   console.log($("input[name=conTransCk]:checked"));
    if($("input[name=conTransCk]:checked").val() == "Y") {
       if(!regExpBankName.test(enrollConnection.trfBkName.value)) {
          trfBkName.focus();

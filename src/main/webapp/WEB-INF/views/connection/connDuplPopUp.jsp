@@ -50,22 +50,17 @@ ol, ul, dl {
 		<h6 class="font-weight-medium title-text">거래처명 중복검사</h6>
 		<ul class="pricing-list">
 			<c:if test="${result>0 }">
-				<c:if test="${conCateg eq '유통'}">
-					<li>같은 상호명의 유통거래처가 존재합니다.</li>
-					<li>다시 입력해주세요.</li>
-				</c:if>
-				<c:if test="${(conCateg eq '매입') or (conCateg eq '매출')}">
-					<li>같은 상호명의</li>
-					<li>${conCateg}거래처가</li>
-					<li>존재합니다.</li>
-					<li>다시 입력해주세요.</li>
-				</c:if>
+				<li>같은 상호명의</li>
+				<li>${conCateg}거래처가</li>
+				<li>존재합니다.</li>
+				<li>다시 입력해주세요.</li>
 		        <br><br>
 		        <button type="button" class="btn btn-outline-primary" onclick="remove();">확인</button>
 			</c:if>
 			
 			<c:if test="${result==0}">
-				<li>새로 등록 가능한 ${conCateg}거래처 입니다.</li>
+				<li>새로 등록 가능한</li>
+				<li>${conCateg}거래처 입니다.</li>
 		        <br><br>
 		        <button type="button" class="btn btn-outline-primary" onclick="setting();">확인</button>
 		    </c:if>
@@ -79,7 +74,6 @@ function remove() {
    opener.document.getElementById("conNameCheckResult").value = "N";
    self.close();
 }
-
 function setting() {
    opener.document.getElementById("conNameCheckResult").value = "Y";
    self.close();

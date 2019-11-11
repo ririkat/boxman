@@ -165,7 +165,8 @@ public class ConnectionController {
 
 		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/connection/searchConnection.do", type, data));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage,
+				path.getUrl()+"/connection/searchConnection.do", type, data));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("connection/connList");
