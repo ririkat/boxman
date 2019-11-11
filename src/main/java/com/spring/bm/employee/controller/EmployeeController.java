@@ -137,10 +137,8 @@ public class EmployeeController {
 			loc="/";
 		}else if (pwEncoder.matches((CharSequence) map.get("empPassword"),(String)m.get("EMPPASSWORD"))) {
 			//사원번호 가져옴
-			int empNo = Integer.parseInt(m.get("EMPNO").toString());
-			
 			msg = "로그인 성공";
-			loc="/common/main.do?empNo="+empNo;
+			loc="/common/main.do";
 			session.setAttribute("loginEmp", m);//HttpSession 사용
 			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
 

@@ -117,6 +117,7 @@
 		        </a>
 		        <div id="collapseMy" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 		          <div class="bg-white py-2 collapse-inner rounded">
+		          	<a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=">내정보확인</a>
 		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}&temp=my">내정보확인</a>
 		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태현황</a>
 		            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?empNo=${loginEmp.EMPNO}&temp=my">휴가현황</a>
