@@ -328,8 +328,7 @@
                contentType: "application/json",
                success : function(data) {
                   if(data>0){
-                     self.close();
-                     window.opener.location.reload();
+                	  alert("등록성공");
                   }else{
                      alert("등록실패");
                   }

@@ -152,4 +152,20 @@ public class ApvLineController {
 		mv.setViewName("apv/requestApvLineEnroll");
 		return mv;
 	}
+	
+	/*결재라인 검색*/
+	 @RequestMapping("/apv/searchApvLine.do")
+	   public ModelAndView searchDocFormReq(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+	         @RequestParam Map<String, Object> param) {
+
+	      int numPerPage = 10;
+	      List<Map<String, String>> list = service.selectApvlSearchList(cPage, numPerPage, param);
+	      int totalCount = service.selectApvlSearchCount(param);
+	      ModelAndView mv=new ModelAndView();
+	      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/searchApvLine.do",""+param.get("type"), ""+param.get("data")));
+	      mv.addObject("count", totalCount);
+	      mv.addObject("myList", list);
+	      mv.setViewName("apv/apvLineList");
+	      return mv;
+	   }
 }

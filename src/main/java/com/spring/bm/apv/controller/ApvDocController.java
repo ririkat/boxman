@@ -1,5 +1,6 @@
 package com.spring.bm.apv.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -424,18 +425,11 @@ public class ApvDocController {
 	}
 	
 	/*결재하기뷰->결재처리*/
-	@RequestMapping("/apv/apvPermit.do")
-	public ModelAndView apvPermit(@RequestParam(value="apvNo", 
-	required=true) int apvNo,int empNo,int priorNo) {
-		ModelAndView mv = new ModelAndView();
-		Map<String,Object> param=new HashMap<String, Object>();
-		param.put("apvNo", apvNo);
-		param.put("empNo", empNo);
-		param.put("priorNo", priorNo);
-		
+	@RequestMapping(value="/apv/apvPermit.do",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> apvPermit(@RequestParam Map<String,Object> param) {
 		int result=0;
 		String msg="";
-		String loc="/apv/lookupApvAOne.do?apvNo="+apvNo+"&empNo="+empNo;
 		try {
 			result=service.apvPermit(param);
 		} catch (Exception e) {
@@ -443,16 +437,16 @@ public class ApvDocController {
 			e.printStackTrace();
 		}
 		
+		Map<String,Object> map=new HashMap<String, Object>();
 		if(result>0) {
 			msg="결재처리 완료";
+			map=service.selectStamp(param);
+			map.put("msg", msg);
 		}else {
 			msg="결재처리 실패";
+			map.put("msg", msg);
 		}
-		
-		mv.addObject("msg",msg);
-		mv.addObject("loc",loc);
-		mv.setViewName("common/msg");
-		return mv;
+		return map;
 	}
 	
 	/*결재하기뷰->반려처리*/
@@ -571,7 +565,8 @@ public class ApvDocController {
 	
 	int dfNo=0;
 	String cate=String.valueOf(param.get("temp")).trim();
-	System.out.println("cate?");
+	String ckCol=String.valueOf(param.get("checkCol")).trim();
+	String pkey=String.valueOf(param.get("pkey")).trim();
 	int totalPay=0;
 	String sDate="";
 	String eDate="";
@@ -602,6 +597,16 @@ public class ApvDocController {
 	String head=((String)dfOne.get("DFHEADFORM"));
 	
 	///head에서 index 다 돌려~~!!
+	if(head.indexOf("{{pkey}}")>-1) {
+		String content="<input type='hidden' id=\"pkey\" value='"+pkey+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{pkey}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{ckCol}}")>-1) {
+		String content="<input type='hidden' id=\"ckCol\" value='"+ckCol+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{ckCol}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
 	if(head.indexOf("{{cateName}}")>-1) {
 		String content="<input type='hidden' id=\"cateName\" value='"+cate+"' />";
 		String form=((String)dfOne.get("DFHEADFORM")).replace("{{cateName}}", content);
@@ -671,7 +676,70 @@ public class ApvDocController {
 	 
 	mv.addObject("dfOne",dfOne);
 	/* mv.addObject("docCate",docCate); */
-	mv.setViewName("apv/requestApvEnroll");
+	mv.setViewName("apv/requestApvEnrollAdd");
 	return mv;
 	}
+	
+	
+	/*결재하기뷰->추가결재 결재처리*/
+	/*상태YN만 바꾸는 애!!*/
+	@RequestMapping(value="/apv/apvAddPermit.do",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> apvAddPermit(@RequestParam Map<String,Object> m) {
+		
+		//똑같이 처리하는데, serviceImpl에서 종결처리 될 경우에, 가진정보로 테이블 상태 'Y'로 바꿈
+		//가져온 정보가...
+		//테이블이름,프라이머리키번호,시작일,끝일,청구비용,
+		//상태 yn으로 바꿀 컬럼명
+		  
+		  int result=0;
+		  String msg="";
+		  try {
+		  result=service.apvAddPermit1(m); 
+		  }
+		  catch (Exception e) { 
+			 e.printStackTrace(); 
+		  }
+
+		  Map<String,Object> map=new HashMap<String, Object>();
+			if(result>0) {
+				msg="결재처리 완료";
+				map=service.selectStamp(m);
+				map.put("msg", msg);
+			}else {
+				msg="결재처리 실패";
+				map.put("msg", msg);
+			}
+			return map;
+	}
+	
+	/*결재양식 검색*/
+	 @RequestMapping("/apv/searchDocForm.do")
+	   public ModelAndView searchDocForm(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+	         @RequestParam Map<String, Object> param) {
+
+	      int numPerPage = 10;
+	      List<Map<String, String>> list = service.selectDfSearchList(cPage, numPerPage, param);
+	      int totalCount = service.selectDfSearchCount(param);
+	      ModelAndView mv=new ModelAndView();
+	      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/searchDocForm.do",""+param.get("type"), ""+param.get("data")));
+	      mv.addObject("count", totalCount);
+	      mv.addObject("list", list);
+	      mv.setViewName("apv/apvDocList");
+	      return mv;
+	   }
+	 @RequestMapping("/apv/searchDocFormReq.do")
+	   public ModelAndView searchDocFormReq(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+	         @RequestParam Map<String, Object> param) {
+
+	      int numPerPage = 10;
+	      List<Map<String, String>> list = service.selectDfSearchList(cPage, numPerPage, param);
+	      int totalCount = service.selectDfSearchCount(param);
+	      ModelAndView mv=new ModelAndView();
+	      mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/searchDocFormReq.do",""+param.get("type"), ""+param.get("data")));
+	      mv.addObject("count", totalCount);
+	      mv.addObject("list", list);
+	      mv.setViewName("apv/requestApvMain");
+	      return mv;
+	   }
 }
