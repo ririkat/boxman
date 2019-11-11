@@ -426,6 +426,10 @@
       empAddr += "/" + $('#sample6_extraAddress').val();
       $('#empAddr').val(empAddr);
       
+      var sal = $('#empSal').val();
+      sal = sal.replaceAll(",","");
+      $('#empSal').val(sal);
+      
       if(empAddr==null || empAddr=='') {
     	  alert("주소를 입력하세요.");
     	  return false;

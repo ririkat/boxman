@@ -8,13 +8,7 @@ import lombok.Data;
 public class PageUrlFactory {
 	
 	/* 서버용 */
-//	1. 이건 https/ http 일때
 //	private String url="/19AM_boxman_final";
-	
-	
-//	2. 이건 현빈씨
-//	private String url="/19AM_boxman_final";
-	
 	
 	/* 로컬용 */
 	private String url="/bm";

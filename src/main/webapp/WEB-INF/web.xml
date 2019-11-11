@@ -51,8 +51,20 @@
 		<url-pattern>/*</url-pattern> <!-- /* 은 모오든 내용 -->
 	</filter-mapping>
 
-
-
+	<!-- errorpage -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/no-resource</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/server-error</location>
+	</error-page>
+	<error-page>
+		<location>/error</location>
+	</error-page>
+	
+	
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>

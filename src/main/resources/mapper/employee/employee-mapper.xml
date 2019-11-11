@@ -154,7 +154,7 @@
 		<choose>
 			<when test="temp eq 'my'"><!-- 마이페이지 -->
 				AND	A.EMPNO=#{empNo}
-				AND A.ATTENDAY=TO_CHAR(SYSDATE,'YYYY-MM-DD')
+				AND TO_CHAR(A.ATTENDAY,'YYYY-MM')=TO_CHAR(SYSDATE,'YYYY-MM')
 				ORDER BY A.ATTENDAY 
 			</when>
 			<when test="temp eq 'search'"><!-- 마이페이지에서 검색 -->
