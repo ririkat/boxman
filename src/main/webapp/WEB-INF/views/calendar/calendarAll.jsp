@@ -631,9 +631,9 @@
                             <div class="col-xs-12">
                                 <label class="col-xs-4" for="edit-type">구분</label>
                                 <select class="inputModal" type="text" name="edit-type" id="edit-type">
-									<option value = "개인">개인</option>
-									<option value = "부서">부서</option>
-									<option value = "회사">회사</option>
+                           <option value = "개인">개인</option>
+                           <option value = "부서">부서</option>
+                           <option value = "회사">회사</option>
                                 </select>
                             </div>
                         </div>
@@ -682,15 +682,15 @@
                  <div class="col-sm-12">
                    <table class="table table-striped table-hover" id="myTable2" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
-						<tr>
-							<th scope="col">내용</th>						
-							<th scope="col">카테고리</th>
-						</tr>
+                  <tr>
+                     <th scope="col">내용</th>                  
+                     <th scope="col">카테고리</th>
+                  </tr>
                        </thead>
                        <tbody>
                        <tr class = "rooo">
-                       		<td colspan="2" style = "text-align: center"><strong>새로운 일정이 없습니다.</strong></td>
-                       	</tr>
+                             <td colspan="2" style = "text-align: center"><strong>새로운 일정이 없습니다.</strong></td>
+                          </tr>
                        </tbody>
                    </table>
                  </div>
@@ -704,42 +704,42 @@
                  <div class="col-sm-12">
                     <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
-						<tr>
-							<th scope="col">No</th>
-							<th scope="col">내용</th>
-							<th scope="col">시작 날짜</th>
-							<th scope="col">종료 날짜</th>							
-							<th scope="col">카테고리</th>
-							<th scope="col">참고번호</th>
-							<th scope="col"></th>
-						</tr>
+                  <tr>
+                     <th scope="col">No</th>
+                     <th scope="col">내용</th>
+                     <th scope="col">시작 날짜</th>
+                     <th scope="col">종료 날짜</th>                     
+                     <th scope="col">카테고리</th>
+                     <th scope="col">참고번호</th>
+                     <th scope="col"></th>
+                  </tr>
                        </thead>
                        <tbody>
                           <c:forEach items="${list}" var="cal" varStatus = "v">
-      						<tr>
-								<td>
-         						<c:if test="${param.cPage eq null }">
-         								<c:out value="${v.count }"/>
-         						</c:if>
-             					<c:if test="${param.cPage == 1 }">
-										<c:out value="${v.count }"/>
-								</c:if>			
-         						<c:if test="${param.cPage > 1 }">
-										<c:out value="${v.count+(5*(param.cPage-1)) }"/>
-								</c:if>
-								</td>
-         						<td>${cal.title}</td>
-         						<td>${cal.start}</td>
-         						<td>${cal.end}</td>        						
-         						<td>${cal.type}</td>
-         						<td>${cal._id }</td>
-         						<td>
-         							<button type ="button" class="btn btn-success mr-2 checkBtn" id = "btn1">수정</button>
-									<button type ="button" class="btn btn-success mr-2"
-									onclick="location.href='${pageContext.request.contextPath }/calender/deleteCal.do?data=${cal._id }&empNo=${loginEmp['EMPNO'] }'">삭제</button>
-								</td>
-      						</tr>
-   						</c:forEach>
+                        <tr>
+                        <td>
+                           <c:if test="${param.cPage eq null }">
+                                 <c:out value="${v.count }"/>
+                           </c:if>
+                            <c:if test="${param.cPage == 1 }">
+                              <c:out value="${v.count }"/>
+                        </c:if>         
+                           <c:if test="${param.cPage > 1 }">
+                              <c:out value="${v.count+(5*(param.cPage-1)) }"/>
+                        </c:if>
+                        </td>
+                           <td>${cal.title}</td>
+                           <td>${cal.start}</td>
+                           <td>${cal.end}</td>                          
+                           <td>${cal.type}</td>
+                           <td>${cal._id }</td>
+                           <td>
+                              <button type ="button" class="btn btn-success mr-2 checkBtn" id = "btn1">수정</button>
+                           <button type ="button" class="btn btn-success mr-2"
+                           onclick="location.href='${pageContext.request.contextPath }/calender/deleteCal.do?data=${cal._id }&empNo=${loginEmp['EMPNO'] }'">삭제</button>
+                        </td>
+                        </tr>
+                     </c:forEach>
                        </tbody>
                      </table>
                    </div>
@@ -747,7 +747,7 @@
                <div style="margin:0 auto; width:fit-content;">
                  ${pageBar }
                </div>
-        	    <input type = "hidden" id = "empNo2" value = "${loginEmp['EMPNO'] }"/>
+               <input type = "hidden" id = "empNo2" value = "${loginEmp['EMPNO'] }"/>
         
         <!-- /.filter panel -->
     </div>
@@ -760,7 +760,7 @@
     <script src="${path }/resources/full/vendor/js/ko.js"></script>
     <script src="${path }/resources/full/vendor/js/select2.min.js"></script>
     <script src="${path }/resources/full/vendor/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="${path }/resources/full/js/main.js"></script>
+   <script src="${path }/resources/full/js/main.js"></script>
     <script src="${path }/resources/full/js/addEvent.js"></script>
     <script src="${path }/resources/full/js/editEvent.js"></script>
     <script src="${path }/resources/full/js/etcSetting.js"></script>
@@ -772,27 +772,27 @@
     
 
     $(".checkBtn").click(function(){ 
-		
-		var str = ""
-		var tdArr = new Array();	// 배열 선언
-		var checkBtn = $(this);
-		
-		// checkBtn.parent() : checkBtn의 부모는 <td>이다.
-		// checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
-		var tr = checkBtn.parent().parent();
-		var td = tr.children();
-		
-		var no = td.eq(5).text();
-		console.log(no);
-		
-		window.open("${path}/calendar/updateCal.do?calNo="+no,"일정 수정","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
-		
+      
+      var str = ""
+      var tdArr = new Array();   // 배열 선언
+      var checkBtn = $(this);
+      
+      // checkBtn.parent() : checkBtn의 부모는 <td>이다.
+      // checkBtn.parent().parent() : <td>의 부모이므로 <tr>이다.
+      var tr = checkBtn.parent().parent();
+      var td = tr.children();
+      
+      var no = td.eq(5).text();
+      console.log(no);
+      
+      window.open("${path}/calendar/updateCal.do?calNo="+no,"일정 수정","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
+      
 
-		
+      
     });
 
-		
-		
+      
+      
 
        
 

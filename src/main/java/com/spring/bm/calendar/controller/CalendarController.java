@@ -79,7 +79,7 @@ public class CalendarController {
 		int result = service.deletecCal(data);
 
 		String msg = "";
-		String loc = "/calendar/allView.do?data=" + data2;
+		String loc = "/calendar/allView.do?temp=" + data2;
 
 		if (result > 0) {
 			msg = "스케줄 삭제 완료되었습니다.";
