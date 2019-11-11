@@ -17,7 +17,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-  <title>${param.tabTitle }</title>
+  <title>일정관리</title>
 
   <script src="http://code.jquery.com/jquery-3.4.1.min.js"></script>
 
@@ -57,6 +57,7 @@
   
   <!-- tableSorter -->
   <script src='${path }/resources/hb/js/jquery.tablesorter.min.js'></script>
+  
     
 
   <script>
@@ -648,7 +649,7 @@
        </div>
            <div class="row">
                  <div class="col-sm-12">
-                   <table class="table table-striped table-hover tablesorter" id="myTable2" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align: center;">
+                   <table class="table table-striped table-hover" id="myTable2" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
 						<tr>
 							<th scope="col">내용</th>						
@@ -656,7 +657,7 @@
 						</tr>
                        </thead>
                        <tbody>
-                       <tr>
+                       <tr class = "rooo">
                        		<td colspan="2" style = "text-align: center"><strong>새로운 일정이 없습니다.</strong></td>
                        	</tr>
                        </tbody>
@@ -666,20 +667,7 @@
         <div class="card-header py-3">
          <h4 class="m-0 font-weight-bold text-primary">일정 목록</h4>
        </div>
-       <div class="card-header py-3">
-       
-		 <button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calendar/allView.do?temp=${loginEmp['EMPNO'] }'">전체</button>       
-       
-         <button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calender/1Cal.do?temp=${loginEmp['EMPNO'] }'">개인</button>
-		
-		<button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calender/2Cal.do?temp=${loginEmp['EMPNO'] }'">부서</button>
-		
-		<button type ="button" class="btn btn-success mr-2"
-		onclick="location.href='${pageContext.request.contextPath }/calender/3Cal.do?temp=${loginEmp['EMPNO'] }'">회사</button>
-       </div>
+
 
            <div class="row">
                  <div class="col-sm-12">
@@ -735,7 +723,6 @@
     </div>
     <!-- /.container -->
 </section>
-    <script src="${path }/resources/full/vendor/js/jquery.min.js"></script>
     <script src="${path }/resources/full/vendor/js/bootstrap.min.js"></script>
     <script src="${path }/resources/full/vendor/js/moment.min.js"></script>
     <script src="${path }/resources/full/vendor/js/fullcalendar.min.js"></script>
@@ -747,6 +734,10 @@
     <script src="${path }/resources/full/js/editEvent.js"></script>
     <script src="${path }/resources/full/js/etcSetting.js"></script>
     <script>
+    
+    $(function() {
+        $("#myTable").tablesorter();
+      });
     
 
     $(".checkBtn").click(function(){ 
