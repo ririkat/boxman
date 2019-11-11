@@ -125,6 +125,16 @@ public class AcctServiceImpl implements AcctService {
 		return dao.selectSevOne(session, empno);
 	}
 
+	@Override
+	public int updateBizTripPayment(int data) {
+		return dao.updateBizTripPayment(session, data);
+	}
+
+	@Override
+	public int updateSevPayment(int empno) {
+		return dao.updateSevPayment(session, empno);
+	}
+
 	
 	
 	

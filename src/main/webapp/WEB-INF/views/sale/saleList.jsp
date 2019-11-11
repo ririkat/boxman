@@ -10,6 +10,12 @@
    <jsp:param value="판매 관리" name="tabTitle"/> 
 </jsp:include>
 
+<style>
+th {
+	text-align: center;
+}
+</style>
+
 <section>
 
 	<div class="card shadow mb-4">
@@ -28,7 +34,7 @@
 								<option value="salCode">판매코드</option>
 								<option value="conCode">거래처명</option>
 								<option value="empNo">담당자명</option>
-								<option value="salCk">판매확정여부</option>
+								<option value="salCk">결재승인여부</option>
 								<option value="remitCk">입금확정여부</option>
 							</select>
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
@@ -58,7 +64,7 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover tablesorter" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align:center;">
+                    <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
                          <tr>
                             <th>판매코드</th>
@@ -67,15 +73,15 @@
 							<th>담당자</th>
 							<th>거래유형</th>
 							<th>판매총액</th>
-							<th>판매확정</th>
-							<th>판매일자</th>
+							<th>결재승인</th>
+							<th>승인일자</th>
 							<th>입금여부</th>
 							<th>입금일자</th>
                          </tr>
                        </thead>
                        <tbody>
                           <c:forEach items="${list }" var="s">
-								<tr>
+								<tr style="text-align:center;">
 									<td><a href='${path }/sale/verificationSaleInfo.do?salCode=${s["SALCODE"] }'><c:out value='${s["SALCODE"] }'/></a></td>
 									<td><c:out value='${s["SALENROLLDATE"] }' /></td>
 									<td><c:out value='${s["CONNAME"] }' /></td>
@@ -83,9 +89,23 @@
 									<td><c:out value='${s["SALTRANTYPE"] }' /></td>
 									<td style="text-align:right;"><c:out value='${s["SALTOTAMT"] }'/></td>
 									<td><c:out value='${s["SALCK"] }'/></td>
-									<td><c:out value='${s["SALDATE"] }' /></td>
+									<td>
+										<c:if test="${s['SALDATE'] eq null}">
+											-
+										</c:if>
+										<c:if test="${s['SALDATE'] ne null}">
+											<c:out value='${s["SALDATE"] }' />
+										</c:if>
+									</td>
 									<td><c:out value='${s["REMITCK"] }' /></td>
-									<td><c:out value='${s["REMITDATE"] }' /></td>
+									<td>
+										<c:if test="${s['REMITDATE'] eq null}">
+											-
+										</c:if>
+										<c:if test="${s['REMITDATE'] ne null}">
+											<c:out value='${s["REMITDATE"] }' />
+										</c:if>
+									</td>
 								</tr>
 							</c:forEach>
                        </tbody>
@@ -95,19 +115,20 @@
                </div>
 			</div>
 		</div>
-       ${pageBar }
+      <div style="margin:0 auto; width:fit-content;">
+		${pageBar }
+      </div>
 	</div>
 
 </section>
 
 <script>
-//테이블 정렬
-$(function() {
-	$("#dataTable").tablesorter();
-});
-
 function searchSaleInfo(){
 	$("#searchFrm").attr("action","${path}/sale/searchSaleInfo.do");
 	$("#searchFrm").submit();
 }
+//테이블 정렬
+$(function() {
+  $("#myTable").tablesorter();
+});
 </script>

@@ -93,31 +93,39 @@
 	
 	
 	<!-- biztrip -->
+	<update id="updateBizTripPayment" parameterType = "_int">
+		update businesstrippay set btppaydate=sysdate, btpcheck='Y' where btno=#{data}
+	</update>
+	
 	<select id="selectBizTripList" resultType="map">
 		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
-		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
-			from employee
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend,
+			(select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from salary where salcheck='Y') as BIZCOST,
+             BTPPAYDATE, BTPCHECK
+            from employee
 			    inner join businesstrip on employee.empno=businesstrip.empno
 			    inner join empjob on employee.jobno=empjob.jobno
 			    inner join department on employee.deptno=department.deptno
+                LEFT JOIN BUSINESSTRIPPAY ON BUSINESSTRIP.BTNO=BUSINESSTRIPPAY.BTNO
+            WHERE BTPCHECK IS NOT NULL
 	</select>
 	<select id="selectBizTripCount" resultType="_int">
-		select count(*) from businessTrip
+		select count(*) from businesstrippay
 	</select>
-	
-	
-	
 	
 	
 	<!-- biztrip search -->
 	<select id="selectBiztripSearchList" resultType="map">
 		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
-		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
-			from employee
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend,
+			(select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from salary where salcheck='Y') as BIZCOST,
+             BTPPAYDATE, BTPCHECK
+            from employee
 			    inner join businesstrip on employee.empno=businesstrip.empno
 			    inner join empjob on employee.jobno=empjob.jobno
 			    inner join department on employee.deptno=department.deptno
-                where 1=1
+                LEFT JOIN BUSINESSTRIPPAY ON BUSINESSTRIP.BTNO=BUSINESSTRIPPAY.BTNO
+            WHERE BTPCHECK IS NOT NULL
                 <choose>
 			    	<when test="type eq 'empNo'">
 		                and employee.empno like '%'||#{data}||'%' 
@@ -136,9 +144,10 @@
 	<select id="biztripSearchCount" parameterType="map" resultType="_int">
 		select count(*) from employee
 		    inner join businesstrip on employee.empno=businesstrip.empno
-		    inner join empjob on employee.jobno=empjob.jobno
-		    inner join department on employee.deptno=department.deptno
-            where 1=1
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno
+                LEFT JOIN BUSINESSTRIPPAY ON BUSINESSTRIP.BTNO=BUSINESSTRIPPAY.BTNO
+            WHERE BTPCHECK IS NOT NULL
 		    <choose>
 		    	<when test="type eq 'empNo'">
 	                and employee.empno like '%'||#{data}||'%' 
@@ -168,15 +177,16 @@
 		    employee.empno, employee.empname, employee.empsal,
 		    to_char(employee.emphiredate, 'mm/dd/yyyy')as hiredate, 
 		    department.deptname, empjob.jobname,
-		    employee.empentyn as empentyn, 
-		    to_char(severance.sevdate, 'mm/dd/yyyy')as sevdate, severance.sevno 
+		    employee.empentyn as empentyn, severance.sevpay,
+		    to_char(severance.sevdate, 'mm/dd/yyyy')as sevdate, severance.sevcheck, severance.sevno
 		    from employee 
 		        join severance on employee.empno=severance.empno
 		        join empjob on employee.jobno=empjob.jobno
 		        join department on employee.deptno=department.deptno
+		    where sevpay is not null
 	</select>
 	<select id="selectSevCount" resultType="_int">
-		select count(*) from severance
+		select count(*) from severance where sevpay is not null
 	</select>
 	
 	<update id="updateSeveranceStatus" parameterType="map">
@@ -252,6 +262,14 @@
 		WHERE S.EMPNO=#{empno}
 	</select>
 	
+	<!-- severance payment -->
+	<update id="updateSevPayment" parameterType="_int">
+		update severance
+		    set
+		        severance.sevcheck='Y',
+		        severance.sevdate=sysdate
+		        where empno=#{empno}
+	</update>
 	
 </mapper>
 

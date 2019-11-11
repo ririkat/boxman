@@ -52,7 +52,7 @@
 </head>
 <body id="page-top">
    <section>
-      <div class="container">
+      <div class="container-fluid">
          <h2 class="title font-weight-bold text-primary">결재 라인 수정</h2>
          <div class="card shadow mb-4">
             <div class="card-body">
@@ -94,7 +94,7 @@
                         <button class="btn btn-primary" id="removeAll" onclick="removeAll()" >비우기</button>
                      </div>   
                      </div>
-                        <div class="row" style="height:300px; overflow: hidden;  padding:5px; border: thin solid gray;">
+                        <div class="row" style="height:400px; overflow: hidden;  padding:5px; border: thin solid gray;">
                            <div class="col-sm-12" >
                            <form id="apvLineForm" class="form-controll" style="width:100%">
                            <table class="table table-stripped">
@@ -105,6 +105,14 @@
                                  <td>
                                  <input type="hidden" name="apvLineNo" id="apvLNo" value="${apvl['APVLNO']}"/>
                                  <input type="text" name="apvLineTitle" id="apvLTitle" style="width:600px;" value="${apvl['APVLTITLE']}"/>
+                                 </td>
+                              </tr>
+                                                            <tr>
+                                 <th>
+                                 설명
+                                 </th>
+                                 <td>
+                                 <input type="text" name="description" id="description" style="width:600px;" />
                                  </td>
                               </tr>
                               <tr>
@@ -225,14 +233,16 @@
          
          
          function updateButton(){
-            var myObject=new Object();
-            var apvLTitle=$('#apvLTitle').val();
-            var selOpts=new Array();
-            $('#apvL option').each(function(){
-            	selOpts.push($(this).val());
-            })
-            myObject["apvLTitle"]=apvLTitle;
-            myObject["selOpts"]=selOpts;
+        	 var myObject=new Object();
+             var apvLTitle=$('#apvLTitle').val();
+             var description=$('#description').val();
+             var selOpts=new Array();
+             $('#apvL option').each(function(){
+             	selOpts.push($(this).val());
+             })
+             myObject["apvLTitle"]=apvLTitle;
+             myObject["description"]=description;
+             myObject["selOpts"]=selOpts;
             
             var apvlNo=$('#apvLNo').val();
             myObject["apvlNo"]=apvlNo;

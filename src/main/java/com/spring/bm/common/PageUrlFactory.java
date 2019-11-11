@@ -9,6 +9,7 @@ public class PageUrlFactory {
 	
 	/* 서버용 */
 //	private String url="/19AM_boxman_final";
+	
 	/* 로컬용 */
 	private String url="/bm";
 	

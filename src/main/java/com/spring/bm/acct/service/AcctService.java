@@ -39,6 +39,12 @@ public interface AcctService {
 
 	/* 퇴직금한개보기 */
 	Map<String, String> selectSevOne(String empno);
+
+	/* biztrip payment */
+	int updateBizTripPayment(int data);
+
+	/* severance payment */
+	int updateSevPayment(int empno);
 	
 	
 

@@ -65,10 +65,10 @@
 											class="btn btn-primary btn-user btn-block" value="로그인"/>
 											<%--  href="${path }/emp/loginEmp.do" --%>
 									</form>
-									<hr>
+									<%-- <hr>
 									<div class="text-center">
 										<a class="small" href="${path }/bfLogin/forgotPassword.do">비밀번호 찾기</a>
-									</div>
+									</div> --%>
 								</div>
 							</div>
 						</div>

@@ -74,11 +74,19 @@
 	</select>
 	
 	<select id="selectSaleInfo" parameterType="_int" resultType="map">
-		SELECT * FROM saleTab WHERE SALCODE=#{salCode}
+		SELECT DISTINCT A.*, B.CONNAME, C.EMPNAME
+		FROM SALETAB A, CONNECTION B, EMPLOYEE C
+		WHERE A.CONCODE=B.CONCODE(+)
+		AND A.EMPNO=C.EMPNO(+)
+		AND A.SALCODE=#{salCode}
 	</select>
 	
 	<select id="selectSaleItemList" parameterType="_int" resultType="map">
-		SELECT * FROM saleItemList WHERE SALCODE=#{saleCode}
+		SELECT DISTINCT A.*, B.STUFFNAME, C.SCNAME, B.PRICE
+		FROM SALEITEMLIST A, stuff B, stuff_subcategory C
+		WHERE A.STUFFNO=B.STUFFNO(+)
+		AND B.SCNO=C.SCNO(+)
+		AND SALCODE=#{saleCode}
 	</select>
 	
 

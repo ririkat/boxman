@@ -62,7 +62,7 @@
 	function requestApv(dfno){
   		var url="${path}/apv/requestApvEnroll.do?dfNo="+dfno;
   		var name="기안하기"
-        window.open(url,name,"width=1000,height=800,left=600");
+        window.open(url,name,"width=1200,height=800,left=600");
   	}
 	</script>
 

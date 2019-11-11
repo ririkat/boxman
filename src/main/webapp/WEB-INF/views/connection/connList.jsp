@@ -10,6 +10,12 @@
    <jsp:param value="거래처 관리" name="tabTitle"/> 
 </jsp:include>
 
+<style>
+th {
+	text-align: center;
+}
+</style>
+
 <section>
 
    <div class="card shadow mb-4">
@@ -57,7 +63,7 @@
               </div>
               <div class="row">
                  <div class="col-sm-12">
-                    <table class="table table-striped table-hover" id="dataTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align:center;">
+                    <table class="table table-striped table-hover tablesorter" id="myTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
                        <thead>
                          <tr>
                              <th>거래처코드</th>
@@ -73,18 +79,18 @@
                        </thead>
                        <tbody>
                           <c:forEach items="${list }" var="c">
-                        <tr>
-                           <td><a href='${path }/connection/modifyConn.do?conCode=${c["CONCODE"]}&conTransCk=${c["CONTRANSCK"]}'><c:out value='${c["CONCODE"] }'/></a></td>
-                           <td><c:out value='${c["CONNAME"] }' /></td>
-                           <td><c:out value='${c["CONREPNAME"] }' /></td>
-                           <td><c:out value='${c["CONTEL"] }' /></td>
-                           <td><c:out value='${c["CONPHONE"] }' /></td>
-                           <td><c:out value='${c["CONCATEG"] }'/></td>
-                           <td><c:out value='${c["CONUSECK"] }' /></td>
-                           <td><c:out value='${c["CONTRANSCK"] }' /></td>
-                           <td style="text-align:left;"><c:out value='${c["CONADDR"] }' /></td>
-                        </tr>
-                     </c:forEach>
+	                        <tr style="text-align:center;">
+	                           <td><a href='${path }/connection/modifyConn.do?conCode=${c["CONCODE"]}&conTransCk=${c["CONTRANSCK"]}'><c:out value='${c["CONCODE"] }'/></a></td>
+	                           <td><c:out value='${c["CONNAME"] }' /></td>
+	                           <td><c:out value='${c["CONREPNAME"] }' /></td>
+	                           <td><c:out value='${c["CONTEL"] }' /></td>
+	                           <td><c:out value='${c["CONPHONE"] }' /></td>
+	                           <td><c:out value='${c["CONCATEG"] }'/></td>
+	                           <td><c:out value='${c["CONUSECK"] }' /></td>
+	                           <td><c:out value='${c["CONTRANSCK"] }' /></td>
+	                           <td style="text-align:left;"><c:out value='${c["CONADDR"] }' /></td>
+	                        </tr>
+	                     </c:forEach>
                        </tbody>
                      </table>
                    </div>
@@ -92,7 +98,9 @@
                </div>
          </div>
       </div>
-       ${pageBar }
+      <div style="margin:0 auto; width:fit-content;">
+		${pageBar }
+      </div>
    </div>
 
 </section>
@@ -102,4 +110,8 @@ function searchConnection(){
    $("#searchFrm").attr("action","${path}/connection/searchConnection.do");
    $("#searchFrm").submit();
 }
+//테이블 정렬
+$(function() {
+  $("#myTable").tablesorter();
+});
 </script>

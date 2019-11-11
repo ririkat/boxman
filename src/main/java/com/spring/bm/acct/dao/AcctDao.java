@@ -45,6 +45,12 @@ public interface AcctDao {
 
 	/* 퇴직금한개보기 */
 	Map<String, String> selectSevOne(SqlSessionTemplate session, String empno);
+
+	/* biztrip payment */
+	int updateBizTripPayment(SqlSessionTemplate session, int data);
+
+	/* severance payment */
+	int updateSevPayment(SqlSessionTemplate session, int empno);
 	
 
 }

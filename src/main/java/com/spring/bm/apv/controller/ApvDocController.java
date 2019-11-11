@@ -267,9 +267,19 @@ public class ApvDocController {
 			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{request_name}}</p>", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("<p>&nbsp;{{form_idx}}</p>")>-1) {
-			String content="<p id=\"request_name\">시행자명</p>";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{form_idx}}</p>", content);
+		if(head.indexOf("<p>&nbsp;{{app_sdate}}</p>")>-1) {
+			String content="<input type='date' id=\"sDate\" />";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_sdate}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("<p>&nbsp;{{app_edate}}</p>")>-1) {
+			String content="<input type='date' id=\"eDate\" />";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_edate}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("<p>&nbsp;{{pay}}</p>")>-1) {
+			String content="<input type='number' id=\"pay\" />";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{pay}}</p>", content);
 			dfOne.put("DFHEADFORM", form);
 		}
 		 
@@ -553,5 +563,115 @@ public class ApvDocController {
 		mv.addObject("loc",loc);
 		mv.setViewName("common/msg");
 		return mv;
+	}
+	
+	@RequestMapping("/apv/addReqApvEnroll.do")
+	public ModelAndView addReqApvEnroll(@RequestParam Map<String, Object> param,HttpSession session) {
+	ModelAndView mv = new ModelAndView();
+	
+	int dfNo=0;
+	String cate=String.valueOf(param.get("temp")).trim();
+	System.out.println("cate?");
+	int totalPay=0;
+	String sDate="";
+	String eDate="";
+	int cateNo=0;
+	switch(cate) {
+	case "businessTripPay":
+		cateNo=Integer.parseInt(String.valueOf(param.get("BTPNO")));
+		dfNo=102;
+		totalPay=Integer.parseInt(String.valueOf(param.get("BTPROOM")))+Integer.parseInt(String.valueOf(param.get("BTPTRANSPORTATION")))+Integer.parseInt(String.valueOf(param.get("BTPENTERTAIN")));
+		sDate=String.valueOf(param.get("BTSTART"));
+		eDate=String.valueOf(param.get("BTEND"));
+		break;
+	}
+	
+	
+	/* List<Map<String,Object>> docCate=service.selectDocCate(); */
+	Map<String,Object> dfOne=service.selectDfModi(dfNo);
+	
+	//테이블에 값 넣기
+	//먼저 index로 변수들이 있는지 파악
+	//-1이면 테이블에 해당 변수 없음.
+	//해당 변수가 있을 때 replace 시켜줌.
+	//replace 시켜줄 때는, 태그로 감싸서 넣기!!나중에 뽑아 쓸 수 있도록 id값을 설정해서 넣기!!
+	//그대로 출력
+	Map<String,Object> loginEmp=(Map<String, Object>) session.getAttribute("loginEmp");
+	Map<String,Object> empInfo=service.selectEmpInfoAll(loginEmp);
+	
+	String head=((String)dfOne.get("DFHEADFORM"));
+	
+	///head에서 index 다 돌려~~!!
+	if(head.indexOf("{{cateName}}")>-1) {
+		String content="<input type='hidden' id=\"cateName\" value='"+cate+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{cateName}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{cateNo}}")>-1) {
+		String content="<input type='hidden' id=\"cateNo\" value='"+cateNo+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{cateNo}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{title}}")>-1) {
+		String content=(String)dfOne.get("DFTITLE");
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{title}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{empName}}")>-1) {
+		String content=(String)empInfo.get("EMPNAME");
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{empName}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{empEmail}}")>-1) {
+		String content=(String)empInfo.get("EMPEMAIL");
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{empEmail}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{deptName}}")>-1) {
+		String content=(String)empInfo.get("DEPTNAME");
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{deptName}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{jobName}}")>-1) {
+		String content=(String)empInfo.get("JOBNAME");
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{jobName}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{text_box_1}}")>-1) {
+		String content="<input type='text' id='textBox1'/>";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{text_box_1}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("<p>&nbsp;{{approval_line_html}}</p>")>-1) {
+		String content="<table id=\"approval_line_html\" border=\"1px;\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" valign=\"middle\" width=\"100%\" height=\"100%\"><tr><td id=\"prior1\">1</td><td id=\"prior2\"></td><td id=\"prior3\"></td><td id=\"prior4\"></td><td id=\"prior5\"></td></tr><tr height=\"100px;\"><td id=\"stamp1\"></td><td id=\"stamp2\"></td><td id=\"stamp3\"></td><td id=\"stamp4\"></td><td id=\"stamp5\"></td></tr></table>";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{approval_line_html}}</p>", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("<p>&nbsp;{{request_name}}</p>")>-1) {
+		String content="<p id=\"requestName\">시행자명</p>";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{request_name}}</p>", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("<p>&nbsp;{{app_sdate}}</p>")>-1) {
+		String content="<p id=\"sDate\" >"+sDate+"</p>";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_sdate}}</p>", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("<p>&nbsp;{{app_edate}}</p>")>-1) {
+		String content="<p id=\"eDate\" >"+eDate+"</p>";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_edate}}</p>", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("<p>&nbsp;{{pay}}</p>")>-1) {
+		String content="<p id=\"pay\" >"+totalPay+"</p>";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{pay}}</p>", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	
+	 
+	mv.addObject("dfOne",dfOne);
+	/* mv.addObject("docCate",docCate); */
+	mv.setViewName("apv/requestApvEnroll");
+	return mv;
 	}
 }
