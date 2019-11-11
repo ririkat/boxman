@@ -241,6 +241,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return dao.selectBTOne(session, param);
 	}
+	
+	/* 출장비등록 */
 	@Override
 	public int insertBTP(Map<String, Object> param) throws Exception {
 		int result = 0;
@@ -249,6 +251,43 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return result;
 	}
 	
+	/* 사원통계 */
+	@Override
+	public List<Map<String, Object>> empYearCount() {
+		// TODO Auto-generated method stub
+		return dao.empYearCount(session);
+	}
+	@Override
+	public List<Map<String, Object>> newEmpYearCount() {
+		// TODO Auto-generated method stub
+		return dao.newEmpYearCount(session);
+	}
+	@Override
+	public List<Map<String, Object>> entEmpYearCount() {
+		// TODO Auto-generated method stub
+		return dao.entEmpYearCount(session);
+	}
+	
+	/* 근태수정 한개보기 */
+	@Override
+	public Map<String, Object> selectUpAttendanceOne(int result) {
+		// TODO Auto-generated method stub
+		return dao.selectUpAttendanceOne(session, result);
+	}
+	
+	/* 휴가한개보기 */
+	@Override
+	public Map<String, Object> selectDayoffOne(int doNo) {
+		// TODO Auto-generated method stub
+		return dao.selectDayoffOne(session, doNo);
+	}
+
+	/* 출장비한개보기 */
+	@Override
+	public Map<String, Object> selectBTPOne(int btpNo) {
+		// TODO Auto-generated method stub
+		return dao.selectBTPOne(session, btpNo);
+	}
 	
 
 	

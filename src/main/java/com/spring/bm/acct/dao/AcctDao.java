@@ -42,6 +42,9 @@ public interface AcctDao {
 	/* severance search */
 	List<Map<String, String>> selectSevSearchList(SqlSessionTemplate session, int cPage, int numPerPage, Map<String, Object> param);
 	int sevSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	/* 퇴직금한개보기 */
+	Map<String, String> selectSevOne(SqlSessionTemplate session, String empno);
 	
 
 }

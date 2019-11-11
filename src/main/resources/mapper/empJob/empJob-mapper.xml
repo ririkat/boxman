@@ -10,6 +10,11 @@
 	<select id="empJobList" resultType="map">
 		SELECT J.JOBNO, J.JOBNAME, J.JOBSTATUS, COUNT(A.EMPNO) AS COUNT FROM EMPJOB J
 		LEFT JOIN EMPLOYEE A ON (J.JOBNO=A.JOBNO) GROUP BY J.JOBNO, J.JOBNAME, J.JOBSTATUS
+		<choose>
+			<when test="type != null">
+				WHERE J.${type} like '%'||#{data}||'%'
+			</when>
+		</choose>
 		ORDER BY J.JOBNO
 	</select>
 	

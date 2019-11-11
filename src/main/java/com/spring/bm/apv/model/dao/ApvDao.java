@@ -57,4 +57,60 @@ public interface ApvDao {
 
 	int deleteApvlApplicants(SqlSessionTemplate session, Map<String, Object> param);
 
+	Map<String, Object> selectEmpInfoAll(SqlSessionTemplate session, Map<String, Object> param);
+
+	int insertRequestApv(SqlSessionTemplate session, Map<String, Object> param);
+
+	int insertApvApplicant(SqlSessionTemplate session, Map<String, Object> param2);
+
+	int insertApvReferer(SqlSessionTemplate session, Map<String, Object> param2);
+
+	int insertApvEnforcer(SqlSessionTemplate session, Map<String, Object> param2);
+
+	List<Map<String, Object>> selectSendApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectSendApvCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectReceiveApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectReceiveApvCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectEnforceApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectEnforceApvCount(SqlSessionTemplate session, int loginNo);
+
+	List<Map<String, Object>> selectReferApvList(SqlSessionTemplate session, int cPage, int numPerPage, int loginNo);
+
+	int selectReferApvCount(SqlSessionTemplate session, int loginNo);
+
+	Map<String, Object> selectLookupApv(SqlSessionTemplate session, int apvNo);
+
+	Map<String, Object> selectLookupApvR(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateReferYN(SqlSessionTemplate session, Map<String, Object> param);
+
+	Map<String, Object> selectLookupApvA(SqlSessionTemplate session, Map<String, Object> param);
+
+	int apvPermit(SqlSessionTemplate session, Map<String, Object> param);
+
+	int apvAReturn(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvReturn(SqlSessionTemplate session, Map<String, Object> param);
+
+	int selectApvACount(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvPermitAll(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvPermit(SqlSessionTemplate session, Map<String, Object> param);
+
+	Map<String, Object> selectLookupApvEOne(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvEEnforce(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvEnforce(SqlSessionTemplate session, Map<String, Object> param);
+
+	int apvEEReturn(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateApvEReturn(SqlSessionTemplate session, Map<String, Object> param);
+
 }

@@ -43,8 +43,8 @@ public class EmpJobController {
 		
 		String msg = "";
 		String loc = "/empJob/empJobList.do";
-		if(result > 0) msg = param.get("empJobName") + " 직급이 등록 완료되었습니다.";
-		else msg = param.get("empJobName") + " 직급등록이 실패하였습니다.";
+		if(result > 0) msg = "직급 등록 완료되었습니다.";
+		else msg = "직급등록 실패하였습니다.";
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg", msg);

@@ -19,14 +19,14 @@
 	
 	
 	
-	<!-- 월급 리스트 가져오기 -->
+	<!-- salary list -->
 	<select id="selectEmpList" resultType="map">
 		select salary.salno, employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
 		(select sum(salrealpay+saltax) from salary) as salaries, to_char(salary.saldate, 'mm/dd/yyyy')as saldate, salary.SALCHECK 
 			from employee
 			    inner join salary on employee.empno=salary.empno
 			    inner join empjob on employee.jobno=empjob.jobno
-			    inner join department on employee.deptno=department.deptno order by saldate desc
+			    inner join department on employee.deptno=department.deptno
 	</select>
 	<select id="selectEmpCount" resultType="_int">
 		select count(*) from salary
@@ -183,7 +183,7 @@
 		update severance
 		    set
 		        severance.sevpay=#{amt},
-		        severance.sevdate=sysdate
+		        severance.sevdate=null
 		        where empno=#{empno}
 	</update>
 	
@@ -195,11 +195,7 @@
 					where empno=#{empno}
 	</update>
 	<!-- severance end -->
-	
-	
-	
-	
-	
+
 	<!-- severance search -->
 	<select id="selectSevSearchList" resultType="map">
 		select
@@ -249,6 +245,13 @@
 	              	</when>
 			    </choose>
 	</select>
+	
+	<!-- 퇴직금한개보기 -->
+	<select id="selectSevOne" parameterType="_int" resultType="map">
+		SELECT E.*, S.* FROM EMPLOYEE E JOIN SEVERANCE S ON (E.EMPNO=S.EMPNO)
+		WHERE S.EMPNO=#{empno}
+	</select>
+	
 	
 </mapper>
 

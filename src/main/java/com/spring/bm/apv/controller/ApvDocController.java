@@ -1,24 +1,31 @@
 package com.spring.bm.apv.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.apv.model.service.ApvService;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 
 
 @Controller
 public class ApvDocController {
 	private Logger logger=LoggerFactory.getLogger(ApvDocController.class);
+	private String path=new PageUrlFactory().getUrl();
 
 	@Autowired
 	ApvService service;
@@ -32,25 +39,12 @@ public class ApvDocController {
 		int totalCount = service.selectDfCount();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/apv/apvDoc.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/apvDoc.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/apvDocList");
 		return mv;
 	}
-	
-	/* 상신결재함 관리 */
-	@RequestMapping("/apv/receiveApv.do")
-	public String receiveApv() {
-		return "apv/receiveApv";
-	}
-	
-	/* 수신결재함 관리 */
-	@RequestMapping("/apv/sendApv.do")
-	public String sendApv() {
-		return "apv/sendApv";
-	}
-	
 	
 	/* 결재 양식 등록 팝업창 */
 	@RequestMapping("/apv/apvDocEnroll.do")
@@ -206,7 +200,7 @@ public class ApvDocController {
 		int totalCount = service.selectDfCount();
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/apv/requestApv.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/requestApv.do"));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/requestApvMain");
@@ -216,16 +210,348 @@ public class ApvDocController {
 	/* 기안 등록 뷰 */
 	@RequestMapping("/apv/requestApvEnroll.do")
 	public ModelAndView requestApvEnroll(@RequestParam(value="dfNo", 
-			required=false, defaultValue="0") int dfNo) {
+			required=false, defaultValue="0") int dfNo,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		/* List<Map<String,Object>> docCate=service.selectDocCate(); */
 		Map<String,Object> dfOne=service.selectDfModi(dfNo);
-		String title=(String)dfOne.get("DFTITLE");
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<c:out value='${dfOne[\"DFTITLE\"]}' ​escapeXml=\"false\"/>", title);
 		
+		//테이블에 값 넣기
+		//먼저 index로 변수들이 있는지 파악
+		//-1이면 테이블에 해당 변수 없음.
+		//해당 변수가 있을 때 replace 시켜줌.
+		//replace 시켜줄 때는, 태그로 감싸서 넣기!!나중에 뽑아 쓸 수 있도록 id값을 설정해서 넣기!!
+		//그대로 출력
+		Map<String,Object> loginEmp=(Map<String, Object>) session.getAttribute("loginEmp");
+		Map<String,Object> empInfo=service.selectEmpInfoAll(loginEmp);
+		
+		String head=((String)dfOne.get("DFHEADFORM"));
+		
+		///head에서 index 다 돌려~~!!
+		if(head.indexOf("{{title}}")>-1) {
+			String content=(String)dfOne.get("DFTITLE");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{title}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{empName}}")>-1) {
+			String content=(String)empInfo.get("EMPNAME");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{empName}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{empEmail}}")>-1) {
+			String content=(String)empInfo.get("EMPEMAIL");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{empEmail}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{deptName}}")>-1) {
+			String content=(String)empInfo.get("DEPTNAME");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{deptName}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{jobName}}")>-1) {
+			String content=(String)empInfo.get("JOBNAME");
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{jobName}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("{{text_box_1}}")>-1) {
+			String content="<input type='text' id='textBox1'/>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{text_box_1}}", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("<p>&nbsp;{{approval_line_html}}</p>")>-1) {
+			String content="<table id=\"approval_line_html\" border=\"1px;\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" valign=\"middle\" width=\"100%\" height=\"100%\"><tr><td id=\"prior1\">1</td><td id=\"prior2\"></td><td id=\"prior3\"></td><td id=\"prior4\"></td><td id=\"prior5\"></td></tr><tr height=\"100px;\"><td id=\"stamp1\"></td><td id=\"stamp2\"></td><td id=\"stamp3\"></td><td id=\"stamp4\"></td><td id=\"stamp5\"></td></tr></table>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{approval_line_html}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("<p>&nbsp;{{request_name}}</p>")>-1) {
+			String content="<p id=\"requestName\">시행자명</p>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{request_name}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		if(head.indexOf("<p>&nbsp;{{form_idx}}</p>")>-1) {
+			String content="<p id=\"request_name\">시행자명</p>";
+			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{form_idx}}</p>", content);
+			dfOne.put("DFHEADFORM", form);
+		}
+		 
 		mv.addObject("dfOne",dfOne);
 		/* mv.addObject("docCate",docCate); */
 		mv.setViewName("apv/requestApvEnroll");
+		return mv;
+	}
+	
+	/* 기안 상신하기 로직 */
+	@RequestMapping(value="/apv/requestApvEnrollEnd.do",method=RequestMethod.POST)
+	@ResponseBody
+	public int requestApvEnrollEnd(@RequestBody Map<String,Object> param){
+		int result=0;
+		try { 
+			result=service.insertRequestApv(param);
+		}
+		catch (Exception e) {
+			e.printStackTrace(); 
+		}
+		return result;
+	}
+	
+	/*상신함*/
+	@RequestMapping("/apv/sendApv.do")
+	public ModelAndView sendApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectSendApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectSendApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/sendApv.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/sendApv");
+		return mv;
+	}
+	
+	/*상신함 -> 조회하기*/
+	@RequestMapping("/apv/lookupApvOne.do")
+	public ModelAndView lookupApvOne(@RequestParam(value="no", 
+	required=true) int apvNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> apvOne=service.selectLookupApv(apvNo);
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	/*수신함*/
+	@RequestMapping("/apv/receiveApvList.do")
+	public ModelAndView receiveApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectReceiveApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectReceiveApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/receiveApvList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/receiveApvList");
+		return mv;
+	}
+	
+	/*시행함*/
+	@RequestMapping("/apv/enforceApvList.do")
+	public ModelAndView enforceApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		System.out.println(loginNo);
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectEnforceApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectEnforceApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/enforceApvList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/enforceApvList");
+		return mv;
+	}
+	
+	/*참조함*/
+	@RequestMapping("/apv/referApvList.do")
+	public ModelAndView referApvList(@RequestParam(value="cPage", 
+		required=false, defaultValue="1") int cPage,int loginNo) {
+		int numPerPage = 10;
+		
+		List<Map<String,Object>> list=service.selectReferApvList(cPage,numPerPage,loginNo);
+		int totalCount = service.selectReferApvCount(loginNo);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/referApvList.do"));
+		mv.addObject("count", totalCount);
+		mv.addObject("list",list);
+		mv.setViewName("apv/referApvList");
+		return mv;
+	}
+	
+	/*참조함 -> 조회하기*/
+	@RequestMapping("/apv/lookupApvROne.do")
+	public ModelAndView lookupApvROne(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		Map<String,Object> apvOne=service.selectLookupApvR(param);
+		if(String.valueOf(apvOne.get("OPENYN")).trim().equals("N")) {
+			int result=0;
+			try { 
+				result=service.updateReferYN(param);
+			}
+			catch (Exception e) {
+				e.printStackTrace(); 
+			}
+		}
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	/*결재함 -> 결재하기 뷰*/
+	@RequestMapping("/apv/lookupApvAOne.do")
+	public ModelAndView lookupApvAOne(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		Map<String,Object> apvOne=service.selectLookupApvA(param);
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	/*결재하기뷰->결재처리*/
+	@RequestMapping("/apv/apvPermit.do")
+	public ModelAndView apvPermit(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo,int priorNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		param.put("priorNo", priorNo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvAOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvPermit(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="결재처리 완료";
+		}else {
+			msg="결재처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	/*결재하기뷰->반려처리*/
+	@RequestMapping("/apv/apvReturn.do")
+	public ModelAndView apvReturn(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo,String moreInfo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		param.put("moreInfo", moreInfo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvAOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvReturn(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="반려처리 완료";
+		}else {
+			msg="반려처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	/*시행함 -> 시행관리 뷰*/
+	@RequestMapping("/apv/lookupApvEOne.do")
+	public ModelAndView lookupApvEOne(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		Map<String,Object> apvOne=service.selectLookupApvEOne(param);
+		
+		mv.addObject("apvOne",apvOne);
+		mv.setViewName("apv/lookupApvOne");
+		return mv;
+	}
+	
+	/*시행관리뷰->시행처리*/
+	@RequestMapping("/apv/apvEnforce.do")
+	public ModelAndView apvEnforce(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvEOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvEnforce(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="시행처리 완료";
+		}else {
+			msg="시행처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	/*결재하기뷰->반려처리*/
+	@RequestMapping("/apv/apvEReturn.do")
+	public ModelAndView apvEReturn(@RequestParam(value="apvNo", 
+	required=true) int apvNo,int empNo,String moreInfo) {
+		ModelAndView mv = new ModelAndView();
+		Map<String,Object> param=new HashMap<String, Object>();
+		param.put("apvNo", apvNo);
+		param.put("empNo", empNo);
+		param.put("moreInfo", moreInfo);
+		
+		int result=0;
+		String msg="";
+		String loc="/apv/lookupApvEOne.do?apvNo="+apvNo+"&empNo="+empNo;
+		try {
+			result=service.apvEReturn(param);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(result>0) {
+			msg="반송처리 완료";
+		}else {
+			msg="반송처리 실패";
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
 		return mv;
 	}
 }

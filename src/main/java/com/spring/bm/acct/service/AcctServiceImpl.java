@@ -118,6 +118,14 @@ public class AcctServiceImpl implements AcctService {
 		return dao.sevSearchCount(session, param);
 	}
 
+	/* 퇴직금한개보기 */
+	@Override
+	public Map<String, String> selectSevOne(String empno) {
+		// TODO Auto-generated method stub
+		return dao.selectSevOne(session, empno);
+	}
+
+	
 	
 	
 	

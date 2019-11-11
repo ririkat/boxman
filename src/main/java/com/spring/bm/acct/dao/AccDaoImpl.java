@@ -108,6 +108,13 @@ public class AccDaoImpl implements AcctDao {
 	public int sevSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("acct.sevSearchCount", param);
 	}
+
+	/* 퇴직금한개보기 */
+	@Override
+	public Map<String, String> selectSevOne(SqlSessionTemplate session, String empno) {
+		// TODO Auto-generated method stub
+		return session.selectOne("acct.selectSevOne", empno);
+	}
 	
 	
 	
