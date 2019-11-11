@@ -51,10 +51,7 @@
       							<div id="subcategoryNameCheck" class="rg-checkMsg card-title"></div>
       						</td>
          					<td>
-				  		<button type = "button" onclick = "maincategoryEnroll();" class="btn btn-light btn-icon-split" id = "btn">
-                   		 <span class="icon text-gray-600">
-                    	  <i class="fas fa-arrow-right"></i>
-                   		 </span>
+				  		<button type = "button" onclick = "maincategoryEnroll();" class="btn btn-primary mr-2" id = "btn">
                    		 <span class="text">추가하기</span>
                  		 </button>
 								</td>

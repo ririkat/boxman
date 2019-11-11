@@ -21,10 +21,7 @@
                        <label>Search:
                            <input type="text" name="data" class="form-control form-control-sm" placeholder="제목으로 검색" aria-controls="dataTable">
                       </label>
-                      <button onclick = "searchNotice();" class="btn btn-light btn-icon-split">
-                          <span class="icon text-gray-600">
-                         <i class="fas fa-arrow-right"></i>
-                          </span>
+                      <button onclick = "searchNotice();" class="btn btn-primary mr-2">
                           <span class="text">검색</span>
                         </button>
                     </div>
@@ -33,12 +30,9 @@
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
                      <div style="float:right;">
-                      <a href="${path}/notice/guideline.do" class="btn btn-light btn-icon-split">
-                    <span class="icon text-gray-600">
-                      <i class="fas fa-arrow-right"></i>
-                    </span>
-                    <span class="text">게시판등록</span>
-                  </a>
+                    	<button type="button" onclick="location.href='${path}/notice/guideline.do'" class="btn btn-primary mr-2">
+					        게시판등록
+					    </button>
                  </div>
                   </div>
                  </div>

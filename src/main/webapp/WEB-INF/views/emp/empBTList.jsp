@@ -123,7 +123,7 @@
 													<c:when test="${nowDate eq endDate or nowDate-1 eq endDate}">
 														<!-- 결재 종결 후 기안할 수 없음. -->
 														<c:if test="${fn:trim(e['BTCHECK']) eq 'Y' and endfDate<=nowfDate 
-														and (fn:trim(e['BTPCHECK']) eq 'N' or empty fn:trim(e['BTPCHECK']))}">	
+														and (fn:trim(e['BTPYN']) eq 'N' or empty fn:trim(e['BTPYN']))}">	
 															<td>
 																<button type="button" class="btn btn-primary mr-2" onclick="location.href='${path}/emp/insertBTP.do?btNo=${e.BTNO}&temp=newMonthBTP&empNo=${e.EMPNO}'">
 																	출장비신청

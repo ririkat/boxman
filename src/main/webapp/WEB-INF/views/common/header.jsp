@@ -180,10 +180,10 @@
       </li>   
 
 			<!-- 회계 관리 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
+			<li class="nav-item"><a class="nav-link collapsed" href="#" id="acctNav"
 				data-toggle="collapse" data-target="#collapseUtilities"
 				aria-expanded="true" aria-controls="collapseUtilities"> 
-				<i class="fas fa-calculator"></i> <span>회계 관리</span>
+				<i class="fas fa-calculator"></i>&nbsp;&nbsp;<span>회계 관리</span>
 			</a>
 				<div id="collapseUtilities" class="collapse"
 					aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -343,8 +343,6 @@
 					<!-- Topbar Navbar -->
 					<ul class="navbar-nav ml-auto">
 
-
-					
 						<!-- Video Chat -->
 						<li class="nav-item no-arrow mx-1"><a
 							class="nav-link" href="javascript:chatting();" id="messagesDropdown"
@@ -368,7 +366,7 @@
 									aria-expanded="false"> <span
 									class="mr-2 d-none d-lg-inline text-gray-600 small">${loginEmp.EMPNAME}</span>
 									<img class="img-profile rounded-circle"
-									src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+									src="${path}/resources/upload/emp/${loginEmp.EFRENAME}">
 								</a>
 								<!-- Dropdown - User Information -->
 								<div
@@ -377,12 +375,6 @@
 									<a href="${path}/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}" class="dropdown-item" href="#"> <i
 										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 										Profile
-									</a> <a class="dropdown-item" href="#"> <i
-										class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-										Settings
-									</a> <a class="dropdown-item" href="#"> <i
-										class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-										Activity Log
 									</a>
 									<div class="dropdown-divider"></div>
 									<a class="dropdown-item" href="#"
@@ -430,9 +422,50 @@
 			<form name="openMessageFrm" method="post">
 				<input type="hidden" id="userId" name="userId" value="${loginEmp['EMPNO']}">
 			</form>
-					
+			<input type="hidden" id="deptNo" name="deptNo" value="${loginEmp['DEPTNO']}">		
+			<input type="hidden" id="jobNo" name="jobNo" value="${loginEmp['JOBNO']}">
 <script>
 		var userId = $("#userId").val();
+		var deptNo1;
+		var deptNo2;
+		var jobNo = $('#jobNo').val().trim();
+		var deptNo = $('#deptNo').val().trim();
+		
+		$('#empNav').on("click",function(e){
+			deptNo1 = 100;
+			if(jobNo != 100 && jobNo != 101) {
+				if(deptNo!=deptNo1) {
+					alert("권한이 없습니다.");
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			}
+		});
+		$('#bizNav').on("click",function(e){
+			deptNo1 = 102;
+			deptNo2 = 103;
+			if(jobNo != 100 && jobNo != 101) {
+				if(deptNo!=deptNo1 && deptNo!=deptNo2) {
+					alert("권한이 없습니다.");
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			}
+		});
+		
+		$('#acctNav').on("click",function(e){
+			deptNo1 = 101;
+			if(jobNo != 100 && jobNo != 101) {
+				if(deptNo!=deptNo1) {
+					alert("권한이 없습니다.");
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			}
+		});
+		
+		
+		
 
 		//안읽은메세지수 출력
 		/* $(function(){

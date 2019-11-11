@@ -40,10 +40,7 @@ th {
 							<input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
 							<input type="hidden" name="empId" value="${loginEmp['EMPID'] }">
 						</label>
-						<button onclick = "searchSaleInfo();" class="btn btn-light btn-icon-split">
-	                   		<span class="icon text-gray-600">
-	                    		<i class="fas fa-arrow-right"></i>
-	                   		</span>
+						<button onclick = "searchSaleInfo();" class="btn btn-primary mr-2">
 	                   		<span class="text">검색</span>
                  		</button>
                     </div>
@@ -52,12 +49,9 @@ th {
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
                      <div style="float:right;">
-	                      <a href="${path }/sale/enrollSaleInfo.do" class="btn btn-light btn-icon-split">
-		                      <span class="icon text-gray-600">
-		                      	<i class="fas fa-arrow-right"></i>
-		                      </span>
-		                      <span class="text">판매정보 등록</span>
-	                  	  </a>
+                      <button type="button" onclick="location.href='${path}/sale/enrollSaleInfo.do'" class="btn btn-primary mr-2">
+					        판매정보 등록
+					    </button>
 	                 </div>
                   </div>
                  </div>

@@ -419,7 +419,7 @@
 	<!-- 출장비신청 -->
 	<insert id="insertBTP" parameterType="map">
 		INSERT INTO BUSINESSTRIPPAY VALUES(SEQ_BUSINESSTRIPPAY.NEXTVAL,
-		  #{btNo}, #{btpRoom}, #{btpTransportation}, #{btpEntertain}, DEFAULT, NULL, DEFAULT)
+		  #{btNo}, #{btpRoom}, #{btpTransportation}, #{btpEntertain}, DEFAULT, NULL, DEFAULT, DEFAULT)
 		  <selectKey keyProperty="btpNo" resultType="_int"
 			order="AFTER">
 			SELECT SEQ_BUSINESSTRIPPAY.CURRVAL FROM DUAL

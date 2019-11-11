@@ -39,10 +39,7 @@ th {
 		                     </select>
 		                     <input type="search" class="form-control form-control-sm" name="data" aria-controls="dataTable">
 						</label>
-                  		<button type="button" onclick = "searchConnection();" class="btn btn-light btn-icon-split">
-                            <span class="icon text-gray-600">
-                             <i class="fas fa-arrow-right"></i>
-                            </span>
+                  		<button type="button" onclick = "searchConnection();" class="btn btn-primary mr-2">
                             <span class="text">검색</span>
                        </button>
                     </div>
@@ -51,12 +48,9 @@ th {
                  <div class="col-sm-12 col-md-6">
                   <div id="dataTable_filter" class="dataTables_filter">
                      <div style="float:right;">
-                         <a href="${path }/connection/enrollConn.do" class="btn btn-light btn-icon-split">
-                            <span class="icon text-gray-600">
-                               <i class="fas fa-arrow-right"></i>
-                            </span>
-                            <span class="text">거래처등록</span>
-                          </a>
+                        <button type="button" onclick="location.href='${path}/connection/enrollConn.do'" class="btn btn-primary mr-2">
+						        거래처 등록
+						</button>
                     </div>
                   </div>
                  </div>
