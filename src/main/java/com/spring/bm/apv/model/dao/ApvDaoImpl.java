@@ -7,6 +7,8 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bm.calendar.model.vo.Calendar;
+
 @Repository
 public class ApvDaoImpl implements ApvDao {
 	/*결재양식*/
@@ -255,10 +257,19 @@ public class ApvDaoImpl implements ApvDao {
 	public int updateApvPermit(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.update("apv.updateApvPermit",param);
 	}
+	@Override
+	public int updateAddApv2(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateAddApv2",param);
+	}
 	//도장
 	@Override
 	public Map<String, Object> selectStamp(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("apv.selectStamp",param);
+	}
+	
+	@Override
+	public int apvSaveUpdate(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.apvSaveUpdate",param);
 	}
 	
 	/*결재하기 -> 반려하기*/
@@ -323,5 +334,11 @@ public class ApvDaoImpl implements ApvDao {
 	@Override
 	public int selectApvlSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.selectOne("apv.selectApvlSearchCount",param);
+	}
+	
+	/*메인출력용*/
+	@Override
+	public List<Map<String,Object>> selectApvList2(SqlSessionTemplate session, int empNo) {
+		return session.selectList("apv.selectApvList2",empNo);
 	}
 }

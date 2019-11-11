@@ -202,6 +202,10 @@
 	<select id="selectStamp" parameterType="map" resultType="map">
 		SELECT * FROM APVAPPLICANT JOIN EMPFILE USING(EMPNO) WHERE APVNO=#{apvNo} AND EMPNO=#{empNo} AND EFCNAME='결재도장'
 	</select>
+	<!-- 결재폼 업데이트  -->
+	<update id="apvSaveUpdate" parameterType="map">
+		UPDATE APPROVAL SET APVHCONTENT=#{headContent} WHERE APVNO=#{apvNo}
+	</update>
 	<!-- 결재하기 -> 반려처리 -->
 	<update id="apvAReturn" parameterType="map">
 		UPDATE APVAPPLICANT SET APVASTATUS='반려' WHERE EMPNO=#{empNo} AND APVNO=#{apvNo}
@@ -257,7 +261,9 @@
 	<update id="updateAddApv" parameterType="map">
 		UPDATE ${cateName} SET ${ckCol}='Y' WHERE ${pkey}=#{cateNo}
 	</update>
-	
+	<update id="updateAddApv2" parameterType="map">
+		UPDATE ${cateName} SET ${ckCol}='Y',${ckCol2}='Y', ${ckColDate}=SYSDATE, ${ckColDate2}=SYSDATE WHERE ${pkey}=#{cateNo}
+	</update>
 	
 	<!-- 검색 -->
 	<!-- 결재양식 검색 -->
@@ -273,6 +279,11 @@
 	</select>
 	<select id="selectApvlSearchCount" parameterType="map" resultType="_int">
 		SELECT COUNT(*) FROM APVLINE WHERE ${type} LIKE '%'||#{data}||'%'
+	</select>
+	
+	<!-- 메인화면 출력용 -->
+	<select id="selectApvList2" parameterType="_int" resultType="map">
+		SELECT * FROM APPROVAL A JOIN DOCCATE D ON A.DCNO=D.DCNO WHERE A.EMPNO=#{empNo} ORDER BY A.APVNO DESC
 	</select>
 	
 </mapper>

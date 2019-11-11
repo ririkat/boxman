@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bm.apv.model.dao.ApvDao;
+import com.spring.bm.calendar.model.vo.Calendar;
 
 @Service
 public class ApvServiceImpl implements ApvService {
@@ -374,7 +375,7 @@ public class ApvServiceImpl implements ApvService {
 		if(result==0) throw new Exception();
 		return result;
 	}
-	
+	//비니꺼 추가결재
 	@Override
 	public int apvAddPermit1(Map<String, Object> param) throws Exception {
 		int result=0;
@@ -399,6 +400,39 @@ public class ApvServiceImpl implements ApvService {
 		
 		return result;
 	}
+	//더기꺼 추가결재
+	@Override
+	public int apvAddPermit2(Map<String, Object> param) throws Exception {
+		int result=0;
+		//먼저, 해당 결재문서에 결재자들 총 인원을 불러옴
+		result=dao.selectApvACount(session,param);
+		int allCount=result;
+		//개인을 전결처리시킴
+		result=dao.apvPermit(session,param);
+		if(result==0) throw new Exception();
+		//총 인원과 현재 턴 번호가 일치하면 전체 종결상태가 되도록 ,
+		if(Integer.parseInt(String.valueOf(param.get("priorNo")))
+				==allCount) {
+			result=dao.updateApvPermitAll(session,param);
+			if(result==0) throw new Exception();
+			result=dao.updateAddApv2(session,param);
+			if(result==0) throw new Exception();
+		}else {
+			//아니라면 진행상태로 update 하고, currturn +1함.
+			result=dao.updateApvPermit(session,param);
+			if(result==0) throw new Exception();
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int apvSaveUpdate(Map<String, Object> param) throws Exception {
+		int result=0;
+		result=dao.apvSaveUpdate(session,param);
+		if(result==0) throw new Exception();
+		return result;
+	}
 	
 	/*결재양식 검색*/
 	@Override
@@ -418,6 +452,12 @@ public class ApvServiceImpl implements ApvService {
 	@Override
 	public int selectApvlSearchCount(Map<String, Object> param) {
 		return dao.selectApvlSearchCount(session,param);
+	}
+	
+	/*메인출력용*/
+	@Override
+	public List<Map<String, Object>> selectApvList2(int empNo) {
+		return dao.selectApvList2(session,empNo);
 	}
 
 }

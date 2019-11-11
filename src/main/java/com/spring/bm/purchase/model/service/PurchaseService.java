@@ -12,12 +12,13 @@ public interface PurchaseService {
 	
 	Map<String,String> addStuffToTemp(String stuffNo);
 	
-	int enrollPurInfo(Map<String,String> param) throws Exception;
+	int enrollPurInfo(Map<String, Object> param) throws Exception;
 	
 	List<Map<String,String>> selectPurSearchList(Map<String, Object> m);
 	int selectPurSearchCount(Map<String, Object> m);
 	
 	Map<String,String> selectPurInfo(int purCode);
 	List<Map<String,String>> selectPurItemList(int purCode);
+	Map<String, Object> selectPurOne(Map<String, Object> param);
 
 }

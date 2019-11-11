@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.bm.apv.model.service.ApvService;
 import com.spring.bm.calendar.model.service.CalendarService;
 import com.spring.bm.calendar.model.vo.Calendar;
 import com.spring.bm.employee.model.service.EmployeeService;
@@ -21,6 +21,8 @@ import com.spring.bm.notice.model.vo.Notice;
 @Controller
 public class CommonController {
 
+	@Autowired
+	ApvService apvService;
 	@Autowired
 	CalendarService calService;
 	@Autowired
@@ -35,6 +37,9 @@ public class CommonController {
 		int empNo = Integer.parseInt(String.valueOf(map.get("EMPNO")));
 
 		ModelAndView mv = new ModelAndView();
+		
+		//상신문서
+		List<Map<String, Object>> apvList = apvService.selectApvList2(empNo);
 
 		//내 일정 불러오는 목록(달력을 못넣을시 사용)
 		//사원번호로 일정 목록 조회
@@ -45,6 +50,7 @@ public class CommonController {
 
 		mv.addObject("noticeList", noticeList);
 		mv.addObject("calList", calList);
+		mv.addObject("apvList", apvList);
 		mv.setViewName("common/main");
 
 		return mv;

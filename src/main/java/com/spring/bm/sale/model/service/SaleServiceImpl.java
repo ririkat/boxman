@@ -36,7 +36,7 @@ public class SaleServiceImpl implements SaleService {
 	}
 
 	@Override
-	public int enrollSaleInfo(Map<String, String> param) throws Exception {
+	public int enrollSaleInfo(Map<String, Object> param) throws Exception {
 		int result = 0;
 		
 		result = dao.enrollSaleInfo(session,param);	//구매 정보 등록
@@ -44,9 +44,9 @@ public class SaleServiceImpl implements SaleService {
 
 		if(result!=0) {
 			Map<String,Object> paramMap = new HashMap<String,Object>();
-			List<Map<String,String>> stList = new ArrayList<Map<String,String>>();
-			for(int i=0; i<Integer.parseInt(param.get("cnt")); i++) {
-				Map<String,String> stMap = new HashMap<String,String>();
+			List<Map<String,Object>> stList = new ArrayList<Map<String,Object>>();
+			for(int i=0; i<Integer.parseInt(String.valueOf(param.get("cnt"))); i++) {
+				Map<String,Object> stMap = new HashMap<String,Object>();
 				stMap.put("stNo", param.get("stNo"+i));
 				stMap.put("stNum", param.get("stNum"+i));
 				stList.add(stMap);
@@ -78,5 +78,9 @@ public class SaleServiceImpl implements SaleService {
 		return dao.selectSaleItemList(session,salCode);
 	}
 
+	@Override
+	public Map<String, Object> selectSalOne(Map<String, Object> param) {
+		return dao.selectSalOne(session,param);
+	}
 	
 }

@@ -14,7 +14,7 @@ public interface PurchaseDao {
 
 	Map<String, String> addStuffToTemp(SqlSessionTemplate session, String stuffNo);
 	
-	int enrollPurInfo(SqlSessionTemplate session, Map<String, String> param);
+	int enrollPurInfo(SqlSessionTemplate session, Map<String, Object> param);
 	int enrollPurItem(SqlSessionTemplate session, Map<String,Object> paramMap);
 	
 	List<Map<String, String>> selectPurSearchList(SqlSessionTemplate session, Map<String, Object> m);
@@ -22,5 +22,6 @@ public interface PurchaseDao {
 	
 	Map<String, String> selectPurInfo(SqlSessionTemplate session, int purCode);
 	List<Map<String, String>> selectPurItemList(SqlSessionTemplate session, int purCode);
+	Map<String, Object> selectPurOne(SqlSessionTemplate session, Map<String, Object> param);
 	
 }

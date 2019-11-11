@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.spring.bm.calendar.model.vo.Calendar;
+
 public interface ApvDao {
 
 	int insertApvDoc(SqlSessionTemplate session, Map<String, Object> param);
@@ -126,5 +128,11 @@ public interface ApvDao {
 	int selectApvlSearchCount(SqlSessionTemplate session, Map<String, Object> param);
 
 	Map<String, Object> selectStamp(SqlSessionTemplate session,Map<String, Object> param);
+
+	int apvSaveUpdate(SqlSessionTemplate session, Map<String, Object> param);
+
+	int updateAddApv2(SqlSessionTemplate session, Map<String, Object> param);
+
+	List<Map<String, Object>> selectApvList2(SqlSessionTemplate session, int empNo);
 
 }

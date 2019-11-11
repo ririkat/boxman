@@ -34,7 +34,7 @@ public class ApvDocController {
 	/* 결재 양식 관리 리스트 뷰 호출 */
 	@RequestMapping("/apv/apvDoc.do")
 	public ModelAndView apvDoc(@RequestParam(value="cPage", 
-			required=false, defaultValue="0") int cPage) {
+			required=false, defaultValue="1") int cPage) {
 		int numPerPage = 10;
 		List<Map<String,Object>> list=service.selectDocForm(cPage,numPerPage);
 		int totalCount = service.selectDfCount();
@@ -79,7 +79,7 @@ public class ApvDocController {
 	/* 결재 양식 수정 팝업창 */
 	@RequestMapping("/apv/apvDocModify.do")
 	public ModelAndView apvDocModify(@RequestParam(value="dfNo", 
-			required=false, defaultValue="0") int dfNo) {
+			required=false, defaultValue="1") int dfNo) {
 		ModelAndView mv = new ModelAndView();
 		List<Map<String,Object>> docCate=service.selectDocCate();
 		Map<String,Object> dfOne=service.selectDfModi(dfNo);
@@ -107,7 +107,7 @@ public class ApvDocController {
 	/* 결재 양식 삭제 로직*/
 	@RequestMapping("/apv/apvDocDelete.do")
 	public ModelAndView apvDocDelete(@RequestParam(value="dfNo", 
-			required=false, defaultValue="0") int dfNo){
+			required=false, defaultValue="1") int dfNo){
 		ModelAndView mv = new ModelAndView();
 		
 		int result=0;
@@ -195,7 +195,7 @@ public class ApvDocController {
 	/* 기안하기 리스트 뷰 */
 	@RequestMapping("/apv/requestApv.do")
 	public ModelAndView requestApvMain(@RequestParam(value="cPage", 
-			required=false, defaultValue="0") int cPage) {
+			required=false, defaultValue="1") int cPage) {
 		int numPerPage = 10;
 		List<Map<String,Object>> list=service.selectDocForm(cPage,numPerPage);
 		int totalCount = service.selectDfCount();
@@ -211,7 +211,7 @@ public class ApvDocController {
 	/* 기안 등록 뷰 */
 	@RequestMapping("/apv/requestApvEnroll.do")
 	public ModelAndView requestApvEnroll(@RequestParam(value="dfNo", 
-			required=false, defaultValue="0") int dfNo,HttpSession session) {
+			required=false, defaultValue="1") int dfNo,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		/* List<Map<String,Object>> docCate=service.selectDocCate(); */
 		Map<String,Object> dfOne=service.selectDfModi(dfNo);
@@ -258,29 +258,29 @@ public class ApvDocController {
 			String form=((String)dfOne.get("DFHEADFORM")).replace("{{text_box_1}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("<p>&nbsp;{{approval_line_html}}</p>")>-1) {
+		if(head.indexOf("{{approval_line_html}}")>-1) {
 			String content="<table id=\"approval_line_html\" border=\"1px;\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" valign=\"middle\" width=\"100%\" height=\"100%\"><tr><td id=\"prior1\">1</td><td id=\"prior2\"></td><td id=\"prior3\"></td><td id=\"prior4\"></td><td id=\"prior5\"></td></tr><tr height=\"100px;\"><td id=\"stamp1\"></td><td id=\"stamp2\"></td><td id=\"stamp3\"></td><td id=\"stamp4\"></td><td id=\"stamp5\"></td></tr></table>";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{approval_line_html}}</p>", content);
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{approval_line_html}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("<p>&nbsp;{{request_name}}</p>")>-1) {
+		if(head.indexOf("{{request_name}}")>-1) {
 			String content="<p id=\"requestName\">시행자명</p>";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{request_name}}</p>", content);
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{request_name}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("<p>&nbsp;{{app_sdate}}</p>")>-1) {
+		if(head.indexOf("{{app_sdate}}")>-1) {
 			String content="<input type='date' id=\"sDate\" />";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_sdate}}</p>", content);
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{app_sdate}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("<p>&nbsp;{{app_edate}}</p>")>-1) {
+		if(head.indexOf("{{app_edate}}")>-1) {
 			String content="<input type='date' id=\"eDate\" />";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_edate}}</p>", content);
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{app_edate}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
-		if(head.indexOf("<p>&nbsp;{{pay}}</p>")>-1) {
+		if(head.indexOf("{{pay}}")>-1) {
 			String content="<input type='number' id=\"pay\" />";
-			String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{pay}}</p>", content);
+			String form=((String)dfOne.get("DFHEADFORM")).replace("{{pay}}", content);
 			dfOne.put("DFHEADFORM", form);
 		}
 		 
@@ -314,7 +314,7 @@ public class ApvDocController {
 		int totalCount = service.selectSendApvCount(loginNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/sendApv.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage,  path+"/apv/sendApv.do", loginNo));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/sendApv");
@@ -343,7 +343,7 @@ public class ApvDocController {
 		int totalCount = service.selectReceiveApvCount(loginNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/receiveApvList.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/receiveApvList.do", loginNo));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/receiveApvList");
@@ -361,7 +361,7 @@ public class ApvDocController {
 		int totalCount = service.selectEnforceApvCount(loginNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/enforceApvList.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/enforceApvList.do", loginNo));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/enforceApvList");
@@ -378,7 +378,7 @@ public class ApvDocController {
 		int totalCount = service.selectReferApvCount(loginNo);
 		
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/referApvList.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/referApvList.do", loginNo));
 		mv.addObject("count", totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("apv/referApvList");
@@ -571,6 +571,9 @@ public class ApvDocController {
 	String sDate="";
 	String eDate="";
 	int cateNo=0;
+	String ckCol2="";
+	String ckColDate="";
+	String ckColDate2="";
 	switch(cate) {
 	case "businessTripPay":
 		cateNo=Integer.parseInt(String.valueOf(param.get("BTPNO")));
@@ -578,6 +581,39 @@ public class ApvDocController {
 		totalPay=Integer.parseInt(String.valueOf(param.get("BTPROOM")))+Integer.parseInt(String.valueOf(param.get("BTPTRANSPORTATION")))+Integer.parseInt(String.valueOf(param.get("BTPENTERTAIN")));
 		sDate=String.valueOf(param.get("BTSTART"));
 		eDate=String.valueOf(param.get("BTEND"));
+		break;
+	case "upAttendance":
+		cateNo=Integer.parseInt(String.valueOf(param.get("UANO")));
+		dfNo=121;
+		sDate=String.valueOf(param.get("UADATE"));
+		break;
+	case "dayoff":
+		cateNo=Integer.parseInt(String.valueOf(param.get("DONO")));
+		dfNo=122;
+		sDate=String.valueOf(param.get("DOSTART"));
+		eDate=String.valueOf(param.get("DOEND"));
+		break;
+	case "businessTrip":
+		cateNo=Integer.parseInt(String.valueOf(param.get("BTNO")));
+		dfNo=120;
+		sDate=String.valueOf(param.get("BTSTART"));
+		eDate=String.valueOf(param.get("BTEND"));
+		break;
+	case "purchaseTab":
+		cateNo=Integer.parseInt(String.valueOf(param.get("PURCODE")));
+		dfNo=123;//여기 수정
+		totalPay=Integer.parseInt(String.valueOf(param.get("PURTOTAMT")));
+		ckCol2=String.valueOf(param.get("checkCol2")).trim();
+		ckColDate=String.valueOf(param.get("checkColDate")).trim();
+		ckColDate2=String.valueOf(param.get("checkColDate2")).trim();
+		break;
+	case "saleTab":
+		cateNo=Integer.parseInt(String.valueOf(param.get("SALCODE")));
+		dfNo=124;//여기 수정
+		totalPay=Integer.parseInt(String.valueOf(param.get("SALTOTAMT")));
+		ckCol2=String.valueOf(param.get("checkCol2")).trim();
+		ckColDate=String.valueOf(param.get("checkColDate")).trim();
+		ckColDate2=String.valueOf(param.get("checkColDate2")).trim();
 		break;
 	}
 	
@@ -605,6 +641,21 @@ public class ApvDocController {
 	if(head.indexOf("{{ckCol}}")>-1) {
 		String content="<input type='hidden' id=\"ckCol\" value='"+ckCol+"' />";
 		String form=((String)dfOne.get("DFHEADFORM")).replace("{{ckCol}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{ckCol2}}")>-1) {
+		String content="<input type='hidden' id=\"ckCol2\" value='"+ckCol2+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{ckCol2}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{ckColDate}}")>-1) {
+		String content="<input type='hidden' id=\"ckColDate\" value='"+ckColDate+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{ckColDate}}", content);
+		dfOne.put("DFHEADFORM", form);
+	}
+	if(head.indexOf("{{ckColDate2}}")>-1) {
+		String content="<input type='hidden' id=\"ckColDate2\" value='"+ckColDate2+"' />";
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{ckColDate2}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
 	if(head.indexOf("{{cateName}}")>-1) {
@@ -647,29 +698,29 @@ public class ApvDocController {
 		String form=((String)dfOne.get("DFHEADFORM")).replace("{{text_box_1}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
-	if(head.indexOf("<p>&nbsp;{{approval_line_html}}</p>")>-1) {
+	if(head.indexOf("{{approval_line_html}}")>-1) {
 		String content="<table id=\"approval_line_html\" border=\"1px;\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\" valign=\"middle\" width=\"100%\" height=\"100%\"><tr><td id=\"prior1\">1</td><td id=\"prior2\"></td><td id=\"prior3\"></td><td id=\"prior4\"></td><td id=\"prior5\"></td></tr><tr height=\"100px;\"><td id=\"stamp1\"></td><td id=\"stamp2\"></td><td id=\"stamp3\"></td><td id=\"stamp4\"></td><td id=\"stamp5\"></td></tr></table>";
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{approval_line_html}}</p>", content);
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{approval_line_html}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
-	if(head.indexOf("<p>&nbsp;{{request_name}}</p>")>-1) {
+	if(head.indexOf("{{request_name}}")>-1) {
 		String content="<p id=\"requestName\">시행자명</p>";
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{request_name}}</p>", content);
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{request_name}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
-	if(head.indexOf("<p>&nbsp;{{app_sdate}}</p>")>-1) {
+	if(head.indexOf("{{app_sdate}}")>-1) {
 		String content="<p id=\"sDate\" >"+sDate+"</p>";
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_sdate}}</p>", content);
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{app_sdate}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
-	if(head.indexOf("<p>&nbsp;{{app_edate}}</p>")>-1) {
+	if(head.indexOf("{{app_edate}}")>-1) {
 		String content="<p id=\"eDate\" >"+eDate+"</p>";
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{app_edate}}</p>", content);
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{app_edate}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
-	if(head.indexOf("<p>&nbsp;{{pay}}</p>")>-1) {
+	if(head.indexOf("{{pay}}")>-1) {
 		String content="<p id=\"pay\" >"+totalPay+"</p>";
-		String form=((String)dfOne.get("DFHEADFORM")).replace("<p>&nbsp;{{pay}}</p>", content);
+		String form=((String)dfOne.get("DFHEADFORM")).replace("{{pay}}", content);
 		dfOne.put("DFHEADFORM", form);
 	}
 	
@@ -695,7 +746,11 @@ public class ApvDocController {
 		  int result=0;
 		  String msg="";
 		  try {
-		  result=service.apvAddPermit1(m); 
+			  if(String.valueOf(m.get("cateName")).equals("purchaseTab") || String.valueOf(m.get("cateName")).equals("saleTab")) {
+				  result=service.apvAddPermit2(m);
+			  }else {
+				  result=service.apvAddPermit1(m);
+			  }
 		  }
 		  catch (Exception e) { 
 			 e.printStackTrace(); 
@@ -711,6 +766,20 @@ public class ApvDocController {
 				map.put("msg", msg);
 			}
 			return map;
+	}
+	@RequestMapping(value="/apv/apvSaveUpdate.do",method=RequestMethod.POST)
+	@ResponseBody
+	public int apvSaveUpdate(@RequestParam Map<String,Object> param) {
+		  
+		  int result=0;
+		  try {
+		  result=service.apvSaveUpdate(param); 
+		  }
+		  catch (Exception e) { 
+			 e.printStackTrace(); 
+		  }
+			
+		return result;
 	}
 	
 	/*결재양식 검색*/
@@ -742,4 +811,6 @@ public class ApvDocController {
 	      mv.setViewName("apv/requestApvMain");
 	      return mv;
 	   }
+	 
+	 
 }

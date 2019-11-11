@@ -12,7 +12,7 @@ public interface SaleDao {
 	
 	List<Map<String, String>> selectConnList(SqlSessionTemplate session);
 
-	int enrollSaleInfo(SqlSessionTemplate session, Map<String, String> param);
+	int enrollSaleInfo(SqlSessionTemplate session, Map<String, Object> param);
 	int enrollSaleItem(SqlSessionTemplate session, Map<String,Object> paramMap);
 	
 	List<Map<String, String>> selectSaleSearchList(SqlSessionTemplate session, Map<String, Object> m);
@@ -20,5 +20,6 @@ public interface SaleDao {
 	
 	Map<String, String> selectSaleInfo(SqlSessionTemplate session, int salCode);
 	List<Map<String, String>> selectSaleItemList(SqlSessionTemplate session, int salCode);
+	Map<String, Object> selectSalOne(SqlSessionTemplate session, Map<String, Object> param);
 
 }

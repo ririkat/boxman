@@ -23,6 +23,10 @@
 	</select>
 	
 	<insert id="enrollPurInfo" parameterType="map">
+		<selectKey keyProperty="purCode" resultType="string"
+			order="AFTER">
+			SELECT SEQ_purchase.CURRVAL FROM DUAL
+		</selectKey>
 		INSERT INTO purchaseTab
 		VALUES (seq_purchase.NEXTVAL, SYSDATE, (SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매입'),
 				#{chargeNo}, #{purTotAmt}, default, null, default, null)
@@ -109,6 +113,10 @@
 		WHERE A.STUFFNO=B.STUFFNO(+)
 		AND B.SCNO=C.SCNO(+)
 		AND PURCODE=#{purCode}
+	</select>
+	
+	<select id="selectPurOne" parameterType="map" resultType="map">
+		SELECT * FROM purchaseTab WHERE PURCODE=#{purCode}
 	</select>
 	
 </mapper>
