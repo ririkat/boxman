@@ -25,7 +25,7 @@ public class ChatController {
 	
 	//모든사원리스트
 	@RequestMapping("/chat/chatList.do")
-	public ModelAndView ChatList() {
+	public ModelAndView ChatList(@RequestParam Map<String, String> param) {
 		
 		ModelAndView mv = new ModelAndView();
 	    List<Map<String,String>> list = service.selectChatList();

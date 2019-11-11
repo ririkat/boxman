@@ -36,4 +36,6 @@ public interface ChatDao {
 
 	int updateReadCount(SqlSessionTemplate sqlSession, Map<String, Object> m);
 
+	List<Map<String, String>> selectReadCount(SqlSessionTemplate sqlSession, Map<String, String> param);
+
 }

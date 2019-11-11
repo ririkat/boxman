@@ -74,5 +74,10 @@ public class ChatDaoImpl implements ChatDao {
 	public int updateReadCount(SqlSessionTemplate sqlSession, Map<String, Object> m) {
 		return sqlSession.update("chat.updateReadCount",m);
 	}
+
+	@Override
+	public List<Map<String, String>> selectReadCount(SqlSessionTemplate sqlSession, Map<String,String> param ) {
+		return sqlSession.selectList("chat.selectReadCount", param);
+	}
 	
 }

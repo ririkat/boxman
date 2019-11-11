@@ -34,4 +34,6 @@ public interface ChatService {
 	int noReadCount(int userId);
 	//readcount +1 (메세지읽음처리)
 	int updateReadCount(Map<String, Object> m);
+	//안읽은채팅 아이콘 보여주기
+	List<Map<String, String>> selectReadCount(Map<String, String> param);
 }

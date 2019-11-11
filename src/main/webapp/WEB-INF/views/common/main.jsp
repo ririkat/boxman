@@ -14,16 +14,28 @@
     width : 48%;
     float : left;
     margin : 15px;
+    height : 380px;
 }
 
 #notice {
     width : 48%;
     float : left;
     margin : 15px;
+   height: 380px;
 }
 
 #memo {
-   margin :20px;
+   width : 48%;
+    float : left;
+    margin : 15px;
+   height: 380px;
+}
+
+#approval {
+   width : 48%;
+    float : left;
+    margin : 15px;
+   height: 380px;
 }
 </style>
 
@@ -37,15 +49,27 @@
      </div>
      
      <div class="card-body">
-       <textarea class="form-control" id="note" rows="3"><c:out value="${cookie.note.value}"></c:out></textarea>
+       <textarea class="form-control" id="note" rows="11" style = "resize: none"><c:out value="${cookie.note.value}"></c:out></textarea>
      </div>
      
    </div>
    
+   <!-- 결제 -->
+   <div class="card shadow mb-4" id = "approval">
+   
+     <div class="card-header py-3">
+       <h6 class="m-0 font-weight-bold text-primary">결재<a style = "float: right;" href = ""><strong>+더보기</strong></a></h6>
+     </div>
+     
+
+     
+   </div>
+   
+   <!-- 일정 -->
    <div class="card shadow mb-4" id = "calendar">
    
      <div class="card-header py-3">
-       <h6 class="m-0 font-weight-bold text-primary">최근 내 일정</h6>
+       <h6 class="m-0 font-weight-bold text-primary">최근 내 일정 <a style = "float: right;" href = "${pageContext.request.contextPath }/calendar/allView.do?temp=${loginEmp['EMPNO'] }"><strong>+더보기</strong></a></h6>
      </div>
      
      <div class="card-body">
@@ -59,6 +83,7 @@
                   </tr>
                        </thead>
                        <tbody>
+                       <c:if test = '${fn:length(calList) > 0 }'>
                           <c:forEach items="${calList}" var="cal" varStatus = "v" begin="0" end = "4">
                         <tr>
                             <td>${v.count}</td> 
@@ -67,15 +92,23 @@
                            <td>${cal.end}</td>                                
                         </tr>
                      </c:forEach>
+                     </c:if>
+                     <c:if test = '${fn:length(calList) == 0 }'>
+                        <tr>
+                           <td colspan="4" style="text-align: center">최근 일정이 없습니다.</td>
+                        </tr>
+                     </c:if>
                        </tbody>
                      </table>
      </div>
      
    </div>
    
-         <div class="card shadow mb-4" id="notice">
+   
+   <!-- 공지사항 -->
+   <div class="card shadow mb-4" id="notice">
      <div class="card-header py-3">
-       <h6 class="m-0 font-weight-bold text-primary">공지사항</h6>
+       <h6 class="m-0 font-weight-bold text-primary">공지사항 <a style = "float: right;" href = "${pageContext.request.contextPath }/notice/selectNoticeList.do"><strong>+더보기</strong></a></h6>
      </div>
      <div class="card-body">
    <table class="table table-striped table-hover" id="dataTable" width="50%" cellspacing="0" role="grid" aria-describedby="dataTable_info">
