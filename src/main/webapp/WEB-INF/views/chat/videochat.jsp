@@ -85,7 +85,8 @@
 			$("#open_call_state").show();
 		}
 		//메세지를 주고받게 해주는 서버등록(websocket)
-		signaling_server=new WebSocket("wss://192.168.220.75:7777/bm//videochat");
+		//signaling_server=new WebSocket("wss://192.168.220.75:7777/bm/videochat");
+		signaling_server=new WebSocket("wss://rclass.iptime.org/19AM_boxman_final/videochat");
 		
 		//시그널링 서버설정  *onmessage함수를 등록
 		signaling_server.onopen=function(){

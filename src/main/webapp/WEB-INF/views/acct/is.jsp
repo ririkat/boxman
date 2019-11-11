@@ -220,7 +220,6 @@
 					$("#netincome").html("₩"+netincome);
 				}
 				
-				
 				$("#rent").html("(₩"+rent+")");
 				$("#saltax").html("(₩"+saltax+")");
 				$("#insurance").html("(₩"+insurance+")");

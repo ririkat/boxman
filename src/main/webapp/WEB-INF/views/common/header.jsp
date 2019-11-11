@@ -459,6 +459,6 @@
 			}
 			
 			function chatting(){
-	    		open("${pageContext.request.contextPath}/viewChatting.do","_blank","width=600 height=400");
+	    		open("${pageContext.request.contextPath}/viewChatting.do","_blank","width=1200 height=800");
 	    	}
 </script>

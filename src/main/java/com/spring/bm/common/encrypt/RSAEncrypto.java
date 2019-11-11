@@ -27,14 +27,15 @@ public class RSAEncrypto implements MyEncrypt{
 	private PrivateKey privateKey;
 
 	public RSAEncrypto() {
+		
 		String path = this.getClass().getResource("/").getPath();
 		/* 서버용 */
-//		path = path.substring(0,path.lastIndexOf("/classes"));
-//		File f = new File(path + "/keys.hb");
+		path = path.substring(0,path.lastIndexOf("/classes"));
+		File f = new File(path + "/keys.hb");
 		
 		/* 로컬용 */
-		path = path.substring(0,path.lastIndexOf("/target"));
-		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
+//		path = path.substring(0,path.lastIndexOf("/target"));
+//		File f = new File(path + "/src/main/webapp/WEB-INF/keys.hb");
 		
 		
 		if(f.exists()) {
