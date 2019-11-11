@@ -579,6 +579,11 @@ public class ApvDocController {
 		sDate=String.valueOf(param.get("BTSTART"));
 		eDate=String.valueOf(param.get("BTEND"));
 		break;
+	case "purchaseTab":
+		cateNo=Integer.parseInt(String.valueOf(param.get("purCode")));
+		dfNo=0;//여기 수정
+		totalPay=Integer.parseInt(String.valueOf(param.get("PURTOTAMT")));
+		break;
 	}
 	
 	
@@ -712,6 +717,20 @@ public class ApvDocController {
 			}
 			return map;
 	}
+	@RequestMapping(value="/apv/apvSaveUpdate.do",method=RequestMethod.POST)
+	@ResponseBody
+	public int apvSaveUpdate(@RequestParam Map<String,Object> param) {
+		  
+		  int result=0;
+		  try {
+		  result=service.apvSaveUpdate(param); 
+		  }
+		  catch (Exception e) { 
+			 e.printStackTrace(); 
+		  }
+			
+		return result;
+	}
 	
 	/*결재양식 검색*/
 	 @RequestMapping("/apv/searchDocForm.do")
@@ -742,4 +761,6 @@ public class ApvDocController {
 	      mv.setViewName("apv/requestApvMain");
 	      return mv;
 	   }
+	 
+	 
 }

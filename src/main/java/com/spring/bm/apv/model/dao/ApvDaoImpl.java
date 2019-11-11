@@ -261,6 +261,11 @@ public class ApvDaoImpl implements ApvDao {
 		return session.selectOne("apv.selectStamp",param);
 	}
 	
+	@Override
+	public int apvSaveUpdate(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.apvSaveUpdate",param);
+	}
+	
 	/*결재하기 -> 반려하기*/
 	@Override
 	public int apvAReturn(SqlSessionTemplate session, Map<String, Object> param) {

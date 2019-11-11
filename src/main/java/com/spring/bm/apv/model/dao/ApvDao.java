@@ -127,4 +127,6 @@ public interface ApvDao {
 
 	Map<String, Object> selectStamp(SqlSessionTemplate session,Map<String, Object> param);
 
+	int apvSaveUpdate(SqlSessionTemplate session, Map<String, Object> param);
+
 }

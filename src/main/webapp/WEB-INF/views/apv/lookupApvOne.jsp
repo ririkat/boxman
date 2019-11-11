@@ -169,6 +169,7 @@
 								var prior=result["APVAPRIOR"];
 								console.log("stamp"+prior);
 								$('#stamp'+prior).html(imgTag);
+								saveUpdate(apvNo);
 							}
 						});
 						
@@ -189,11 +190,31 @@
 							var prior=result["APVAPRIOR"];
 							console.log("stamp"+prior);
 							$('#stamp'+prior).html(imgTag);
+							saveUpdate(apvNo);
 						}
 					});
 				}
       		}
 		}
+		
+		function saveUpdate(apvNo){
+			var headContent=$("#id01").html();
+			$.ajax({
+				url:"${path}/apv/apvSaveUpdate.do",
+				type : "post",
+				data : {"apvNo":apvNo,"headContent":headContent},
+				contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(data) {
+					if(data>0){
+						alert("저장완료");
+					}else{
+						alert("저장실패");
+					}
+				}
+			});
+			
+		}
+		
 		function apvReturn(apvNo,empNo){
 			var moreInfo = prompt("반려사유를 입력하세요","");
 			location.href="${path}/apv/apvReturn.do?apvNo="+apvNo+"&empNo="+empNo+"&moreInfo="+moreInfo;

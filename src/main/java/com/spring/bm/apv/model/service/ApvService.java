@@ -103,5 +103,7 @@ public interface ApvService {
 
 	Map<String, Object> selectStamp(Map<String, Object> param);
 
+	int apvSaveUpdate(Map<String, Object> param) throws Exception;;
+
 
 }

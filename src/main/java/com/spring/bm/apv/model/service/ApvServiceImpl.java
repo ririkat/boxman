@@ -400,6 +400,14 @@ public class ApvServiceImpl implements ApvService {
 		return result;
 	}
 	
+	@Override
+	public int apvSaveUpdate(Map<String, Object> param) throws Exception {
+		int result=0;
+		result=dao.apvSaveUpdate(session,param);
+		if(result==0) throw new Exception();
+		return result;
+	}
+	
 	/*결재양식 검색*/
 	@Override
 	public List<Map<String, String>> selectDfSearchList(int cPage, int numPerPage, Map<String, Object> param) {
