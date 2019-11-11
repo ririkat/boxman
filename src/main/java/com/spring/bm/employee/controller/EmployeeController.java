@@ -775,7 +775,7 @@ public class EmployeeController {
 				param.put("btpNo", result);
 				map = service.selectBTPOne(result);
 				map.put("temp", "businessTripPay");
-				map.put("checkCol", "btpCheck");
+				map.put("checkCol", "btpYN");
 				map.put("pkey", "btpNo");
 				redirect.addAllAttributes(map);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";

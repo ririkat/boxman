@@ -79,6 +79,7 @@
 											<th>교통(유류)비</th>
 											<th>접대비</th>
 											<th>승인여부</th>
+											<th>지급여부</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -93,6 +94,7 @@
 													<td><fmt:formatNumber value='${el["BTPROOM"] }' pattern="###,###,###"/></td>
 													<td><fmt:formatNumber value='${el["BTPTRANSPORTATION"] }' pattern="###,###,###"/></td>
 													<td><fmt:formatNumber value='${el["BTPENTERTAIN"] }' pattern="###,###,###"/></td>
+													<td><c:out value="${el['BTPYN'] }"/></td>
 													<td><c:out value="${el['BTPCHECK'] }"/></td>
 												</tr>
 											</c:if>

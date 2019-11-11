@@ -152,13 +152,6 @@ public class AcctController {
 /* BusinessTrip End */
 	
 	
-	
-	
-	
-	
-	
-	
-	
 /* Severance Start */	
 	/* severance list */
 	@RequestMapping("/acct/severance.do")
@@ -178,12 +171,7 @@ public class AcctController {
 	public ModelAndView severanceSearch(@RequestParam(value="cPage", required=false, defaultValue="1") int cPage, @RequestParam Map<String, Object> param) {
 		int numPerPage = 5;
 		List <Map<String, String>>list = service.selectSevSearchList(cPage, numPerPage, param);
-		System.out.println("////////");
-		System.out.println(list);
 		int totalCount = service.sevSearchCount(param);
-		System.out.println(totalCount);
-		System.out.println(totalCount);
-		System.out.println("////////");
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/acct/severanceSearch.do",""+param.get("type"), ""+param.get("data")));
 		mv.addObject("count", totalCount);
@@ -213,7 +201,7 @@ public class AcctController {
 			if(result > 0) {
 				m = service.selectSevOne(empno);
 				m.put("temp", "severance");
-				m.put("checkCol", "sevCheck");
+				m.put("checkCol", "sevYN");
 				m.put("pkey", "sevNo");
 				redirect.addAllAttributes(m);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";
@@ -227,13 +215,6 @@ public class AcctController {
 		} catch (RuntimeException e) {
 			msg="문제가 발생했습니다";
 		}
-		
-//		
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("msg", msg);
-//		mv.addObject("loc", loc);
-//		mv.setViewName("common/msg");
-//		return mv;
 		return loc1;
 		
 	}

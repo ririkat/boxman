@@ -81,7 +81,6 @@
 			$('textarea#note').keyup(function(){
 				var note = $('textarea#note').val();
 				note=note.replace(/\s/g,"_");
-				 console.log(note);
 				$.ajax({
 					url: "${path}/note/saveCache.do",
 					data: {"note": note},
@@ -94,7 +93,6 @@
 			    $(window).bind("beforeunload", function() { 
 			    	var note = $('textarea#note').val();
 					note=note.replace(/\s/g,"_");
-					console.log(note);
 					$.ajax({
 						url: "${path}/note/saveNote.do?empNo=${loginEmp.EMPNO}",
 						data: {"note": note},
