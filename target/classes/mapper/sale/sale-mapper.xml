@@ -19,6 +19,10 @@
 	</select>
 
 	<insert id="enrollSaleInfo" parameterType="map">
+		<selectKey keyProperty="salCode" resultType="string"
+			order="AFTER">
+			SELECT SEQ_sale.CURRVAL FROM DUAL
+		</selectKey>
 		INSERT INTO saleTab
 		VALUES (seq_sale.NEXTVAL, SYSDATE, (SELECT CONCODE FROM CONNECTION WHERE CONNAME=#{conName} AND CONCATEG='매출'),
 				#{chargeNo}, #{saleSuperTax}, #{salTranType}, #{salTotAmt}, default, null, default, null)
@@ -89,5 +93,8 @@
 		AND SALCODE=#{saleCode}
 	</select>
 	
+	<select id="selectSalOne" parameterType="map" resultType="map">
+		SELECT * FROM SALETAB WHERE SALCODE=#{salCode}
+	</select>
 
 </mapper>

@@ -372,7 +372,7 @@
 								<div
 									class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
 									aria-labelledby="userDropdown">
-									<a href="${path}/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}" class="dropdown-item" href="#"> <i
+									<a href="${path}/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}&temp=my" class="dropdown-item"> <i
 										class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
 										Profile
 									</a>

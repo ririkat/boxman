@@ -32,7 +32,7 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	}
 
 	@Override
-	public int enrollPurInfo(SqlSessionTemplate session, Map<String, String> param) {
+	public int enrollPurInfo(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.insert("purchase.enrollPurInfo", param);
 	}
 
@@ -62,6 +62,11 @@ public class PurchaseDaoImpl implements PurchaseDao {
 	@Override
 	public List<Map<String, String>> selectPurItemList(SqlSessionTemplate session, int purCode) {
 		return session.selectList("purchase.selectPurItemList", purCode);
+	}
+	
+	@Override
+	public Map<String, Object> selectPurOne(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("purchase.selectPurOne", param);
 	}
 
 }

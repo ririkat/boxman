@@ -155,7 +155,7 @@ public class ApvLineController {
 	
 	/*결재라인 검색*/
 	 @RequestMapping("/apv/searchApvLine.do")
-	   public ModelAndView searchDocFormReq(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
+	   public ModelAndView searchDocFormReq(@RequestParam(value="cPage",required=false, defaultValue="1") int cPage,
 	         @RequestParam Map<String, Object> param) {
 
 	      int numPerPage = 10;

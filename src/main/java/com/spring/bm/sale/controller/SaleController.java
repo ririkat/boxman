@@ -6,10 +6,11 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.spring.bm.common.PageBarFactory;
 import com.spring.bm.common.PageUrlFactory;
@@ -48,7 +49,7 @@ public class SaleController {
 		return mv;
 	}
 	
-	@RequestMapping("/sale/enrollSaleInfoEnd.do")
+	/*@RequestMapping("/sale/enrollSaleInfoEnd.do")
 	public ModelAndView enrollSaleInfoEnd(@RequestParam Map<String,String> param) {
 		int result = 0;
 		try {
@@ -71,6 +72,40 @@ public class SaleController {
 		
 		mv.setViewName("common/msg");
 		return mv;
+	}*/
+	
+	@RequestMapping("/sale/enrollSaleInfoEnd.do")
+	public String enrollSaleInfoEnd(@RequestParam Map<String,Object> param, RedirectAttributes redirect, Model model) {
+		int result = 0;
+		Map<String, Object> map = new HashMap();
+		String loc = "";
+		String loc1 = "";
+		String msg = "";
+		try {
+			result = service.enrollSaleInfo(param);
+			if(result > 0) {
+				param.put("salCode", result);
+				map = service.selectSalOne(param);
+				map.put("temp", "saleTab");
+				map.put("checkCol", "salck");
+				map.put("pkey", "salCode");
+				map.put("checkCol2", "remitck");
+				map.put("checkColDate", "saldate");
+				map.put("checkColDate2", "remitdate");
+				redirect.addAllAttributes(map);
+				loc1 = "redirect:/apv/addReqApvEnroll.do";
+			} else {
+				msg = "판매정보 등록 실패";
+				loc= "/sale/saleList.do";
+				model.addAttribute("msg", msg);
+				model.addAttribute("loc", loc);
+				loc1 = "common/msg";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return loc1;
 	}
 	
 	@RequestMapping("/sale/searchSaleInfo.do")

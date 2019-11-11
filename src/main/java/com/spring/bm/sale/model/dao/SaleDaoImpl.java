@@ -27,7 +27,7 @@ public class SaleDaoImpl implements SaleDao {
 	}
 
 	@Override
-	public int enrollSaleInfo(SqlSessionTemplate session, Map<String, String> param) {
+	public int enrollSaleInfo(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.insert("sale.enrollSaleInfo", param);
 	}
 
@@ -57,6 +57,11 @@ public class SaleDaoImpl implements SaleDao {
 	@Override
 	public List<Map<String, String>> selectSaleItemList(SqlSessionTemplate session, int salCode) {
 		return session.selectList("sale.selectSaleItemList", salCode);
+	}
+	
+	@Override
+	public Map<String, Object> selectSalOne(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("sale.selectSalOne", param);
 	}
 
 }

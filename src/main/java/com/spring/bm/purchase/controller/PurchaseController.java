@@ -107,6 +107,9 @@ public class PurchaseController {
 				map.put("temp", "purchaseTab");
 				map.put("checkCol", "purck");
 				map.put("pkey", "purCode");
+				map.put("checkCol2", "deposck");
+				map.put("checkColDate", "purdate");
+				map.put("checkColDate2", "deposdate");
 				redirect.addAllAttributes(map);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";
 			} else {

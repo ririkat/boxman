@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.bm.apv.model.dao.ApvDao;
+import com.spring.bm.calendar.model.vo.Calendar;
 
 
 public interface ApvService {
@@ -103,7 +104,11 @@ public interface ApvService {
 
 	Map<String, Object> selectStamp(Map<String, Object> param);
 
-	int apvSaveUpdate(Map<String, Object> param) throws Exception;;
+	int apvSaveUpdate(Map<String, Object> param) throws Exception;
+
+	int apvAddPermit2(Map<String, Object> param) throws Exception;
+
+	List<Map<String, Object>> selectApvList2(int empNo);
 
 
 }

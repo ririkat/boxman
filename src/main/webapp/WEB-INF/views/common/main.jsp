@@ -58,10 +58,38 @@
    <div class="card shadow mb-4" id = "approval">
    
      <div class="card-header py-3">
-       <h6 class="m-0 font-weight-bold text-primary">결재<a style = "float: right;" href = ""><strong>+더보기</strong></a></h6>
+       <h6 class="m-0 font-weight-bold text-primary">최근 상신 문서<a style = "float: right;" href = "${pageContext.request.contextPath }/apv/sendApv.do?loginNo=${loginEmp['EMPNO'] }"><strong>+더보기</strong></a></h6>
      </div>
      
-
+     <div class="card-body">
+       <table class="table table-striped table-hover tablesorter" id="apvTable" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                       <thead>
+                  <tr>
+                     <th scope="col">No</th>
+                     <th scope="col">분류</th>
+                     <th scope="col">문서명</th>
+                     <th scope="col">결재상태</th>            
+                  </tr>
+                       </thead>
+                       <tbody>
+                       <c:if test = '${fn:length(apvList) > 0 }'>
+                          <c:forEach items="${apvList}" var="apv" varStatus = "v" begin="0" end = "4">
+                        <tr>
+                            <td>${v.count}</td> 
+                           <td>${apv["DCTITLE"]}</td>
+                           <td>${apv["APVTITLE"]}</td>
+                           <td>${apv["APVSTATUS"]}</td>                                
+                        </tr>
+                     </c:forEach>
+                     </c:if>
+                     <c:if test = '${fn:length(apvList) == 0 }'>
+                        <tr>
+                           <td colspan="4" style="text-align: center">상신 문서가 없습니다.</td>
+                        </tr>
+                     </c:if>
+                       </tbody>
+                     </table>
+     </div>
      
    </div>
    

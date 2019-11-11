@@ -8,10 +8,11 @@
    <jsp:param value="기안하기" name="tabTitle"/> 
    <jsp:param value="기안하기" name="pageTitle"/>
 </jsp:include>
+<script type="text/javascript"
+	src="${path }/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 	<section>
 		<div class="container">
 			<button type="button" class="btn btn-primary" onclick="enrollApvl();">결재라인등록</button>
-			<h2 class="title font-weight-bold text-primary">${dfOne["DFTITLE"]}</h2>
 
 			<form id="apvDocModiForm" class="form-sample" method="post" action="">
 				<div class="card shadow mb-4">
@@ -54,8 +55,7 @@
 									<th colspan="2">본문내용</th>
 								</tr>
 								<tr>
-									<td colspan="2"><textarea id="dfContentForm"
-											name="dfContentForm" rows="10" cols="100">${dfOne['DFCONTENTFORM']}</textarea></td>
+									<td colspan="2"><textarea id="dfContentForm" name="dfContentForm" rows="10" cols="100">${dfOne['DFCONTENTFORM']}</textarea></td>
 								</tr>
 								<tr>
 									<th>특이사항</th>
