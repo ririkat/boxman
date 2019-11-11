@@ -329,6 +329,11 @@ public class ApvServiceImpl implements ApvService {
 		
 		return result;
 	}
+	//도장 이미지 가져오기
+	@Override
+	public Map<String, Object> selectStamp(Map<String, Object> param) {
+		return dao.selectStamp(session,param);
+	}
 	
 	/*결재하기 -> 반려하기*/
 	@Override
@@ -369,4 +374,50 @@ public class ApvServiceImpl implements ApvService {
 		if(result==0) throw new Exception();
 		return result;
 	}
+	
+	@Override
+	public int apvAddPermit1(Map<String, Object> param) throws Exception {
+		int result=0;
+		//먼저, 해당 결재문서에 결재자들 총 인원을 불러옴
+		result=dao.selectApvACount(session,param);
+		int allCount=result;
+		//개인을 전결처리시킴
+		result=dao.apvPermit(session,param);
+		if(result==0) throw new Exception();
+		//총 인원과 현재 턴 번호가 일치하면 전체 종결상태가 되도록 ,
+		if(Integer.parseInt(String.valueOf(param.get("priorNo")))
+				==allCount) {
+			result=dao.updateApvPermitAll(session,param);
+			if(result==0) throw new Exception();
+			result=dao.updateAddApv(session,param);
+			if(result==0) throw new Exception();
+		}else {
+			//아니라면 진행상태로 update 하고, currturn +1함.
+			result=dao.updateApvPermit(session,param);
+			if(result==0) throw new Exception();
+		}
+		
+		return result;
+	}
+	
+	/*결재양식 검색*/
+	@Override
+	public List<Map<String, String>> selectDfSearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectDfSearchList(session,cPage,numPerPage,param);
+	}
+	@Override
+	public int selectDfSearchCount(Map<String, Object> param) {
+		return dao.selectDfSearchCount(session,param);
+	}
+	
+	/*결재라인 검색*/
+	@Override
+	public List<Map<String, String>> selectApvlSearchList(int cPage, int numPerPage, Map<String, Object> param) {
+		return dao.selectApvlSearchList(session,cPage,numPerPage,param);
+	}
+	@Override
+	public int selectApvlSearchCount(Map<String, Object> param) {
+		return dao.selectApvlSearchCount(session,param);
+	}
+
 }

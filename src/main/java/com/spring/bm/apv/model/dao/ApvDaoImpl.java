@@ -255,6 +255,11 @@ public class ApvDaoImpl implements ApvDao {
 	public int updateApvPermit(SqlSessionTemplate session, Map<String, Object> param) {
 		return session.update("apv.updateApvPermit",param);
 	}
+	//도장
+	@Override
+	public Map<String, Object> selectStamp(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectStamp",param);
+	}
 	
 	/*결재하기 -> 반려하기*/
 	@Override
@@ -291,4 +296,32 @@ public class ApvDaoImpl implements ApvDao {
 		return session.update("apv.updateApvEReturn",param);
 	}
 	
+	@Override
+	public int updateAddApv(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.update("apv.updateAddApv",param);
+	}
+	
+	/*결재양식 검색*/
+	@Override
+	public List<Map<String, String>> selectDfSearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectDfSearchList",param, rows);
+	}
+	@Override
+	public int selectDfSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectDfSearchCount",param);
+	}
+	
+	/*결재라인 검색*/
+	@Override
+	public List<Map<String, String>> selectApvlSearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param) {
+		RowBounds rows = new RowBounds((cPage-1) * numPerPage, numPerPage);
+		return session.selectList("apv.selectApvlSearchList",param, rows);
+	}
+	@Override
+	public int selectApvlSearchCount(SqlSessionTemplate session, Map<String, Object> param) {
+		return session.selectOne("apv.selectApvlSearchCount",param);
+	}
 }

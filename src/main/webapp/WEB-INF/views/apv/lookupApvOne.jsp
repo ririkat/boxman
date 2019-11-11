@@ -120,7 +120,78 @@
 		});
 		function apvPermit(apvNo,empNo,priorNo){
 			if(confirm("결재처리하시겠습니까?")){
-      			location.href="${path}/apv/apvPermit.do?apvNo="+apvNo+"&empNo="+empNo+"&priorNo="+priorNo;
+				/* 추가 결재 로직 추가 */
+				/* 먼저 결재폼에 cateName를 가져온다! 있다면 가져와질거고 없으면 안가져와 지겠지?*/
+				/*  cateName이 있는지 없는지 먼저 분기처리한 후에, 네임값에 따라 보낼 값을 넣어준다 (cateNo,sDate,eDate,pay) */
+				/* 
+					일반 결재인 경우는 기존 파라미터 값만 넣어서 넘겨주고,
+					추가 결재인 경우는 분기처리해서 값을 넣어 전송!한다. mapping은 추가결재용 매핑으로 넘겨줌.
+					단, 청구 금액이 있는 추가 결재는 일반결재와 같이 보내고 시행할 때 분기 처리함.
+				*/
+				/* ajax로 처리하고 팝업 창 닫기 */
+				
+				//먼저 ajax에서 넘겨줄 Object 생성, 기본 파라미터를 넣어줌.
+				var param=new Object();
+				param["apvNo"]=apvNo;
+				param["empNo"]=empNo;
+				param["priorNo"]=priorNo;
+				
+				//cateName 가져옴.
+				var cateName=$('#cateName').val();
+				var cateNo;
+				var sDate;
+				var eDate;
+				var pay;
+				if("undefined" !== typeof cateName && cateName !== null){
+					var ckCol=$('#ckCol').val();
+					var pkey=$('#pkey').val();
+					var cateNo=$('#cateNo').val();
+					var sDate;
+					var eDate;
+					var pay;
+					param["cateName"]=cateName;
+					param["ckCol"]=ckCol;
+					param["pkey"]=pkey;
+					param["cateNo"]=cateNo;
+					
+						$.ajax({
+							url:"${path}/apv/apvAddPermit.do",
+							type : "post",
+							data : param,
+							contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+							success : function(data) {
+								var result=data;
+								alert(result["msg"]);
+								var reName=result["EFRENAME"];
+								var imgTag=$("<img/>");
+								imgTag.attr({"src":"${path}/resources/upload/emp/"+reName,"width":"50px","height":"50px;"});
+								
+								var prior=result["APVAPRIOR"];
+								console.log("stamp"+prior);
+								$('#stamp'+prior).html(imgTag);
+							}
+						});
+						
+				}else{
+					//일반결재
+					$.ajax({
+						url:"${path}/apv/apvPermit.do",
+						type : "post",
+						data : param,
+                        contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+						success : function(data) {
+							var result=data;
+							alert(result["msg"]);
+							var reName=result["EFRENAME"];
+							var imgTag=$("<img/>");
+							imgTag.attr({"src":"${path}/resources/upload/emp/"+reName,"width":"50px","height":"50px;"});
+							
+							var prior=result["APVAPRIOR"];
+							console.log("stamp"+prior);
+							$('#stamp'+prior).html(imgTag);
+						}
+					});
+				}
       		}
 		}
 		function apvReturn(apvNo,empNo){

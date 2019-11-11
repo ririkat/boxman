@@ -19,13 +19,30 @@
 		<!-- DataTales Example -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
+				<form id="searchFrm">
+					<div class="dataTables_length" id="dataTable_length">
+						<label>Search: 
+						<select name="type" id="dfSearch"
+							class="form-control form-control-sm">
+								<option value="dcTitle">문서분류명</option>
+								<option value="dfTitle">문서양식명</option>
+						</select> 
+						<input type="search" class="form-control form-control-sm"
+							placeholder="" aria-controls="dataTable" name="data">
+						</label>
+						<button onclick="fn_search();"
+							class="btn btn-primary mr-2">
+							<span class="text">검색</span>
+						</button>
+					</div>
+				</form>
 
 				<!-- <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6> -->
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
 					<table class="table table-stripped" id="dataTable" width="100%"
-						cellspacing="0">
+						cellspacing="0" id="myTable">
 						<thead>
 							<tr>
 								<th>문서번호</th>
@@ -58,6 +75,15 @@
 
 	<!-- End of Main Content -->
 	<script>
+	//검색
+	function fn_search() {
+		$("#searchFrm").attr("action","${path}/apv/searchDocFormReq.do");
+		$("#searchFrm").submit();
+	}
+	//테이블 정렬
+	$(function() {
+	  $("#myTable").tablesorter();
+	});
 	
 	function requestApv(dfno){
   		var url="${path}/apv/requestApvEnroll.do?dfNo="+dfno;

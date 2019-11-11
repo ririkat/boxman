@@ -113,4 +113,18 @@ public interface ApvDao {
 
 	int updateApvEReturn(SqlSessionTemplate session, Map<String, Object> param);
 
+	int updateAddApv(SqlSessionTemplate session, Map<String, Object> param);
+
+	List<Map<String, String>> selectDfSearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param);
+
+	int selectDfSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	List<Map<String, String>> selectApvlSearchList(SqlSessionTemplate session, int cPage, int numPerPage,
+			Map<String, Object> param);
+
+	int selectApvlSearchCount(SqlSessionTemplate session, Map<String, Object> param);
+
+	Map<String, Object> selectStamp(SqlSessionTemplate session,Map<String, Object> param);
+
 }

@@ -89,5 +89,19 @@ public interface ApvService {
 
 	int apvEnforce(Map<String, Object> param) throws Exception;
 
-	int apvEReturn(Map<String, Object> param) throws Exception;;
+	int apvEReturn(Map<String, Object> param) throws Exception;
+
+	int apvAddPermit1(Map<String, Object> param) throws Exception;
+
+	List<Map<String, String>> selectDfSearchList(int cPage, int numPerPage, Map<String, Object> param);
+
+	int selectDfSearchCount(Map<String, Object> param);
+
+	List<Map<String, String>> selectApvlSearchList(int cPage, int numPerPage, Map<String, Object> param);
+
+	int selectApvlSearchCount(Map<String, Object> param);
+
+	Map<String, Object> selectStamp(Map<String, Object> param);
+
+
 }
