@@ -120,9 +120,9 @@ window.onload = function(){
 //creating web socket
 
 	/* 로컬용 서버용 */
-	var socket = new   WebSocket("ws://192.168.120.171:9090/bm/chatRoom");
+	/* var socket = new   WebSocket("ws://192.168.120.171:9090/bm/chatRoom"); */
     /* server */
-    /* var socket = new   WebSocket("wss://rclass.iptime.org/19AM_boxman_final/chatRoom"); */
+    var socket = new   WebSocket("wss://rclass.iptime.org/19AM_boxman_final/chatRoom");
      
     
     
