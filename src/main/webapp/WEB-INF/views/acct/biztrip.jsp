@@ -90,7 +90,7 @@
 												<c:out value='${e["BIZCOST"]}' />
 											</td>
 											<td>
-												<c:if test='${fn:trim(e["BTPPAYDATE"]) eq "" }' var="r">
+												<c:if test='${fn:trim(e["BTPPAYDATE"]) eq ""}' var="r">
 													<button type="button" class="btn btn-success" onclick="pay('${e.BTNO}');">승인하기</button>
 												</c:if>
 											</td>
@@ -114,7 +114,6 @@ function fn_search(){
 
 function pay(data){
 	if (confirm('출장비를 지급하시겠습니까?')) {
-		console.log(data);
 	    $.ajax({
 	    	url: "${path}/acct/biztripPay.do",
 	    	data: {"data": data},

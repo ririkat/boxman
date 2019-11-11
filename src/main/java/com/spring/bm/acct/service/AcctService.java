@@ -42,6 +42,9 @@ public interface AcctService {
 
 	/* biztrip payment */
 	int updateBizTripPayment(int data);
+
+	/* severance payment */
+	int updateSevPayment(int empno);
 	
 	
 

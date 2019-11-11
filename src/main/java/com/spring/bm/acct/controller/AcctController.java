@@ -235,6 +235,19 @@ public class AcctController {
 		return loc1;
 		
 	}
+	
+	/*biztrip payment*/
+	@RequestMapping("/acct/severancePayment.do")
+	@ResponseBody
+	public String updateSevPayment(int empno) throws JsonProcessingException{
+		int num = service.updateSevPayment(empno);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(num);
+	}
+	
+	
+	
+	
 /* Severance End */
 	
 }

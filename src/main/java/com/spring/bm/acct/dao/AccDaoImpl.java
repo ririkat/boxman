@@ -120,7 +120,13 @@ public class AccDaoImpl implements AcctDao {
 	public int updateBizTripPayment(SqlSessionTemplate session, int data) {
 		return session.update("acct.updateBizTripPayment", data);
 	}
+
+	@Override
+	public int updateSevPayment(SqlSessionTemplate session, int empno) {
+		return session.update("acct.updateSevPayment", empno);
+	}
 	
+	/* severance payment */
 	
 	
 }

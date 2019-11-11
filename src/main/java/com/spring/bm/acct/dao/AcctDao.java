@@ -48,6 +48,9 @@ public interface AcctDao {
 
 	/* biztrip payment */
 	int updateBizTripPayment(SqlSessionTemplate session, int data);
+
+	/* severance payment */
+	int updateSevPayment(SqlSessionTemplate session, int empno);
 	
 
 }
