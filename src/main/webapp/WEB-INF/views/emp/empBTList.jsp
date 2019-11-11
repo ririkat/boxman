@@ -135,6 +135,9 @@
 																출장 종료후 신청 가능합니다.
 															</td>
 														</c:if>
+														<c:if test="${fn:trim(e['BTPYN']) eq 'Y'}">
+															<td>마감</td>
+														</c:if>
 														<c:if test="${fn:trim(e['BTCHECK']) eq 'N'}">
 															<td></td>
 														</c:if>
