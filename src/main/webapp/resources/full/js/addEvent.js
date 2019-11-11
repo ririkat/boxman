@@ -95,8 +95,7 @@ var newEvent = function (start, end, eventType) {
                 $('#calendar').fullCalendar('refetchEvents');
                 
                 if(response != null) {
-                	$("#myTable2").find(".myTable2").remove();
-        			$("#remo").remove();
+                	$("#myTable2").find(".rooo").remove();
         				tr = $('<tr class="dataTable1"/>');
         				tr.append("<td>" + response.title + "</td>");
         				tr.append("<td>" + response.type + "</td>");
