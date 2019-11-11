@@ -58,9 +58,9 @@
 										<th>이름</th>
 										<th>직급</th>
 										<th>부서</th>
-										<th>출장 시작</th>
-										<th>출장 끝</th>
 										<th>사유</th>
+										<th>가격</th>
+										<th>승인</th>
 									</tr>
 								</thead>
 								
@@ -84,19 +84,16 @@
 												<c:out value='${e["DEPTNAME"] }'/>
 											</td>
 											<td>
-												<c:out value='${e["BTSTART"]}' />
-											</td>
-											<td>
-												<c:out value='${e["BTEND"]}' />
-											</td>
-											<td>
 												<c:out value='${e["BTREASON"]}' />
 											</td>
-											<%-- <td>
-												<c:if test='${fn:trim(e["SALCHECK"]) eq "N" }' var="r">
-													<button type="button" class="btn btn-success" onclick="pay('${e.SALNO}');">지급하기</button>
+											<td>
+												<c:out value='${e["BIZCOST"]}' />
+											</td>
+											<td>
+												<c:if test='${fn:trim(e["BTPPAYDATE"]) eq "" }' var="r">
+													<button type="button" class="btn btn-success" onclick="pay('${e.BTNO}');">승인하기</button>
 												</c:if>
-											</td> --%>
+											</td>
 										</tr>
 									</c:forEach>
 								</tbody>
@@ -115,7 +112,30 @@ function fn_search(){
 	$("#searchFrm").submit();
 }
 
-</script>
+function pay(data){
+	if (confirm('출장비를 지급하시겠습니까?')) {
+		console.log(data);
+	    $.ajax({
+	    	url: "${path}/acct/biztripPay.do",
+	    	data: {"data": data},
+	    	type: "post",
+	    	success: function(num){
+	    		var result=JSON.parse(num);
+	    		console.log(result);
+	    		if(result == 1){
+	    			alert("출장비가 지급 되었습니다");
+	    		} else{
+	    			alert("문제가 발생했습니다.");
+	    		}
+	    		location.reload();
+	    	}
+	    })
+	} else {
+	    // Do nothing!
+	}
+}
 
+
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

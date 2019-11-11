@@ -93,31 +93,39 @@
 	
 	
 	<!-- biztrip -->
+	<update id="updateBizTripPayment" parameterType = "_int">
+		update businesstrippay set btppaydate=sysdate, btpcheck='Y' where btno=#{data}
+	</update>
+	
 	<select id="selectBizTripList" resultType="map">
 		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
-		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
-			from employee
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend,
+			(select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from salary where salcheck='Y') as BIZCOST,
+             BTPPAYDATE, BTPCHECK
+            from employee
 			    inner join businesstrip on employee.empno=businesstrip.empno
 			    inner join empjob on employee.jobno=empjob.jobno
 			    inner join department on employee.deptno=department.deptno
+                LEFT JOIN BUSINESSTRIPPAY ON BUSINESSTRIP.BTNO=BUSINESSTRIPPAY.BTNO
+            WHERE BTPCHECK IS NOT NULL
 	</select>
 	<select id="selectBizTripCount" resultType="_int">
-		select count(*) from businessTrip
+		select count(*) from businesstrippay
 	</select>
-	
-	
-	
 	
 	
 	<!-- biztrip search -->
 	<select id="selectBiztripSearchList" resultType="map">
 		select employee.empno, employee.empname, empjob.jobname, department.DEPTNAME, 
-		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend
-			from employee
+		businesstrip.btno, businesstrip.btreason, to_char(businesstrip.btstart, 'mm/dd/yyyy')as btstart, to_char(businesstrip.btend, 'mm/dd/yyyy')as btend,
+			(select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from salary where salcheck='Y') as BIZCOST,
+             BTPPAYDATE, BTPCHECK
+            from employee
 			    inner join businesstrip on employee.empno=businesstrip.empno
 			    inner join empjob on employee.jobno=empjob.jobno
 			    inner join department on employee.deptno=department.deptno
-                where 1=1
+                LEFT JOIN BUSINESSTRIPPAY ON BUSINESSTRIP.BTNO=BUSINESSTRIPPAY.BTNO
+            WHERE BTPCHECK IS NOT NULL
                 <choose>
 			    	<when test="type eq 'empNo'">
 		                and employee.empno like '%'||#{data}||'%' 
@@ -136,9 +144,10 @@
 	<select id="biztripSearchCount" parameterType="map" resultType="_int">
 		select count(*) from employee
 		    inner join businesstrip on employee.empno=businesstrip.empno
-		    inner join empjob on employee.jobno=empjob.jobno
-		    inner join department on employee.deptno=department.deptno
-            where 1=1
+			    inner join empjob on employee.jobno=empjob.jobno
+			    inner join department on employee.deptno=department.deptno
+                LEFT JOIN BUSINESSTRIPPAY ON BUSINESSTRIP.BTNO=BUSINESSTRIPPAY.BTNO
+            WHERE BTPCHECK IS NOT NULL
 		    <choose>
 		    	<when test="type eq 'empNo'">
 	                and employee.empno like '%'||#{data}||'%' 

@@ -115,6 +115,11 @@ public class AccDaoImpl implements AcctDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("acct.selectSevOne", empno);
 	}
+
+	@Override
+	public int updateBizTripPayment(SqlSessionTemplate session, int data) {
+		return session.update("acct.updateBizTripPayment", data);
+	}
 	
 	
 	

@@ -139,6 +139,16 @@ public class AcctController {
 		mv.setViewName("acct/biztrip");
 		return mv;
 	}
+	
+	/*biztrip payment*/
+	@RequestMapping("/acct/biztripPay.do")
+	@ResponseBody
+	public String biztripPayment(int data) throws JsonProcessingException{
+		int num = service.updateBizTripPayment(data);
+		ObjectMapper mapper = new ObjectMapper();
+		return mapper.writeValueAsString(num);
+	}
+	
 /* BusinessTrip End */
 	
 	
