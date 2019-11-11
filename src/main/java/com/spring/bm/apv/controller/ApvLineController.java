@@ -39,7 +39,7 @@ public class ApvLineController {
 		int totalCount = service.selectMyALCount(loginNo);
 
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/apvLineList.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path+"/apv/apvLineList.do",loginNo));
 		mv.addObject("count", totalCount);
 		mv.addObject("myList",myList);
 		mv.setViewName("apv/apvLineList");
@@ -158,7 +158,7 @@ public class ApvLineController {
 	   public ModelAndView searchDocFormReq(@RequestParam(value="cPage",required=false, defaultValue="0") int cPage,
 	         @RequestParam Map<String, Object> param) {
 
-	      int numPerPage = 10;
+	      int numPerPage = 2;
 	      List<Map<String, String>> list = service.selectApvlSearchList(cPage, numPerPage, param);
 	      int totalCount = service.selectApvlSearchCount(param);
 	      ModelAndView mv=new ModelAndView();

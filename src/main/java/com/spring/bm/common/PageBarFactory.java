@@ -77,6 +77,17 @@ public class PageBarFactory {
       return pageBar;
    }
    
+   public static String getPageBar(int totalCount, int cPage, 
+            int numPerPage,String url, int loginNo) {
+         String pageBar="";
+         
+         pageBar += PageBarBody(totalCount, cPage, numPerPage, pageBar);
+         pageBar+="location.href='"+url+"?cPage='+cPage+'&loginNo="+loginNo+"'";
+         pageBar+="}";
+         pageBar+="</script>";
+         return pageBar;
+      }
+   
    public static String PageBarBody(int totalCount, int cPage, int numPerPage, String pageBar) {
       int pageBarSize=5;
 
