@@ -45,9 +45,21 @@
 	<beans:bean id="chatting" class="com.spring.bm.chatting.ViewChatting"/>
 	<websocket:handlers>
 		<websocket:mapping handler="chatting" path="/chatRoom"/>
-		
 	</websocket:handlers>
 	<beans:bean class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
 		<beans:property name="maxBinaryMessageBufferSize" value="1020400"/>
 	</beans:bean>
+
+<!-- 영상통화 웹소켓 설정  -->
+   <beans:bean id="vc"  class="com.spring.bm.vc.controller.VideoChat"/>
+   <websocket:handlers>
+       <websocket:mapping handler="vc"  path="/viewchat"/>
+       <websocket:handshake-interceptors>
+            <beans:bean  class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>     
+       </websocket:handshake-interceptors>
+   </websocket:handlers>
+   <beans:bean  class="org.springframework.web.socket.server.standard.ServletServerContainerFactoryBean">
+       <beans:property  name="maxBinaryMessageBufferSize" value="1020400"/>
+   </beans:bean>
+
 </beans:beans>

@@ -146,9 +146,6 @@ form:active {
 							  		</div>
 							  		<!-- Venue -->
 							  		<div class="venue"> <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/chatRoom.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><span>방열기</span></a></label></div>					  				
-					  				<div class="videochat">
-							  			 <label class=""><a class="b-related btn btn-outline-success my-2 my-sm-0" href="${path }/chat/videoRequest.do?receiver=${list['EMPNO']}&sender=${loginEmp['EMPNO'] }"><i class="fas fa-video"></i></a></label>
-							  		</div>
 					  				<c:if test="${list['READCOUNT'] == 0}">
 						  				<div class="venue">
 						  					<i class="fas fa-comment-dots" style="color:#e73b66d6;"></i>

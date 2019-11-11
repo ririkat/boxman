@@ -1,19 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<c:set var="path" value="${pageContext.request.contextPath}"/>
-
-<jsp:include page="/WEB-INF/views/common/header.jsp">   
-	<jsp:param value="선덕별리현빈" name="tabTitle"/> 
-	<jsp:param value="기호기오무관" name="pageTitle"/>
-</jsp:include>
-
-<section>
-
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>화상채팅</title>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script>
 	//WebRtc에 필요한 변수를 지정
 	var webrtc_capable=true;//브라우저가 webrtc를 지원하는지여부
@@ -60,8 +52,7 @@
 <!-- 여기까지 webRtc를 적용하기 위한 기본설정 -->
 <script>
 <!-- 실제화상통신을 구현하는 script -->
-	var call_token="${sender}";//사용자를 구분하기 위한 변수
-	console.log(call_token);
+	var call_token="${loginEmp.EMPNAME}";//사용자를 구분하기 위한 변수
 	var signaling_server;//화상채팅시 정보를 주고받게할 서버 *websocket으로 활용! 이게 가장좋음
 	var peer_connect;//실질적인 연결정보를 저장할 객체
 	
@@ -94,7 +85,7 @@
 			$("#open_call_state").show();
 		}
 		//메세지를 주고받게 해주는 서버등록(websocket)
-		signaling_server=new WebSocket("wss://192.168.120.216:8443/spring/viewChatting");
+		signaling_server=new WebSocket("wss://192.168.120.216:7777/bm/videochat");
 		
 		//시그널링 서버설정  *onmessage함수를 등록
 		signaling_server.onopen=function(){
@@ -268,11 +259,7 @@
 			</ul>
 		</div>
 	</div>
-
-
-
-</section>
-
-
-<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
-
+</body>
+</html>
+</body>
+</html>

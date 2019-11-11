@@ -90,7 +90,7 @@
 												<c:out value='${e["BIZCOST"]}' />
 											</td>
 											<td>
-												<c:if test='${fn:trim(e["BTPPAYDATE"]) eq ""}' var="r">
+												<c:if test='${fn:trim(e["BTPCHECK"]) eq "N"}' var="r">
 													<button type="button" class="btn btn-success" onclick="pay('${e.BTNO}');">승인하기</button>
 												</c:if>
 											</td>
