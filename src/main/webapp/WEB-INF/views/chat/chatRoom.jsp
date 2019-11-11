@@ -124,8 +124,6 @@ window.onload = function(){
     /* server */
     var socket = new   WebSocket("wss://rclass.iptime.org/19AM_boxman_final/chatRoom");
      
-    
-    
      // This method is triggered when it's received
      socket.onmessage = function(e) {
           console.log(e);

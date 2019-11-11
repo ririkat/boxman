@@ -468,7 +468,7 @@
 		
 
 		//안읽은메세지수 출력
-		/* $(function(){
+		$(function(){
 					timer = setInterval(function(){
 						$.ajax({
 							type:"post",
@@ -484,8 +484,8 @@
 								}
 							}
 						});
-					},1000);
-			});  */
+					},3000);
+			});  
 			
 			function showUnread(result){
 				$('#unread').html(result);
