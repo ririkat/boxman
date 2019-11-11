@@ -34,7 +34,7 @@ public class ApvLineController {
 	@RequestMapping("/apv/apvLineList.do")
 	public ModelAndView apvLineList(@RequestParam(value="cPage", 
 	required=false, defaultValue="1") int cPage, int loginNo) {
-		int numPerPage = 10;
+		int numPerPage = 2;
 		List<Map<String,Object>> myList=service.selectMyApvLineList(cPage,numPerPage,loginNo);
 		int totalCount = service.selectMyALCount(loginNo);
 

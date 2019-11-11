@@ -88,6 +88,7 @@
 		
 		/* 로컬용 */
 		//signaling_server=new WebSocket("wss://192.168.220.75:7777/bm/videochat");
+		
 		/* 서버용 */
 		signaling_server=new WebSocket("wss://rclass.iptime.org/19AM_boxman_final/videochat");
 		

@@ -34,6 +34,7 @@ public class NoteController {
 		return mapper.writeValueAsString(note);
 	}
 	
+	
 	@RequestMapping("/note/saveNote.do")
 	@ResponseBody
 	public void saveNote(String note, int empNo, HttpServletResponse response) throws JsonProcessingException {
