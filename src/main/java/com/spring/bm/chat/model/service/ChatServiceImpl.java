@@ -82,5 +82,10 @@ public class ChatServiceImpl implements ChatService {
 		return dao.updateReadCount(sqlSession, m);
 	}
 
+	@Override
+	public List<Map<String, String>> selectReadCount(Map<String,String> param) {
+		return dao.selectReadCount(sqlSession, param);
+	}
+
 	
 }

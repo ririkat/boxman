@@ -36,10 +36,7 @@ public class ViewChatting extends BinaryWebSocketHandler{
 		// session 관리를 위해 clients 객체에 세션을 추가
 		clients.put(String.valueOf(msg.getReceiver()), session);
 		sessionChecking(); // 접속이 종료된 session 을 client 에서 삭제함.
-		
-		//접속한 회원을 보내기
-		//adminBroadCast(); // 현재 접속회원 접속자에게 전송하기
-		
+
 		// 화면 연결하는 로직 구성
 		for(Map.Entry<String, WebSocketSession> client: clients.entrySet()) {
 			WebSocketSession s = client.getValue();
