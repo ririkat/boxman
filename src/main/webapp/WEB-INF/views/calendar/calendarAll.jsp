@@ -539,6 +539,7 @@
 <!-- --------------------------------------------------------------------------------------------------------------------------------------- -->
 
 <section>
+       <div class="card shadow mb-4">
      <div class="container">
 
         <!-- 일자 클릭시 메뉴오픈 -->
@@ -641,12 +642,13 @@
                 <h3 class="panel-title"></h3>
             </div>
         </div>
+        
         <div class="card-header py-3">
          <h4 class="m-0 font-weight-bold text-primary">새로운 일정</h4>
        </div>
            <div class="row">
                  <div class="col-sm-12">
-                   <table class="table table-striped table-hover tablesorter" id="myTable2" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%;">
+                   <table class="table table-striped table-hover tablesorter" id="myTable2" width="100%" cellspacing="0" role="grid" aria-describedby="dataTable_info" style="width: 100%; text-align: center;">
                        <thead>
 						<tr>
 							<th scope="col">내용</th>						
@@ -654,7 +656,9 @@
 						</tr>
                        </thead>
                        <tbody>
-                       
+                       <tr>
+                       		<td colspan="2" style = "text-align: center"><strong>새로운 일정이 없습니다.</strong></td>
+                       	</tr>
                        </tbody>
                    </table>
                  </div>
@@ -663,6 +667,10 @@
          <h4 class="m-0 font-weight-bold text-primary">일정 목록</h4>
        </div>
        <div class="card-header py-3">
+       
+		 <button type ="button" class="btn btn-success mr-2"
+		onclick="location.href='${pageContext.request.contextPath }/calendar/allView.do?temp=${loginEmp['EMPNO'] }'">전체</button>       
+       
          <button type ="button" class="btn btn-success mr-2"
 		onclick="location.href='${pageContext.request.contextPath }/calender/1Cal.do?temp=${loginEmp['EMPNO'] }'">개인</button>
 		
@@ -724,6 +732,7 @@
         
         <!-- /.filter panel -->
     </div>
+    </div>
     <!-- /.container -->
 </section>
     <script src="${path }/resources/full/vendor/js/jquery.min.js"></script>
@@ -766,71 +775,6 @@
        
 
     </script>
-
-
-<!--     <script>
-    var arr = [];
-    var empNo = $('#empNo').val();
-    
-    $(function(){
-           $.ajax({
-              contentType:'application/json',
-              dataType:'json',
-              url : "${path}/calendar/selectCalendarEmpNo.do?empNo="+ empNo,
-              type : "post",
-              async: false,
-              success:function(data){
-					
-					 console.log(data);
-					 arr = data;
-				},
-				
-		      error:function(){
-		            alert('저장 중 에러가 발생했습니다. 다시 시도해 주세요.');
-		        }
-			});
-           
-           return arr;
-	});
-    </script> -->
-<!--     <script>
-	$(document).ready(function() {
-		fn_get_events();
-	});
-
-	function fn_set_calendar(events){
-		$('#calendar').fullCalendar({
-			events: events, 	
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-			editable: true,
-			droppable: true, // this allows things to be dropped onto the calendar
-			drop: function() {
-				// is the "remove after drop" checkbox checked?
-				if ($('#drop-remove').is(':checked')) {
-				  // if so, remove the element from the "Draggable Events" list
-				  $(this).remove();
-				}
-			}
-		});
-	}
-		
-	function fn_get_events()
-	{
-		var empNo = $('#empNo').val();
-		$.ajax({
-			url: "${path}/calendar/selectCalendarEmpNo.do?empNo="+ empNo,
-			dataType: 'json', 
-			success: function(plan) {
-				console.log(plan);
-				fn_set_calendar(plan);
-			}
-		}); 
-	}
-    </script> -->
 
 
 

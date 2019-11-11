@@ -6,8 +6,6 @@ function getDisplayEventDate(event) {
   var displayEventDate;
 
   if (event.allDay == false) {
-    var startTimeEventInfo = moment(event.start).format('HH:mm');
-    var endTimeEventInfo = moment(event.end).format('HH:mm');
     displayEventDate = startTimeEventInfo + " - " + endTimeEventInfo;
   } else {
     displayEventDate = "하루종일";
@@ -49,8 +47,8 @@ function calDateWhenResize(event) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = moment(event.end._d).subtract(1, 'days').format('YYYY-MM-DD');
   } else {
-    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD HH:mm');
-    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD HH:mm');
+    newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
+    newDates.endDate = moment(event.end._d).format('YYYY-MM-DD');
   }
 
   return newDates;
@@ -63,7 +61,10 @@ function calDateWhenDragnDrop(event) {
     endDate: ''
   }
 
-  //하루짜리 all day
+
+
+
+//하루짜리 all day
   if (event.allDay && event.end === null) {
     newDates.startDate = moment(event.start._d).format('YYYY-MM-DD');
     newDates.endDate = newDates.startDate;
@@ -87,7 +88,7 @@ function calDateWhenDragnDrop(event) {
 
 var calendar = $('#calendar').fullCalendar({
 
-    eventRender: function (event, element, view) {
+    /*eventRender: function (event, element, view) {
 
     //일정에 hover시 요약
     element.popover({
@@ -152,7 +153,7 @@ var calendar = $('#calendar').fullCalendar({
     listWeek: {
       columnFormat: ''
     }
-  },
+  },*/
 
   /* ****************
    *  일정 받아옴 
@@ -167,7 +168,7 @@ var calendar = $('#calendar').fullCalendar({
       },
       dataType : "json",
       success: function (response) {
-    	  console.log(response);
+    	  console.log(response.calendarList);
         var fixedDate = response.map(function (array) {
           if (array.allDay && array.start != array.end) {
             // 이틀 이상 AllDay 일정인 경우 달력에 표기시 하루를 더해야 정상출력
@@ -266,17 +267,17 @@ var calendar = $('#calendar').fullCalendar({
         hours: today.hours(),
         minute: today.minutes()
       });
-      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
+      startDate = moment(startDate).format('YYYY-MM-DD');
       endDate = moment(endDate).subtract(1, 'days');
 
       endDate.set({
         hours: today.hours() + 1,
         minute: today.minutes()
       });
-      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+      endDate = moment(endDate).format('YYYY-MM-DD');
     } else {
-      startDate = moment(startDate).format('YYYY-MM-DD HH:mm');
-      endDate = moment(endDate).format('YYYY-MM-DD HH:mm');
+      startDate = moment(startDate).format('YYYY-MM-DD');
+      endDate = moment(endDate).format('YYYY-MM-DD');
     }
 
     //날짜 클릭시 카테고리 선택메뉴
@@ -324,12 +325,10 @@ var calendar = $('#calendar').fullCalendar({
   eventLimitClick: 'week', //popover
   navLinks: true,
   defaultDate: new Date(), //실제 사용시 삭제
-  timeFormat: 'HH:mm',
+  timeFormat: 'MM/DD',
   defaultTimedEventDuration: '01:00:00',
   editable: true,
-  minTime: '00:00:00',
-  maxTime: '24:00:00',
-  slotLabelFormat: 'HH:mm',
+  slotLabelFormat: 'MM/DD',
   weekends: true,
   nowIndicator: true,
   dayPopoverFormat: 'MM/DD dddd',

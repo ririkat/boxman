@@ -123,41 +123,39 @@ public class EmployeeController {
 	}
 
 	/* 사원로그인*/
-	@RequestMapping("/bfLogin/loginEmp.do")
-	public ModelAndView empLogin(@RequestParam Map<String,Object> map,HttpSession session) {
+	   @RequestMapping("/bfLogin/loginEmp.do")
+	   public ModelAndView empLogin(@RequestParam Map<String,Object> map,HttpSession session) {
 
-		Map<String, Object> m = service.selectLoginEmp(map);
+	      Map<String, Object> m = service.selectLoginEmp(map);
 
-		ModelAndView mv = new ModelAndView();
-		String msg = "";
-		String loc = "";
-		//		if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
-		if(m==null) {
-			msg = "존재하지 않는 아이디입니다.";
-			loc="/";
-		}else if (pwEncoder.matches((CharSequence) map.get("empPassword"),(String)m.get("EMPPASSWORD"))) {
-			//사원번호 가져옴
-			int empNo = Integer.parseInt(m.get("EMPNO").toString());
-			
-			msg = "로그인 성공";
-			loc="/common/main.do?empNo="+empNo;
-			session.setAttribute("loginEmp", m);//HttpSession 사용
-			session.setMaxInactiveInterval(60*60);//세션유효시간 1분
+	      ModelAndView mv = new ModelAndView();
+	      String msg = "";
+	      String loc = "";
+	      //      if(m.get("EMPPASSWORD").equals(map.get("empPassword"))) {
+	      if(m==null) {
+	         msg = "존재하지 않는 아이디입니다.";
+	         loc="/";
+	      }else if (pwEncoder.matches((CharSequence) map.get("empPassword"),(String)m.get("EMPPASSWORD"))) {
+	         //사원번호 가져옴
+	         msg = "로그인 성공";
+	         loc="/common/main.do";
+	         session.setAttribute("loginEmp", m);//HttpSession 사용
+	         session.setMaxInactiveInterval(60*60);//세션유효시간 1분
 
-		} else if(pwEncoder.matches((CharSequence) map.get("empPassword"), (String)m.get("EMPPASSWORD"))==false){
-			msg = "비밀번호가 일치하지 않습니다.";
-			loc="/";
-		}else {
-			msg = "로그인 실패";
-			loc="/";
-		}
+	      } else if(pwEncoder.matches((CharSequence) map.get("empPassword"), (String)m.get("EMPPASSWORD"))==false){
+	         msg = "비밀번호가 일치하지 않습니다.";
+	         loc="/";
+	      }else {
+	         msg = "로그인 실패";
+	         loc="/";
+	      }
 
-		mv.addObject("msg", msg);
-		mv.addObject("loc", loc);
-		mv.setViewName("common/msg");
+	      mv.addObject("msg", msg);
+	      mv.addObject("loc", loc);
+	      mv.setViewName("common/msg");
 
-		return mv;
-	}
+	      return mv;
+	   }
 
 	/* 사원로그아웃*/
 	@RequestMapping("/emp/logoutEmp.do")
