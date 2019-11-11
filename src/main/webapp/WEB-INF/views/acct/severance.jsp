@@ -53,9 +53,9 @@
                                                                    <th>이름</th>
                                                                    <th>직급</th>
                                                                    <th>부서</th>
-                                                                   <th>퇴사   여부</th>
+                                                                   <th>퇴사금</th>
                                                                    <th>퇴사   날짜</th>
-                                                                   <th>퇴사</th>
+                                                                   <th>지급 여부</th>
                                                             </tr>
                                                      </thead>
                                                      
