@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.category.model.service.CategoryService;
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.stuff.model.vo.StuffMaincategory;
 import com.spring.bm.stuff.model.vo.StuffSubcategory;
 
@@ -23,6 +24,8 @@ public class CategoryController {
 	
 	@Autowired
 	CategoryService service;
+	
+	private PageUrlFactory path = new PageUrlFactory();
 	
 	
 	//메인 카테고리 조회
@@ -36,7 +39,7 @@ public class CategoryController {
 		List<StuffMaincategory> list=service.selectMaincategoryList(cPage,numPerPage);
 		int totalCount = service.selectMaincategoryCount(); 
 		
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/category/maincategoryUpdate.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl() +"/category/maincategoryUpdate.do"));
 		mv.addObject("count",totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("category/maincategoryUpdate");
@@ -55,7 +58,7 @@ public class CategoryController {
 		List<StuffSubcategory> subcategoryList = service.subcategoryList(cPage,numPerPage);
 		int totalCount = service.selectSubcategoryCount(); 
 		
-		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/category/subcategoryUpdate.do"));
+		mv.addObject("pageBar",PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl() +"/category/subcategoryUpdate.do"));
 		mv.addObject("list", maincategoryList);
 		mv.addObject("list2", subcategoryList);
 		mv.setViewName("category/subcategoryUpdate");

@@ -118,12 +118,10 @@ window.onload = function(){
 }
    
 //creating web socket
-    /* local */
-     var socket = new   WebSocket("ws://192.168.220.11:9090/bm/chatRoom");
-     
+
+   var socket = new   WebSocket("ws://192.168.220.2:9090/bm/chatRoom");
     /* server */
-    /* var socket = new   WebSocket("wss://rclass.iptime.org/19AM_boxman_final/chatRoom");  */
-     
+    /* var socket = new   WebSocket("wss://rclass.iptime.org/19AM_boxman_final/chatRoom"); */
      
      // This method is triggered when it's received
      socket.onmessage = function(e) {
