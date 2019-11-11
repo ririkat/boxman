@@ -90,18 +90,18 @@
                   <tbody>
                     <tr>
                       <td style="background-color">매출</td>
-                      <td  style="background-color">₩1,100,000,000</td>
+                      <td  id="revenue" ></td>
                       <td style="background-color"></td>
                     </tr>
                     <tr>
                       <td>매출 원가</td>
-                      <td>(₩890,000,000)</td>
+                      <td id="costOfRevenue"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td><strong>총 수익</strong></td>
                       <td></td>
-                      <td><strong>₩210,000,000</strong></td>
+                      <td id = "netProfit"><strong>₩210,000,000</strong></td>
                     </tr>
                     <tr>
                       <td>경영비</td>
@@ -110,7 +110,7 @@
                     </tr>
                     <tr>
                       <td>월세</td>
-                      <td>(₩3,000,000)</td>
+                      <td id="rent"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -125,22 +125,22 @@
                     </tr>
                     <tr>
                       <td>보험</td>
-                      <td>(₩5,000,000)</td>
+                      <td id="insurance"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>법무 관련 수수료</td>
-                      <td>(₩2,000,000)</td>
+                      <td id="lawInterest"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>지급 이자</td>
-                      <td>(₩3,000,000)</td>
+                      <td id="interest"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>지급 기타</td>
-                      <td>(₩2,000,000)</td>
+                      <td id="otherInterest"></td>
                       <td></td>
                     </tr>
                     <tr>
@@ -155,18 +155,18 @@
                     </tr>
                     <tr>
                       <td>지급 세금</td>
-                      <td>(₩20,000,000)</td>
+                      <td id="taxPay"></td>
                       <td></td>
                     </tr>
                     <tr>
                       <td>총 경영비</td>
-                      <td id="netIncome"></td>
-                      <!-- <td><strong id="totalExpense">${list['SEVERANCE']+list['BIZTRIP'] }</strong></td> -->
+                      <td></td>
+                      <td id="totalExpense"></td>
                     </tr>
                     <tr>
                       <td>순 이익</td>
                       <td></td>
-                      <td><strong>₩57,500,000</strong></td>
+                      <td id = "netincome"><strong></strong></td>
                     </tr>
                   </tbody>
                 </table>
@@ -196,10 +196,44 @@
 					console.log(list[0][i]);
 				}
 				
+				$("#revenue").html("₩"+list[0].REVENUE);
+				$("#costOfRevenue").html("(₩"+list[0].COSTREVENUE+")");
+				
+				var netProfit = list[0].REVENUE-list[0].COSTREVENUE;
+				
+				var rent = 3000000;
+				var saltax = 3800000;
+				var insurance = 5000000;
+				var lawInterest = 2000000;
+				var interest = 3000000;
+				var otherInterest = 2000000;
+				var taxPay = 20000000;
+				
+				var totalExpense = rent+saltax+insurance+lawInterest+interest+otherInterest+taxPay+list[0].SALARIES+list[0].BIZTRIP;
+				var netincome = netProfit-totalExpense;
+				
+				$("#totalExpense").html("(₩"+totalExpense+")");
+				
+				if(netincome<0){
+					$("#netincome").html("(₩"+Math.abs(netincome)+")");
+				} else{
+					$("#netincome").html("₩"+netincome);
+				}
+				
+				
+				$("#rent").html("(₩"+rent+")");
+				$("#saltax").html("(₩"+saltax+")");
+				$("#insurance").html("(₩"+insurance+")");
+				$("#lawInterest").html("(₩"+lawInterest+")");
+				$("#interest").html("(₩"+interest+")");
+				$("#otherInterest").html("(₩"+otherInterest+")");
+				$("#taxPay").html("(₩"+taxPay+")");
+				$("#netProfit").html("(₩"+netProfit+")");
 				$("#biztrip").html("(₩"+list[0].BIZTRIP+")");
 				$("#severance").html("(₩"+list[0].SEVERANCE+")");
 				$("#saltax").html("(₩"+list[0].SALTAX+")");
 				$("#salaries").html("(₩"+list[0].SALARIES+")");
+				
 			} 
 		})
 		

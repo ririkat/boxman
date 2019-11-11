@@ -12,8 +12,8 @@
 			(select sum(purTotAmt) from purchasetab where deposck='Y') as COSTREVENUE,
 		    (select sum(salrealpay+saltax) from salary where salcheck='Y') as salaries,
 		    (select sum(saltax) from salary where salcheck='Y') as saltax,
-		    (select sum(sevpay) from severance) as severance,
-		    (select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from businessTripPay) as biztrip
+		    (select sum(sevpay) from severance where sevcheck='Y') as severance,
+		    (select sum(BTPROOM+BTPTRANSPORTATION+BTPENTERTAIN) from businessTripPay where btpcheck='Y') as biztrip
 		from dual
 	</select>
 	
@@ -188,7 +188,7 @@
 		    where sevyn='Y'
 	</select>
 	<select id="selectSevCount" resultType="_int">
-		select count(*) from severance where where sevyn='Y'
+		select count(*) from severance where sevyn='Y'
 	</select>
 	
 	<update id="updateSeveranceStatus" parameterType="map">

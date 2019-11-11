@@ -226,12 +226,6 @@ public class AcctController {
 			msg="문제가 발생했습니다";
 		}
 		
-//		
-//		ModelAndView mv = new ModelAndView();
-//		mv.addObject("msg", msg);
-//		mv.addObject("loc", loc);
-//		mv.setViewName("common/msg");
-//		return mv;
 		return loc1;
 		
 	}
@@ -244,8 +238,6 @@ public class AcctController {
 		ObjectMapper mapper = new ObjectMapper();
 		return mapper.writeValueAsString(num);
 	}
-	
-	
 	
 	
 /* Severance End */

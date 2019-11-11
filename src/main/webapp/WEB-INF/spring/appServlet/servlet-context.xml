@@ -53,7 +53,7 @@
 <!-- 영상통화 웹소켓 설정  -->
    <beans:bean id="vc"  class="com.spring.bm.vc.controller.VideoChat"/>
    <websocket:handlers>
-       <websocket:mapping handler="vc"  path="/viewchat"/>
+       <websocket:mapping handler="vc"  path="/videochat"/>
        <websocket:handshake-interceptors>
             <beans:bean  class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>     
        </websocket:handshake-interceptors>
