@@ -159,6 +159,7 @@
                     <input type="file" class="custom-file-input" name="upFile" id="upFile">
                     <label class="custom-file-label" for="upFile">${stuffUpload.imgOriname }</label>
                 	</div>
+                	<div id="fileCheck" class="rg-checkMsg card-title"></div>
 				</div>
 			<br><br>
 
@@ -207,6 +208,36 @@ $(function(){
 	});
 });
 
+	
+$(function(){
+    
+    //확장자, 정규식 검사
+    $(document).on("change","input[name='upFile']",function(event) {
+       var ext = $(this).val().split('.').pop().toLowerCase();
+       var fileSize = (this).files[0].size;
+       var maxSize = 1024*1024*1024;
+       
+       if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+    	   	$(fileCheck).text("gif, png, jpg, jpeg 형식의 파일만 업로드 할 수 있습니다.");
+			$(fileCheck).css({
+				"color" : "red",
+				"font-size" : "15px"
+			});
+			$(fileCheck).prop("disabled",true);
+			$('#btn').attr('disabled', true);
+       } else {
+    	   $(fileCheck).text("");
+			$('#btn').prop("disabled",false);
+       }
+       
+       if(fileSize > maxSize) {
+          alert("첨부파일 크기는 1GB 이내로 등록 가능합니다.");
+          $(this).val("");
+          return;
+       }
+    });
+ });
+
 $(function(){
 	$('[name=upFile]').on('change', function(){
 		var fileName = this.files[0].name;
@@ -247,6 +278,7 @@ function seeMap(){
 		window.open("${path}/resources/upload/warehouseMap/update.jpg","약도","width=800, height=800, top=100, left=500, location=no, menubar=no, status=no");
 	}
 }
+
 </script>
 
 

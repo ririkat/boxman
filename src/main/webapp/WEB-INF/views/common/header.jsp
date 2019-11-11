@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -13,7 +13,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -63,89 +63,89 @@
 }
 
 .btn-success{
-	background-color: #4e73df;
-	border-color: #4e73df;
+   background-color: #4e73df;
+   border-color: #4e73df;
 }
 
 .btn-success hover{
-	background-color: white;
-	border-color: #4e73df;
+   background-color: white;
+   border-color: #4e73df;
 }
 
 .btn-outline-success{
-	background-color: #4e73df;
-	border-color: #4e73df;
-	color: white;
+   background-color: #4e73df;
+   border-color: #4e73df;
+   color: white;
 }
 
 </style>
 <body id="page-top">
 
-	<!-- Page Wrapper -->
-	<div id="wrapper">
+   <!-- Page Wrapper -->
+   <div id="wrapper">
 
-		<!-- Sidebar -->
-		<ul
-			class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
-			id="accordionSidebar">
+      <!-- Sidebar -->
+      <ul
+         class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion"
+         id="accordionSidebar">
 
-			<!-- Sidebar - Brand -->
-			<a
-				class="sidebar-brand d-flex align-items-center justify-content-center"
-				href="${path }/common/main.do?empNo=${loginEmp.EMPNO}">
-				<div class="sidebar-brand-icon rotate-n-15">
-					<!-- <i class="fas fa-laugh-wink"></i> -->
-					<!-- <i class="fas fa-warehouse"></i> -->
-					<i class="fas fa-box"></i>
-				</div>
-				<div class="sidebar-brand-text mx-3">
-					BOXMAN <sup>2</sup>
-				</div>
-			</a>
+         <!-- Sidebar - Brand -->
+         <a
+            class="sidebar-brand d-flex align-items-center justify-content-center"
+            href="${path }/common/main.do?empNo=${loginEmp.EMPNO}">
+            <div class="sidebar-brand-icon rotate-n-15">
+               <!-- <i class="fas fa-laugh-wink"></i> -->
+               <!-- <i class="fas fa-warehouse"></i> -->
+               <i class="fas fa-box"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">
+               BOXMAN <sup>2</sup>
+            </div>
+         </a>
 
-			<!-- Divider -->
-			<hr class="sidebar-divider">
+         <!-- Divider -->
+         <hr class="sidebar-divider">
 
-			<!-- Heading -->
-			<div class="sidebar-heading">index</div>
-			
-			<!-- 마이페이지 -->
-		      <li class="nav-item">
-		        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMy" aria-expanded="true" aria-controls="collapseTwo">
-		          <i class="fas fa-fw fa-cog"></i>
-		          <span>마이페이지</span>
-		        </a>
-		        <div id="collapseMy" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-		          <div class="bg-white py-2 collapse-inner rounded">
-		            <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}&temp=my">내정보확인</a>
-		            <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태현황</a>
-		            <a class="collapse-item" href="${path }/emp/selectDayOffList.do?empNo=${loginEmp.EMPNO}&temp=my">휴가현황</a>
-		            <a class="collapse-item" href="${path }/emp/selectBTList.do?empNo=${loginEmp.EMPNO}&temp=my">출장현황</a>
-		          </div>
-		        </div>
-		      </li>
+         <!-- Heading -->
+         <div class="sidebar-heading">index</div>
+         
+         <!-- 마이페이지 -->
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMy" aria-expanded="true" aria-controls="collapseTwo">
+                <i class="fas fa-fw fa-cog"></i>
+                <span>마이페이지</span>
+              </a>
+              <div id="collapseMy" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                  <a class="collapse-item" href="${path }/emp/selectEmpOne.do?empNo=${loginEmp.EMPNO}&temp=my">내정보확인</a>
+                  <a class="collapse-item" href="${path }/emp/selectAttenList.do?empNo=${loginEmp.EMPNO}&temp=my">근태현황</a>
+                  <a class="collapse-item" href="${path }/emp/selectDayOffList.do?empNo=${loginEmp.EMPNO}&temp=my">휴가현황</a>
+                  <a class="collapse-item" href="${path }/emp/selectBTList.do?empNo=${loginEmp.EMPNO}&temp=my">출장현황</a>
+                </div>
+              </div>
+            </li>
 
-			<!-- 결재 관리 -->
-			<li class="nav-item">
-				<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseApv" aria-expanded="true" aria-controls="collapseApv">
-						<i class="fas fa-fw fa-chart-area"></i> <span>결재 관리</span>
-				</a>
-				<div id="collapseApv" class="collapse" aria-labelledby="headingApv" data-parent="#accordionSidebar">
-		          <div class="bg-white py-2 collapse-inner rounded">
-		          	<a class="collapse-item" href="${path }/apv/requestApv.do">기안하기</a>
-		            <a class="collapse-item" href="${path }/apv/sendApv.do?loginNo=${loginEmp['EMPNO'] }">상신결재함</a>
-		            <a class="collapse-item" href="${path }/apv/receiveApvList.do?loginNo=${loginEmp['EMPNO'] }">수신결재함</a>
-		            <a class="collapse-item" href="${path }/apv/enforceApvList.do?loginNo=${loginEmp['EMPNO'] }">시행결재함</a>
-		            <a class="collapse-item" href="${path }/apv/referApvList.do?loginNo=${loginEmp['EMPNO'] }">참조결재함</a>
-		            <a class="collapse-item" href="${path }/apv/apvLineList.do?loginNo=${loginEmp['EMPNO'] }">결재라인관리</a>
-		            <a class="collapse-item" href="${path }/apv/apvDoc.do">결재양식관리</a>
-		          </div>
-        		</div>
-			</li>
+         <!-- 결재 관리 -->
+         <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseApv" aria-expanded="true" aria-controls="collapseApv">
+                  <i class="fas fa-fw fa-chart-area"></i> <span>결재 관리</span>
+            </a>
+            <div id="collapseApv" class="collapse" aria-labelledby="headingApv" data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                   <a class="collapse-item" href="${path }/apv/requestApv.do">기안하기</a>
+                  <a class="collapse-item" href="${path }/apv/sendApv.do?loginNo=${loginEmp['EMPNO'] }">상신결재함</a>
+                  <a class="collapse-item" href="${path }/apv/receiveApvList.do?loginNo=${loginEmp['EMPNO'] }">수신결재함</a>
+                  <a class="collapse-item" href="${path }/apv/enforceApvList.do?loginNo=${loginEmp['EMPNO'] }">시행결재함</a>
+                  <a class="collapse-item" href="${path }/apv/referApvList.do?loginNo=${loginEmp['EMPNO'] }">참조결재함</a>
+                  <a class="collapse-item" href="${path }/apv/apvLineList.do?loginNo=${loginEmp['EMPNO'] }">결재라인관리</a>
+                  <a class="collapse-item" href="${path }/apv/apvDoc.do">결재양식관리</a>
+                </div>
+              </div>
+         </li>
 
       <!-- 인사 관리 -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" id="empNav" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
           <span>인사 관리</span>
         </a>
@@ -161,9 +161,9 @@
         </div>
       </li>
 
-			<!-- 영업 관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+         <!-- 영업 관리 -->
+      <li class="nav-item" >
+        <a class="nav-link collapsed" id="bizNav" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
           <span>영업 관리</span>
         </a>

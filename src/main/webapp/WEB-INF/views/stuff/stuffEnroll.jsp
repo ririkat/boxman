@@ -147,7 +147,7 @@
 		</form>
 	</div>
 </section>
-<script>
+<script>z
     $(function(){
         $("#stuffMain").click(function(){
            $.ajax({
