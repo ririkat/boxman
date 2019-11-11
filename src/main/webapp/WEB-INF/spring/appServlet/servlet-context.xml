@@ -42,45 +42,7 @@
 			<beans:bean id="loggerInterceptor"
 				class="com.spring.bm.common.LoggerInterceptor" />
 		</interceptor>
-
-		<interceptor>
-			<mapping path="/stuff/*.do" />
-			<exclude-mapping path="/bfLogin/*" />
-			<beans:bean id="stuffInterceptor"
-				class="com.spring.bm.common.LoggerInterceptor" />
-		</interceptor>
-
-		<interceptor>
-			<mapping path="/category/*.do" />
-			<exclude-mapping path="/bfLogin/*" />
-			<beans:bean id="saleInterceptor"
-				class="com.spring.bm.common.LoggerInterceptor" />
-		</interceptor>
-		<interceptor>
-			<mapping path="/connection/*.do" />
-			<exclude-mapping path="/bfLogin/*" />
-			<beans:bean id="connectionInterceptor"
-				class="com.spring.bm.common.LoggerInterceptor" />
-		</interceptor>
-		<interceptor>
-			<mapping path="/purchase/*.do" />
-			<exclude-mapping path="/bfLogin/*" />
-			<beans:bean id="purchaseInterceptor"
-				class="com.spring.bm.common.LoggerInterceptor" />
-		</interceptor>
-
-		<interceptor>
-			<mapping path="/sale/*.do" />
-			<exclude-mapping path="/bfLogin/*" />
-			<beans:bean id="salInterceptor"
-				class="com.spring.bm.common.LoggerInterceptor" />
-		</interceptor>
 	</interceptors>
-
-
-
-
-
 
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
