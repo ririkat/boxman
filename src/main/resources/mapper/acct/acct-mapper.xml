@@ -8,6 +8,8 @@
 	<!-- income statement -->
 	<select id="selectIcList" resultType="map">
 		select 
+			(select sum(salTotAmt) from saletab where remitck='Y') as REVENUE,
+			(select sum(purTotAmt) from purchasetab where deposck='Y') as COSTREVENUE,
 		    (select sum(salrealpay+saltax) from salary where salcheck='Y') as salaries,
 		    (select sum(saltax) from salary where salcheck='Y') as saltax,
 		    (select sum(sevpay) from severance) as severance,
