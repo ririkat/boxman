@@ -87,9 +87,11 @@
 								</tr>
 							</table>
 							<div style="margin:0 auto; width:fit-content;">
-                      <button type="button" class="btn btn-success mr-2" onclick="noReadonly();" id="upBtn">수정</button>  
-                      <button type="button" class="btn btn-success mr-2" onclick="updateNotice();" id="endBtn" style="display:none;">수정완료</button>
-                      <button type="button" class="btn btn-light" onclick="deleteNotice();">삭제</button>
+					  <c:if test="${nt.empName eq loginEmp.EMPNAME }">
+	                      <button type="button" class="btn btn-success mr-2" onclick="noReadonly();" id="upBtn">수정</button>  
+	                      <button type="button" class="btn btn-success mr-2" onclick="updateNotice();" id="endBtn" style="display:none;">수정완료</button>
+	                      <button type="button" class="btn btn-light" onclick="deleteNotice();">삭제</button>
+                      </c:if>
                         </div>
                     </form>
                   </div>

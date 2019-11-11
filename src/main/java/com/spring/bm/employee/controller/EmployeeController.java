@@ -603,11 +603,12 @@ public class EmployeeController {
 		if((""+param.get("temp")).equals("my")) {
 			try {
 				result = service.insertUpAttendance(param);
-				logger.debug("controller "+result);
 				if(result > 0) {
 					//근태수정요청 결재로 이동
 					map = service.selectUpAttendanceOne(result);
 					map.put("temp", "upAttendance");
+					map.put("checkCol", "uaCheck");
+					map.put("pkey", "uaNo");
 					redirect.addAllAttributes(map);
 					loc1 = "redirect:/apv/addReqApvEnroll.do";
 				} else {
@@ -681,6 +682,8 @@ public class EmployeeController {
 			if(result > 0) {
 				map = service.selectDayoffOne(result);
 				map.put("temp", "dayoff");
+				map.put("checkCol", "doCheck");
+				map.put("pkey", "doNo");
 				redirect.addAllAttributes(map);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";
 			} else {
@@ -723,6 +726,8 @@ public class EmployeeController {
 				param.put("btNo", result);
 				map = service.selectBTOne(param);
 				map.put("temp", "businessTrip");
+				map.put("checkCol", "btCheck");
+				map.put("pkey", "btNo");
 				redirect.addAllAttributes(map);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";
 			} else {
@@ -770,6 +775,8 @@ public class EmployeeController {
 				param.put("btpNo", result);
 				map = service.selectBTPOne(result);
 				map.put("temp", "businessTripPay");
+				map.put("checkCol", "btpCheck");
+				map.put("pkey", "btpNo");
 				redirect.addAllAttributes(map);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";
 			} else {

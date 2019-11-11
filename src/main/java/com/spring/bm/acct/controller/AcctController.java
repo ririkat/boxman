@@ -213,6 +213,8 @@ public class AcctController {
 			if(result > 0) {
 				m = service.selectSevOne(empno);
 				m.put("temp", "severance");
+				m.put("checkCol", "sevCheck");
+				m.put("pkey", "sevNo");
 				redirect.addAllAttributes(m);
 				loc1 = "redirect:/apv/addReqApvEnroll.do";
 			} else {

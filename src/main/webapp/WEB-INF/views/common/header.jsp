@@ -145,7 +145,7 @@
 
       <!-- 인사 관리 -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" id="empNav" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
           <i class="fas fa-fw fa-cog"></i>
           <span>인사 관리</span>
         </a>
@@ -162,8 +162,8 @@
       </li>
 
 			<!-- 영업 관리 -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+      <li class="nav-item" >
+        <a class="nav-link collapsed" id="bizNav" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
           <i class="fas fa-fw fa-folder"></i>
           <span>영업 관리</span>
         </a>
@@ -180,7 +180,7 @@
       </li>   
 
 			<!-- 회계 관리 -->
-			<li class="nav-item"><a class="nav-link collapsed" href="#"
+			<li class="nav-item"><a class="nav-link collapsed" href="#" id="acctNav"
 				data-toggle="collapse" data-target="#collapseUtilities"
 				aria-expanded="true" aria-controls="collapseUtilities"> 
 				<i class="fas fa-calculator"></i>&nbsp;&nbsp;<span>회계 관리</span>
@@ -485,9 +485,50 @@
 			<form name="openMessageFrm" method="post">
 				<input type="hidden" id="userId" name="userId" value="${loginEmp['EMPNO']}">
 			</form>
-					
+			<input type="hidden" id="deptNo" name="deptNo" value="${loginEmp['DEPTNO']}">		
+			<input type="hidden" id="jobNo" name="jobNo" value="${loginEmp['JOBNO']}">
 <script>
 		var userId = $("#userId").val();
+		var deptNo1;
+		var deptNo2;
+		var jobNo = $('#jobNo').val().trim();
+		var deptNo = $('#deptNo').val().trim();
+		
+		$('#empNav').on("click",function(e){
+			deptNo1 = 100;
+			if(jobNo != 100 && jobNo != 101) {
+				if(deptNo!=deptNo1) {
+					alert("권한이 없습니다.");
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			}
+		});
+		$('#bizNav').on("click",function(e){
+			deptNo1 = 102;
+			deptNo2 = 103;
+			if(jobNo != 100 && jobNo != 101) {
+				if(deptNo!=deptNo1 && deptNo!=deptNo2) {
+					alert("권한이 없습니다.");
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			}
+		});
+		
+		$('#acctNav').on("click",function(e){
+			deptNo1 = 101;
+			if(jobNo != 100 && jobNo != 101) {
+				if(deptNo!=deptNo1) {
+					alert("권한이 없습니다.");
+					e.stopPropagation();
+					e.preventDefault();
+				}
+			}
+		});
+		
+		
+		
 
 		//안읽은메세지수 출력
 		/* $(function(){

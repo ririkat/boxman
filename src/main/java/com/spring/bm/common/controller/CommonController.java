@@ -9,10 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.calendar.model.service.CalendarService;
 import com.spring.bm.calendar.model.vo.Calendar;
+import com.spring.bm.employee.model.service.EmployeeService;
 import com.spring.bm.notice.model.service.NoticeService;
 import com.spring.bm.notice.model.vo.Notice;
 
@@ -23,6 +25,8 @@ public class CommonController {
 	CalendarService calService;
 	@Autowired
 	NoticeService noticeService;
+	@Autowired
+	EmployeeService empService;
 
 	@RequestMapping("/common/main.do")
 	public ModelAndView toMain(@RequestParam Map<String, Object> param, HttpSession session) {
@@ -45,6 +49,7 @@ public class CommonController {
 
 		return mv;
 	}
+	
 
 
 }

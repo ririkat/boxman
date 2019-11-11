@@ -6,11 +6,11 @@
 		select distinct(roomNo) from chatRoom where (receiver=#{receiver} and sender=#{sender}) or receiver=#{sender} and sender=#{receiver}
 	</select>
 	<select id="selectChatList" resultType="map">
-		select distinct employee.empno, empjob.jobname, employee.empname, department.deptname, chat.readcount
-    	from employee
+		select distinct employee.empno, empjob.jobname, employee.empname, department.deptname, chat.*
+        from employee
         join empjob on employee.jobno=empjob.jobno
         join department on employee.DEPTNO = department.DEPTNO
-        left join chat on employee.empno=chat.sender
+        left join chat on employee.empno=chat.sender order by empNo
 	</select>
 	<!-- <select id="selectChatListEmp" resultType="map">
 		select * from chat where empNo=#{empNo}
