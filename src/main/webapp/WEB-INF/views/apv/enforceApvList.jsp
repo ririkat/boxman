@@ -64,7 +64,7 @@
               </div>
             </div>
           </div>
-
+			${pageBar }
         </div>
         <!-- /.container-fluid -->
 

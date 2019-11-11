@@ -56,28 +56,18 @@
 <body id="page-top">
 	<section>
 		<div class="container">
-			<c:choose>
-			    <c:when test="${not empty apvOne['APVAPRIOR']}">
-			    	<c:choose>
-			    		<c:when test="${apvOne['APVAPRIOR'] eq apvOne['CURRTURN']}">
-			    			<c:choose>
-				    			<c:when test="${apvOne['APVASTATUS'] eq '미결'}">
-									<button type="button" class="btn btn-primary" onclick="apvPermit(${apvOne['APVNO']},${loginEmp['EMPNO']},${apvOne['APVAPRIOR']});">결재하기</button>
-									<button type="button" class="btn btn-primary" onclick="apvReturn(${apvOne['APVNO']},${loginEmp['EMPNO']},${apvOne['APVAPRIOR']});">반려하기</button>
-								</c:when>
-							</c:choose>
-						</c:when>
-					</c:choose>
-			    </c:when>
-			    <c:when test="${not empty apvOne['APVESTATUS']}">
-			    	<c:choose>
-			    		<c:when test="${apvOne['APVESTATUS'] eq '미시행'}">
+			    <c:if test="${not empty apvOne['APVAPRIOR']}">
+			    	<c:if test="${apvOne['APVAPRIOR'] eq apvOne['CURRTURN'] and apvOne['APVASTATUS'] eq '미결'}">
+			    		<button type="button" class="btn btn-primary" onclick="apvPermit(${apvOne['APVNO']},${loginEmp['EMPNO']},${apvOne['APVAPRIOR']});">결재하기</button>
+						<button type="button" class="btn btn-primary" onclick="apvReturn(${apvOne['APVNO']},${loginEmp['EMPNO']},${apvOne['APVAPRIOR']});">반려하기</button>
+			    	</c:if>
+			    </c:if>
+			    <c:if test="${not empty apvOne['APVENO']}">
+			    	<c:if test="${apvOne['APVESTATUS'] eq '미시행'}">
 			    			<button type="button" class="btn btn-primary" onclick="apvEnforce(${apvOne['APVNO']},${loginEmp['EMPNO']});">시행하기</button>
 							<button type="button" class="btn btn-primary" onclick="apvEReturn(${apvOne['APVNO']},${loginEmp['EMPNO']});">반송하기</button>
-						</c:when>
-					</c:choose>
-			    </c:when>
-			</c:choose>
+					</c:if>
+			    </c:if>
 			<h2 class="title font-weight-bold text-primary">${apvOne["APVTITLE"]}</h2>
 
 			<form id="apvDocModiForm" class="form-sample" method="post" action="">
