@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bm.common.PageBarFactory;
+import com.spring.bm.common.PageUrlFactory;
 import com.spring.bm.sale.model.service.SaleService;
 
 @Controller
 public class SaleController {
 
+	private PageUrlFactory path = new PageUrlFactory();
+	
 	@Autowired
 	SaleService service;
 
@@ -27,7 +30,7 @@ public class SaleController {
 		List<Map<String,String>> list = service.selectSaleList(cPage,numPerPage);
 		int totalCount = service.selectSaleCount();
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount,cPage,numPerPage, "/bm/sale/saleList.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount,cPage,numPerPage, path.getUrl()+"/sale/saleList.do"));
 		mv.addObject("count",totalCount);
 		mv.addObject("list",list);
 		mv.setViewName("sale/saleList");
@@ -87,7 +90,7 @@ public class SaleController {
 		
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, "/bm/sale/searchSaleInfo.do"));
+		mv.addObject("pageBar", PageBarFactory.getPageBar(totalCount, cPage, numPerPage, path.getUrl()+"/sale/searchSaleInfo.do", type, data));
 		mv.addObject("count", totalCount);
 		mv.addObject("list", list);
 		mv.setViewName("sale/saleList");

@@ -96,11 +96,19 @@
 	</select>
 	
 	<select id="selectPurInfo" parameterType="_int" resultType="map">
-		SELECT * FROM purchaseTab WHERE PURCODE=#{purCode}
+		SELECT DISTINCT A.*, B.CONNAME, C.EMPNAME
+		FROM purchaseTab A, CONNECTION B, EMPLOYEE C
+		WHERE A.CONCODE=B.CONCODE(+)
+		AND A.EMPNO=C.EMPNO(+)
+		AND A.PURCODE=#{purCode}
 	</select>
 	
 	<select id="selectPurItemList" parameterType="_int" resultType="map">
-		SELECT * FROM purItemList WHERE PURCODE=#{purCode}
+		SELECT DISTINCT A.*, B.STUFFNAME, C.SCNAME, B.PRICE
+		FROM purItemList A, stuff B, stuff_subcategory C
+		WHERE A.STUFFNO=B.STUFFNO(+)
+		AND B.SCNO=C.SCNO(+)
+		AND PURCODE=#{purCode}
 	</select>
 	
 </mapper>
