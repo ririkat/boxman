@@ -183,7 +183,7 @@
    </form>
 </section>
 
-<script>
+<script>ㅋ
 $(document).ready(function() {
    $("input:radio[name=conTransCk]").click(function() {
        if($("input[name=conTransCk]:checked").val() == "N") {
