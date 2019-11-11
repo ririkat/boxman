@@ -348,7 +348,7 @@
 							class="nav-link" href="javascript:chatting();" id="messagesDropdown"
 							role="button"  aria-haspopup="true"	aria-expanded="false"> <i class="fas fa-video fa-fw"></i>
 								<!-- Counter - Messages -->
-						<span id = "unread" class="badge badge-danger badge-counter"></span>
+						<span class="badge badge-danger badge-counter"></span>
 						</a> 
 
 						<!-- Nav Item - Messages -->
